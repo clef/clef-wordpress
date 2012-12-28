@@ -8,7 +8,7 @@ Stable tag: 1.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Let users log into their WordPress accounts with the [Clef](http://clef.io) app on their phone and the Clef web service.
+Let users log into their WordPress accounts with the Clef app on their phone and the Clef web service.
 
 == Description ==
 
