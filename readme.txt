@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: csixty4
 Donate link: http://www.giffordcatshelter.org
-Tags: login, authentication, qc code, qr codes
+Tags: login, authentication, qr code, qr codes
 Requires at least: 3.5
 Tested up to: 3.5
 Stable tag: 1.0
