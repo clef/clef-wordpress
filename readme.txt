@@ -22,7 +22,7 @@ http://vimeo.com/55652461
 
 = Note =
 
-WPClef is provided by [Dave Ross](http://davidmichaelross.com) and is not affiliated wtih the Clef or Brennen Byrne. All trademarks, including the Clef logo, are the property of Clef/Brennen Byrne.
+WPClef is provided by [Dave Ross](http://davidmichaelross.com) and is not affiliated with  Clef or Brennen Byrne. All trademarks, including the Clef logo, are the property of Clef/Brennen Byrne.
 
 == Installation ==
 
