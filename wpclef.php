@@ -4,7 +4,7 @@
 Plugin Name: WPClef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Log in using Clef.io
-Version: 1.0
+Version: 1.1
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
