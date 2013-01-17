@@ -29,6 +29,18 @@ class WPClefAdmin {
 
 	}
 
+	public static function admin_enqueue_scripts() {
+		wp_register_script('wpclef_admin', plugin_dir_url(__FILE__) . '/admin_pointer.js', array('jquery', 'wp-pointer'), '1.0', TRUE );
+
+		wp_enqueue_script('wp-pointer');
+		wp_enqueue_style('wp-pointer');
+		wp_enqueue_script('wpclef_admin');
+	}
+
+	public static function admin_print_footer_scripts() {
+
+	}
+
 	public static function admin_menu() {
 		add_options_page("Clef", __('Clef', 'wpclef'), 'manage_options', __FILE__, array('WPClefAdmin', 'plugin_options'));
 	}
@@ -43,3 +55,5 @@ class WPClefAdmin {
 
 WPClefAdmin::hook('admin_init');
 WPClefAdmin::hook('admin_menu');
+WPClefAdmin::hook('admin_enqueue_scripts');
+WPClefAdmin::hook('admin_print_footer_scripts');
