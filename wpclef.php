@@ -91,8 +91,27 @@ class WPClef {
 
 			$existing_user = WP_User::get_data_by( 'email', $email );
 			if ( !$existing_user ) {
-				$_SESSION['WPClef_Messages'][] = "There's no user whose email address matches your phone's Clef account";
-				self::redirect_to_login();
+				$users_can_register = get_option('users_can_register', 0);
+				if(!$users_can_register) {
+					$_SESSION['WPClef_Messages'][] = "There's no user whose email address matches your phone's Clef account";
+					self::redirect_to_login();
+				}
+
+				// Register a new user
+				$userdata = new WP_User();
+				$userdata->first_name = $first_name;
+				$userdata->last_name = $last_name;
+				$userdata->user_email = $email;
+				$userdata->user_login = $email;
+				$password = wp_generate_password(16, FALSE);
+				$userdata->user_pass = $password;
+				$res = wp_insert_user($userdata);
+				if(is_wp_error($res)) {
+					$_SESSION['WPClef_Messages'][] = "An error occurred when creating your new account.";
+					self::redirect_to_login();					
+				}
+				$existing_user = WP_User::get_data_by( 'email', $email );
+
 			}
 
 			// Log in the user
