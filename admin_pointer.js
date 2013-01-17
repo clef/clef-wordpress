@@ -5,5 +5,11 @@ jQuery(document).ready( function($) {
             edge: 'left',
             align: 'center'
         },
+        close: function() {
+            $.post( ajaxurl, {
+                pointer: 'wpclef_configure',
+                action: 'dismiss-wp-pointer'
+            });
+        }
     }).pointer('open');
 });

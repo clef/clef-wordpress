@@ -29,16 +29,21 @@ class WPClefAdmin {
 
 	}
 
-	public static function admin_enqueue_scripts() {
+	public static function admin_enqueue_scripts($hook) {
+
+		if(array_shift(explode('/', $hook)) === 'settings_page_wpclef') {
+			return;
+		}
+
+		if(in_array('wpclef_configure', self::dismissed_wp_pointers())) {
+			return;
+		}
+
 		wp_register_script('wpclef_admin', plugin_dir_url(__FILE__) . '/admin_pointer.js', array('jquery', 'wp-pointer'), '1.0', TRUE );
 
 		wp_enqueue_script('wp-pointer');
 		wp_enqueue_style('wp-pointer');
 		wp_enqueue_script('wpclef_admin');
-	}
-
-	public static function admin_print_footer_scripts() {
-
 	}
 
 	public static function admin_menu() {
@@ -51,9 +56,26 @@ class WPClefAdmin {
 		$form->renderBasicForm('Clef Settings', Settings_API_Util::ICON_SETTINGS);
 
 	}
+
+	public static function update_option_wpclef() {
+
+		// Automatically dismiss the pointer once settings are saved
+		$dismissed = self::dismissed_wp_pointers();
+		$dismissed[] = 'wpclef_configure';
+		$dismissed = implode(',', $dismissed);
+
+		update_user_meta( get_current_user_id(), 'dismissed_wp_pointers', $dismissed );
+	}
+
+	private static function dismissed_wp_pointers() {
+		$dismissed = explode( ',', 
+			(string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true )
+		);
+		return $dismissed;
+	}
 }
 
 WPClefAdmin::hook('admin_init');
 WPClefAdmin::hook('admin_menu');
 WPClefAdmin::hook('admin_enqueue_scripts');
-WPClefAdmin::hook('admin_print_footer_scripts');
+WPClefAdmin::hook('update_option_wpclef');

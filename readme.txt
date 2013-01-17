@@ -78,6 +78,9 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 
 == Changelog ==
 
+= 1.1 =
+* Added an admin "pointer" to call out the configuration screen on new installs
+
 = 1.0 =
 * Initial release. Supports logging in using the Clef app.
 
