@@ -4,11 +4,11 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.0
+Stable tag: 1.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Let users log into their WordPress accounts with the Clef app on their phone and the Clef web service.
+Let users register and log into their WordPress accounts with the Clef app on their phone and the Clef web service.
 
 == Description ==
 
@@ -80,6 +80,7 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 
 = 1.1 =
 * Added an admin "pointer" to call out the configuration screen on new installs
+* User registration
 
 = 1.0 =
 * Initial release. Supports logging in using the Clef app.
@@ -87,7 +88,5 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 == Upgrade Notice ==
 
 == Roadmap ==
-
-* **Allow registering using Clef**. Will only work on sites where anyone can register, and accounts will be assigned the default role. The plugin will assign a complex password and email it to the address registered with Clef.
 
 * Translation into other languages
