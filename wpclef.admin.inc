@@ -61,6 +61,9 @@ class WPClefAdmin {
 
 		// Automatically dismiss the pointer once settings are saved
 		$dismissed = self::dismissed_wp_pointers();
+		if(in_array('wpclef_configure', $dismissed)) {
+			return;
+		}
 		$dismissed[] = 'wpclef_configure';
 		$dismissed = implode(',', $dismissed);
 
