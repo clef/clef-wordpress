@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.1
+Stable tag: 1.2
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -77,6 +77,9 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 3. Configuring Clef in WordPress.
 
 == Changelog ==
+
+= 1.2 =
+* Updated for Clef v2 API
 
 = 1.1 =
 * Added an admin "pointer" to call out the configuration screen on new installs

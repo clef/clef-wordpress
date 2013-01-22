@@ -4,7 +4,7 @@
 Plugin Name: WPClef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Log in using Clef.io
-Version: 1.1
+Version: 1.2
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -54,12 +54,12 @@ class WPClef {
 
 	function init() {
 
-		if ( isset( $_REQUEST['clef_callback'] ) && isset( $_REQUEST['?code'] ) ) {
+		if ( isset( $_REQUEST['clef_callback'] ) && isset( $_REQUEST['code'] ) ) {
 
 			// Authenticate
 
 			$args = array(
-				'code' => $_REQUEST['?code'],
+				'code' => $_REQUEST['code'],
 				'app_id' => self::setting( 'clef_settings_app_id' ),
 				'app_secret' => self::setting( 'clef_settings_app_secret' ),
 			);
@@ -127,7 +127,7 @@ class WPClef {
 
 	public static function login_form() {
 		$app_id = self::setting( 'clef_settings_app_id' );
-		$redirect_url = trailingslashit( home_url() ) . "?clef_callback&";
+		$redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&";
 		include dirname( __FILE__ )."/login_script.tpl.php";
 	}
 
