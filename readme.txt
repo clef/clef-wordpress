@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: csixty4
 Donate link: http://www.giffordcatshelter.org
-Tags: login, authentication, qr code, qr codes
+Tags: login, authentication, qr code, qr codes, iphone, android
 Requires at least: 3.5
 Tested up to: 3.5
 Stable tag: 1.2
@@ -12,7 +12,7 @@ Let users register and log into their WordPress accounts with the Clef app on th
 
 == Description ==
 
-[Clef](http://clef.io) is a smartphone app that lets you "forget your passwords" and log into sites as easily as taking a photo. Once you've registered and signed into the Clef website, you can visit a [website that uses Clef](https://clef.io/websites) and sign in using the [Clef app for your iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) (an Android app is coming in January, 2013).
+[Clef](http://clef.io) is a smartphone app that lets you "forget your passwords" and log into sites as easily as taking a photo. Once you've registered and signed into the Clef website, you can visit a [website that uses Clef](https://clef.io/websites) and sign in using the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device.
 
 WPClef adds a graphic (a "QR code" for the geeks out there) to the WordPress login form. Scanning that graphic with the Clef app automatically logs you into WordPress using your Clef account.
 
@@ -38,7 +38,7 @@ or
 
 = Getting Started =
 
-If you don't already have a Clef account, download the [Clef app for your iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) (an Android app is coming in January, 2013) and sign up.
+If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
 
 You will then need to register as a developer at https://developer.clef.io and [create a new application](https://developer.clef.io/applications/new) for your site. For the "iFrame parent URL", enter the address of your WordPress login page (i.e. `http://www.example.com/wp-login.php`) and tell Clef you need permission to see users' Email, First Name, and Last Name.
 
