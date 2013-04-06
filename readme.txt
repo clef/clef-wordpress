@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== WPClef ===
 Contributors: csixty4
 Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes, iphone, android
