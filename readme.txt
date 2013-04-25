@@ -8,7 +8,7 @@ Stable tag: 1.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Clef lets you log in and register on your Wordpress site using only your phone -- forget your usernames and passwords.
+Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
 
 == Description ==
 

@@ -3,9 +3,9 @@
 /*
 Plugin Name: WPClef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
-Description: Log in to your Wordpress site with your phone using Clef.
+Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
 Version: 1.3
-Author: David Michael Ross & Jesse Pollak
+Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
 License URI: http://opensource.org/licenses/MIT
