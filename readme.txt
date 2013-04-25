@@ -8,13 +8,13 @@ Stable tag: 1.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
+Clef lets you log in and register on your Wordpress site using only your phone -- forget your usernames and passwords.
 
 == Description ==
 
 [Clef](https://getclef.com) is a replacement for usernames and passwords that lets you use your phone to identify yourself. When you visit a Clef enabled site, click the "Log in with your phone" button, scan the Clef code with your [Clef app](https://getclef.com/apps), and you are instantly logged in.
 
-Clef is the best single sign on solution for your Wordpress sites. Once you sign in to one website using Clef, you are signed into every other Clef enabled site with a single click. If you have multiple Wordpress accounts, this means password-free, single sign on, 2-factor authentication for all of your Wordpress sites — give it a try today!
+Clef is the best single sign on solution for your Wordpress sites. Once you sign in to one website using Clef, you are signed into every other Clef enabled site with a single click. If you have multiple Wordpress accounts, this means password-free, single sign on, 2-factor authentication for all of your Wordpress sites -- give it a try today!
 
 Want to better understand how Clef works? Visit [getclef.com](https://getclef.com) or watch the video below.
 
@@ -86,6 +86,8 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 * Initial release. Supports logging in using the Clef app.
 
 == Upgrade Notice ==
+
+We just upgraded to 1.3
 
 == Roadmap ==
 
