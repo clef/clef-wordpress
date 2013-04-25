@@ -1,28 +1,28 @@
 === WPClef ===
-Contributors: csixty4
+Contributors: csixty4, jessepollak
 Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes, iphone, android
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Let users register and log into their WordPress accounts with the Clef app on their phone and the Clef web service.
+Use Clef to log in and register for WordPress accounts using only your phone. Never remember a password again, get single sign on across all of your Wordpress sites and protect it all with 2-factor authentication.
 
 == Description ==
 
-[Clef](http://clef.io) is a smartphone app that lets you "forget your passwords" and log into sites as easily as taking a photo. Once you've registered and signed into the Clef website, you can visit a [website that uses Clef](https://clef.io/websites) and sign in using the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device.
+[Clef](https://getclef.com) is a replacement for usernames and passwords that lets you use your phone to identify yourself. When you visit a Clef enabled site, click the "Log in with your phone" button, scan the Clef code with your [Clef app](https://getclef.com/apps), and you are instantly logged in.
 
-WPClef adds a graphic (a "QR code" for the geeks out there) to the WordPress login form. Scanning that graphic with the Clef app automatically logs you into WordPress using your Clef account.
+Clef is the best single sign on solution for your Wordpress blogs. Once you sign in to one website using Clef, you are signed into every other Clef enabled site with a single click. If you have multiple Wordpress accounts, this means password-free, single sign on, 2-factor authentication for all of your Wordpress sites — give it a try today!
 
-See [the installation instructions](http://wordpress.org/extend/plugins/wpclef/installation/) for details on how to sign up for Clef and start using it today.
+Want to better understand how Clef works? Visit [getclef.com](https://getclef.com) or watch the video below.
 
-http://vimeo.com/55652461
+https://vimeo.com/61393630
 
 = Note =
 
-WPClef is provided by [Dave Ross](http://davidmichaelross.com) and is not affiliated with  Clef or Brennen Byrne. All trademarks, including the Clef logo, are the property of Clef/Brennen Byrne.
+WPClef was originally created by [Dave Ross](http://davidmichaelross.com), but has since been contributed to by members of the Clef team. All trademarks, including the Clef logo, are the property of Clef.
 
 == Installation ==
 
@@ -40,29 +40,20 @@ or
 
 If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
 
-You will then need to register as a developer at https://developer.clef.io and [create a new application](https://developer.clef.io/applications/new) for your site. For the "iFrame parent URL", enter the address of your WordPress login page (i.e. `http://www.example.com/wp-login.php`) and tell Clef you need permission to see users' Email, First Name, and Last Name.
+With your Clef app in hand, visit the Clef settings page in your Wordpress admin panel and walk through the setup wizard.
 
-If you have any questions about registering with Clef or signing up as a developer, contact Clef support at info@clef.io
+If you have any questions or problems, don't hesitate to contact Clef support at support@getclef.com.
 
-Once your site is registered, Clef will give you "Application ID" and "Application Secret" codes. Paste these codes in the Clef configuration screen on your WordPress site, by selecting "Settings", then "Clef". Save your changes and you're all set to start using Clef with your site.
 
 == Frequently Asked Questions ==
 
-= Can anyone use my phone to log into a site using Clef? =
-
-The Clef app is protected by a four-digit PIN you set up when you register. This should be a different PIN than the one you use to unlock your phone.
-
 = What if I lose my phone? =
 
-Visit [Clef's "lost phone" page](https://clef.io/lost) to deactivate your phone and disconnect it from your Clef account.
+Visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone and disconnect it from your Clef account.
 
 = How much does Clef cost? =
 
-Clef is free for sites that have less than 10,000 unique users logging in with Clef per month and costs half a cent per user per month for larger sites.
-
-= Who owns Clef users' data? =
-
-Clef only provides user data with the user's explicit permission, but once granted, ownership of the data is transferred with the data. You own any data about a user provided to you by Clef and use of that data is subject to your Terms of Service and Privacy Policy.
+Clef is 100% free.
 
 = Can existing users on my site sign in with Clef? =
 
@@ -70,13 +61,19 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 
 == Screenshots ==
 
-1. WordPress login form showing the Clef login graphic.
+1. WordPress login form with Clef login enabled.
 
 2. Location of the Clef configuration screen.
 
-3. Configuring Clef in WordPress.
+3. Clef setup wizard.
+
+4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.3 =
+* Beautified Wordpress login form with Clef
+* Added setup wizard for easy setup
 
 = 1.2 =
 * Updated for Clef v2 API

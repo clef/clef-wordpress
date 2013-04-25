@@ -3,9 +3,9 @@
 /*
 Plugin Name: WPClef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
-Description: Log in using Clef.io
-Version: 1.2
-Author: David Michael Ross
+Description: Log in to your Wordpress site with your phone using Clef.
+Version: 1.3
+Author: David Michael Ross & Jesse Pollak
 Author URI: http://www.davidmichaelross.com/
 License: MIT
 License URI: http://opensource.org/licenses/MIT
@@ -108,7 +108,7 @@ class WPClef {
 				$res = wp_insert_user($userdata);
 				if(is_wp_error($res)) {
 					$_SESSION['WPClef_Messages'][] = "An error occurred when creating your new account.";
-					self::redirect_to_login();					
+					self::redirect_to_login();
 				}
 				$existing_user = WP_User::get_data_by( 'email', $email );
 
@@ -116,12 +116,12 @@ class WPClef {
 
 			// Log in the user
 
-			$user = set_current_user( $existing_user->ID, $existing_user->user_nicename );
+			$user = wp_set_current_user( $existing_user->ID, $existing_user->user_nicename );
 			wp_set_auth_cookie( $existing_user->ID );
 			do_action( 'wp_login', $existing_user->ID );
 
 			header( "Location: " . admin_url() );
-
+			exit();
 		}
 	}
 
