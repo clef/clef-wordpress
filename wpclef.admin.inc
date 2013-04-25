@@ -54,6 +54,7 @@ class WPClefAdmin {
 
 
 			wp_enqueue_script('wp-pointer');
+			wp_enqueue_style('wp-pointer');
 			wp_enqueue_script('wpclef_admin');
 		}
 
