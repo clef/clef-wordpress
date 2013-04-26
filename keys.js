@@ -3,7 +3,7 @@ jQuery(document).ready(function() {
 });
 
 function handleKeys(data) {
-    if (!(data.origin =~ 'https://clef.io')){
+    if (!(/https:\/\/clef.io/.test(data.origin))){
         return;
     }
     var appID = data.data.appID,

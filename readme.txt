@@ -2,7 +2,7 @@
 Contributors: csixty4, jessepollak
 Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes, iphone, android
-Requires at least: 3.5
+Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 1.3
 License: MIT
