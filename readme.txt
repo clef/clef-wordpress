@@ -18,7 +18,7 @@ Clef is the best single sign on solution for your Wordpress sites. Once you sign
 
 Want to better understand how Clef works? Visit [getclef.com](https://getclef.com) or watch the video below.
 
-https://vimeo.com/61393630
+http://vimeo.com/61393630
 
 = Note =
 
