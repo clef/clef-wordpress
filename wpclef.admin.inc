@@ -2,6 +2,10 @@
 
 include dirname( __FILE__ )."/Settings_API_Util.inc";
 
+function print_password_descript() {
+	echo "Ready to let go of your password forever? By selecting this option, Clef will reset your password to a random string of 40 characters every time you log in with Clef. It will help keep you secure by preventing several forms of attacks on your site. However, we won't be able to recover your old password if you want it back later.";
+}
+
 class WPClefAdmin {
 
 	const OPTIONS_NAME = 'wpclef';
@@ -34,6 +38,11 @@ class WPClefAdmin {
 		$settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
+		$pw_settings = $form->addSection('clef_password_settings', "Protect yourself from your password", "print_password_descript");
+
+		
+		$pw_settings->addField('wants_password_reset', "I'm ready!", Settings_API_Util_Field::TYPE_CHECKBOX);
+
 	}
 
 	public static function admin_enqueue_scripts($hook) {
@@ -51,7 +60,6 @@ class WPClefAdmin {
 			}
 
 			wp_register_script('wpclef_admin', plugin_dir_url(__FILE__) . '/admin_pointer.js', array('jquery', 'wp-pointer'), '1.0', TRUE );
-
 
 			wp_enqueue_script('wp-pointer');
 			wp_enqueue_style('wp-pointer');

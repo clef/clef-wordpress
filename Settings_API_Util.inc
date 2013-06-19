@@ -203,6 +203,7 @@ class Settings_API_Util_Field {
   const TYPE_TEXTFIELD = 'textfield';
   const TYPE_TEXTAREA = 'textarea';
   const TYPE_CHECKBOX = 'checkbox';
+  const TYPE_RADIO = 'radio';
 
   public $section;
 
@@ -272,11 +273,30 @@ class Settings_API_Util_Field {
   public static function checkbox(array $options) {
     ob_start();
     do_action('settings_api_util_pre_checkbox');
-    echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" />";
+    if($options['value']) {
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" onclick=\"javascript: if(this.value == 1) { this.value = 0; } else { this.value = 1; }\" checked>";
+    } else {
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" onclick=\"javascript: if(this.value == 1) { this.value = 0; } else { this.value = 1; }\">";
+    }
     do_action('settings_api_util_after_checkbox');
     $html = ob_get_contents();
     ob_end_clean();
     apply_filters('settings_api_util_checkbox', $html);
+    echo $html;
+  }
+
+  /**
+   * Checkbox
+   * @param array $options
+   */
+  public static function radio(array $options) {
+    ob_start();
+    do_action('settings_api_util_pre_radio');
+    echo "<input type=\"radio\" name=\"{$options['name']}\" value=\"{$options['value']}\" />";
+    do_action('settings_api_util_after_radio');
+    $html = ob_get_contents();
+    ob_end_clean();
+    apply_filters('settings_api_util_radio', $html);
     echo $html;
   }
 }
