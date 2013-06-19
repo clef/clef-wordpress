@@ -1,7 +1,7 @@
 === Plugin Name ===
-Contributors: csixty4, jessepollak
+Contributors: csixty4, jessepollak, zrathustra
 Donate link: http://www.giffordcatshelter.org
-Tags: login, authentication, qr code, qr codes, iphone, android
+Tags: login, authentication, identity, security, clef, wave, iphone, android
 Requires at least: 3.5
 Tested up to: 3.5.1
 Stable tag: 1.4
@@ -22,17 +22,17 @@ http://vimeo.com/61393630
 
 = Note =
 
-WPClef was originally created by [Dave Ross](http://davidmichaelross.com), but has since been contributed to by members of the Clef team. All trademarks, including the Clef logo, are the property of Clef.
+The Clef plugin was originally created by [Dave Ross](http://davidmichaelross.com), but has since been contributed to by members of the Clef team. All trademarks, including the Clef logo, are the property of Clef.
 
 == Installation ==
 
 = Installing the Plugin =
 
-Install WPClef automatically from your admin account by selecting "Plugins", then "Add new" from the sidebar menu. Search for WPClef, then choose "Install Now".
+Install Clef automatically from your admin account by selecting "Plugins", then "Add new" from the sidebar menu. Search for Clef, then choose "Install Now".
 
 or
 
-1. Download the latest WPClef archive from wordpress.org.
+1. Download the latest Clef archive from wordpress.org.
 1. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -57,7 +57,7 @@ Clef is 100% free.
 
 = Can existing users on my site sign in with Clef? =
 
-WPClef matches users to the WordPress accounts by matching email addresses. As long as your users are registered with your WordPress site and Clef using the same email address, they can start using Clef right away.
+The Clef plugin matches users to the WordPress accounts by matching email addresses. As long as your users are registered with your WordPress site and Clef using the same email address, they can start using Clef right away.
 
 == Screenshots ==
 
@@ -70,6 +70,10 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.4 =
+* Adds single sign-off functionality - when you sign out of your phone, you sign out of all of your Wordpress sites
+* Adds greater password protection - if a site admin opts-in, a user's passwords will be reset to a random 40 characters every time they sign in
 
 = 1.3 =
 * Beautified Wordpress login form with Clef
@@ -87,7 +91,7 @@ WPClef matches users to the WordPress accounts by matching email addresses. As l
 
 == Upgrade Notice ==
 
-We just upgraded to 1.3
+We just upgraded to 1.4
 
 == Roadmap ==
 

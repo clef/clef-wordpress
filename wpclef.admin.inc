@@ -3,7 +3,7 @@
 include dirname( __FILE__ )."/Settings_API_Util.inc";
 
 function print_password_descript() {
-	echo "Ready to let go of your password forever? By selecting this option, Clef will reset your password to a random string of 40 characters every time you log in with Clef. It will help keep you secure by preventing several forms of attacks on your site. However, we won't be able to recover your old password if you want it back later.";
+	echo "Ready to let go of your password forever? By selecting this option, Clef will reset your password to a random string of 40 characters every time you log in with Clef. It will help keep you secure by preventing several forms of attacks on your site. However, we won't be able to recover your old password if you want it back later.  Also keep in mind that this will happen for every user of your site.";
 }
 
 class WPClefAdmin {
