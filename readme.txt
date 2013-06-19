@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, qr code, qr codes, iphone, android
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
