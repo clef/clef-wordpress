@@ -71,6 +71,9 @@ The Clef plugin matches users to the WordPress accounts by matching email addres
 
 == Changelog ==
 
+= 1.5 =
+* Update to the optional security feature: instead of changing users' passwords every time they sign in, usernames and passwords are entirely disabled for accounts using Clef
+
 = 1.4 =
 * Adds single sign-off functionality - when you sign out of your phone, you sign out of all of your Wordpress sites
 * Adds greater password protection - if a site admin opts-in, a user's passwords will be reset to a random 40 characters every time they sign in

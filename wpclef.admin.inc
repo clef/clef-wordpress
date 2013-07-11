@@ -3,7 +3,7 @@
 include dirname( __FILE__ )."/Settings_API_Util.inc";
 
 function print_password_descript() {
-	echo "Ready to let go of your password forever? By selecting this option, Clef will reset your password to a random string of 40 characters every time you log in with Clef. It will help keep you secure by preventing several forms of attacks on your site. However, we won't be able to recover your old password if you want it back later.  Also keep in mind that this will happen for every user of your site.";
+	echo "Ready to let go of your password forever? By selecting this option, Clef will disable logging in with usernames and passwords for Clef-enabled users on this site.";
 }
 
 class WPClefAdmin {
@@ -39,9 +39,8 @@ class WPClefAdmin {
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 		$pw_settings = $form->addSection('clef_password_settings', "Protect yourself from your password", "print_password_descript");
-
 		
-		$pw_settings->addField('wants_password_reset', "I'm ready!", Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('disable_passwords', "I'm ready!", Settings_API_Util_Field::TYPE_CHECKBOX);
 
 	}
 

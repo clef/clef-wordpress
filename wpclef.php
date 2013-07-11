@@ -123,11 +123,6 @@ class WPClef {
 
 			update_user_meta($existing_user->ID, 'clef_id', $clef_id);
 
-			if(self::setting( 'clef_settings_wants_password_reset' ) == 1) {
-				$new_password = sha1(rand());
-				wp_set_password($new_password, $existing_user->ID);
-			}
-
 			$user = wp_set_current_user( $existing_user->ID, $existing_user->user_nicename );
 			wp_set_auth_cookie( $existing_user->ID );
 			do_action( 'wp_login', $existing_user->ID );
@@ -189,6 +184,16 @@ class WPClef {
 			self::redirect_to_login();
 		}
 	}
+
+	public static function disable_passwords($user) {
+		if (self::setting("clef_password_settings_disable_passwords") == 1 && get_user_meta($user->ID, 'clef_id')) {
+			$_SESSION['WPClef_Messages'][] = "Error: logging in with a username and password has been disabled.";
+			header("Location: " . wp_login_url());
+			exit();
+		}
+
+		return $user;
+	}
 }
 
 add_action( 'init', array( 'WPClef', 'init' ) );
@@ -196,3 +201,5 @@ add_action( 'login_form', array( 'WPClef', 'login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
+
+add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
