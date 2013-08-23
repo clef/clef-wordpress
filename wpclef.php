@@ -52,7 +52,7 @@ class WPClef {
 
 	}
 
-	function init() {
+	public static function init() {
 
 		if ( isset( $_REQUEST['clef_callback'] ) && isset( $_REQUEST['code'] ) ) {
 

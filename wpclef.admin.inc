@@ -45,8 +45,10 @@ class WPClefAdmin {
 	}
 
 	public static function admin_enqueue_scripts($hook) {
-
-		if(array_shift(explode('/', $hook)) === 'settings_page_wpclef') {
+		$exploded_path = explode('/', $hook);
+		$settings_page_name = array_shift($exploded_path);
+		
+		if($settings_page_name === 'settings_page_wpclef') {
 			wp_register_style('wpclef_styles', plugin_dir_url(__FILE__) . '/clef.css', FALSE, '1.0.0');
 			wp_enqueue_style('wpclef_styles');
 
