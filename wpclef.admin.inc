@@ -26,6 +26,9 @@ class WPClefAdmin {
 		$values = $settings->settings->values;
 		if($values['clef_settings_app_id'] == '' ||
 			$values['clef_settings_app_secret'] == '') {
+			$site_name = urlencode(get_option('blogname'));
+			$site_domain = urlencode(get_option('siteurl'));
+			error_log($site_domain);
 			ob_start();
 			include dirname(__FILE__)."/keys_generation.tpl.php";
 			$form->introHTML = ob_get_clean();
