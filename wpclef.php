@@ -177,12 +177,17 @@ class WPClef {
 		exit();
 	}
 
-	public static function logged_out_check() {
+	public static function logged_out_check($redirect=true) {
 		// if the user is logged into WP but logged out with Clef, sign them out of Wordpress
 		if (is_user_logged_in() && isset($_SESSION['logged_in_at']) && $_SESSION['logged_in_at'] < get_user_meta(wp_get_current_user()->ID, "logged_out_at", true)) {
 			wp_logout();
-			self::redirect_to_login();
+			if ($redirect) {
+				self::redirect_to_login();
+			} else {
+				return true;
+			}
 		}
+		return false;
 	}
 
 	public static function disable_passwords($user) {
@@ -194,7 +199,17 @@ class WPClef {
 
 		return $user;
 	}
+
+	public static function hook_heartbeat($response, $data, $screen_id) {
+		$logged_out = self::logged_out_check(false);
+		if ($logged_out) {
+			$response['cleflogout'] = true;
+		}
+		return $response;
+	}
 }
+
+
 
 add_action( 'init', array( 'WPClef', 'init' ) );
 add_action( 'login_form', array( 'WPClef', 'login_form' ) );
@@ -202,4 +217,5 @@ add_action( 'login_message', array( 'WPClef', 'login_message' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
 
+add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
