@@ -71,6 +71,12 @@ The Clef plugin matches users to the WordPress accounts by matching email addres
 
 == Changelog ==
 
+= 1.5.4 =
+
+* various bug fixes
+* better error messages
+* fixes FPD
+
 = 1.5.3 =
 
 * Adds javascript logout through heartbeat API

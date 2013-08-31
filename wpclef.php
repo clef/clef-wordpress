@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
-Version: 1.5.3
+Version: 1.5.4
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -66,23 +66,35 @@ class WPClef {
 			);
 
 			$response = wp_remote_post( self::API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
-			$body = json_decode( $response['body'] );
-			$access_token = $body->access_token;
-			$_SESSION['wpclef_access_token'] = $access_token;
-			$success = $body->success;
 
-			if ( $success != 1 ) {
+			if ( is_wp_error($response)  ) {
+				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
+				self::redirect_to_login();
+				return;
+			}
+
+			$body = json_decode( $response['body'] );
+
+			if ( !isset($body->success) || $body->success != 1 ) {
 				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef access token';
 				self::redirect_to_login();
 			}
 
+			$access_token = $body->access_token;
+			$_SESSION['wpclef_access_token'] = $access_token;
+
 			// Get info
 			$response = wp_remote_get( self::API_BASE . "info?access_token={$access_token}" );
+			if ( is_wp_error($response)  ) {
+				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
+				self::redirect_to_login();
+				return;
+			}
 
 			$body = json_decode( $response['body'] );
 
-			if ( $success != 1 ) {
-				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data';
+			if ( !isset($body->success) || $body->success != 1 ) {
+				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
 				self::redirect_to_login();
 			}
 
