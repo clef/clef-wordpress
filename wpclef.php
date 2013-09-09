@@ -69,7 +69,7 @@ class WPClef {
 
 			if ( is_wp_error($response)  ) {
 				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
-				self::redirect_to_login();
+				self::redirect_error();
 				return;
 			}
 
@@ -77,7 +77,7 @@ class WPClef {
 
 			if ( !isset($body->success) || $body->success != 1 ) {
 				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef access token';
-				self::redirect_to_login();
+				self::redirect_error();
 			}
 
 			$access_token = $body->access_token;
@@ -87,7 +87,7 @@ class WPClef {
 			$response = wp_remote_get( self::API_BASE . "info?access_token={$access_token}" );
 			if ( is_wp_error($response)  ) {
 				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
-				self::redirect_to_login();
+				self::redirect_error();
 				return;
 			}
 
@@ -95,7 +95,7 @@ class WPClef {
 
 			if ( !isset($body->success) || $body->success != 1 ) {
 				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
-				self::redirect_to_login();
+				self::redirect_error();
 			}
 
 			$first_name = $body->info->first_name;
@@ -117,7 +117,7 @@ class WPClef {
 					$users_can_register = get_option('users_can_register', 0);
 					if(!$users_can_register) {
 						$_SESSION['WPClef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
-						self::redirect_to_login();
+						self::redirect_error();
 					}
 
 					// Register a new user
@@ -131,7 +131,7 @@ class WPClef {
 					$res = wp_insert_user($userdata);
 					if(is_wp_error($res)) {
 						$_SESSION['WPClef_Messages'][] = "An error occurred when creating your new account.";
-						self::redirect_to_login();
+						self::redirect_error();
 					}
 					$existing_user = WP_User::get_data_by( 'email', $email );
 
@@ -201,6 +201,18 @@ class WPClef {
 		}
 	}
 
+	public static function edit_profile_errors($errors) {
+		if ($_SESSION['WPClef_Messages']) {
+			$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
+			echo '<div class="error">';
+			foreach ( $_SESSION['WPClef_Messages'] as $message ) {
+				echo '<p><strong>ERROR</strong>: '. $message . ' </p>';
+			}
+			echo '</div>';
+			$_SESSION['WPClef_Messages'] = array();
+		}
+	}
+
 	public static function login_message() {
 		$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
 		foreach ( $_SESSION['WPClef_Messages'] as $message ) {
@@ -209,8 +221,12 @@ class WPClef {
 		$_SESSION['WPClef_Messages'] = array();
 	}
 
-	public static function redirect_to_login() {
-		header( 'Location: ' . wp_login_url() );
+	public static function redirect_error() {
+		if (!is_user_logged_in()) {
+			header( 'Location: ' . wp_login_url() );
+		} else {
+			header( 'Location: ' . get_edit_profile_url(wp_get_current_user()->ID));
+		}
 		exit();
 	}
 
@@ -219,7 +235,7 @@ class WPClef {
 		if (is_user_logged_in() && isset($_SESSION['logged_in_at']) && $_SESSION['logged_in_at'] < get_user_meta(wp_get_current_user()->ID, "logged_out_at", true)) {
 			wp_logout();
 			if ($redirect) {
-				self::redirect_to_login();
+				self::redirect_error();
 			} else {
 				return true;
 			}
@@ -257,6 +273,7 @@ add_action('show_user_profile', array('WPClef', 'show_user_profile'));
 add_action('edit_user_profile', array('WPClef', 'show_user_profile'));
 add_action('edit_user_profile_update', array('WPClef', 'edit_user_profile_update'));
 add_action('personal_options_update', array('WPClef', 'edit_user_profile_update'));
+add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
