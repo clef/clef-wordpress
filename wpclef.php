@@ -103,47 +103,58 @@ class WPClef {
 			$email = $body->info->email;
 			$clef_id = $body->info->id;
 
-			$existing_user = WP_User::get_data_by( 'email', $email );
-			if ( !$existing_user ) {
-				$users_can_register = get_option('users_can_register', 0);
-				if(!$users_can_register) {
-					$_SESSION['WPClef_Messages'][] = "There's no user whose email address matches your phone's Clef account";
-					self::redirect_to_login();
-				}
+			if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
+				$existing_user = wp_get_current_user();
+				update_user_meta($existing_user->ID, 'clef_id', $clef_id);
+				$redirect = get_edit_profile_url($existing_user->ID) . "?updated=1";
+			} else {
 
-				// Register a new user
-				$userdata = new WP_User();
-				$userdata->first_name = $first_name;
-				$userdata->last_name = $last_name;
-				$userdata->user_email = $email;
-				$userdata->user_login = $email;
-				$password = wp_generate_password(16, FALSE);
-				$userdata->user_pass = $password;
-				$res = wp_insert_user($userdata);
-				if(is_wp_error($res)) {
-					$_SESSION['WPClef_Messages'][] = "An error occurred when creating your new account.";
-					self::redirect_to_login();
+				$users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id));
+				if ($users) $existing_user = $users[0];
+				else $existing_user =  WP_User::get_data_by( 'email', $email );
+
+				if ( !$existing_user ) {
+					$users_can_register = get_option('users_can_register', 0);
+					if(!$users_can_register) {
+						$_SESSION['WPClef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
+						self::redirect_to_login();
+					}
+
+					// Register a new user
+					$userdata = new WP_User();
+					$userdata->first_name = $first_name;
+					$userdata->last_name = $last_name;
+					$userdata->user_email = $email;
+					$userdata->user_login = $email;
+					$password = wp_generate_password(16, FALSE);
+					$userdata->user_pass = $password;
+					$res = wp_insert_user($userdata);
+					if(is_wp_error($res)) {
+						$_SESSION['WPClef_Messages'][] = "An error occurred when creating your new account.";
+						self::redirect_to_login();
+					}
+					$existing_user = WP_User::get_data_by( 'email', $email );
+
+					update_user_meta($existing_user->ID, 'clef_id', $clef_id);
+
 				}
-				$existing_user = WP_User::get_data_by( 'email', $email );
 
 				update_user_meta($existing_user->ID, 'clef_id', $clef_id);
+
+				$user = wp_set_current_user( $existing_user->ID, $existing_user->user_nicename );
+				wp_set_auth_cookie( $existing_user->ID );
+				do_action( 'wp_login', $existing_user->ID );
+
+				$redirect = admin_url();
 
 			}
 
 			// Log in the user
-
 			$_SESSION['logged_in_at'] = time();
 
-			update_user_meta($existing_user->ID, 'clef_id', $clef_id);
-
-			$user = wp_set_current_user( $existing_user->ID, $existing_user->user_nicename );
-			wp_set_auth_cookie( $existing_user->ID );
-			do_action( 'wp_login', $existing_user->ID );
-
-			// if the user has this setting set, reset their password with a random 40-character password
-
-			header( "Location: " . admin_url() );
+			header( "Location: " . $redirect );
 			exit();
+
 		}
 	}
 
@@ -174,7 +185,20 @@ class WPClef {
 	public static function login_form() {
 		$app_id = self::setting( 'clef_settings_app_id' );
 		$redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&";
-		include dirname( __FILE__ )."/login_script.tpl.php";
+		include dirname( __FILE__ )."/login_page.tpl.php";
+	}
+
+	public static function show_user_profile() {
+		$connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
+		$app_id = self::setting( 'clef_settings_app_id' );
+		$redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
+		include dirname( __FILE__ )."/user_profile.tpl.php";
+	}
+
+	public static function edit_user_profile_update($user_id) {
+		if (isset($_POST['remove_clef']) && $_POST['remove_clef']) {
+			delete_user_meta($user_id, "clef_id");
+		}
 	}
 
 	public static function login_message() {
@@ -229,6 +253,10 @@ add_action( 'login_form', array( 'WPClef', 'login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
+add_action('show_user_profile', array('WPClef', 'show_user_profile'));
+add_action('edit_user_profile', array('WPClef', 'show_user_profile'));
+add_action('edit_user_profile_update', array('WPClef', 'edit_user_profile_update'));
+add_action('personal_options_update', array('WPClef', 'edit_user_profile_update'));
 
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
