@@ -253,6 +253,13 @@ class WPClef {
 		return $user;
 	}
 
+	public static function clear_logout_hook($user) {
+		if (isset($_SESSION['logged_in_at'])) {
+			unset($_SESSION['logged_in_at']);
+		}
+		return $user;
+	}
+
 	public static function hook_heartbeat($response, $data, $screen_id) {
 		$logged_out = self::logged_out_check(false);
 		if ($logged_out) {
@@ -276,4 +283,5 @@ add_action('personal_options_update', array('WPClef', 'edit_user_profile_update'
 add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
+add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
