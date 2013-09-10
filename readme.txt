@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, identity, security, clef, wave, iphone, android
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -70,6 +70,11 @@ The Clef plugin matches users to the WordPress accounts by matching email addres
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.6.3 =
+
+* adds bug fixes
+* adds better error messages
 
 = 1.6 =
 
