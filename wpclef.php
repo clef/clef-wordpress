@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
-Version: 1.6
+Version: 1.6.1
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -68,7 +68,7 @@ class WPClef {
 			$response = wp_remote_post( self::API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
 
 			if ( is_wp_error($response)  ) {
-				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
+				$_SESSION['WPClef_Messages'][] = "Something went wrong: " . $response->get_error_message();
 				self::redirect_error();
 				return;
 			}
@@ -86,7 +86,7 @@ class WPClef {
 			// Get info
 			$response = wp_remote_get( self::API_BASE . "info?access_token={$access_token}" );
 			if ( is_wp_error($response)  ) {
-				$_SESSION['WPClef_Messages'][] = 'Error retrieving Clef user data.';
+				$_SESSION['WPClef_Messages'][] = "Something went wrong: " . $response->get_error_message();
 				self::redirect_error();
 				return;
 			}

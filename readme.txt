@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, authentication, identity, security, clef, wave, iphone, android
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.6
+Stable tag: 1.6.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
