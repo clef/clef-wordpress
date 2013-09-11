@@ -252,14 +252,17 @@ class WPClef {
 
 		return $user;
 	}
-
+	
 	public static function disable_login_form() {
-			if ((self::setting( "force_clef_settings_force" ) == 1) && (!$_POST['wp-submit'])) {
+		if ((self::setting( 'force_clef_settings_force' ) == 1) && (!$_POST['wp-submit'])) {
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url());
 				exit();
-			} elseif ($_GET['ForceClefOverrideKey'] == self::setting( "force_clef_settings_override_key" )) {
+			}  elseif ( (self::setting( 'force_clef_settings_override_key' ) != '') && ($_GET['ForceClefOverrideKey'] == self::setting( 'force_clef_settings_override_key' )) ) {
 				return;
+			/* elseif ((self::setting( 'force_clef_settings_override_key' ) != 0) && ($_GET['ForceClefOverrideKey'] == self::setting( 'force_clef_settings_override_key' ))) {
+				echo $_GET['ForceClefOverrideKey'];
+				return; */
 			} else {
 				wp_enqueue_script('jquery');
 				login_header(__('Log In'), ''); ?>
