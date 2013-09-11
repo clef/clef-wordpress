@@ -6,6 +6,18 @@ function print_password_descript() {
 	echo "Ready to let go of your password forever? By selecting this option, Clef will disable logging in with usernames and passwords for Clef-enabled users on this site.";
 }
 
+function print_force_clef_descript() {
+	$msg ="Ready to embrace password-free WordPress freedom? By selecting this option, Clef will require Clef-based authentication for all users. If you have a user who is not able to use Clef, you can create a key that will open password-based log in at the following secret URL: " .wp_login_url() ."?ForceClefOverrideKey=";
+	if (get_option( 'force_clef_settings_override_key' ) != 0) { //*** What is the right way to call plugin settings in wpclef?
+		$msg .= get_option( 'force_clef_settings_override_key' );
+	} else {
+		$msg .= "YOUR_KEY_HERE";
+	}
+	echo $msg;
+}
+
+
+
 class WPClefAdmin {
 
 	const OPTIONS_NAME = 'wpclef';
@@ -41,8 +53,11 @@ class WPClefAdmin {
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 		$pw_settings = $form->addSection('clef_password_settings', "Protect yourself from your password", "print_password_descript");
-		
 		$pw_settings->addField('disable_passwords', "Disable password login for Clef users", Settings_API_Util_Field::TYPE_CHECKBOX);
+		
+		$pw_settings = $form->addSection('force_clef_settings', "Require Clef authentication", "print_force_clef_descript");
+		$pw_settings->addField('force', "Require Clef authentication", Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('override_key', "Set an override key (optional)", Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 	}
 

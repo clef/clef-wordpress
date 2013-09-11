@@ -253,6 +253,25 @@ class WPClef {
 		return $user;
 	}
 
+	public static function disable_login_form() {
+			if ((self::setting( "force_clef_settings_force" ) == 1) && (!$_POST['wp-submit'])) {
+			if (is_user_logged_in()) {
+				header("Location: " . admin_url());
+				exit();
+			} elseif ($_GET['ForceClefOverrideKey'] == self::setting( "force_clef_settings_override_key" )) {
+				return;
+			} else {
+				wp_enqueue_script('jquery');
+				login_header(__('Log In'), ''); ?>
+				<form name="loginform" id="loginform" action="" method="post">
+				<?php do_action('login_form'); ?>
+				</form>
+				<?php login_footer();
+				exit();
+			}
+		}
+	}
+
 	public static function clear_logout_hook($user) {
 		if (isset($_SESSION['logged_in_at'])) {
 			unset($_SESSION['logged_in_at']);
@@ -267,12 +286,14 @@ class WPClef {
 		}
 		return $response;
 	}
+
 }
 
 
 
 add_action( 'init', array( 'WPClef', 'init' ) );
 add_action( 'login_form', array( 'WPClef', 'login_form' ) );
+add_action( 'login_form_login', array( 'WPClef', 'disable_login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
