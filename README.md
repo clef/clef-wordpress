@@ -38,7 +38,6 @@ How To Contribute
 -----------------
 
 * Clone: `git clone git://github.com/clef/wordpress.git`
-* Get [Setup](#setup)
 * Create a topic branch: `git checkout -b awesome_feature`
 * Commit away.
 * Keep up to date: `git fetch && git rebase origin/master`.
