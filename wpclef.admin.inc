@@ -8,7 +8,7 @@ function print_password_descript() {
 
 function print_force_clef_descript() {
 	$key = WPClef::setting( 'force_clef_settings_override_key' );
-	$msg ="Ready to embrace password-free WordPress administration? By selecting this option, Clef will require Clef-based authentication for all users. If you have a user who is not able to use Clef, you can create a key that will re-open password-based logging in at the following secret URL: ";
+	$msg ="Ready to free your WordPress site from passwords? By selecting this option, Clef will (1) hide the default user/pass login form, (2) require Clef-based authentication for all users, and (3) disable forgotten password resets. If you have a user who is not able to use Clef, you can set a key that will re-open the user/pass login form in at the following secret URL: ";
 	if ($key != '') {
 		$url = wp_login_url() .'?ForceClefOverrideKey=' .$key;
 		$msg .= "<a href='" .$url ."' target='new'>" .$url ."</a>.";
@@ -52,11 +52,11 @@ class WPClefAdmin {
 		$settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
-		$pw_settings = $form->addSection('clef_password_settings', "Protect yourself from your password", "print_password_descript");
+		$pw_settings = $form->addSection('clef_password_settings', "Protect Clef users from passwords", "print_password_descript");
 		$pw_settings->addField('disable_passwords', "Disable password login for Clef users", Settings_API_Util_Field::TYPE_CHECKBOX);
 		
-		$pw_settings = $form->addSection('force_clef_settings', "Go whole hog on passwordless freedom", "print_force_clef_descript");
-		$pw_settings->addField('force', "Require Clef authentication", Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings = $form->addSection('force_clef_settings', "Protect all users from passwords", "print_force_clef_descript");
+		$pw_settings->addField('force', "Disable password login for all users", Settings_API_Util_Field::TYPE_CHECKBOX);
 		$pw_settings->addField('override_key', "Set an override key (optional)", Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 	}
