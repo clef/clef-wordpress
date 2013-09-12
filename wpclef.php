@@ -255,7 +255,7 @@ class WPClef {
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url());
 				exit();
-			}  elseif ( (self::setting( 'force_clef_settings_override_key' ) != '') && ($_GET['ForceClefOverrideKey'] == self::setting( 'force_clef_settings_override_key' )) ) {
+			} elseif ( (self::setting( 'force_clef_settings_override_key' ) != '') && ($_GET['ForceClefOverrideKey'] == self::setting( 'force_clef_settings_override_key' )) ) {
 				return;
 			} else {
 				wp_enqueue_script('jquery');
@@ -266,6 +266,19 @@ class WPClef {
 				<?php login_footer();
 				exit();
 			}
+		}
+	}
+	
+	public static function disable_lost_password_form() {
+		if (self::setting( 'force_clef_settings_force' ) == 1) {
+			wp_enqueue_script('jquery');
+			login_header(__('Lost Password'), '');
+			echo '<div id="login_error"><strong>Sorry Charlie:</strong> password reset is disabled for security reasons!</div>';?>
+				<form name="loginform" id="loginform" action="" method="post">
+				<?php do_action('login_form'); ?>
+				</form>
+				<?php login_footer();
+			exit();
 		}
 	}
 
@@ -292,6 +305,7 @@ add_action( 'init', array( 'WPClef', 'init' ) );
 add_action( 'login_form', array( 'WPClef', 'login_form' ) );
 add_action( 'login_form_login', array( 'WPClef', 'disable_login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
+add_action( 'lost_password', array( 'WPClef', 'disable_lost_password_form' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
 add_action('show_user_profile', array('WPClef', 'show_user_profile'));
