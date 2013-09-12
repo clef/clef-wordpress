@@ -28,9 +28,6 @@ if ( !session_id() ) {
 	session_start();
 }
 
-include dirname( __FILE__ )."/wpclef.admin.inc";
-
-
 if ( !isset( $_SESSION['WPClef_Messages'] ) ) {
 	$_SESSION['WPClef_Messages'] = array();
 }
@@ -289,7 +286,7 @@ class WPClef {
 
 }
 
-
+include dirname( __FILE__ )."/wpclef.admin.inc";
 
 add_action( 'init', array( 'WPClef', 'init' ) );
 add_action( 'login_form', array( 'WPClef', 'login_form' ) );
