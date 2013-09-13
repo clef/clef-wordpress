@@ -201,7 +201,7 @@ class WPClef {
 	public static function edit_profile_errors($errors) {
 		if ($_SESSION['WPClef_Messages']) {
 			$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
-			echo '<div class="error">';
+			echo '<div id="login_error">';
 			foreach ( $_SESSION['WPClef_Messages'] as $message ) {
 				echo '<p><strong>ERROR</strong>: '. $message . ' </p>';
 			}
@@ -213,7 +213,7 @@ class WPClef {
 	public static function login_message() {
 		$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
 		foreach ( $_SESSION['WPClef_Messages'] as $message ) {
-			echo '<div class="message">' . $message . '</div>';
+			echo '<div id="login_error"><p><strong>ERROR</strong>: ' . $message . '</p></div>';
 		}
 		$_SESSION['WPClef_Messages'] = array();
 	}
@@ -241,8 +241,8 @@ class WPClef {
 	}
 
 	public static function disable_passwords($user) {
-		if (self::setting("clef_password_settings_disable_passwords") == 1 && get_user_meta($user->ID, 'clef_id')) {
-			$_SESSION['WPClef_Messages'][] = "Error: logging in with a username and password has been disabled.";
+		if (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) {
+			$_SESSION['WPClef_Messages'][] = "Passwords have been disabled.";
 			header("Location: " . wp_login_url());
 			exit();
 		}
@@ -251,11 +251,12 @@ class WPClef {
 	}
 	
 	public static function disable_login_form() {
-		if ((self::setting( 'force_clef_settings_force' ) == 1) && (!$_POST['wp-submit'])) {
+		if ( (self::setting( 'clef_password_settings_force' ) == 1) && (empty($_POST['wp-submit'])) ) {
+			$key = self::setting( 'clef_password_settings_override_key' );
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url());
 				exit();
-			} elseif ( (self::setting( 'force_clef_settings_override_key' ) != '') && ($_GET['ForceClefOverrideKey'] == self::setting( 'force_clef_settings_override_key' )) ) {
+			} elseif ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] == $key) ) {
 				return;
 			} else {
 				wp_enqueue_script('jquery');
@@ -270,14 +271,9 @@ class WPClef {
 	}
 	
 	public static function disable_lost_password_form() {
-		if (self::setting( 'force_clef_settings_force' ) == 1) {
-			wp_enqueue_script('jquery');
-			login_header(__('Lost Password'), '');
-			echo '<div id="login_error"><strong>Sorry Charlie:</strong> password reset is disabled for security reasons!</div>';?>
-				<form name="loginform" id="loginform" action="" method="post">
-				<?php do_action('login_form'); ?>
-				</form>
-				<?php login_footer();
+		if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1) || (self::setting( 'clef_password_settings_force' ) == 1)) {
+			$_SESSION['WPClef_Messages'][] = "Lost password resets have been disabled.";
+			header("Location: " . wp_login_url());
 			exit();
 		}
 	}

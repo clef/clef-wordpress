@@ -2,14 +2,14 @@
 
 include dirname( __FILE__ )."/Settings_API_Util.inc";
 
-function print_password_descript() {
-	echo "Ready to let go of your password forever? By selecting this option, Clef will disable logging in with usernames and passwords for Clef-enabled users on this site.";
+function print_api_descript() {
+	echo 'To update or delete the Clef application that powers your WordPress site, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.';
 }
 
-function print_force_clef_descript() {
-	$key = WPClef::setting( 'force_clef_settings_override_key' );
-	$msg ="Ready to free your WordPress site from passwords? By selecting this option, Clef will (1) hide the default user/pass login form, (2) require Clef-based authentication for all users, and (3) disable forgotten password resets. If you have a user who is not able to use Clef, you can set a key that will re-open the user/pass login form in at the following secret URL: ";
-	if ($key != '') {
+function print_password_descript() {
+	$key = WPClef::setting( 'clef_password_settings_override_key' );
+	$msg ="The first option (i.e., hybrid mode) disables passwords for Clef-enabled users but continues to dispaly the default user/pass login form for non-Clef users. The second, more secure, option (i.e., full Clef mode) hides the default user/pass login form, requires Clef-based authentication for all users, and disables forgotten password resets. If you have users who are not able to use Clef but you still want to use full Clef mode, you can set a key that will open the user/pass login form at the following secret URL: ";
+	if (!empty($key)) {
 		$url = wp_login_url() .'?ForceClefOverrideKey=' .$key;
 		$msg .= "<a href='" .$url ."' target='new'>" .$url ."</a>.";
 	} else {
@@ -34,7 +34,7 @@ class WPClefAdmin {
 		$formID = 'clef';
 		$form = Settings_API_Util::forID($formID, WPClefAdmin::OPTIONS_NAME);
 
-		$settings = $form->addSection('clef_settings', 'API Settings');
+		$settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
 		$values = $settings->settings->values;
 		if($values['clef_settings_app_id'] == '' ||
 			$values['clef_settings_app_secret'] == '') {
@@ -52,11 +52,9 @@ class WPClefAdmin {
 		$settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
-		$pw_settings = $form->addSection('clef_password_settings', "Protect Clef users from passwords", "print_password_descript");
-		$pw_settings->addField('disable_passwords', "Disable password login for Clef users", Settings_API_Util_Field::TYPE_CHECKBOX);
-		
-		$pw_settings = $form->addSection('force_clef_settings', "Protect all users from passwords", "print_force_clef_descript");
-		$pw_settings->addField('force', "Disable password login for all users", Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings = $form->addSection('clef_password_settings', "Password Settings", "print_password_descript");
+		$pw_settings->addField('disable_passwords', "Disable passwords for Clef users", Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('force', "Disable passwords for all users", Settings_API_Util_Field::TYPE_CHECKBOX);
 		$pw_settings->addField('override_key', "Set an override key (optional)", Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 	}
