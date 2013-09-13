@@ -271,7 +271,10 @@ class WPClef {
 	}
 	
 	public static function disable_lost_password_form() {
-		if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1) || (self::setting( 'clef_password_settings_force' ) == 1)) {
+		if (!empty($_POST['user_login'])) {
+			$user = get_user_by( 'login', $_POST['user_login'] );
+		}
+		if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
 			$_SESSION['WPClef_Messages'][] = "Lost password resets have been disabled.";
 			header("Location: " . wp_login_url());
 			exit();
@@ -302,6 +305,7 @@ add_action( 'login_form', array( 'WPClef', 'login_form' ) );
 add_action( 'login_form_login', array( 'WPClef', 'disable_login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
 add_action( 'lost_password', array( 'WPClef', 'disable_lost_password_form' ) );
+add_action( 'lostpassword_post', array( 'WPClef', 'disable_lost_password_form' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
 add_action('show_user_profile', array('WPClef', 'show_user_profile'));

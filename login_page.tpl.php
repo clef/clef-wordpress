@@ -4,7 +4,7 @@
     	<?php
     	$force = WPClef::setting( 'clef_password_settings_force' );
     	$key = WPClef::setting( 'clef_password_settings_override_key' );
-    	if ( (!empty($force)) && ( ($_GET['ForceClefOverrideKey'] == '' ) || ((!empty($key)) && ($_GET['ForceClefOverrideKey'] != $key)) ) ) {
+    	if ( (!empty($force)) && ( empty($_GET['ForceClefOverrideKey']) || ((!empty($key)) && ($_GET['ForceClefOverrideKey'] != $key)) ) ) {
 			echo 'hello';
 		} elseif ( (!empty($force)) && ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] == $key) ) ) {
 			echo 'or';

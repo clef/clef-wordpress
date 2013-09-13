@@ -8,7 +8,7 @@ Stable tag: 1.6.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Clef replaces WordPress’s insecure username/password authentication with wonderfully free, beautifully simple, and impenatrably secure smartphone-based multi-factor authentication: no passwords, no temporary codes, one-click single sign on and off.
+Clef replaces insecure password-based authentication with beautifully simple and impenatrably secure smartphone-based multi-factor authentication: no passwords, no temporary codes, single sign on and off, always free.
 
 == Description ==
 
