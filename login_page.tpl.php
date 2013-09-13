@@ -2,11 +2,11 @@
     <div style="border-bottom: 1px solid #EEE; width: 90%; margin: 0 5%; z-index: 1; top: 50%; position: absolute;"></div>
     <h2 style="color: #666; margin: 0 auto 20px auto; padding: 3px 0; text-align:center; background: white; width: 20%; position:relative; z-index: 2;">
     	<?php
-    	$force = WPClef::setting( 'force_clef_settings_force' );
-    	$key = WPClef::setting( 'force_clef_settings_override_key' );
-    	if ( ($force != '') && ( ($_GET['ForceClefOverrideKey'] == '' ) || (($key != '') && ($_GET['ForceClefOverrideKey'] != $key)) ) ) {
+    	$force = WPClef::setting( 'clef_password_settings_force' );
+    	$key = WPClef::setting( 'clef_password_settings_override_key' );
+    	if ( (!empty($force)) && ( ($_GET['ForceClefOverrideKey'] == '' ) || ((!empty($key)) && ($_GET['ForceClefOverrideKey'] != $key)) ) ) {
 			echo 'hello';
-		} elseif ( ($force != '') && ( ($key != '') && ($_GET['ForceClefOverrideKey'] == $key) ) ) {
+		} elseif ( (!empty($force)) && ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] == $key) ) ) {
 			echo 'or';
 		} else {
 			echo 'or';
