@@ -39,7 +39,7 @@ class WPClef {
 	public static function setting( $name ) {
 		static $clef_settings = NULL;
 		if ( $clef_settings === NULL ) {
-			$clef_settings = get_option( 'wpclef' );
+			$clef_settings = get_option( WPClefAdmin::OPTIONS_NAME );
 		}
 		if ( isset( $clef_settings[$name] ) ) {
 			return $clef_settings[$name];
@@ -295,6 +295,10 @@ class WPClef {
 		}
 		return $response;
 	}
+	
+	public static function uninstall_wpclef() {
+		delete_option(WPClefAdmin::OPTIONS_NAME);
+	}
 
 }
 
@@ -317,3 +321,5 @@ add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
+
+register_uninstall_hook(__FILE__, array('WPClef', 'uninstall_wpclef'));
