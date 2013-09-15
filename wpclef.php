@@ -256,7 +256,7 @@ class WPClef {
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url());
 				exit();
-			} elseif ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] == $key) ) {
+			} elseif ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] === $key) ) {
 				return;
 			} else {
 				wp_enqueue_script('jquery');

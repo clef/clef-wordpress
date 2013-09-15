@@ -1,48 +1,44 @@
 === Plugin Name ===
-Contributors: csixty4, jessepollak, zrathustra
+Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: login, log in, authentication, identity, security, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, single sign-on, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 1.6.3
+Stable tag: 1.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Clef replaces insecure password-based authentication with beautifully simple and impenatrably secure smartphone-based multi-factor authentication: no passwords, no temporary codes, single sign on and off, always free.
+Clef is the simplest and most secure way to sign in to WordPress: no passwords, no temporary codes, strong encryption, multi-factor authentication, single sign-on/off, free forever.
 
 == Description ==
 
-[Clef](https://getclef.com) is a replacement for usernames and passwords that lets you use your phone to identify yourself. When you visit a Clef enabled site, simply click the "Log in with your phone" button, scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are instantly and securely logged in.
+[Clef](https://getclef.com) replaces insecure password-based authentication with beautifully simple and impenatrably secure smartphone-based multi-factor authentication. Simply click the "Log in with your phone" button, scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are instantly and securely logged in to all of your Clef-enabled websites.
 
-Clef is the best single sign on solution for your WordPress sites. Once you sign in to one website using Clef, you are signed into every other Clef enabled site with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites online. If you have multiple WordPress accounts, this means password-free, single sign on, 2-factor authentication for all of your WordPress sites -- give it a try today!
+Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites online. This means password-free, single sign-on, multi-factor authentication for all of your WordPress sites--try it today!
 
-Want to better understand how Clef works? Visit [getclef.com](https://getclef.com) or watch the video below.
+[See more on how Clef works](https://getclef.com/how-clef-works), or watch the video below.
 
 http://vimeo.com/61393630
-
-= Note =
-
-The Clef plugin was originally created by [Dave Ross](http://davidmichaelross.com), but has since been contributed to by members of the Clef team. All trademarks, including the Clef logo, are the property of Clef.
 
 == Installation ==
 
 = Installing the Plugin =
 
-Install Clef automatically from your admin account by selecting "Plugins", then "Add new" from the sidebar menu. Search for Clef, then choose "Install Now".
+Install Clef automatically from your WordPress Dashboard by selecting "Plugins" and then "Add New" from the sidebar menu. Search for Clef, and then choose "Install Now."
 
-or
+Or:
 
 1. Download the latest Clef archive from WordPress.org.
 1. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
-1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Activate the plugin through the "Plugins" menu in WordPress
 
 = Getting Started =
 
 If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
 
-With your Clef app in hand, visit the Clef settings page in your WordPress admin panel and walk through the setup wizard.
+With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
 
-If you have any questions or problems, don't hesitate to contact Clef support at support@getclef.com.
+If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
 
 
 == Frequently Asked Questions ==
@@ -57,7 +53,7 @@ Clef is and will always be 100% free.
 
 = Can existing users on my site sign in with Clef? =
 
-The Clef plugin matches users to the WordPress accounts by matching email addresses. As long as your users are registered with your WordPress site and Clef using the same email address, they can start using Clef right away.
+As long as your users register on the Clef App using the same email address as their WordPress accounts, they can start using Clef right away. Also, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
 
 == Screenshots ==
 
@@ -70,6 +66,12 @@ The Clef plugin matches users to the WordPress accounts by matching email addres
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.7 =
+
+* adds "force Clef authentication for all users" feature with optional override key
+* adds lost password reset protection
+* adds settings removal on uninstall
 
 = 1.6.3 =
 
@@ -121,6 +123,11 @@ The Clef plugin matches users to the WordPress accounts by matching email addres
 
 We just upgraded to 1.4
 
+== Credits ==
+
+[Dave Ross](http://davidmichaelross.com) created the original WP Clef plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
+
 == Roadmap ==
 
+* Multisite compabibility
 * Translation into other languages
