@@ -68,8 +68,8 @@ As long as your users register on the Clef App using the same email address as t
 
 = 1.7 =
 
-* New setting: require Clef authentication for all users with optional override key. When selected, this setting enables true password-free WordPress authentication by hiding the default login form and requiring Clef authentication for all users. (Bye bye opportunistic botnets and brute-force attacks!) If the need arises, you can set an optional override key to allow password logins at a secret URL.
-* New feature: lost password reset protection. If you are running WP Clef in hybrid mode, then lost password resets are disabled only for Clef users. If you are running in full Clef mode, then lost password resets are disabled for all users.
+* New feature: require Clef authentication for all users with optional override key. When this new setting is selected, WP Clef enables true password-free WordPress authentication by hiding the default login form and requiring Clef authentication for all users. If the need arises, you can set an optional override key to allow password logins at a secret URL. Secure keys can be generated automatically, or you can input your own key.
+* New feature: lost password reset protection. If you are running WP Clef in hybrid mode, then lost password resets are disabled for Clef users only. If you are running in full Clef mode, then lost password resets are disabled for all users.
 * New feature: WP Clef's settings are deleted on uninstall
 
 = 1.6.3 =
