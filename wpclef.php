@@ -28,9 +28,6 @@ if ( !session_id() ) {
 	session_start();
 }
 
-include dirname( __FILE__ )."/wpclef.admin.inc";
-
-
 if ( !isset( $_SESSION['WPClef_Messages'] ) ) {
 	$_SESSION['WPClef_Messages'] = array();
 }
@@ -42,7 +39,7 @@ class WPClef {
 	public static function setting( $name ) {
 		static $clef_settings = NULL;
 		if ( $clef_settings === NULL ) {
-			$clef_settings = get_option( 'wpclef' );
+			$clef_settings = get_option( WPClefAdmin::OPTIONS_NAME );
 		}
 		if ( isset( $clef_settings[$name] ) ) {
 			return $clef_settings[$name];
@@ -204,7 +201,7 @@ class WPClef {
 	public static function edit_profile_errors($errors) {
 		if ($_SESSION['WPClef_Messages']) {
 			$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
-			echo '<div class="error">';
+			echo '<div id="login_error">';
 			foreach ( $_SESSION['WPClef_Messages'] as $message ) {
 				echo '<p><strong>ERROR</strong>: '. $message . ' </p>';
 			}
@@ -216,7 +213,7 @@ class WPClef {
 	public static function login_message() {
 		$_SESSION['WPClef_Messages'] = array_unique( $_SESSION['WPClef_Messages'] );
 		foreach ( $_SESSION['WPClef_Messages'] as $message ) {
-			echo '<div class="message">' . $message . '</div>';
+			echo '<div id="login_error"><p><strong>ERROR</strong>: ' . $message . '</p></div>';
 		}
 		$_SESSION['WPClef_Messages'] = array();
 	}
@@ -244,13 +241,44 @@ class WPClef {
 	}
 
 	public static function disable_passwords($user) {
-		if (self::setting("clef_password_settings_disable_passwords") == 1 && get_user_meta($user->ID, 'clef_id')) {
-			$_SESSION['WPClef_Messages'][] = "Error: logging in with a username and password has been disabled.";
+		if (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) {
+			$_SESSION['WPClef_Messages'][] = "Passwords have been disabled.";
 			header("Location: " . wp_login_url());
 			exit();
 		}
 
 		return $user;
+	}
+	
+	public static function disable_login_form() {
+		if ( (self::setting( 'clef_password_settings_force' ) == 1) && (empty($_POST['wp-submit'])) ) {
+			$key = self::setting( 'clef_password_settings_override_key' );
+			if (is_user_logged_in()) {
+				header("Location: " . admin_url() );
+				exit();
+			} elseif ( !empty($key) && !empty($_GET['override']) && ($_GET['override'] === $key) ) {
+				return;
+			} else {
+				wp_enqueue_script('jquery');
+				login_header(__('Log In'), ''); ?>
+				<form name="loginform" id="loginform" action="" method="post">
+				<?php do_action('login_form'); ?>
+				</form>
+				<?php login_footer();
+				exit();
+			}
+		}
+	}
+	
+	public static function disable_lost_password_form() {
+		if (!empty($_POST['user_login'])) {
+			$user = get_user_by( 'login', $_POST['user_login'] );
+		}
+		if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
+			$_SESSION['WPClef_Messages'][] = "Lost password resets have been disabled.";
+			header("Location: " . wp_login_url());
+			exit();
+		}
 	}
 
 	public static function clear_logout_hook($user) {
@@ -267,13 +295,25 @@ class WPClef {
 		}
 		return $response;
 	}
+	
+	public static function uninstall_wpclef() {
+		if (current_user_can( 'delete_plugins' )) {	
+			global $wpdb;
+			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
+			delete_option(WPClefAdmin::OPTIONS_NAME);
+		}
+	}
+
 }
 
-
+include dirname( __FILE__ )."/wpclef.admin.inc";
 
 add_action( 'init', array( 'WPClef', 'init' ) );
 add_action( 'login_form', array( 'WPClef', 'login_form' ) );
+add_action( 'login_form_login', array( 'WPClef', 'disable_login_form' ) );
 add_action( 'login_message', array( 'WPClef', 'login_message' ) );
+add_action( 'lost_password', array( 'WPClef', 'disable_lost_password_form' ) );
+add_action( 'lostpassword_post', array( 'WPClef', 'disable_lost_password_form' ) );
 add_action('init', array('WPClef', 'logout_handler'));
 add_action('init', array('WPClef', 'logged_out_check'));
 add_action('show_user_profile', array('WPClef', 'show_user_profile'));
@@ -285,3 +325,5 @@ add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
 add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
+
+register_uninstall_hook(__FILE__, array('WPClef', 'uninstall_wpclef'));
