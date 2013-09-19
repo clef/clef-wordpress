@@ -40,8 +40,8 @@ class WPClefAdmin {
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
 		$pw_settings = $form->addSection('clef_password_settings', 'Password Settings', '');
-		$pw_settings->addField('disable_passwords', 'Disable passwords for Clef users', Settings_API_Util_Field::TYPE_CHECKBOX);
-		$pw_settings->addField('force', 'Disable passwords for all users and hide password login form', Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
 		
 		if (WPClef::setting( 'clef_password_settings_force' ) == 1) {
 			$key = WPClef::setting( 'clef_password_settings_override_key' );

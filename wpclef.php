@@ -297,7 +297,11 @@ class WPClef {
 	}
 	
 	public static function uninstall_wpclef() {
-		delete_option(WPClefAdmin::OPTIONS_NAME);
+		if (current_user_can( 'delete_plugins' )) {	
+			global $wpdb;
+			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
+			delete_option(WPClefAdmin::OPTIONS_NAME);
+		}
 	}
 
 }
