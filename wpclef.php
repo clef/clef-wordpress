@@ -254,9 +254,9 @@ class WPClef {
 		if ( (self::setting( 'clef_password_settings_force' ) == 1) && (empty($_POST['wp-submit'])) ) {
 			$key = self::setting( 'clef_password_settings_override_key' );
 			if (is_user_logged_in()) {
-				header("Location: " . admin_url());
+				header("Location: " . admin_url() );
 				exit();
-			} elseif ( (!empty($key)) && ($_GET['ForceClefOverrideKey'] === $key) ) {
+			} elseif ( (!empty($key)) && ($_GET['override'] === $key) ) {
 				return;
 			} else {
 				wp_enqueue_script('jquery');

@@ -106,7 +106,6 @@ class Settings_API_Util {
     echo '<p class="submit">';
     echo '<input type="submit" name="submit" class="button-primary" value="'.__('Save').'" />';
     echo ' <input type="reset" name="reset" class="button-secondary" value="'.__('Reset').'" />';
-	echo ' <input type="button" name="generate" class="button-secondary" value="'.__('Generate Override Key').'" onclick="document.getElementById(\'wpclef[clef_password_settings_override_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'"/>';
     echo '</p>';
 
     echo '</form>';

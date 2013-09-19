@@ -3,20 +3,7 @@
 include dirname( __FILE__ )."/Settings_API_Util.inc";
 
 function print_api_descript() {
-	echo '<p>To update or delete the Clef application that powers your WordPress site, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
-}
-
-function print_password_descript() {
-	$key = WPClef::setting( 'clef_password_settings_override_key' );
-	$msg ="<p>The first option disables password logins and lost password resets <em>for Clef-enabled users only</em>.</p><p>The second, more secure, option disables password logins and lost password resets <em>for all users</em> and hides the password login form. If you want to use the second option but have some non-Clef users, you can set a key that will open password logins at the following secret URL: ";
-	if (!empty($key)) {
-		$url = wp_login_url() .'?ForceClefOverrideKey=' .$key;
-		$msg .= "<a href='" .$url ."' target='new'>" .$url ."</a>.";
-	} else {
-		$msg .= wp_login_url() .'?ForceClefOverrideKey=YOUR_KEY_HERE';
-	}
-	$msg .= '</p>';
-	echo $msg;
+	echo '<p>To manage the Clef application that syncs with your WP Clef plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
 
 class WPClefAdmin {
@@ -52,11 +39,22 @@ class WPClefAdmin {
 		$settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
 		$settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
 
-		$pw_settings = $form->addSection('clef_password_settings', "Password Settings", "print_password_descript");
-		$pw_settings->addField('disable_passwords', "Disable passwords for Clef users", Settings_API_Util_Field::TYPE_CHECKBOX);
-		$pw_settings->addField('force', "Disable passwords for all users", Settings_API_Util_Field::TYPE_CHECKBOX);
-		$pw_settings->addField('override_key', "Set an override key (optional)", Settings_API_Util_Field::TYPE_TEXTFIELD);
-
+		$pw_settings = $form->addSection('clef_password_settings', 'Password Settings', '');
+		$pw_settings->addField('disable_passwords', 'Disable passwords for Clef users', Settings_API_Util_Field::TYPE_CHECKBOX);
+		$pw_settings->addField('force', 'Disable passwords for all users and hide password login form', Settings_API_Util_Field::TYPE_CHECKBOX);
+		
+		if (WPClef::setting( 'clef_password_settings_force' ) == 1) {
+			$key = WPClef::setting( 'clef_password_settings_override_key' );
+			$override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_password_settings_override_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a> to enable passwords via ';
+			if (!empty($key)) {
+				$url = wp_login_url() .'?override=' .$key;
+				$override_msg .= "<strong><a href='" .$url ."' target='new'>this secret URL</a></strong>.";
+			} else {
+				$override_msg .= 'a secret URL.';
+			}
+			
+			$pw_settings->addField('override_key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD);	
+		}
 	}
 
 	public static function admin_enqueue_scripts($hook) {
