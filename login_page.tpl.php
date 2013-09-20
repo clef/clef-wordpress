@@ -1,6 +1,5 @@
 <?php
 $force = WPClef::setting( 'clef_password_settings_force' );
-$override = 1234;
 if (!$force || !empty($_GET['override']) && $_GET['override'] == WPClef::setting('clef_password_settings_override_key')) { ?>
     <input type="hidden" value="<?php if (isset($_GET['override'])) echo $_GET['override'] ?>" name="override"/>
     <div style="position: relative">
