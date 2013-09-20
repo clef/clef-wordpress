@@ -270,6 +270,14 @@ class WPClef {
 			exit();
 		}
 	}
+
+	public static function handle_login_failed($errors) {
+		if (isset($_POST['override'])) {
+			// if the person submitted an override before, automatically 
+			// submit it for them the next time
+			$_GET['override'] = $_POST['override'];
+		}
+	}
 	
 	public static function disable_login_form($user) {
 		if ( (self::setting( 'clef_password_settings_force' ) == 1) && empty($_POST)) {
@@ -347,5 +355,6 @@ add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
 add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
 add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
+add_filter('wp_login_failed', array('WPClef', 'handle_login_failed'));
 
 register_uninstall_hook(__FILE__, array('WPClef', 'uninstall_wpclef'));
