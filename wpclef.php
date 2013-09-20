@@ -258,10 +258,10 @@ class WPClef {
 
 		if (self::setting('clef_password_settings_force')) {
 			$key = self::setting('clef_password_settings_override_key');
-			if (!(isset($_GET['override']) && $_GET['override'] == $key)) {
-				$exit = true;
-			} else {
+			if (isset($_GET['override']) && $_GET['override'] == $key) {
 				$exit = false;
+			} else {
+				$exit = true;
 			}
 		}
 
