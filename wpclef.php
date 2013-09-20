@@ -241,18 +241,39 @@ class WPClef {
 		return false;
 	}
 
-	public static function disable_passwords($user) {
-		if ((self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || self::setting( 'clef_password_settings_force' ) == 1) {
+	public static function disable_passwords($username) {
+		$exit = false;
+
+		if (self::setting( 'clef_password_settings_disable_passwords' )) {
+			if(!username_exists($username)) {
+				return;
+			}
+
+    		$user = get_user_by('login', $username);
+
+    		if (get_user_meta($user->ID, 'clef_id')) {
+    			$exit = true;
+    		}
+		}
+
+		if (self::setting('clef_password_settings_force')) {
+			$key = self::setting('clef_password_settings_override_key');
+			if (!(isset($_GET['override']) && $_GET['override'] == $key)) {
+				$exit = true;
+			} else {
+				$exit = false;
+			}
+		}
+
+		if ($exit) {
 			$_SESSION['WPClef_Messages'][] = "Passwords have been disabled.";
 			header("Location: " . wp_login_url());
 			exit();
 		}
-
-		return $user;
 	}
 	
-	public static function disable_login_form() {
-		if ( (self::setting( 'clef_password_settings_force' ) == 1) && (empty($_POST['wp-submit'])) ) {
+	public static function disable_login_form($user) {
+		if ( (self::setting( 'clef_password_settings_force' ) == 1) && empty($_POST)) {
 			$key = self::setting( 'clef_password_settings_override_key' );
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url() );
@@ -325,6 +346,7 @@ add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
-add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
+add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
+add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
 
 register_uninstall_hook(__FILE__, array('WPClef', 'uninstall_wpclef'));
