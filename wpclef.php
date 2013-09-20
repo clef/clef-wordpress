@@ -242,8 +242,7 @@ class WPClef {
 	}
 
 	public static function disable_passwords($user) {
-		if ((self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) 
-		|| (self::setting( 'clef_password_settings_force' ) == 1)) {
+		if ((self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || self::setting( 'clef_password_settings_force' ) == 1) {
 			$_SESSION['WPClef_Messages'][] = "Passwords have been disabled.";
 			header("Location: " . wp_login_url());
 			exit();
