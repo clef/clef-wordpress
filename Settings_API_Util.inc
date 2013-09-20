@@ -104,7 +104,7 @@ class Settings_API_Util {
     do_settings_sections($this->id);
 
     echo '<p class="submit">';
-    echo '<input type="submit" name="submit" class="button-primary" value="'.__('Save Changes').'" />';
+    echo '<input type="submit" name="submit" class="button-primary" value="'.__('Save').'" />';
     echo '</p>';
 
     echo '</form>';
