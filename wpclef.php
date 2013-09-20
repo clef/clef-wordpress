@@ -242,26 +242,23 @@ class WPClef {
 	}
 
 	public static function disable_passwords($username) {
-		$exit = false;
-
-		if (self::setting( 'clef_password_settings_disable_passwords' )) {
-			if(!username_exists($username)) {
-				return;
-			}
-
-    		$user = get_user_by('login', $username);
-
-    		if (get_user_meta($user->ID, 'clef_id')) {
-    			$exit = true;
-    		}
+		if (isset($_GET['override']) && $_GET['override'] == self::setting('clef_password_settings_override_key')) {
+			return;
 		}
 
+		$exit = false;
+
 		if (self::setting('clef_password_settings_force')) {
-			$key = self::setting('clef_password_settings_override_key');
-			if (isset($_GET['override']) && $_GET['override'] == $key) {
-				$exit = false;
-			} else {
-				$exit = true;
+			$exit = true;
+		}
+
+		if (self::setting( 'clef_password_settings_disable_passwords' )) {
+			if(username_exists($username)) {
+				$user = get_user_by('login', $username);
+
+	    		if (get_user_meta($user->ID, 'clef_id')) {
+	    			$exit = true;
+	    		}
 			}
 		}
 

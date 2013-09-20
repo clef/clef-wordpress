@@ -41,18 +41,16 @@ class WPClefAdmin {
 		$pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
 		$pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
 		
-		if (WPClef::setting( 'clef_password_settings_force' ) == 1) {
-			$key = WPClef::setting( 'clef_password_settings_override_key' );
-			$override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_password_settings_override_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a> to enable passwords via ';
-			if (!empty($key)) {
-				$url = wp_login_url() .'?override=' .$key;
-				$override_msg .= "<strong><a href='" .$url ."' target='new'>this secret URL</a></strong>.";
-			} else {
-				$override_msg .= 'a secret URL.';
-			}
-			
-			$pw_settings->addField('override_key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD);	
+		$key = WPClef::setting( 'clef_password_settings_override_key' );
+		$override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_password_settings_override_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a> to enable passwords via ';
+		if (!empty($key)) {
+			$url = wp_login_url() .'?override=' .$key;
+			$override_msg .= "<strong><a href='" .$url ."' target='new'>this secret URL</a></strong>.";
+		} else {
+			$override_msg .= 'a secret URL.';
 		}
+		
+		$pw_settings->addField('override_key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD);	
 	}
 
 	public static function admin_enqueue_scripts($hook) {
