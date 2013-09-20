@@ -242,7 +242,9 @@ class WPClef {
 	}
 
 	public static function disable_passwords($username) {
-		if (isset($_GET['override']) && $_GET['override'] == self::setting('clef_password_settings_override_key')) {
+		if (empty($_POST)) return;
+		
+		if (isset($_POST['override']) && $_POST['override'] == self::setting('clef_password_settings_override_key')) {
 			return;
 		}
 
