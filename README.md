@@ -18,11 +18,50 @@ For support, we recommend emailing us directly at [support@getclef.com](mailto:s
 
 If you find an issue, let us know in the issues section!
 
-## Contributing
+## Contribution Guidelines
 
-We encourage everyone to contribute to Clef for WordPress. There are many ways you can contribute:
+From the [Rubinius](http://rubini.us/) contribution page:
 
-* Open an issue on GitHub
-* Send us a pull request with your bug fixes and/or new features
-* Translate Clef for WordPress into different languages
-* Provide feedback and suggestions on enhancements
+> Writing code and participating should be fun, not an exercise in
+> perseverance. Stringent commit polices, for whatever their other
+> qualities may bring, also mean longer turnaround times.
+
+Submit a patch and once it’s accepted, you’ll get commit access to the
+repository. Feel free to fork the repository and send a pull request,
+once it’s merged in you’ll get added. If not, feel free to bug
+[jessepollak](http://github.com/jessepollak) about it.
+
+Also, if you’re hacking away, hop in the [Clef support room](http://www.hipchat.com/gYDBysXUf). Chances are someone else will be around to answer
+questions or bounce ideas off of.
+
+How To Contribute
+-----------------
+
+* Clone: `git clone git://github.com/clef/wordpress.git`
+* Get [Setup](#setup)
+* Create a topic branch: `git checkout -b awesome_feature`
+* Commit away.
+* Keep up to date: `git fetch && git rebase origin/master`.
+
+Once you’re ready:
+
+* Fork the project on GitHub
+* Add your repository as a remote: `git remote add your_remote your_repo`
+* Push up your branch: `git push your_remote awesome_feature`
+* Create a Pull Request for the topic branch, asking for review.
+
+Once it’s accepted:
+
+* If you want access to the core repository feel free to ask! Then you
+can change origin to point to the Read+Write URL:
+
+```
+git remote set-url origin git@github.com:clef/wordpress.git
+```
+
+Otherwise, you can continue to hack away in your own fork.
+
+If you’re looking for things to hack on, please check 
+[GitHub Issues](http://github.com/clef/wordpress/issues). 
+
+*thanks to [rubygems](https://github.com/rubygems/rubygems.org) for inspiration of our guidelines*
