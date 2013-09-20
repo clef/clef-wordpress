@@ -105,7 +105,6 @@ class Settings_API_Util {
 
     echo '<p class="submit">';
     echo '<input type="submit" name="submit" class="button-primary" value="'.__('Save').'" />';
-    echo ' <input type="reset" name="reset" class="button-secondary" value="'.__('Reset').'" />';
     echo '</p>';
 
     echo '</form>';
