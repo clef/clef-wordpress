@@ -35,11 +35,12 @@ if ( !isset( $_SESSION['WPClef_Messages'] ) ) {
 class WPClef {
 
 	const API_BASE = 'https://clef.io/api/v1/';
+	const OPTIONS_NAME = 'wpclef';
 
 	public static function setting( $name ) {
 		static $clef_settings = NULL;
 		if ( $clef_settings === NULL ) {
-			$clef_settings = get_option( WPClefAdmin::OPTIONS_NAME );
+			$clef_settings = get_option( self::OPTIONS_NAME );
 		}
 		if ( isset( $clef_settings[$name] ) ) {
 			return $clef_settings[$name];
@@ -300,7 +301,7 @@ class WPClef {
 		if (current_user_can( 'delete_plugins' )) {	
 			global $wpdb;
 			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
-			delete_option(WPClefAdmin::OPTIONS_NAME);
+			delete_option(self::OPTIONS_NAME);
 		}
 	}
 

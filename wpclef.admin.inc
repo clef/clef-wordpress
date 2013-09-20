@@ -8,8 +8,6 @@ function print_api_descript() {
 
 class WPClefAdmin {
 
-	const OPTIONS_NAME = 'wpclef';
-
 	public static function hook($hook, $method = NULL) {
 		if($method === NULL) {
 			$method = $hook;
@@ -20,7 +18,7 @@ class WPClefAdmin {
 	public static function admin_init() {
 
 		$formID = 'clef';
-		$form = Settings_API_Util::forID($formID, WPClefAdmin::OPTIONS_NAME);
+		$form = Settings_API_Util::forID($formID, WPClef::OPTIONS_NAME);
 
 		$settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
 		$values = $settings->settings->values;
