@@ -5,7 +5,7 @@
             add_action('login_form', array( __CLASS__, 'login_form' ) );
             add_action('login_form_login', array( __CLASS__, 'disable_login_form' ) );
             add_action('login_message', array( __CLASS__, 'login_message' ) );
-            add_filter('wp_login_failed', array('Clef', 'handle_login_failed'));
+            add_filter('wp_login_failed', array(__CLASS__, 'handle_login_failed'));
 
             self::handle_callback();
         }

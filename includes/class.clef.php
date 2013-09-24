@@ -7,8 +7,13 @@ if ( !isset( $_SESSION['Clef_Messages'] ) ) {
 class Clef extends ClefBase {
 
     public static function init() {
-        add_action( 'lost_password', array( 'Clef', 'disable_lost_password_form' ) );
-        add_action( 'lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );
+        
+        if ( !session_id() ) {
+            session_start();
+        }
+
+        add_action('lost_password', array( 'Clef', 'disable_lost_password_form' ) );
+        add_action('lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );
         add_filter('wp_authenticate_user', array('Clef', 'clear_logout_hook'));
         add_filter('wp_authenticate', array('Clef', 'disable_passwords'));
 
@@ -70,11 +75,12 @@ class Clef extends ClefBase {
         return $user;
     }
 
-    public static function install_plugin() {
-
+    public static function activate_plugin() {
+        self::setting("activated", true);
     }
     
     public static function uninstall_plugin() {
+        delete_option(CLEF_OPTIONS_NAME);
         if (current_user_can( 'delete_plugins' )) { 
             global $wpdb;
             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );

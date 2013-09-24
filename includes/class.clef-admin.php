@@ -19,6 +19,7 @@ class ClefAdmin extends ClefBase {
     public static function init() {
         add_action('admin_menu', array(__CLASS__, "admin_menu"));
         add_action('admin_init', array(__CLASS__, "admin_init"));
+        add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
         add_action('update_option_wpclef', array(__CLASS__, "update_option_wpclef"));
@@ -86,19 +87,7 @@ class ClefAdmin extends ClefBase {
 
             wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.0', TRUE );
             wp_enqueue_script('wpclef_keys');
-        } else {
-            if(in_array('wpclef_configure', self::dismissed_wp_pointers())) {
-                return;
-            }
-
-            wp_register_script('wpclef_admin', CLEF_URL . 'assets/js/admin_pointer.js', array('jquery', 'wp-pointer'), '1.0', TRUE );
-
-            wp_enqueue_script('wp-pointer');
-            wp_enqueue_style('wp-pointer');
-            wp_enqueue_script('wpclef_admin');
-        }
-
-
+        } 
     }
 
     public static function show_user_profile() {
@@ -136,23 +125,18 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function update_option_wpclef() {
-
-        // Automatically dismiss the pointer once settings are saved
-        $dismissed = self::dismissed_wp_pointers();
-        if(in_array('wpclef_configure', $dismissed)) {
-            return;
+        if (!self::setting("setup")) {
+            self::setting("setup", true);
         }
-        $dismissed[] = 'wpclef_configure';
-        $dismissed = implode(',', $dismissed);
-
-        update_user_meta( get_current_user_id(), 'dismissed_wp_pointers', $dismissed );
     }
 
-    private static function dismissed_wp_pointers() {
-        $dismissed = explode( ',',
-            (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true )
-        );
-        return $dismissed;
+    public static function setup_plugin() {
+        if (is_admin() && self::setting("activated")) {
+            self::delete_setting("activated");
+
+            wp_redirect(admin_url('/options-general.php?page=wpclef'));
+            exit();
+        }
     }
 }
 

@@ -34,7 +34,6 @@ module.exports = function( grunt ) {
         uglify: {
             all: {
                 files: {
-                    'assets/js/admin_pointer.js': ['assets/js/src/admin_pointer.js'],
                     'assets/js/clef_heartbeat.js': ['assets/js/src/clef_heartbeat.js'],
                     'assets/js/keys.js': ['assets/js/src/keys.js']
                 },
@@ -150,7 +149,7 @@ module.exports = function( grunt ) {
     
     // Default task.
     
-    grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'sass', 'cssmin'] );
+    grunt.registerTask( 'default', ['jshint', 'uglify', 'sass', 'cssmin'] );
     
     
     grunt.registerTask( 'build', ['default', 'clean', 'copy', 'compress'] );

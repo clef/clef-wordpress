@@ -23,10 +23,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if ( ! defined('ABSPATH') ) exit();
 
-if ( !session_id() ) {
-	session_start();
-}
-
 function plugin_symlink_fix( $url, $path, $plugin ) {
     // Do it only for this plugin
     if ( strstr( $plugin, basename(__FILE__) ) )
@@ -39,12 +35,11 @@ add_filter( 'plugins_url', 'plugin_symlink_fix', 10, 3 );
 // Useful global constants
 define( 'CLEF_VERSION', '1.7.0' );
 define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
-define( 'CLEF_PATH',    dirname( __FILE__ ) . '/' );
+define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
 define( 'CLEF_API_BASE', 'https://clef.io/api/v1/');
 define( 'CLEF_OPTIONS_NAME', 'wpclef');
 define( 'CLEF_DEBUG', false);
-
 
 
 require_once('includes/class.clef-base.php');
@@ -53,8 +48,7 @@ require_once('includes/class.clef-admin.php');
 require_once('includes/class.clef-login.php');
 require_once('includes/class.clef-logout.php');
 
-
-register_activation_hook(CLEF_PATH . '/lib/main.php', 'Clef::install_plugin');
-register_deactivation_hook(CLEF_PATH . '/lib/main.php', 'Clef::uninstall_plugin');
+register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugin'));
+register_uninstall_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'uninstall_plugin'));
 
 add_action( 'init', array('Clef', 'init'));

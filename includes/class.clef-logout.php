@@ -6,7 +6,7 @@
 
             add_action('init', array(__CLASS__, 'logout_hook_handler'));
             add_action('init', array(__CLASS__, 'logged_out_check'));
-            add_filter( 'heartbeat_received',  array("Clef", "hook_heartbeat"), 10, 3);
+            add_filter( 'heartbeat_received',  array(__CLASS__, "hook_heartbeat"), 10, 3);
 
         }
 
