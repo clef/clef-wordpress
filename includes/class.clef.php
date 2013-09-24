@@ -76,7 +76,7 @@ class Clef extends ClefBase {
     }
 
     public static function activate_plugin() {
-        self::setting("activated", true);
+        add_option("Clef_Activated", true);
     }
     
     public static function uninstall_plugin() {

@@ -22,7 +22,6 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
-        add_action('update_option_wpclef', array(__CLASS__, "update_option_wpclef"));
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile_update', array(__CLASS__, 'edit_user_profile_update'));
@@ -124,15 +123,9 @@ class ClefAdmin extends ClefBase {
         $form->renderBasicForm('Clef Settings', Settings_API_Util::ICON_SETTINGS);
     }
 
-    public static function update_option_wpclef() {
-        if (!self::setting("setup")) {
-            self::setting("setup", true);
-        }
-    }
-
     public static function setup_plugin() {
-        if (is_admin() && self::setting("activated")) {
-            self::delete_setting("activated");
+        if (is_admin() && get_option("Clef_Activated")) {
+            delete_option("Clef_Activated");
 
             wp_redirect(admin_url('/options-general.php?page=wpclef'));
             exit();
