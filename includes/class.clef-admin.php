@@ -115,7 +115,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
-        add_options_page("Clef", __('Clef', 'wpclef'), 'manage_options', 'wpclef', array('ClefAdmin', 'plugin_options'));
+        add_menu_page("Clef", __('Clef', 'wpclef'), 'manage_options', 'wpclef', array('ClefAdmin', 'plugin_options'));
     }
 
     public static function plugin_options() {
