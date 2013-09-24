@@ -43,12 +43,13 @@ define( 'CLEF_DEBUG', false);
 
 
 require_once('includes/class.clef-base.php');
+require_once('includes/class.clef-settings.php');
 require_once('includes/class.clef.php');
 require_once('includes/class.clef-admin.php');
 require_once('includes/class.clef-login.php');
 require_once('includes/class.clef-logout.php');
 
 register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugin'));
-register_uninstall_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'uninstall_plugin'));
+register_deactivation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'uninstall_plugin'));
 
 add_action( 'init', array('Clef', 'init'));

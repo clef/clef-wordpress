@@ -1,8 +1,5 @@
 <?php
 
-include dirname( __FILE__ )."/lib/Settings_API_Util.inc";
-
-
 function print_api_descript() {
     echo '<p>To manage the Clef application that syncs with your WP Clef plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
@@ -32,7 +29,7 @@ class ClefAdmin extends ClefBase {
     public static function admin_init() {
 
         $formID = 'clef';
-        $form = Settings_API_Util::forID($formID, CLEF_OPTIONS_NAME);
+        $form = ClefSettings::forID($formID, CLEF_OPTIONS_NAME);
 
         $settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
         $values = $settings->settings->values;
@@ -67,6 +64,7 @@ class ClefAdmin extends ClefBase {
         }
         
         $pw_settings->addField('override_key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
+
     }
 
     public static function admin_enqueue_scripts($hook) {
