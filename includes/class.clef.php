@@ -1,16 +1,15 @@
 <?php
 
+
 if ( !isset( $_SESSION['Clef_Messages'] ) ) {
     $_SESSION['Clef_Messages'] = array();
 }
+        
+
 
 class Clef extends ClefBase {
 
     public static function init() {
-        
-        if ( !session_id() ) {
-            session_start();
-        }
 
         add_action('lost_password', array( 'Clef', 'disable_lost_password_form' ) );
         add_action('lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );

@@ -23,6 +23,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if ( ! defined('ABSPATH') ) exit();
 
+if ( !session_id() ) {
+    session_start();
+}
+
 function plugin_symlink_fix( $url, $path, $plugin ) {
     // Do it only for this plugin
     if ( strstr( $plugin, basename(__FILE__) ) )
