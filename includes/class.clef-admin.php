@@ -36,8 +36,10 @@ class ClefAdmin extends ClefBase {
 
         $settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
         $values = $settings->settings->values;
-        if($values['clef_settings_app_id'] == '' ||
-            $values['clef_settings_app_secret'] == '') {
+        if(!isset($values['clef_settings_app_id']) ||
+            !isset($values['clef_settings_app_secret']) || 
+            $values['clef_settings_app_id'] == "" ||
+            $values['clef_settings_app_secret'] == "") {
             $site_name = urlencode(get_option('blogname'));
             $site_domain = urlencode(get_option('siteurl'));
             ob_start();
