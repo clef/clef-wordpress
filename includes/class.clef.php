@@ -11,6 +11,11 @@ class Clef extends ClefBase {
 
     public static function init() {
 
+        if ( !session_id() ) {
+            session_start();
+        }
+
+
         add_action('lost_password', array( 'Clef', 'disable_lost_password_form' ) );
         add_action('lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );
         add_filter('wp_authenticate_user', array('Clef', 'clear_logout_hook'));

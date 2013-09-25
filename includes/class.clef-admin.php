@@ -42,10 +42,7 @@ class ClefAdmin extends ClefBase {
             ob_start();
             include CLEF_TEMPLATE_PATH."/keys_generation.tpl.php";
             $form->introHTML = ob_get_clean();
-        } else {
-            ob_start();
-            $form->introHTML = ob_get_clean();
-        }
+        } 
 
         $settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
@@ -117,7 +114,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function plugin_options() {
-        $form = Settings_API_Util::forID('clef');
+        $form = ClefSettings::forID('clef');
         $form->renderBasicForm('Clef Settings', Settings_API_Util::ICON_SETTINGS);
     }
 
