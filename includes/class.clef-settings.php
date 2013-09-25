@@ -24,10 +24,11 @@
             if (isset($input['clef_password_settings_force'])) {
                 if (!get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
                     unset($input['clef_password_settings_force']);
+                    $url = admin_url('profile.php#clef');
                     add_settings_error(
                         "clef_password_settings_force",
                         esc_attr("settings_updated"),
-                        "Please link your Clef account before you fully disable passwords. You can do this on the Your Profile page or by logging out and logging in once with Clef.",
+                        "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>.",
                         "error"
                     );
                 }
