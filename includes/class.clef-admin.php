@@ -98,7 +98,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function edit_profile_errors($errors) {
-        if (isset($_SESSION['Clef_Messages'])) {
+        if (isset($_SESSION['Clef_Messages']) && !empty($_SESSION['Clef_Messages'])) {
             $_SESSION['Clef_Messages'] = array_unique( $_SESSION['Clef_Messages'] );
             echo '<div id="login_error">';
             foreach ( $_SESSION['Clef_Messages'] as $message ) {
