@@ -1,7 +1,7 @@
 <?php
 
 function print_api_descript() {
-    echo '<p>To manage the Clef application that syncs with your WP Clef plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
+    echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
 
 class ClefAdmin extends ClefBase {
