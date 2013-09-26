@@ -93,7 +93,6 @@ class Settings_API_Util {
   public function renderBasicForm($title, $icon) {
 
     echo '<div class="wrap" id="' . $this->id . '">';
-    settings_errors();
     echo '<div id="'.$icon.'" class="frmicon icon32"><br></div>';
     echo '<h2>'.$title.'</h2>';
     if(!empty($this->introHTML)) {
