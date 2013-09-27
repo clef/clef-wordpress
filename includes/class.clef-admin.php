@@ -40,7 +40,7 @@ class ClefAdmin extends ClefBase {
             $site_name = urlencode(get_option('blogname'));
             $site_domain = urlencode(get_option('siteurl'));
             ob_start();
-            include CLEF_TEMPLATE_PATH."/keys_generation.tpl.php";
+            include CLEF_TEMPLATE_PATH."keys_generation.tpl.php";
             $form->introHTML = ob_get_clean();
         } 
 
