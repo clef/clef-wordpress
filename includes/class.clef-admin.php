@@ -88,7 +88,7 @@ class ClefAdmin extends ClefBase {
         $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
         $app_id = self::setting( 'clef_settings_app_id' );
         $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
-        include CLEF_TEMPLATE_PATH."/user_profile.tpl.php";
+        include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
     }
 
     public static function edit_user_profile_update($user_id) {
