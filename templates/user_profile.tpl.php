@@ -1,5 +1,5 @@
 <?php if (!$connected) { ?>
-    <h3>Connect your Clef account</h3>
+    <h3 id="clef">Connect your Clef account</h3>
     <p class="description">Click the Clef button and sync your phone to enable Clef logins for this WordPress account.</p>
     <div style="margin-top:20px; margin-left: 10px;">
     <?php

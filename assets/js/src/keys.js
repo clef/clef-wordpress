@@ -1,7 +1,3 @@
-jQuery(document).ready(function() {
-    window.addEventListener('message', handleKeys);
-});
-
 function handleKeys(data) {
     if (!(/https:\/\/clef.io/.test(data.origin))){
         return;
@@ -15,3 +11,8 @@ function handleKeys(data) {
     jQuery('.wrap iframe').hide();
     jQuery('form#wp_clef input[type=submit]').trigger('click');
 }
+
+jQuery(document).ready(function() {
+    window.addEventListener('message', handleKeys);
+});
+
