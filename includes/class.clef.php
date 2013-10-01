@@ -9,6 +9,8 @@ if ( !isset( $_SESSION['Clef_Messages'] ) ) {
 
 class Clef extends ClefBase {
 
+    private static $TABLES = array();
+
     public static function init() {
 
         if ( !session_id() ) {
@@ -21,7 +23,9 @@ class Clef extends ClefBase {
         add_filter('wp_authenticate_user', array('Clef', 'clear_logout_hook'));
         add_filter('wp_authenticate', array('Clef', 'disable_passwords'));
 
-        if (is_admin()) {
+        if (is_network_admin()) {
+            ClefNetworkAdmin::init();
+        } else if (is_admin()) {
             ClefAdmin::init();
         }
 
@@ -79,16 +83,28 @@ class Clef extends ClefBase {
         return $user;
     }
 
-    public static function activate_plugin() {
-        add_option("Clef_Activated", true);
+    public static function create_table($name) {
+        global $wpdb;
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        $tablename = $wpdb->prefix . $name;
+        $sql = "CREATE TABLE $tablename " . self::$TABLES[$name];
+        dbDelta($sql);
+    }
+
+    public static function activate_plugin($network) {
+        add_site_option("Clef_Activated", true);
+    }
+
+    public static function deactivate_plugin($network) {
+
     }
     
     public static function uninstall_plugin() {
-        delete_option(CLEF_OPTIONS_NAME);
+        delete_site_option(CLEF_OPTIONS_NAME);
         if (current_user_can( 'delete_plugins' )) { 
             global $wpdb;
             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
-            delete_option(CLEF_OPTIONS_NAME);
+            delete_site_option(CLEF_OPTIONS_NAME);
         }
     }
 

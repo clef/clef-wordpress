@@ -92,13 +92,18 @@ class Settings_API_Util {
    */
   public function renderBasicForm($title, $icon) {
 
+    if (MULTISITE && is_network_admin()) {
+      $url = "edit.php?action=" . $this->id;
+    } else {
+      $url="options.php";
+    }
     echo '<div class="wrap" id="' . $this->id . '">';
     echo '<div id="'.$icon.'" class="frmicon icon32"><br></div>';
     echo '<h2>'.$title.'</h2>';
     if(!empty($this->introHTML)) {
       echo '<div class="intro">' . $this->introHTML . '</div>';
     }
-    echo '<form id="wp_clef" action="options.php" method="post">';
+    echo '<form id="wp_clef" action="' . $url . '" method="POST">';
     settings_fields($this->id);
     do_settings_sections($this->id);
 

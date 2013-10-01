@@ -14,8 +14,11 @@
 
             register_setting( $id, $optionName, array(__CLASS__, 'validate'));
 
-            $this->values = get_option($optionName);
-
+            if (Clef::individual_settings()) {
+                $this->values = get_option($optionName);
+            } else {
+                $this->values = get_site_option($optionName);
+            }
         }
 
         public static function validate(array $input) {
@@ -34,11 +37,14 @@
                 }
             }
 
+            if (isset($input['multisite_enable']) && $input['multisite_enable']) {
+                error_log("HEY");
+            }
+
             return $input;
         }
 
         public static function forID($id, $optionName = null) {
-
             if(null === $optionName) {
                 $optionName = $id;
             }

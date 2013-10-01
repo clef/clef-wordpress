@@ -122,7 +122,7 @@
                     else $existing_user =  WP_User::get_data_by( 'email', $email );
 
                     if ( !$existing_user ) {
-                        $users_can_register = get_option('users_can_register', 0);
+                        $users_can_register = get_site_option('users_can_register', 0);
                         if(!$users_can_register) {
                             $_SESSION['Clef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
                             self::redirect_error();
