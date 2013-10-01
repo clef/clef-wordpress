@@ -94,7 +94,7 @@ class ClefNetworkAdmin extends ClefAdmin {
         if (is_admin() && get_site_option("Clef_Activated")) {
             delete_site_option("Clef_Activated");
 
-            wp_redirect(network_admin_url('admin.php?page=wpclef'));
+            wp_redirect(network_admin_url('admin.php?page=clef'));
 
             exit();
         }
