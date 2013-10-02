@@ -1,12 +1,5 @@
 <?php
 
-
-if ( !isset( $_SESSION['Clef_Messages'] ) ) {
-    $_SESSION['Clef_Messages'] = array();
-}
-        
-
-
 class Clef extends ClefBase {
 
     private static $TABLES = array();
@@ -15,6 +8,10 @@ class Clef extends ClefBase {
 
         if ( !session_id() ) {
             session_start();
+        }
+
+        if ( !isset( $_SESSION['Clef_Messages'] ) ) {
+            $_SESSION['Clef_Messages'] = array();
         }
 
 
