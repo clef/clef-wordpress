@@ -37,7 +37,7 @@ class ClefAdmin extends ClefBase {
             wp_enqueue_script('wpclef_logout');
         }
         
-        if($settings_page_name === 'settings_page_wpclef') {
+        if(preg_match("/clef/", $settings_page_name)) {
             wp_register_style('wpclef_styles', CLEF_URL . 'assets/css/wpclef.css', FALSE, '1.0.0');
             wp_enqueue_style('wpclef_styles');
 
