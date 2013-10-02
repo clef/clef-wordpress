@@ -3,6 +3,7 @@
 
         public static function init() {
             add_action('login_form', array( __CLASS__, 'login_form' ) );
+            add_action('wp_authenticate', array(__CLASS__, 'disable_passwords'));
             add_action('login_form_login', array( __CLASS__, 'disable_login_form' ) );
             add_action('login_message', array( __CLASS__, 'login_message' ) );
             add_filter('wp_login_failed', array(__CLASS__, 'handle_login_failed'));
@@ -61,6 +62,34 @@
             }
         }
 
+        public static function disable_passwords($username) {
+            if (empty($_POST)) return;
+            
+            if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
+                return;
+            }
+
+            if (self::setting('clef_password_settings_force')) {
+                $exit = true;
+            }
+
+            if (self::setting( 'clef_password_settings_disable_passwords' )) {
+                if(username_exists($username)) {
+                    $user = get_user_by('login', $username);
+
+                    if (get_user_meta($user->ID, 'clef_id')) {
+                        $exit = true;
+                    }
+                }
+            }
+
+            if ($exit) {
+                $_SESSION['Clef_Messages'][] = "Passwords have been disabled.";
+                header("Location: " . wp_login_url());
+                exit();
+            }
+        }
+
         public static function handle_callback() {
 
             if ( isset( $_REQUEST['clef_callback'] ) && isset( $_REQUEST['code'] ) ) {
@@ -106,10 +135,11 @@
                     self::redirect_error();
                 }
 
-                $first_name = $body->info->first_name;
-                $last_name = $body->info->last_name;
-                $email = $body->info->email;
-                $clef_id = $body->info->id;
+                $info = $body->info;
+                $clef_id = $info->id;
+                $email = isset($info->email) ? $info->email : "";
+                $first_name = isset($info->first_name) ? $info->first_name : "";
+                $last_name = isset($info->last_name) ? $info->last_name : "";
 
                 if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
                     $existing_user = wp_get_current_user();
@@ -164,6 +194,11 @@
                 exit();
 
             }
+        }
+
+        private static function valid_override($override) {
+            $valid_override = self::setting('clef_password_settings_override_key');
+            return $valid_override && $valid_override != "" && $override == $valid_override;
         }
     }
 ?>

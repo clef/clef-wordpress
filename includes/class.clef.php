@@ -14,11 +14,9 @@ class Clef extends ClefBase {
             $_SESSION['Clef_Messages'] = array();
         }
 
-
         add_action('lost_password', array( 'Clef', 'disable_lost_password_form' ) );
         add_action('lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );
         add_filter('wp_authenticate_user', array('Clef', 'clear_logout_hook'));
-        add_filter('wp_authenticate', array('Clef', 'disable_passwords'));
 
         if (is_network_admin()) {
             ClefNetworkAdmin::init();
@@ -28,38 +26,6 @@ class Clef extends ClefBase {
 
         ClefLogin::init();
         ClefLogout::init();
-    }
-
-
-
-    public static function disable_passwords($username) {
-        if (empty($_POST)) return;
-        
-        if (isset($_POST['override']) && $_POST['override'] == self::setting('clef_password_settings_override_key')) {
-            return;
-        }
-
-        $exit = false;
-
-        if (self::setting('clef_password_settings_force')) {
-            $exit = true;
-        }
-
-        if (self::setting( 'clef_password_settings_disable_passwords' )) {
-            if(username_exists($username)) {
-                $user = get_user_by('login', $username);
-
-                if (get_user_meta($user->ID, 'clef_id')) {
-                    $exit = true;
-                }
-            }
-        }
-
-        if ($exit) {
-            $_SESSION['Clef_Messages'][] = "Passwords have been disabled.";
-            header("Location: " . wp_login_url());
-            exit();
-        }
     }
     
     public static function disable_lost_password_form() {
