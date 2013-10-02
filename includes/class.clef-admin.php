@@ -72,10 +72,10 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
-        add_menu_page("Clef", "Clef", 0, 'clef', array(__CLASS__, 'general_settings'));
+        add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
         if (get_site_option(self::MS_ENABLED_OPTION) && self::individual_settings()) {
-            add_submenu_page('clef','Settings','Settings','clef','clef', array(__CLASS__, 'general_settings'));
-            add_submenu_page("clef", "Multisite Options", "Enable Multisite", 0, 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+            add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
+            add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
         }
     }
 

@@ -10,11 +10,11 @@
         public static function setting( $name , $value=false ) {
 
             if (self::individual_settings()) {
-                $getter = get_option;
-                $setter = update_option;
+                $getter = 'get_option';
+                $setter = 'update_option';
             } else {
-                $getter = get_site_option;
-                $setter = update_site_option;
+                $getter = 'get_site_option';
+                $setter = 'update_site_option';
             }
 
             static $clef_settings = NULL;
