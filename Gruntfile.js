@@ -26,8 +26,8 @@ module.exports = function( grunt ) {
                     module:  false,
                     jQuery: true,
                     wp: true,
-                    ajaxurl: true
-
+                    ajaxurl: true,
+                    console: true
                 }
             }       
         },
