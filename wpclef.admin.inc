@@ -6,19 +6,6 @@ function print_api_descript() {
 	echo '<p>To manage the Clef application that syncs with your WP Clef plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
 
-function print_password_descript() {
-	$key = WPClef::setting( 'clef_password_settings_override_key' );
-	$msg ="<p>The first option disables password logins and lost password resets <em>for Clef-enabled users only</em>.</p><p>The second, more secure, option disables password logins and lost password resets <em>for all users</em> and hides the password login form. If you want to use the second option but have some non-Clef users, you can set a key that will open password logins at the following secret URL: ";
-	if (!empty($key)) {
-		$url = wp_login_url() .'?ForceClefOverrideKey=' .$key;
-		$msg .= "<a href='" .$url ."' target='new'>" .$url ."</a>.";
-	} else {
-		$msg .= wp_login_url() .'?ForceClefOverrideKey=YOUR_KEY_HERE';
-	}
-	$msg .= '</p>';
-	echo $msg;
-}
-
 class WPClefAdmin {
 
 	public static function hook($hook, $method = NULL) {

@@ -311,37 +311,6 @@ class WPClef {
 		}
 	}
 	
-	public static function disable_login_form($user) {
-		if ( (self::setting( 'clef_password_settings_force' ) == 1) && empty($_POST)) {
-			$key = self::setting( 'clef_password_settings_override_key' );
-			if (is_user_logged_in()) {
-				header("Location: " . admin_url() );
-				exit();
-			} elseif ( !empty($key) && !empty($_GET['override']) && ($_GET['override'] === $key) ) {
-				return;
-			} else {
-				wp_enqueue_script('jquery');
-				login_header(__('Log In'), ''); ?>
-				<form name="loginform" id="loginform" action="" method="post">
-				<?php do_action('login_form'); ?>
-				</form>
-				<?php login_footer();
-				exit();
-			}
-		}
-	}
-	
-	public static function disable_lost_password_form() {
-		if (!empty($_POST['user_login'])) {
-			$user = get_user_by( 'login', $_POST['user_login'] );
-		}
-		if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
-			$_SESSION['WPClef_Messages'][] = "Lost password resets have been disabled.";
-			header("Location: " . wp_login_url());
-			exit();
-		}
-	}
-
 	public static function clear_logout_hook($user) {
 		if (isset($_SESSION['logged_in_at'])) {
 			unset($_SESSION['logged_in_at']);
