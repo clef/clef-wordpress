@@ -96,10 +96,11 @@ class WPClef {
 				self::redirect_error();
 			}
 
-			$first_name = $body->info->first_name;
-			$last_name = $body->info->last_name;
-			$email = $body->info->email;
-			$clef_id = $body->info->id;
+    		$info = $body->info;
+            $clef_id = $info->id;
+            $email = isset($info->email) ? $info->email : "";
+            $first_name = isset($info->first_name) ? $info->first_name : "";
+            $last_name = isset($info->last_name) ? $info->last_name : "";
 
 			if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
 				$existing_user = wp_get_current_user();
