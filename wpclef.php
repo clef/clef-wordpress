@@ -383,17 +383,7 @@ add_action('admin_notices', array('WPClef', 'edit_profile_errors'));
 
 add_filter( 'heartbeat_received',  array("WPClef", "hook_heartbeat"), 10, 3);
 add_filter('wp_authenticate_user', array('WPClef', 'clear_logout_hook'));
-<<<<<<< HEAD
-<<<<<<< HEAD
-add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
 add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
 add_filter('wp_login_failed', array('WPClef', 'handle_login_failed'));
-=======
-add_filter('wp_authenticate_user', array('WPClef', 'disable_passwords'));
->>>>>>> added uninstall action and reset button
-=======
-add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
-add_filter('wp_authenticate', array('WPClef', 'disable_passwords'));
->>>>>>> reworks login block for disable password options
 
 register_uninstall_hook(__FILE__, array('WPClef', 'uninstall_wpclef'));
