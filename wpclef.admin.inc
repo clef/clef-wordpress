@@ -7,12 +7,7 @@ function print_api_descript() {
 }
 
 function print_force_clef_descript() {
-	$msg ="Ready to embrace password-free WordPress freedom? By selecting this option, Clef will require Clef-based authentication for all users. If you have a user who is not able to use Clef, you can create a key that will open password-based log in at the following secret URL: " .wp_login_url() ."?ForceClefOverrideKey=";
-	if (get_option( 'force_clef_settings_override_key' ) != 0) { //*** What is the right way to call plugin settings in wpclef?
-		$msg .= get_option( 'force_clef_settings_override_key' );
-	} else {
-		$msg .= "YOUR_KEY_HERE";
-	}
+	$msg ="Ready to embrace password-free WordPress administration? By selecting this option, Clef will require Clef-based authentication for all users. If you have a user who is not able to use Clef, you can create a key that will re-open password-based logging in at the following secret URL: " .wp_login_url() ."?ForceClefOverrideKey=YOUR_KEY_HERE";
 	echo $msg;
 }
 
