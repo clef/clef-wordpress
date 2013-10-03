@@ -64,3 +64,5 @@ If you’re looking for things to hack on, please check
 [GitHub Issues](http://github.com/clef/wordpress/issues). 
 
 *thanks to [rubygems](https://github.com/rubygems/rubygems.org) for inspiration of our guidelines*
+=======
+# The Official Clef WordPress Plugin
