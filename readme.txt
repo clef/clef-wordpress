@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 === WP Clef ===
-=======
-=== Plugin Name ===
->>>>>>> readme refresh & perfectionist polish on wpclef.php
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: login, log in, authentication, identity, security, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, single sign-on, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
@@ -12,7 +8,7 @@ Stable tag: 1.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Clef is the simplest and most secure way to sign in to WordPress: no passwords, no temporary codes, strong encryption, multi-factor authentication, single sign-on/off, free forever.
+The simplest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
 
 == Description ==
 
@@ -32,7 +28,6 @@ Install Clef automatically from your WordPress Dashboard by selecting "Plugins" 
 
 Or:
 
-<<<<<<< HEAD
 1. Download the latest version of WP Clef (via the download button at the top right).
 2. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
 3. Activate the plugin through the "Plugins" menu in WordPress
@@ -40,21 +35,9 @@ Or:
 = Getting Started =
 
 1. If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-1. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
-=======
-1. Download the latest Clef archive from WordPress.org.
-1. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
-1. Activate the plugin through the "Plugins" menu in WordPress
-
-= Getting Started =
-
-If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-
-With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
+2. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
 
 If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
-
->>>>>>> readme refresh & perfectionist polish on wpclef.php
 
 == Frequently Asked Questions ==
 
@@ -68,11 +51,7 @@ Clef is and will always be 100% free.
 
 = Can existing users on my site sign in with Clef? =
 
-<<<<<<< HEAD
 As long as your users register on the Clef App using the same email address as their WordPress accounts, they can start using Clef right away. Also, once WP Clef is activated, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
-=======
-As long as your users register on the Clef App using the same email address as their WordPress accounts, they can start using Clef right away. Also, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
->>>>>>> readme refresh & perfectionist polish on wpclef.php
 
 == Screenshots ==
 
@@ -88,15 +67,9 @@ As long as your users register on the Clef App using the same email address as t
 
 = 1.7 =
 
-<<<<<<< HEAD
 * New feature: require Clef authentication for all users with optional override key. When this new setting is selected, WP Clef enables true password-free WordPress authentication by hiding the default login form and requiring Clef authentication for all users. If the need arises, you can set an optional override key to allow password logins at a secret URL. Secure keys can be generated automatically, or you can input your own key.
 * New feature: lost password reset protection. If you are running WP Clef in hybrid mode, then lost password resets are disabled for Clef users only. If you are running in full Clef mode, then lost password resets are disabled for all users.
 * New feature: WP Clef's settings are deleted on uninstall
-=======
-* adds "force Clef authentication for all users" feature with optional override key
-* adds lost password reset protection
-* adds settings removal on uninstall
->>>>>>> readme refresh & perfectionist polish on wpclef.php
 
 = 1.6.3 =
 
@@ -152,15 +125,8 @@ As long as your users register on the Clef App using the same email address as t
 
 [Dave Ross](http://davidmichaelross.com) created the original WP Clef plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
 
-== Credits ==
-
-[Dave Ross](http://davidmichaelross.com) created the original WP Clef plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
 
 == Roadmap ==
 
 * Multisite compabibility
-<<<<<<< HEAD
 * Translation into other languages
-=======
-* Translation into other languages
->>>>>>> readme refresh & perfectionist polish on wpclef.php
