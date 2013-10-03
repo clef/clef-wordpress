@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, log in, authentication, identity, security, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, single sign-on, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -64,6 +64,11 @@ As long as your users register on the Clef App using the same email address as t
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.7.1 =
+
+* Bug fix: fixes issue caused by Clef applications that did no request last name from users
+* Bug fix: adds state parameter to OAuth flow for connection a Clef account to a WordPress account
 
 = 1.7 =
 
