@@ -8,7 +8,11 @@ Stable tag: 1.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
+<<<<<<< HEAD
 The simplest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
+=======
+Clef replaces insecure password-based authentication with beautifully simple and impenatrably secure smartphone-based multi-factor authentication: no passwords, no temporary codes, single sign on and off, always free.
+>>>>>>> password reset hole plugged
 
 == Description ==
 
