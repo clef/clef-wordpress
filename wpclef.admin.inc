@@ -6,10 +6,10 @@ function print_api_descript() {
 	echo '<p>To manage the Clef application that syncs with your WP Clef plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
 
-function print_force_clef_descript() {
-	$key = WPClef::setting( 'force_clef_settings_override_key' );
-	$msg ="Ready to free your WordPress site from passwords? By selecting this option, Clef will (1) hide the default user/pass login form, (2) require Clef-based authentication for all users, and (3) disable forgotten password resets. If you have a user who is not able to use Clef, you can set a key that will re-open the user/pass login form in at the following secret URL: ";
-	if ($key != '') {
+function print_password_descript() {
+	$key = WPClef::setting( 'clef_password_settings_override_key' );
+	$msg ="The first option (i.e., hybrid mode) disables passwords for Clef-enabled users but continues to dispaly the default user/pass login form for non-Clef users. The second, more secure, option (i.e., full Clef mode) hides the default user/pass login form, requires Clef-based authentication for all users, and disables forgotten password resets. If you have users who are not able to use Clef but you still want to use full Clef mode, you can set a key that will open the user/pass login form at the following secret URL: ";
+	if (!empty($key)) {
 		$url = wp_login_url() .'?ForceClefOverrideKey=' .$key;
 		$msg .= "<a href='" .$url ."' target='new'>" .$url ."</a>.";
 	} else {
