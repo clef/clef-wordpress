@@ -103,6 +103,8 @@ class WPClef {
             $last_name = isset($info->last_name) ? $info->last_name : "";
 
 			if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
+				if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) die();
+
 				$existing_user = wp_get_current_user();
 				update_user_meta($existing_user->ID, 'clef_id', $clef_id);
 				$redirect = get_edit_profile_url($existing_user->ID) . "?updated=1";
@@ -191,6 +193,7 @@ class WPClef {
 		$connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
 		$app_id = self::setting( 'clef_settings_app_id' );
 		$redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
+		$redirect_url .=  ("&state=" . wp_create_nonce("connect_clef"));
 		include dirname( __FILE__ )."/user_profile.tpl.php";
 	}
 
