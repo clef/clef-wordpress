@@ -310,6 +310,25 @@ class WPClef {
 		}
 	}
 
+	public static function disable_login_form() {
+			if ((self::setting( "force_clef_settings_force" ) == 1) && (!$_POST['wp-submit'])) {
+			if (is_user_logged_in()) {
+				header("Location: " . admin_url());
+				exit();
+			} elseif ($_GET['ForceClefOverrideKey'] == self::setting( "force_clef_settings_override_key" )) {
+				return;
+			} else {
+				wp_enqueue_script('jquery');
+				login_header(__('Log In'), ''); ?>
+				<form name="loginform" id="loginform" action="" method="post">
+				<?php do_action('login_form'); ?>
+				</form>
+				<?php login_footer();
+				exit();
+			}
+		}
+	}
+
 	public static function clear_logout_hook($user) {
 		if (isset($_SESSION['logged_in_at'])) {
 			unset($_SESSION['logged_in_at']);
@@ -332,7 +351,6 @@ class WPClef {
 			delete_option(self::OPTIONS_NAME);
 		}
 	}
-
 }
 
 include dirname( __FILE__ )."/wpclef.admin.inc";
