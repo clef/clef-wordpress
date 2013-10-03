@@ -316,7 +316,7 @@ class WPClef {
 			if (is_user_logged_in()) {
 				header("Location: " . admin_url() );
 				exit();
-			} elseif ( (!empty($key)) && ($_GET['override'] === $key) ) {
+			} elseif ( !empty($key) && !empty($_GET['override']) && ($_GET['override'] === $key) ) {
 				return;
 			} else {
 				wp_enqueue_script('jquery');
