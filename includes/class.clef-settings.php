@@ -37,10 +37,6 @@
                 }
             }
 
-            if (isset($input['multisite_enable']) && $input['multisite_enable']) {
-                error_log("HEY");
-            }
-
             return $input;
         }
 

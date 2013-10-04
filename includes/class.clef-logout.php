@@ -27,35 +27,7 @@
                 $body = json_decode( $response['body'] );
 
                 if (isset($body->success) && isset($body->clef_id)) {
-                    $clef_id = $body->clef_id;
-                    if (is_multisite()) {
-                        // if it's multisite, we loop over the table of clef_ids
-                        // attached to site ids. at each site, we look up the user
-                        // and, if they exist, we update their logged_out_at 
-                        // time.
-                        global $wpdb;
-                        $tablename = self::table_name(self::MS_USER_SITE_TABLE_NAME);
-
-                        $sql = $wpdb->prepare("SELECT site_id FROM $tablename WHERE clef_id = %s", $clef_id);
-                        $sites = $wpdb->get_results($sql);
-
-                        if(is_wp_error($sites)) {
-                            error_log("An error occurred when creating your new account: " . $sites->get_error_message());
-                            exit();
-                        }
-
-                        $original_blog_id = get_current_blog_id();
-                        foreach ($sites as &$site) {
-                            $site_id = $site->site_id;
-                            switch_to_blog($site_id);
-                            self::set_user_logged_out_at($clef_id);
-                        }
-                        switch_to_blog($original_blog_id);
-
-                    } else {
-                        self::set_user_logged_out_at($clef_id);
-                    }
-                    
+                    self::set_user_logged_out_at($body->clef_id);
                 }
             }
         }

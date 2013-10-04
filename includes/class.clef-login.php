@@ -148,7 +148,6 @@
                         // already have a user with this clef_id
                         $user = $users[0];
                     } else {
-                        error_log($email);
                         $user = WP_User::get_data_by( 'email', $email );
 
                         if ($user) {

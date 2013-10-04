@@ -24,14 +24,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if ( ! defined('ABSPATH') ) exit();
 
-function plugin_symlink_fix( $url, $path, $plugin ) {
-    // Do it only for this plugin
-    if ( strstr( $plugin, basename(__FILE__) ) )
-        return str_replace( dirname(__FILE__), '/' . basename( dirname( $plugin ) ), $url );
-
-    return $url;
-}
-add_filter( 'plugins_url', 'plugin_symlink_fix', 10, 3 );
+require_once('includes/lib/utils.inc');
 
 // Useful global constants
 define( 'CLEF_VERSION', '1.7.0' );
@@ -41,7 +34,6 @@ define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
 define( 'CLEF_API_BASE', 'https://clef.io/api/v1/');
 define( 'CLEF_OPTIONS_NAME', 'wpclef');
 define( 'CLEF_DEBUG', false);
-
 
 require_once('includes/class.clef-base.php');
 require_once('includes/class.clef-settings.php');

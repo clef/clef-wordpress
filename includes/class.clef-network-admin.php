@@ -76,10 +76,8 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         if ($enabled) {
             // TODO: actions for when network wide multisite is disabled
-            error_log("DISABLED!");
         } else {
             // TODO: actions for when network wide multiside is enabled
-            error_log("ENABLED");
         }
 
         if (!add_site_option(self::MS_ENABLED_OPTION, !$enabled)) {
@@ -91,7 +89,7 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public static function setup_plugin() {
-        if (is_admin() && get_site_option("Clef_Activated")) {
+        if (is_network_admin() && get_site_option("Clef_Activated")) {
             delete_site_option("Clef_Activated");
 
             wp_redirect(network_admin_url('admin.php?page=clef'));

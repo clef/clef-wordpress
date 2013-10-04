@@ -2,13 +2,7 @@
 
 class Clef extends ClefBase {
 
-    private static $TABLES = array(
-        self::MS_USER_SITE_TABLE_NAME => "(
-            clef_id VARCHAR(20),
-            site_id INTEGER,
-            CONSTRAINT pk_clef_site PRIMARY KEY (clef_id, site_id)
-        );"
-    );
+    private static $TABLES = array();
 
     public static function init() {
 
@@ -71,13 +65,10 @@ class Clef extends ClefBase {
 
     public static function activate_plugin($network) {
         add_site_option("Clef_Activated", true);
-        if (is_multisite()) {
-            self::create_table(self::MS_USER_SITE_TABLE_NAME);
-        }
     }
 
     public static function deactivate_plugin($network) {
-        self::_multisite_uninstall();
+        return;
     }
     
     public static function uninstall_plugin() {
@@ -94,7 +85,7 @@ class Clef extends ClefBase {
     }
 
     public static function _multisite_uninstall() {
-        self::drop_table(self::MS_USER_SITE_TABLE_NAME);
+        return;
     }
 
 }
