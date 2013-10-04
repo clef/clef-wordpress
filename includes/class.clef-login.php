@@ -142,6 +142,8 @@
                 $last_name = isset($info->last_name) ? $info->last_name : "";
 
                 if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
+                    // do state CSRF check
+                    if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) die();
                     $existing_user = wp_get_current_user();
                     update_user_meta($existing_user->ID, 'clef_id', $clef_id);
                     $redirect = get_edit_profile_url($existing_user->ID) . "?updated=1";

@@ -50,6 +50,7 @@ class ClefAdmin extends ClefBase {
         $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
         $app_id = self::setting( 'clef_settings_app_id' );
         $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
+        $redirect_url .=  ("&state=" . wp_create_nonce("connect_clef"));
         include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
     }
 
