@@ -232,15 +232,11 @@ class WPClef {
 		exit();
 	}
 
-	public static function logged_out_check($redirect=true) {
+	public static function logged_out_check() {
 		// if the user is logged into WP but logged out with Clef, sign them out of Wordpress
 		if (is_user_logged_in() && isset($_SESSION['logged_in_at']) && $_SESSION['logged_in_at'] < get_user_meta(wp_get_current_user()->ID, "logged_out_at", true)) {
 			wp_logout();
-			if ($redirect) {
-				self::redirect_error();
-			} else {
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
