@@ -115,7 +115,13 @@ module.exports = function( grunt ) {
                     '!Gruntfile.js',
                     '!package.json',
                     '!.gitignore',
-                    '!.gitmodules'
+                    '!.gitmodules',
+                    '!wpclef.sublime-project',
+                    '!wpclef.sublime-workspace',
+                    '!sftp-config.json',
+                    '!phpunit.xml',
+                    '!bootstrap_tests.php',
+                    '!.travis.yml'
                 ],
                 dest: 'release/<%= pkg.version %>/'
             }       
