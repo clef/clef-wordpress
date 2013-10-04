@@ -67,8 +67,8 @@ As long as your users register on the Clef App using the same email address as t
 
 = 1.7.1 =
 
-* Bug fix: fixes issue caused by Clef applications that did no request last name from users
-* Bug fix: adds state parameter to OAuth flow for connection a Clef account to a WordPress account
+* Bug fix: fixes issue caused by Clef applications that did not request last name from users
+* Bug fix: adds state parameter to OAuth flow for connecting a Clef account to a WordPress account
 
 = 1.7 =
 
