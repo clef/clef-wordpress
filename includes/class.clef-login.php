@@ -64,6 +64,8 @@
 
         public static function disable_passwords($username) {
             if (empty($_POST)) return;
+
+            $exit = false;
             
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
                 return;
