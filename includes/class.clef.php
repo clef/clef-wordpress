@@ -77,7 +77,7 @@ class Clef extends ClefBase {
             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
         }
 
-        if (is_multisite()) {
+        if (is_multisite() && is_network_admin()) {
             self::_multisite_uninstall();
         } else {
             delete_option(CLEF_OPTIONS_NAME);
