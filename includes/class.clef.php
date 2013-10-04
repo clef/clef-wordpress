@@ -2,7 +2,13 @@
 
 class Clef extends ClefBase {
 
-    private static $TABLES = array();
+    private static $TABLES = array(
+        self::MS_USER_SITE_TABLE_NAME => "(
+            clef_id VARCHAR(20),
+            site_id INTEGER,
+            CONSTRAINT pk_clef_site PRIMARY KEY (clef_id, site_id)
+        );"
+    );
 
     public static function init() {
 
@@ -50,17 +56,28 @@ class Clef extends ClefBase {
     public static function create_table($name) {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        $tablename = $wpdb->prefix . $name;
+        $tablename = self::table_name($name);
         $sql = "CREATE TABLE $tablename " . self::$TABLES[$name];
         dbDelta($sql);
     }
 
+    public static function drop_table($name) {
+        global $wpdb;
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        $tablename = self::table_name($name);
+        $sql = "DROP TABLE $tablename";
+        $wpdb->query($sql);
+    }
+
     public static function activate_plugin($network) {
         add_site_option("Clef_Activated", true);
+        if (is_multisite()) {
+            self::create_table(self::MS_USER_SITE_TABLE_NAME);
+        }
     }
 
     public static function deactivate_plugin($network) {
-
+        self::_multisite_uninstall();
     }
     
     public static function uninstall_plugin() {
@@ -70,6 +87,14 @@ class Clef extends ClefBase {
             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
             delete_site_option(CLEF_OPTIONS_NAME);
         }
+
+        if (is_multisite()) {
+            self::_multisite_uninstall();
+        }
+    }
+
+    public static function _multisite_uninstall() {
+        self::drop_table(self::MS_USER_SITE_TABLE_NAME);
     }
 
 }

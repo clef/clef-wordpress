@@ -56,7 +56,7 @@ class ClefAdmin extends ClefBase {
 
     public static function edit_user_profile_update($user_id) {
         if (isset($_POST['remove_clef']) && $_POST['remove_clef']) {
-            delete_user_meta($user_id, "clef_id");
+            self::dissociate_clef_id($user_id);
         }
     }
 

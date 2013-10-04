@@ -1,9 +1,9 @@
 <?php
     class ClefBase {
 
-        const NS_TABLE_NAME = "clef_network_settings";
         const MS_ENABLED_OPTION = "clef_multisite_enabled";
         const MS_OVERRIDE_OPTION = 'clef_multisite_override';
+        const MS_USER_SITE_TABLE_NAME = "clef_user_sites";
 
         private static $_individual_settings = null;
 
@@ -88,6 +88,56 @@
             exit();
         }
 
+        protected static function associate_clef_id($clef_id, $user_id=false) {
+            if (!$user_id) {
+                $user_id = wp_get_current_user()->ID;
+            }
 
+            if (is_multisite()) {
+                $site_id = get_current_site()->id;
+
+                global $wpdb;
+
+                $tablename = self::table_name(self::MS_USER_SITE_TABLE_NAME);
+
+                $sql = $wpdb->prepare("INSERT IGNORE INTO $tablename (clef_id, site_id) VALUES (%s, %d);", $clef_id, $site_id);
+                $res = $wpdb->query($sql);
+
+                if(is_wp_error($res)) {
+                    $_SESSION['Clef_Messages'][] = "An error occurred when creating your new account: " . $res->get_error_message();
+                    self::redirect_error();
+                }
+            }
+
+            update_user_meta($user_id, 'clef_id', $clef_id);
+        }
+
+        protected static function dissociate_clef_id($user_id=false) {
+
+            if (is_multisite()) {
+                $site_id = get_current_site()->id;
+                $clef_id = get_user_meta($user_id, 'clef_id', true);
+
+                global $wpdb;
+
+                $tablename = self::table_name(self::MS_USER_SITE_TABLE_NAME);
+
+                $sql = $wpdb->prepare("DELETE FROM $tablename WHERE clef_id = %s AND site_id = %d;", $clef_id, $site_id);
+
+                $res = $wpdb->query($sql);
+
+                if(is_wp_error($res)) {
+                    $_SESSION['Clef_Messages'][] = "An error occurred when creating your new account: " . $res->get_error_message();
+                    self::redirect_error();
+                }
+            }
+
+            delete_user_meta($user_id, "clef_id");
+        }
+
+        public static function table_name($tablename) {
+            global $wpdb;
+            return $wpdb->prefix . $tablename;
+        }
     }
 ?>

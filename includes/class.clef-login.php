@@ -134,49 +134,59 @@
                 $first_name = isset($info->first_name) ? $info->first_name : "";
                 $last_name = isset($info->last_name) ? $info->last_name : "";
 
-                if (is_user_logged_in() && !get_user_meta(wp_get_current_user()->ID, "clef_id", true)) {
+                $current_user = wp_get_current_user();
+
+                if (is_user_logged_in() && !get_user_meta($current_user->ID, "clef_id", true)) {
                     // do state CSRF check
                     if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) die();
-                    $existing_user = wp_get_current_user();
-                    update_user_meta($existing_user->ID, 'clef_id', $clef_id);
-                    $redirect = get_edit_profile_url($existing_user->ID) . "?updated=1";
+                    self::associate_clef_id($clef_id);
+                    $redirect = get_edit_profile_url($current_user->ID) . "?updated=1";
                 } else {
 
                     $users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id));
-                    if ($users) $existing_user = $users[0];
-                    else $existing_user =  WP_User::get_data_by( 'email', $email );
+                    if ($users) {
+                        // already have a user with this clef_id
+                        $user = $users[0];
+                    } else {
+                        error_log($email);
+                        $user = WP_User::get_data_by( 'email', $email );
 
-                    if ( !$existing_user ) {
-                        $users_can_register = get_site_option('users_can_register', 0);
-                        if(!$users_can_register) {
-                            $_SESSION['Clef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
-                            self::redirect_error();
+                        if ($user) {
+                            // found a user by email, attach clef_id
+                            self::associate_clef_id($clef_id, $user->ID);
+                        } else {
+
+                            $users_can_register = get_site_option('users_can_register', 0);
+                            if(!$users_can_register) {
+                                // if users cannot register, return to login screen
+                                $_SESSION['Clef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
+                                self::redirect_error();
+                            }
+
+                            // Users can register, so create a new user
+                            // and attach the clef_id to them
+                            $userdata = new WP_User();
+                            $userdata->first_name = $first_name;
+                            $userdata->last_name = $last_name;
+                            $userdata->user_email = $email;
+                            $userdata->user_login = $email;
+                            $password = wp_generate_password(16, FALSE);
+                            $userdata->user_pass = $password;
+
+                            $id = wp_insert_user($userdata);
+                            if(is_wp_error($id)) {
+                                $_SESSION['Clef_Messages'][] = "An error occurred when creating your new account: " . $res->get_error_message();
+                                self::redirect_error();
+                            }
+                            $user = get_user_by('id', $id );
+
+                            self::associate_clef_id($clef_id, $user->ID);
                         }
-
-                        // Register a new user
-                        $userdata = new WP_User();
-                        $userdata->first_name = $first_name;
-                        $userdata->last_name = $last_name;
-                        $userdata->user_email = $email;
-                        $userdata->user_login = $email;
-                        $password = wp_generate_password(16, FALSE);
-                        $userdata->user_pass = $password;
-                        $res = wp_insert_user($userdata);
-                        if(is_wp_error($res)) {
-                            $_SESSION['Clef_Messages'][] = "An error occurred when creating your new account: " . $res->get_error_message();
-                            self::redirect_error();
-                        }
-                        $existing_user = WP_User::get_data_by( 'email', $email );
-
-                        update_user_meta($existing_user->ID, 'clef_id', $clef_id);
-
                     }
 
-                    update_user_meta($existing_user->ID, 'clef_id', $clef_id);
-
-                    $user = wp_set_current_user( $existing_user->ID, $existing_user->user_nicename );
-                    wp_set_auth_cookie( $existing_user->ID );
-                    do_action( 'wp_login', $existing_user->ID );
+                    $user = wp_set_current_user( $user->ID, $user->user_nicename );
+                    wp_set_auth_cookie( $user->ID );
+                    do_action( 'wp_login', $user->ID );
 
                     $redirect = admin_url();
 
