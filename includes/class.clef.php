@@ -31,11 +31,12 @@ class Clef extends ClefBase {
     public static function disable_lost_password_form() {
         if (!empty($_POST['user_login'])) {
             $user = get_user_by( 'login', $_POST['user_login'] );
-        }
-        if ( (self::setting( 'clef_password_settings_disable_passwords' ) == 1 && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
-            $_SESSION['Clef_Messages'][] = "Lost password resets have been disabled.";
-            header("Location: " . wp_login_url());
-            exit();
+            
+            if ( (self::setting( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
+                $_SESSION['Clef_Messages'][] = "Lost password resets have been disabled.";
+                header("Location: " . wp_login_url());
+                exit();
+            }
         }
     }
 
