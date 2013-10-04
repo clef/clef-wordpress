@@ -66,6 +66,18 @@ As long as your users register on the Clef App using the same email address as t
 
 == Changelog ==
 
+= 1.8.0 =
+
+* New feature: adds support using Clef on multisite networks (currently only supports single-domain setups)
+* New feature: warns user if they try and disable passwords without a connected Clef account
+* New developer feature: restructures plugin to allow easier development
+* New developer feature: adds testing framework
+
+= 1.7.1 =
+ 
+* Bug fix: fixes issue caused by Clef applications that did not request last name from users
+* Bug fix: adds state parameter to OAuth flow for connecting a Clef account to a WordPress account
+
 = 1.7 =
 
 * New feature: require Clef authentication for all users with optional override key. When this new setting is selected, WP Clef enables true password-free WordPress authentication by hiding the default login form and requiring Clef authentication for all users. If the need arises, you can set an optional override key to allow password logins at a secret URL. Secure keys can be generated automatically, or you can input your own key.
