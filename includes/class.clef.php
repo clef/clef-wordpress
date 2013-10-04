@@ -72,20 +72,22 @@ class Clef extends ClefBase {
     }
     
     public static function uninstall_plugin() {
-        delete_site_option(CLEF_OPTIONS_NAME);
         if (current_user_can( 'delete_plugins' )) { 
             global $wpdb;
             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
-            delete_site_option(CLEF_OPTIONS_NAME);
         }
 
         if (is_multisite()) {
             self::_multisite_uninstall();
+        } else {
+            delete_option(CLEF_OPTIONS_NAME);
         }
     }
 
     public static function _multisite_uninstall() {
-        return;
+        delete_site_option(CLEF_OPTIONS_NAME);
+        delete_site_option(self::MS_OVERRIDE_OPTION);
+        delete_site_option(self::MS_ENABLED_OPTION);
     }
 
 }
