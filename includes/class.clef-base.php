@@ -79,5 +79,15 @@
             return FALSE;
         }
 
+        public static function redirect_error() {
+            if (!is_user_logged_in()) {
+                header( 'Location: ' . wp_login_url() );
+            } else {
+                header( 'Location: ' . get_edit_profile_url(wp_get_current_user()->ID));
+            }
+            exit();
+        }
+
+
     }
 ?>
