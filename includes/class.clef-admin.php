@@ -160,7 +160,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function print_override_descript() {
-        echo "<p>If you choose to allow only Clef logins on your site, it's safe to set an 'override' URL, just in case. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
+        echo "<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
     }
 }
 

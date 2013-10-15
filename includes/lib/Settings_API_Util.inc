@@ -97,6 +97,7 @@ class Settings_API_Util {
     } else {
       $url="options.php";
     }
+    settings_errors();
     echo '<div class="wrap" id="' . $this->id . '">';
     echo '<div id="'.$icon.'" class="frmicon icon32"><br></div>';
     echo '<h2>'.$title.'</h2>';
