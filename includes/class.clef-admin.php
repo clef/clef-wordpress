@@ -1,13 +1,5 @@
 <?php
 
-function print_api_descript() {
-    echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
-}
-
-function print_override_descript() {
-    echo "<p>If you choose to allow only Clef logins on your site, it's safe to set an 'override' URL, just in case. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
-}
-
 class ClefAdmin extends ClefBase {
 
     const FORM_ID = "clef";
@@ -112,7 +104,7 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-        $settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
+        $settings = $form->addSection('clef_settings', 'API Settings', array(__CLASS__, 'print_api_descript'));
         $values = $settings->settings->values;
 
         $settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
@@ -122,7 +114,7 @@ class ClefAdmin extends ClefBase {
         $pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
         
-        $override_settings = $form->addSection('clef_override_settings', 'Override Settings', 'print_override_descript');
+        $override_settings = $form->addSection('clef_override_settings', 'Override Settings', array(__CLASS__, 'print_override_descript'));
 
         $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a>';
         
@@ -161,6 +153,14 @@ class ClefAdmin extends ClefBase {
             wp_redirect(admin_url('/options.php?page=clef'));
             exit();
         }
+    }
+
+    public static function print_api_descript() {
+        echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
+    }
+
+    public static function print_override_descript() {
+        echo "<p>If you choose to allow only Clef logins on your site, it's safe to set an 'override' URL, just in case. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
     }
 }
 

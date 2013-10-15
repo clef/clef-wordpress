@@ -59,7 +59,7 @@ class Clef extends ClefBase {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         $tablename = self::table_name($name);
-        $sql = "DROP TABLE $tablename";
+        $sql = "DROP TABLE IF EXISTS $tablename";
         $wpdb->query($sql);
     }
 
