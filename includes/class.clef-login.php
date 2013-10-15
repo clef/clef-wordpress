@@ -35,7 +35,7 @@
 
         public static function disable_login_form($user) {
             if ( (self::setting( 'clef_password_settings_force' ) == 1) && empty($_POST)) {
-                $key = self::setting( 'clef_password_settings_override_key' );
+                $key = self::setting( 'clef_override_settings_key' );
                 if (is_user_logged_in()) {
                     header("Location: " . admin_url() );
                     exit();
@@ -201,7 +201,7 @@
         }
 
         private static function valid_override($override) {
-            $valid_override = self::setting('clef_password_settings_override_key');
+            $valid_override = self::setting('clef_override_settings_key');
             return $valid_override && $valid_override != "" && $override == $valid_override;
         }
     }

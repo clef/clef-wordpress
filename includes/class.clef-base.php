@@ -20,9 +20,12 @@
             if ( $clef_settings === NULL ) {
                 $clef_settings = $getter( CLEF_OPTIONS_NAME );
             }
+
             
             if ($value) {
+                
                 $clef_settings[$name] = $value;
+
                 $setter(CLEF_OPTIONS_NAME, $clef_settings);
                 return $value;
             } else {
@@ -35,6 +38,29 @@
             return FALSE;
         }
 
+        public static function delete_setting($name) {
+            if (self::individual_settings()) {
+                $getter = 'get_option';
+                $setter = 'update_option';
+            } else {
+                $getter = 'get_site_option';
+                $setter = 'update_site_option';
+            }
+
+            static $clef_settings = NULL;
+            if ( $clef_settings === NULL ) {
+                $clef_settings = $getter( CLEF_OPTIONS_NAME );
+            }
+
+            if (isset($clef_settings[$name])) {
+                $value = $clef_settings[$name];
+                unset($clef_settings[$name]);
+                $setter(CLEF_OPTIONS_NAME, $clef_settings);
+                return $value;
+            }
+            
+            return FALSE;
+        }
 
         /**
         * Function to check whether site's settings are controlled by 
@@ -60,21 +86,6 @@
             } 
             return self::$_individual_settings;
 
-        }
-
-        public static function delete_setting($name) {
-            static $clef_settings = NULL;
-            if ( $clef_settings === NULL ) {
-                $clef_settings = get_site_option( CLEF_OPTIONS_NAME );
-            }
-            if (isset($clef_settings[$name])) {
-                $value = $clef_settings[$name];
-                unset($clef_settings[$name]);
-                update_site_option(CLEF_OPTIONS_NAME, $clef_settings);
-                return $value;
-            }
-            
-            return FALSE;
         }
 
         public static function redirect_error() {

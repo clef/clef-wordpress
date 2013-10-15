@@ -4,6 +4,10 @@ function print_api_descript() {
     echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
 }
 
+function print_override_descript() {
+    echo "<p>If you choose to allow only Clef logins on your site, it's safe to set an 'override' URL, just in case. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
+}
+
 class ClefAdmin extends ClefBase {
 
     const FORM_ID = "clef";
@@ -83,6 +87,18 @@ class ClefAdmin extends ClefBase {
     public static function general_settings() {
         if (self::individual_settings()) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
+
+            $values = $form->values;
+
+            if(!isset($values['clef_settings_app_id']) ||
+                !isset($values['clef_settings_app_secret']) || 
+                $values['clef_settings_app_id'] == "" ||
+                $values['clef_settings_app_secret'] == "") {
+                $site_name = urlencode(get_option('blogname'));
+                $site_domain = urlencode(get_option('siteurl'));
+                include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
+            } 
+
             $form->renderBasicForm('Clef Settings', Settings_API_Util::ICON_SETTINGS);   
         } else {
             include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
@@ -98,16 +114,6 @@ class ClefAdmin extends ClefBase {
 
         $settings = $form->addSection('clef_settings', 'API Settings', 'print_api_descript');
         $values = $settings->settings->values;
-        if(!isset($values['clef_settings_app_id']) ||
-            !isset($values['clef_settings_app_secret']) || 
-            $values['clef_settings_app_id'] == "" ||
-            $values['clef_settings_app_secret'] == "") {
-            $site_name = urlencode(get_option('blogname'));
-            $site_domain = urlencode(get_option('siteurl'));
-            ob_start();
-            include CLEF_TEMPLATE_PATH."keys_generation.tpl.php";
-            $form->introHTML = ob_get_clean();
-        } 
 
         $settings->addField('app_id', 'App ID', Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', 'App Secret', Settings_API_Util_Field::TYPE_TEXTFIELD);
@@ -116,16 +122,17 @@ class ClefAdmin extends ClefBase {
         $pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
         
-        $key = Clef::setting( 'clef_password_settings_override_key' );
-        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_password_settings_override_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a> to enable passwords via ';
-        if (!empty($key)) {
-            $url = wp_login_url() .'?override=' .$key;
-            $override_msg .= "<strong><a href='" .$url ."' target='new'>this secret URL</a></strong>.";
-        } else {
-            $override_msg .= 'a secret URL.';
-        }
+        $override_settings = $form->addSection('clef_override_settings', 'Override Settings', 'print_override_descript');
+
+        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a>';
         
-        $pw_settings->addField('override_key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
+        $override_settings->addField('key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
+        $key = Clef::setting( 'clef_override_settings_key' );
+
+        if (!empty($key)) {
+            $override_settings->settings->values['clef_override_settings_url'] = wp_login_url() .'?override=' .$key;
+            $override_settings->addField('url', "Use this URL to allow passwords:", Settings_API_Util_Field::TYPE_TEXTFIELD);
+        }
 
         return $form;
     }
