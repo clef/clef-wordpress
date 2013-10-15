@@ -12,6 +12,8 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
+        add_action( 'admin_notices', array(__CLASS__, 'display_errors') );
+
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile_update', array(__CLASS__, 'edit_user_profile_update'));
@@ -21,6 +23,9 @@ class ClefAdmin extends ClefBase {
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
     }
 
+    public static function display_errors() {
+        settings_errors( CLEF_OPTIONS_NAME );
+    }
 
     public static function admin_enqueue_scripts($hook) {
 

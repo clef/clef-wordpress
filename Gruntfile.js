@@ -121,7 +121,9 @@ module.exports = function( grunt ) {
                     '!sftp-config.json',
                     '!phpunit.xml',
                     '!bootstrap_tests.php',
-                    '!.travis.yml'
+                    '!.travis.yml',
+                    '!tests/**',
+                    '!tags/**'
                 ],
                 dest: 'release/<%= pkg.version %>/'
             }       
