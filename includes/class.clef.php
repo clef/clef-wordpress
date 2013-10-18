@@ -47,11 +47,14 @@ class Clef extends ClefBase {
         return $user;
     }
 
-    public static function create_table($name) {
+    public static function create_table($name, $migration=false) {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         $tablename = self::table_name($name);
-        $sql = "CREATE TABLE $tablename " . self::$TABLES[$name];
+        if (!$migration) {
+            $migration = self::$TABLES[$name];
+        }
+        $sql = "CREATE TABLE $tablename " . $migration;
         dbDelta($sql);
     }
 
