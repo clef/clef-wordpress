@@ -109,6 +109,8 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
+        $pay_settings = $form->addSection('clef_pay_settings', "Pay with Clef Settings", array(__CLASS__, 'print_pay_with_clef_descript'));
+
         $settings = $form->addSection('clef_settings', 'API Settings', array(__CLASS__, 'print_api_descript'));
         $values = $settings->settings->values;
 
@@ -166,6 +168,10 @@ class ClefAdmin extends ClefBase {
 
     public static function print_override_descript() {
         echo "<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
+    }
+
+    public static function print_pay_with_clef_descript() {
+        echo "<p>You can manage the Pay with Clef settings <a href='/wp-admin/admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_Gateway_Clef'>here</a>.</p>";
     }
 }
 

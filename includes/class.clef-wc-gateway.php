@@ -11,12 +11,13 @@
 
         public static function init() {
             add_filter( 'woocommerce_payment_gateways', array(__CLASS__, "add_gateway") );
-
             add_action( 'woocommerce_proceed_to_checkout', array(__CLASS__, "add_cart_button" ) );
+
             add_action( 'woocommerce_api_clef_initiation', array(__CLASS__, "handle_initiation") );
             add_action( 'woocommerce_api_clef_shipping', array(__CLASS__, "handle_shipping") );
             add_action( 'woocommerce_api_clef_checkout', array(__CLASS__, "handle_checkout" ) );
 
+            // hook to sync Clef ID and Secret when changed on other Clef page
             add_action( 'update_option_' . CLEF_OPTIONS_NAME, array(__CLASS__, "update_clef_settings_hook") );
 
             if (self::instance()->get_option('product_page') == "yes") {
@@ -44,8 +45,6 @@
             $this->init_form_fields();
             $this->init_settings();
 
-
-            add_action( 'woocommerce_settings_' . $this->id, array( $this, "display_setup_tutorial") );
             add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
         }
 
@@ -107,6 +106,7 @@
         }
 
         function admin_options() {
+            // if Clef hasn't been configured, show the walkthrough
             if (!isset($this->settings['clef_app_id']) || $this->settings['clef_app_id'] == "") {
                 include CLEF_TEMPLATE_PATH . "tutorial.tpl.php";
                 wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.0', TRUE );
@@ -116,47 +116,24 @@
         }
 
         function process_admin_options() {
-            if (isset($this->settings)) {
+            // ensure that app ID and secret stay in sync when they
+            // are changed in either settings section for Clef
 
-                if (isset($_POST["woocommerce_clef_clef_app_id"]) && $_POST["woocommerce_clef_clef_app_id"] != Clef::setting("clef_settings_app_id")) {
-                    Clef::setting("clef_settings_app_id", $_POST["woocommerce_clef_clef_app_id"]);
-                }
+            if (isset($_POST["woocommerce_clef_clef_app_id"]) && $_POST["woocommerce_clef_clef_app_id"] != Clef::setting("clef_settings_app_id")) {
+                Clef::setting("clef_settings_app_id", $_POST["woocommerce_clef_clef_app_id"]);
+            }
 
-                if (isset($_POST["woocommerce_clef_clef_app_secret"]) && $_POST["woocommerce_clef_clef_app_secret"] != Clef::setting("clef_settings_app_secret")) {
-                    Clef::setting("clef_settings_app_secret", $_POST["woocommerce_clef_clef_app_secret"]);
-                }
+            if (isset($_POST["woocommerce_clef_clef_app_secret"]) && $_POST["woocommerce_clef_clef_app_secret"] != Clef::setting("clef_settings_app_secret")) {
+                Clef::setting("clef_settings_app_secret", $_POST["woocommerce_clef_clef_app_secret"]);
             }
 
             parent::process_admin_options();
         }
 
-        function display_setup_tutorial() {
-            echo('hi');
-        }
-
-        function process_payment( $order_id ) {
-            global $woocommerce;
-
-            $order = new WC_Order( $order_id );
-
-            $order->payment_complete();
-            $order->reduce_order_stock();
-            $woocommerce->cart->empty_cart();
-
-
-            return array(
-                'result' => 'success',
-                'redirect' => $this->get_return_url($order)
-            );
-        }
-
-        function payment_fields() {
-            global $woocommerce;
-            $reference = htmlentities(self::serialize_reference($woocommerce->cart));
-            self::add_clef_button($reference);
-        }
-
         public static function update_clef_settings_hook() {
+            // ensure that app ID and secret stay in sync when they
+            // are changed in either settings section for Clef
+
             $updated = false;
             $_this = self::instance();
             $_this->init_settings();
@@ -177,6 +154,30 @@
 
         }
 
+        function process_payment( $order_id ) {
+            global $woocommerce;
+
+            $order = new WC_Order( $order_id );
+
+            $order->payment_complete();
+            $order->reduce_order_stock();
+            $woocommerce->cart->empty_cart();
+
+
+            return array(
+                'result' => 'success',
+                'redirect' => $this->get_return_url($order)
+            );
+        }
+
+        function payment_fields() {
+            // add clef button to the payment fields
+            global $woocommerce;
+            $reference = htmlentities(self::serialize_reference($woocommerce->cart));
+            self::add_clef_button($reference);
+        }
+
+        
         public static function add_gateway( $methods ) {
             $methods[] = 'WC_Gateway_Clef';
             return $methods;
@@ -371,6 +372,14 @@
             return CLEF_API_BASE . $path;
         }
 
+        /*
+        * This function is used to convert a cart into a base64 encoded
+        * version of itself to pass to Clef
+        *
+        * Right now, it supports:
+        *   - products
+        *   - coupons
+        */
         public static function serialize_reference($cart) {
             $cart_hash = array(
                 'i' => array(),
@@ -394,6 +403,10 @@
             return base64_encode(json_encode($cart_hash));
         }
 
+        /*
+        * This function is used to convert a base64 encoded version of
+        * a cart into a real cart
+        */
         public static function deserialize_reference($string_cart) {
             global $woocommerce;
 
@@ -414,6 +427,7 @@
             return $woocommerce->cart;
         }
 
+        // Clef doesn't handle phone numbers
         public static function remove_fields( $fields ) {
             $fields['billing_phone']['required'] = false;
             return $fields;
@@ -444,7 +458,7 @@
                     )
                 );
             } else {
-                // TODO: implement
+                // TODO: implement, but not currently necessary
             }
 
             if ( is_wp_error($response)  ) {
@@ -464,10 +478,6 @@
                 return json_decode($response['body']);
             }
 
-        }
-
-        public static function update_options() {
-            error_log('hi');
         }
     }
 ?>
