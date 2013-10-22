@@ -1,4 +1,4 @@
 /*! Clef for WordPress - v1.8.0
  * http://getclef.com
  * Copyright (c) 2013; * Licensed GPLv2+ */
-function handleKeys(e){if(/https:\/\/clef.io/.test(e.origin)){var t=e.data.appID,a=e.data.appSecret,n=jQuery('input[name="wpclef[clef_settings_app_id]"]');n.val(t),jQuery('input[name="wpclef[clef_settings_app_secret]"]').val(a),jQuery(".wrap iframe").hide(),jQuery("form#wp_clef input[type=submit]").trigger("click")}}jQuery(document).ready(function(){window.addEventListener("message",handleKeys)});
+(function(e){function t(t){if(/https:\/\/clef.io/.test(t.origin)){var a=t.data.appID,c=t.data.appSecret,n=e('input[name="wpclef[clef_settings_app_id]"]'),i=e('input[name="wpclef[clef_settings_app_secret]"]'),o=e("form#wp_clef input[type=submit]");0===o.length&&(n=e('input[name="woocommerce_clef_clef_app_id"]'),i=e('input[name="woocommerce_clef_clef_app_secret"]'),o=e("form#mainform input[type=submit]")),n.val(a),i.val(c),o.trigger("click")}}e(document).ready(function(){window.addEventListener("message",t)})}).call(this,jQuery);

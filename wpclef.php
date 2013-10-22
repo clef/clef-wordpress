@@ -31,7 +31,7 @@ define( 'CLEF_VERSION', '1.8.0' );
 define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
 define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
-define( 'CLEF_BASE', 'http://clef.tk');
+define( 'CLEF_BASE', 'https://clef.io');
 // define( 'CLEF_BASE', 'http://arya.dev:5000' );
 define( 'CLEF_JS_URL', CLEF_BASE . '/static/javascripts/v3/clef.js');
 define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
@@ -59,9 +59,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
     define( "CLEF_WOO_VERSION", "0.0.1" );
     require_once('includes/class.clef-wc-gateway.php');
 
-    // if (!Clef::setting("woo_version") || CLEF_WOO_VERSION != Clef::setting("woo_version")) {
-    //     WC_Gateway_Clef::update(CLEF_WOO_VERSION);
-    // }
+    if (!Clef::setting("woo_version") || CLEF_WOO_VERSION != Clef::setting("woo_version")) {
+        WC_Gateway_Clef::instance()->update(CLEF_WOO_VERSION);
+    }
 
     add_action( 'plugins_loaded', array('WC_Gateway_Clef', 'init'));
 }

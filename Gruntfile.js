@@ -27,7 +27,8 @@ module.exports = function( grunt ) {
                     jQuery: true,
                     wp: true,
                     ajaxurl: true,
-                    console: true
+                    console: true,
+                    clef_pay_button: true
                 }
             }       
         },
@@ -35,7 +36,8 @@ module.exports = function( grunt ) {
             all: {
                 files: {
                     'assets/js/clef_heartbeat.js': ['assets/js/src/clef_heartbeat.js'],
-                    'assets/js/keys.js': ['assets/js/src/keys.js']
+                    'assets/js/keys.js': ['assets/js/src/keys.js'],
+                    'assets/js/single_product.js': ['assets/js/src/single_product.js']
                 },
                 options: {
                     banner: '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +
