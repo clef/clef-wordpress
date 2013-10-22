@@ -111,6 +111,10 @@
                 include CLEF_TEMPLATE_PATH . "tutorial.tpl.php";
                 wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.0', TRUE );
                 wp_enqueue_script('wpclef_keys');
+            } else {
+                $app_id = "a75725c2b4b5a91e8beb95d0a08eb44b";
+                $redirect_url = "https://developer.getclef.com/manage/sign_in?redirect=manage.application&app_id=" . $this->settings['clef_app_id'];
+                include CLEF_TEMPLATE_PATH . "woocommerce/manage_payments.tpl.php";
             }
             parent::admin_options();
         }
