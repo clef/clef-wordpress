@@ -11,21 +11,23 @@
 
         public static function init() {
             add_filter( 'woocommerce_payment_gateways', array(__CLASS__, "add_gateway") );
-            add_action( 'woocommerce_proceed_to_checkout', array(__CLASS__, "add_cart_button" ) );
-
-            add_action( 'woocommerce_api_clef_initiation', array(__CLASS__, "handle_initiation") );
-            add_action( 'woocommerce_api_clef_shipping', array(__CLASS__, "handle_shipping") );
-            add_action( 'woocommerce_api_clef_checkout', array(__CLASS__, "handle_checkout" ) );
-
             // hook to sync Clef ID and Secret when changed on other Clef page
             add_action( 'update_option_' . CLEF_OPTIONS_NAME, array(__CLASS__, "update_clef_settings_hook") );
 
-            if (self::instance()->get_option('product_page') == "yes") {
-                add_action( 'woocommerce_after_add_to_cart_button', array(__CLASS__, "add_single_product_button") );
-            }
+            if (self::enabled()) {
+                add_action( 'woocommerce_proceed_to_checkout', array(__CLASS__, "add_cart_button" ) );
 
-            wp_register_style('wpclef_styles', CLEF_URL . 'assets/css/wpclef.css', FALSE, '1.0.0');
-            wp_enqueue_style('wpclef_styles');
+                add_action( 'woocommerce_api_clef_initiation', array(__CLASS__, "handle_initiation") );
+                add_action( 'woocommerce_api_clef_shipping', array(__CLASS__, "handle_shipping") );
+                add_action( 'woocommerce_api_clef_checkout', array(__CLASS__, "handle_checkout" ) );
+
+                if (self::instance()->get_option('product_page') == "yes") {
+                    add_action( 'woocommerce_after_add_to_cart_button', array(__CLASS__, "add_single_product_button") );
+                }
+
+                wp_register_style('wpclef_styles', CLEF_URL . 'assets/css/wpclef.css', FALSE, '1.0.0');
+                wp_enqueue_style('wpclef_styles');
+            }
         }
 
         public static function instance() {
@@ -185,6 +187,10 @@
         public static function add_gateway( $methods ) {
             $methods[] = 'WC_Gateway_Clef';
             return $methods;
+        }
+
+        public static function enabled() {
+            return self::instance()->get_option("enabled") == "yes";
         }
 
         public static function add_clef_button($reference) {
