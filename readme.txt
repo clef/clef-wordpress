@@ -18,7 +18,7 @@ Clef provides the best single sign-on solution for WordPress. Once you sign in t
 
 [See how Clef works](https://getclef.com/how-clef-works), or watch the video below.
 
-http://vimeo.com/61393630
+http://vimeo.com/77091221
 
 == Installation ==
 
@@ -136,11 +136,7 @@ As long as your users register on the Clef App using the same email address as t
 
 == Credits ==
 
-<<<<<<< HEAD
-[Dave Ross](http://davidmichaelross.com) created the original WP Clef plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
-=======
 [Dave Ross](http://davidmichaelross.com) created the original Clef for WordPress plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
->>>>>>> master
 
 == Roadmap ==
 
