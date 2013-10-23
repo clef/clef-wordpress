@@ -8,17 +8,23 @@ Stable tag: 1.8
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-The simplest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
+The easiest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
 
 == Description ==
 
-[Clef](https://getclef.com) replaces insecure username/password authentication with strongly encrypted, multi-factor authentication using your smartphone. Simply click the "Log in with your phone" button, scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are instantly and securely logged in to all of your Clef-enabled websites.
+= What is Clef? =
+[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, multi-factor authentication using your smartphone. [Discover more](https://getclef.com/how-clef-works) about how Clef works.
 
-Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites. Say goodbye to passwords and hello to admistrative bliss--try Clef today!
+= How do I log in to WordPress using Clef? =
+http://vimeo.com/77091221
 
-[See how Clef works](https://getclef.com/how-clef-works), or watch the video below.
+1. Simply click the "Log in with your phone" button,
+1. then scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are logged in!
 
-http://vimeo.com/61393630
+= How does Clef's single sign-on/off work? =
+
+Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites.
+
 
 == Installation ==
 
@@ -42,17 +48,31 @@ If you have any questions or problems, don't hesitate to contact Clef support at
 
 == Frequently Asked Questions ==
 
+= How secure is Clef? =
+
+[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide military-grade protection for your WordPress logins in a beautifully simple and easy-to-use package.
+
+Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks. 
+
+= How secure is my data on Clef's servers? =
+
+Clef stores no personally identifying data on its servers. When you use the Clef App, you create a profile and a private encryption key that never leave your phone. The Clef App uses that data to generate a unique, encrypted, digital signature every time you log in. Since all of your personal info stays on your phone, nothing in the Clef database can compromise your identity even in the unlikely event that the server is hacked.
+
 = What if I lose my phone? =
 
-Visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone and disconnect it from your Clef account.
+Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone and disconnect it from your Clef account.
 
 = How much does Clef cost? =
 
 Clef is and will always be 100% free.
 
-= Can existing users on my site sign in with Clef? =
+= Can existing users on my WordPress site sign in with Clef? =
 
-As long as your users register on the Clef App using the same email address as their WordPress accounts, they can start using Clef right away. Also, once Clef for WordPress is activated, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
+As long as your users register on their Clef Apps using the same email address as their WordPress accounts, they can start using Clef instantly. Also, once Clef for WordPress is activated on your site, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
+
+= What if I have some users who do not have smartphones? =
+
+Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode (no passwords). If you want to enjoy the protection of full Clef mode but still need to allow passwords for users who do not have smartphones, then on the Clef Settings page you can create a secure override key that enables password logins at a secret URL.
 
 == Screenshots ==
 
