@@ -18,7 +18,7 @@ Clef provides the best single sign-on solution for WordPress. Once you sign in t
 
 [See how Clef works](https://getclef.com/how-clef-works), or watch the video below.
 
-http://vimeo.com/61393630
+http://vimeo.com/77091221
 
 == Installation ==
 
