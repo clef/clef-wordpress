@@ -41,7 +41,7 @@ Or:
 = Getting Started =
 
 1. If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-1. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
+2. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
 
 If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
 
