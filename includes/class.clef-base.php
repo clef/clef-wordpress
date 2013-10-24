@@ -121,5 +121,10 @@
         protected static function is_multisite_enabled() {
             return is_plugin_active_for_network('wpclef/wpclef.php') && get_site_option(self::MS_ENABLED_OPTION);
         }
+
+        
+        public static function woo_active() {
+            return in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
+        }
     }
 ?>

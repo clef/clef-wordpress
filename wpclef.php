@@ -55,7 +55,7 @@ if (!Clef::setting("version") || CLEF_VERSION != Clef::setting("version")) {
 }
 
 add_action( 'init', array('Clef', 'init'));
-if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+if ( Clef::woo_active() ) {
     define( "CLEF_WOO_VERSION", "0.0.1" );
     require_once('includes/class.clef-wc-gateway.php');
 
