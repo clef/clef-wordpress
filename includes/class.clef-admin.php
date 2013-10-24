@@ -74,11 +74,19 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
-        add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
-        if (self::is_multisite_enabled() && self::individual_settings()) {
-            add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
-            add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+        if (self::bruteprotect_active()) {
+            add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
+            if (self::is_multisite_enabled() && self::individual_settings()) {
+                add_submenu_page("bruteprotect-config", "Clef Multisite Options", "Clef Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+            }
+        } else {
+            add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
+            if (self::is_multisite_enabled() && self::individual_settings()) {
+                add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
+                add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+            } 
         }
+        
     }
 
     public static function general_settings() {
@@ -155,7 +163,11 @@ class ClefAdmin extends ClefBase {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
 
-            wp_redirect(admin_url('/options.php?page=clef'));
+            if (self::bruteprotect_active()) {
+                wp_redirect(admin_url('/admin.php?page=clef'));
+            } else {
+                wp_redirect(admin_url('/options.php?page=clef'));
+            }
             exit();
         }
     }
