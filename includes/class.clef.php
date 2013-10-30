@@ -91,7 +91,7 @@ class Clef extends ClefBase {
     }
 
     public static function update($version){
-        if ($version == "1.8.0") {
+        if (version_compare($version, "1.8.0", '<')) {
             $settings_changes = array(
                 "clef_password_settings_override_key" => "clef_override_settings_key"
             );
