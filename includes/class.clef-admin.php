@@ -6,6 +6,7 @@ class ClefAdmin extends ClefBase {
     const CLASS_NAME = "ClefAdmin";
 
     public static function init() {
+        add_action('admin_init', array(__CLASS__, "other_install"));
         add_action('admin_menu', array(__CLASS__, "admin_menu"));
         add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_init', array(__CLASS__, "settings_form"));
@@ -74,7 +75,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
-        if (self::bruteprotect_active()) {
+        if (self::bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
             add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
             if (self::is_multisite_enabled() && self::individual_settings()) {
                 add_submenu_page("bruteprotect-config", "Clef Multisite Options", "Clef Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
@@ -85,7 +86,11 @@ class ClefAdmin extends ClefBase {
                 add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
                 add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
             } 
-        }
+
+            if (!self::bruteprotect_active()) {
+                add_submenu_page('clef', 'Add Additional Security', 'Additional Security', 'manage_options', 'clef_other_install', array(__CLASS__, 'other_install_settings'));
+            }
+        } 
         
     }
 
@@ -101,6 +106,10 @@ class ClefAdmin extends ClefBase {
                 $values['clef_settings_app_secret'] == "") {
                 $site_name = urlencode(get_option('blogname'));
                 $site_domain = urlencode(get_option('siteurl'));
+                $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
+                if (get_site_option("bruteprotect_installed_clef")) {
+                    $tutorial_url .= '&bruteprotect=true';
+                }
                 include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
             } 
 
@@ -112,6 +121,31 @@ class ClefAdmin extends ClefBase {
 
     public static function multisite_settings() {
         include CLEF_TEMPLATE_PATH . "admin/multisite-disabled.tpl.php";
+    }
+
+    public static function other_install_settings() {
+        require_once 'lib/plugin-installer/installer.php';
+
+        $installer = new PluginInstaller( array( "name" => "BruteProtect", "slug" => "bruteprotect" ) );
+
+        // pass in current URL as base URL
+        $url = $installer->url();
+
+        include CLEF_TEMPLATE_PATH . "admin/other-install.tpl.php";
+    }
+
+    public static function other_install() {
+        require_once 'lib/plugin-installer/installer.php';
+
+        $installer = new PluginInstaller( array( 
+            "name" => "BruteProtect", 
+            "slug" => "bruteprotect",
+            "redirect" => admin_url( "admin.php?page=bruteprotect-config" )
+        ) );
+
+        if ($installer->called()) {
+            $installer->install_and_activate();
+        }
     }
 
     public static function settings_form() {
