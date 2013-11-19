@@ -57,6 +57,7 @@
             if (empty($_POST)) return;
 
             $exit = false;
+            $user = false;
             
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
                 return;
@@ -71,6 +72,33 @@
                     $user = get_user_by('login', $username);
 
                     if (get_user_meta($user->ID, 'clef_id')) {
+                        $exit = true;
+                    }
+                }
+            }
+
+            if (self::setting( 'clef_password_settings_disable_certain_passwords') != 'Disabled') {
+                $max_role = strtolower(self::setting( 'clef_password_settings_disable_certain_passwords'));
+                $role_map = array( 
+                    "subscriber",
+                    "editor",
+                    "author",
+                    "administrator",
+                    "super administrator"
+                );
+                if (!$user) {
+                    $user = get_user_by('login', $username);
+                    if ($user) {
+                        foreach ($user->roles as &$role) {
+                            $rank = array_search($role, $role_map);
+                            if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
+                                $exit = true;
+                                break;
+                            }
+                        } 
+                    }
+
+                    if ($max_role == "super administrator" && is_super_admin($user->ID)) {
                         $exit = true;
                     }
                 }

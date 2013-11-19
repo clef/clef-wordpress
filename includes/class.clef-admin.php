@@ -87,7 +87,7 @@ class ClefAdmin extends ClefBase {
                 add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
             } 
 
-            if (!self::bruteprotect_active()) {
+            if (!self::bruteprotect_active() && !is_multisite())  {
                 add_submenu_page('clef', 'Add Additional Security', 'Additional Security', 'manage_options', 'clef_other_install', array(__CLASS__, 'other_install_settings'));
             }
         } 
@@ -159,8 +159,14 @@ class ClefAdmin extends ClefBase {
 
         $pw_settings = $form->addSection('clef_password_settings', 'Password Settings', '');
         $pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
-        $pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
-        
+        $pw_settings->addField(
+            'disable_certain_passwords', 
+            'Disable passwords for all users with privileges greater than or equal to ', 
+            Settings_API_Util_Field::TYPE_SELECT,
+            "Disabled",
+            array( "options" => array( "Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
+        );
+        $pw_settings->addField('force', 'Disable passwords for all users and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
         $override_settings = $form->addSection('clef_override_settings', 'Override Settings', array(__CLASS__, 'print_override_descript'));
 
         $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a>';
