@@ -1,0 +1,14 @@
+.bruteprotect-install {
+  background: #515953;
+  padding: 40px;
+  margin-top: 20px; }
+  .bruteprotect-install p {
+    color: white;
+    font-size: 16px;
+    line-height: 1.2em;
+    font-family: "Helvetica Neue", "Helvetica", sans-serif; }
+
+.multisite-settings input[type="checkbox"] {
+  position: relative;
+  left: 30px;
+  top: 1px; }

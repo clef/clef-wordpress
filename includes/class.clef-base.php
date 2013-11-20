@@ -2,6 +2,7 @@
     class ClefBase {
 
         const MS_ENABLED_OPTION = "clef_multisite_enabled";
+        const MS_ALLOW_OVERRIDE_OPTION = 'clef_multsite_allow_override';
         const MS_OVERRIDE_OPTION = 'clef_multisite_override';
 
         private static $_individual_settings = null;
@@ -71,21 +72,29 @@
 
             if (is_null(self::$_individual_settings)) {
                 // we cache this check, this solves an issue on the first update
+                $override = false;
 
-                $override = get_option(self::MS_OVERRIDE_OPTION, 'undefined');
+                if (get_site_option(self::MS_ALLOW_OVERRIDE_OPTION)) {
+                    $override = get_option(self::MS_OVERRIDE_OPTION, 'undefined');
 
-                // check to see whether the override is set (it would not be set
-                // if the blog had previously been used without multisite 
-                // enabled). sets it if it is null.
-                if ($override == "undefined") {
-                    $override = !!get_option(CLEF_OPTIONS_NAME);
-                    add_option(self::MS_OVERRIDE_OPTION, $override);
+                    // check to see whether the override is set (it would not be set
+                    // if the blog had previously been used without multisite 
+                    // enabled). sets it if it is null.
+                    if ($override == "undefined") {
+                        $override = !!get_option(CLEF_OPTIONS_NAME);
+                        add_option(self::MS_OVERRIDE_OPTION, $override);
+                    }
+
                 }
 
                 self::$_individual_settings = $override && !is_network_admin();
             } 
             return self::$_individual_settings;
 
+        }
+
+        public static function multisite_disallow_settings_override() {
+            return self::is_multisite_enabled() && !get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
         }
 
         public static function redirect_error() {

@@ -87,8 +87,10 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 = 1.8.1 =
 
+* New feature: force users with certain permissions to log in with Clef
+* New feature: force multisite settings on sub-site users
+* New feature: adds integration with BruteProtect
 * Compatibility update: supports 3.7+
-* Adds integration with BruteProtect
 
 = 1.8.0 =
 

@@ -175,9 +175,9 @@ class Settings_API_Util_Section {
    * @param string $defaultValue
    * @return Settings_API_Util_Field
    */
-  public function addField($id, $title, $type, $defaultValue = null) {
+  public function addField($id, $title, $type, $defaultValue = null, $additionalArgs = null) {
 
-    $field = new Settings_API_Util_Field($this, $id, $title, $type, $defaultValue);
+    $field = new Settings_API_Util_Field($this, $id, $title, $type, $defaultValue, $additionalArgs);
 
     $this->fields[$id] = $field;
 
@@ -208,10 +208,11 @@ class Settings_API_Util_Field {
   const TYPE_TEXTAREA = 'textarea';
   const TYPE_CHECKBOX = 'checkbox';
   const TYPE_RADIO = 'radio';
+  const TYPE_SELECT = 'select';
 
   public $section;
 
-  function __construct($section, $id, $title, $type, $defaultValue) {
+  function __construct($section, $id, $title, $type, $defaultValue, $additionalArgs) {
 
     $this->section = $section;
     $this->name = $id;
@@ -230,6 +231,11 @@ class Settings_API_Util_Field {
     else {
       $values['value'] = $defaultValue;
     }
+
+    if ($additionalArgs) {
+      $values = array_merge($values, $additionalArgs);
+    }
+
 
     add_settings_field($section->id.'_'.$id, $title, array(__CLASS__, $type), $section->settings->id, $section->id, $values);
   }
@@ -303,6 +309,31 @@ class Settings_API_Util_Field {
     apply_filters('settings_api_util_radio', $html);
     echo $html;
   }
+
+  /**
+   * Select
+   * @param array $options
+   */
+  public static function select(array $options) {
+    ob_start();
+    do_action('settings_api_util_pre_select');
+    echo "<select name=\"{$options['name']}\">";
+    foreach ($options['options'] as &$opt) {
+      if ($opt == $options['value']) {
+        echo "<option selected>";
+      } else {
+        echo "<option>";
+      }
+      echo $opt . "</option>";
+    }
+    echo "</select>";
+    do_action('settings_api_util_after_select');
+    $html = ob_get_contents();
+    ob_end_clean();
+    apply_filters('settings_api_util_select', $html);
+    echo $html;
+  }
+
 }
 
 }
