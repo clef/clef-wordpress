@@ -77,8 +77,9 @@
                 }
             }
 
-            if (self::setting( 'clef_password_settings_disable_certain_passwords') != 'Disabled') {
-                $max_role = strtolower(self::setting( 'clef_password_settings_disable_certain_passwords'));
+            $disable_certain_passwords = self::setting( 'clef_password_settings_disable_certain_passwords');
+            if ($disable_certain_passwords && $disable_certain_passwords != 'Disabled') {
+                $max_role = strtolower($disable_certain_passwords);
                 $role_map = array( 
                     "subscriber",
                     "editor",
