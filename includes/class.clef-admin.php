@@ -75,6 +75,10 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
+        // if the single site override of settings is not allowed
+        // let's not add anything to the menu
+        if (self::multisite_disallow_settings_override()) return;
+
         if (self::bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
             add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
             if (self::is_multisite_enabled() && self::individual_settings()) {

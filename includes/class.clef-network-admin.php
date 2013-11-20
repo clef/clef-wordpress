@@ -61,6 +61,7 @@ class ClefNetworkAdmin extends ClefAdmin {
     public static function multisite_settings() {
         $form_url = "edit.php?action=clef_multisite";
         if (get_site_option(self::MS_ENABLED_OPTION)) {
+            $allow_override = get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
             include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-enabled.tpl.php';
         } else {
             include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-disabled.tpl.php';
@@ -72,16 +73,23 @@ class ClefNetworkAdmin extends ClefAdmin {
             die("Security check; nonce failed.");
         }
 
+
+        if (isset($_POST['allow_override_form'])) {
+            $value = isset($_POST['allow_override']);
+            update_site_option(self::MS_ALLOW_OVERRIDE_OPTION, $value);
+        }
+
+
         $enabled = get_site_option(self::MS_ENABLED_OPTION);
+        
+        if (isset($_POST['disable']) || isset($_POST['enable'])) {
+            update_site_option(self::MS_ENABLED_OPTION, !$enabled);
+        }
 
         if ($enabled) {
             // TODO: actions for when network wide multisite is disabled
         } else {
             // TODO: actions for when network wide multiside is enabled
-        }
-
-        if (!add_site_option(self::MS_ENABLED_OPTION, !$enabled)) {
-            update_site_option(self::MS_ENABLED_OPTION, !$enabled);
         }
 
         wp_redirect(add_query_arg(array('page' => 'clef_multisite', 'updated' => 'true'), network_admin_url('admin.php')));
@@ -91,6 +99,10 @@ class ClefNetworkAdmin extends ClefAdmin {
     public static function setup_plugin() {
         if (is_network_admin() && get_site_option("Clef_Activated")) {
             delete_site_option("Clef_Activated");
+
+            if (!add_site_option(self::MS_ENABLED_OPTION, true)) {
+                update_site_option(self::MS_ENABLED_OPTION, true);
+            }
 
             wp_redirect(network_admin_url('admin.php?page=clef'));
 

@@ -27,7 +27,7 @@ if ( ! defined('ABSPATH') ) exit();
 // Useful global constants
 define( 'CLEF_VERSION', '1.8.1' );
 define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
-define( 'CLEF_DEBUG', true);
+define( 'CLEF_DEBUG', false);
 if (CLEF_DEBUG) {
     require_once('includes/lib/symlink-fix.php');
 }

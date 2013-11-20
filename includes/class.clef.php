@@ -97,7 +97,7 @@ class Clef extends ClefBase {
             );
         }
 
-        if ($settings_changes) {
+        if (defined($settings_changes)) {
             foreach ($settings_changes as $old_name => $new_name) {
                 $value = self::setting($old_name);
                 if ($value) {
