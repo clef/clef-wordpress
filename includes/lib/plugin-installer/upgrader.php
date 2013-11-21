@@ -5,7 +5,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php'; // Need for up
 class Silent_Plugin_Installer_Skin extends WP_Upgrader_Skin {
     var $api;
     var $type;
-    var $errors = [];
+    var $errors = array();
 
     function __construct($args = array()) {
         $defaults = array( 'type' => 'web', 'url' => '', 'plugin' => '', 'nonce' => '', 'title' => '' );

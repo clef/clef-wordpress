@@ -6,7 +6,7 @@ Clef is the easy, and secure, way to log in to your WordPress sites. With Clef, 
 
 ## Installation
 
-To install the latest stable build of Clef for WordPress, we recommend you download Clef for WordPress directly from the WordPress plugin store [here](http://downloads.wordpress.org/plugin/wpclef.1.8.1.zip).
+To install the latest stable build of Clef for WordPress, we recommend you download Clef for WordPress directly from the WordPress plugin store [here](http://downloads.wordpress.org/plugin/wpclef.1.8.1.1.zip).
 
 To install, contribute to, and test the developer build, you should clone this repository.
 
