@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
-Version: 1.8.1
+Version: 1.8.1.1
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -25,7 +25,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 if ( ! defined('ABSPATH') ) exit();
 
 // Useful global constants
-define( 'CLEF_VERSION', '1.8.1' );
+define( 'CLEF_VERSION', '1.8.1.1' );
 define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
 define( 'CLEF_DEBUG', false);
 if (CLEF_DEBUG) {
