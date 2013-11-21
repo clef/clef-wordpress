@@ -3,8 +3,8 @@ Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: login, log in, authentication, identity, security, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, single sign-on, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 1.8
+Tested up to: 3.7.1
+Stable tag: 1.8.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -40,9 +40,10 @@ Or:
 = Getting Started =
 
 1. If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-1. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
+2. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
 
 If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
+
 
 == Frequently Asked Questions ==
 
@@ -83,6 +84,13 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.8.1 =
+
+* New feature: force users with certain permissions to log in with Clef
+* New feature: force multisite settings on sub-site users
+* New feature: adds integration with BruteProtect
+* Compatibility update: supports 3.7+
 
 = 1.8.0 =
 

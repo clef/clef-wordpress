@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
-Version: 1.8
+Version: 1.8.1
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -24,20 +24,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if ( ! defined('ABSPATH') ) exit();
 
-require_once('includes/lib/utils.inc');
-
 // Useful global constants
-define( 'CLEF_VERSION', '1.8.0' );
-define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
+define( 'CLEF_VERSION', '1.8.1' );
 define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
+define( 'CLEF_DEBUG', false);
+if (CLEF_DEBUG) {
+    require_once('includes/lib/symlink-fix.php');
+}
+define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
 // define( 'CLEF_BASE', 'https://clef.io');
 define( 'CLEF_BASE', 'https://clef.io' );
 define( 'CLEF_JS_URL', CLEF_BASE . '/v2/clef.js');
 define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
 define( 'CLEF_OPTIONS_NAME', 'wpclef');
-define( 'CLEF_DEBUG', false);
 
+
+require_once('includes/lib/utils.inc');
 require_once('includes/class.clef-base.php');
 require_once('includes/class.clef-settings.php');
 require_once('includes/class.clef.php');

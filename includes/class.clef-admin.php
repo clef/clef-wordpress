@@ -6,6 +6,7 @@ class ClefAdmin extends ClefBase {
     const CLASS_NAME = "ClefAdmin";
 
     public static function init() {
+        add_action('admin_init', array(__CLASS__, "other_install"));
         add_action('admin_menu', array(__CLASS__, "admin_menu"));
         add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_init', array(__CLASS__, "settings_form"));
@@ -74,11 +75,27 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_menu() {
-        add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
-        if (self::is_multisite_enabled() && self::individual_settings()) {
-            add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
-            add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
-        }
+        // if the single site override of settings is not allowed
+        // let's not add anything to the menu
+        if (self::multisite_disallow_settings_override()) return;
+
+        if (self::bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
+            add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
+            if (self::is_multisite_enabled() && self::individual_settings()) {
+                add_submenu_page("bruteprotect-config", "Clef Multisite Options", "Clef Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+            }
+        } else {
+            add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
+            if (self::is_multisite_enabled() && self::individual_settings()) {
+                add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
+                add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+            } 
+
+            if (!self::bruteprotect_active() && !is_multisite())  {
+                add_submenu_page('clef', 'Add Additional Security', 'Additional Security', 'manage_options', 'clef_other_install', array(__CLASS__, 'other_install_settings'));
+            }
+        } 
+        
     }
 
     public static function general_settings() {
@@ -93,6 +110,10 @@ class ClefAdmin extends ClefBase {
                 $values['clef_settings_app_secret'] == "") {
                 $site_name = urlencode(get_option('blogname'));
                 $site_domain = urlencode(get_option('siteurl'));
+                $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
+                if (get_site_option("bruteprotect_installed_clef")) {
+                    $tutorial_url .= '&bruteprotect=true';
+                }
                 include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
             } 
 
@@ -106,6 +127,31 @@ class ClefAdmin extends ClefBase {
         include CLEF_TEMPLATE_PATH . "admin/multisite-disabled.tpl.php";
     }
 
+    public static function other_install_settings() {
+        require_once 'lib/plugin-installer/installer.php';
+
+        $installer = new PluginInstaller( array( "name" => "BruteProtect", "slug" => "bruteprotect" ) );
+
+        // pass in current URL as base URL
+        $url = $installer->url();
+
+        include CLEF_TEMPLATE_PATH . "admin/other-install.tpl.php";
+    }
+
+    public static function other_install() {
+        require_once 'lib/plugin-installer/installer.php';
+
+        $installer = new PluginInstaller( array( 
+            "name" => "BruteProtect", 
+            "slug" => "bruteprotect",
+            "redirect" => admin_url( "admin.php?page=bruteprotect-config" )
+        ) );
+
+        if ($installer->called()) {
+            $installer->install_and_activate();
+        }
+    }
+
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
@@ -117,8 +163,14 @@ class ClefAdmin extends ClefBase {
 
         $pw_settings = $form->addSection('clef_password_settings', 'Password Settings', '');
         $pw_settings->addField('disable_passwords', 'Disable passwords for Clef users.', Settings_API_Util_Field::TYPE_CHECKBOX);
-        $pw_settings->addField('force', 'Disable passwords for all users, and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
-        
+        $pw_settings->addField(
+            'disable_certain_passwords', 
+            'Disable passwords for all users with privileges greater than or equal to ', 
+            Settings_API_Util_Field::TYPE_SELECT,
+            "Disabled",
+            array( "options" => array( "Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
+        );
+        $pw_settings->addField('force', 'Disable passwords for all users and hide the password login form.', Settings_API_Util_Field::TYPE_CHECKBOX);
         $override_settings = $form->addSection('clef_override_settings', 'Override Settings', array(__CLASS__, 'print_override_descript'));
 
         $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a>';
@@ -155,7 +207,11 @@ class ClefAdmin extends ClefBase {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
 
-            wp_redirect(admin_url('/options.php?page=clef'));
+            if (self::bruteprotect_active()) {
+                wp_redirect(admin_url('/admin.php?page=clef'));
+            } else {
+                wp_redirect(admin_url('/options.php?page=clef'));
+            }
             exit();
         }
     }

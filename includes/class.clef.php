@@ -91,17 +91,21 @@ class Clef extends ClefBase {
     }
 
     public static function update($version){
-        if ($version == "1.8.0") {
+        $settings_changes = false;
+        
+        if (version_compare($version, "1.8.0", '<')) {
             $settings_changes = array(
                 "clef_password_settings_override_key" => "clef_override_settings_key"
             );
         }
 
-        foreach ($settings_changes as $old_name => $new_name) {
-            $value = self::setting($old_name);
-            if ($value) {
-                self::setting($new_name, $value);
-                self::delete_setting($old_name);
+        if ($settings_changes) {
+            foreach ($settings_changes as $old_name => $new_name) {
+                $value = self::setting($old_name);
+                if ($value) {
+                    self::setting($new_name, $value);
+                    self::delete_setting($old_name);
+                }
             }
         }
 
