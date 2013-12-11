@@ -13,8 +13,11 @@
 
         public static function login_form() {
             $app_id = self::setting( 'clef_settings_app_id' );
-            $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&";
-            include CLEF_TEMPLATE_PATH."login_page.tpl.php";
+            $app_secret = self::setting( 'clef_settings_app_secret' );
+            if( !empty( $app_id ) && !empty( $app_secret ) ) {
+                $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&";
+                include CLEF_TEMPLATE_PATH."login_page.tpl.php";
+            }
         }
 
         public static function login_message() {
