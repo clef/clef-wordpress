@@ -35,7 +35,7 @@ define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
 // define( 'CLEF_BASE', 'https://clef.io');
 define( 'CLEF_BASE', 'https://clef.io' );
-define( 'CLEF_JS_URL', CLEF_BASE . '/v2/clef.js');
+define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
 define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
 define( 'CLEF_OPTIONS_NAME', 'wpclef');
 
