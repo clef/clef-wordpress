@@ -31,7 +31,7 @@ repository. Feel free to fork the repository and send a pull request,
 once it’s merged in you’ll get added. If not, feel free to bug
 [jessepollak](http://github.com/jessepollak) about it.
 
-Also, if you’re hacking away, hop in the [Clef support room](http://www.hipchat.com/gYDBysXUf). Chances are someone else will be around to answer
+Also, if you’re hacking away, hop in the [Clef support room](https://www.hipchat.com/go5kUkq90). Chances are someone else will be around to answer
 questions or bounce ideas off of.
 
 How To Contribute
