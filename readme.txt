@@ -1,7 +1,7 @@
 === Clef ===
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
-Tags: login, log in, authentication, identity, security, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, single sign-on, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
+Tags: login, two factor, two-factor, 2-factor, 2 factor, wordpress security, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, identity, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.7.1
 Stable tag: 1.8.1.2
@@ -13,7 +13,7 @@ The easiest and most secure way to log in to WordPress: no passwords, no tempora
 == Description ==
 
 = What is Clef? =
-[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, multi-factor authentication using your smartphone. [Discover more](https://getclef.com/how-clef-works) about how Clef works.
+[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, two-factor authentication using your smartphone. [Discover more](https://getclef.com) about how Clef works.
 
 = How do I log in to WordPress using Clef? =
 http://vimeo.com/77091221
