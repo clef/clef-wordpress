@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, 2 factor, wordpress security, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, identity, clef, wave, iphone, android, password, mfa, 2fa, multi-factor, sso, openid, oauth, phone, smartphone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 1.8.1.2
+Stable tag: 1.9
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -84,6 +84,11 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 1.9 =
+
+* New features: automatically add a badge showing off that your login is protected by Clef
+* Various stability fixes
 
 = 1.8.1.2 =
 

@@ -25,7 +25,6 @@ class Silent_Plugin_Installer_Skin extends WP_Upgrader_Skin {
     function after() {}
 
     function error($errors) {
-        error_log(print_r($errors, true));
         if ( is_string($errors) ) {
             $this->errors[] = $errors;
         } elseif ( is_wp_error($errors) && $errors->get_error_code() ) {

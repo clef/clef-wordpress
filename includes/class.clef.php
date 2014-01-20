@@ -26,7 +26,9 @@ class Clef extends ClefBase {
 
         ClefLogin::init();
         ClefLogout::init();
-    }
+
+        ClefBadge::hook_display();
+ }
     
     public static function disable_lost_password_form() {
         if (!empty($_POST['user_login'])) {
@@ -45,6 +47,11 @@ class Clef extends ClefBase {
             unset($_SESSION['logged_in_at']);
         }
         return $user;
+    }
+
+    public static function register_styles() {
+        wp_register_style('wpclef', CLEF_URL . 'assets/css/wpclef.min.css', FALSE, '1.0.0');
+        wp_enqueue_style('wpclef');
     }
 
     public static function create_table($name) {
@@ -90,8 +97,15 @@ class Clef extends ClefBase {
         delete_site_option(self::MS_ENABLED_OPTION);
     }
 
-    public static function update($version){
+    public static function update($version, $previous_version){
         $settings_changes = false;
+
+        if ($version == "1.9" && version_compare($previous_version, "1.9", '<')) {
+           if (!$previous_version) {
+                $previous_version = $version;
+           }
+           self::setting('installed_at', $previous_version);
+        }
         
         if (version_compare($version, "1.8.0", '<')) {
             $settings_changes = array(

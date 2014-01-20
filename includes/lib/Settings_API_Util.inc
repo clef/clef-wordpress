@@ -319,12 +319,19 @@ class Settings_API_Util_Field {
     do_action('settings_api_util_pre_select');
     echo "<select name=\"{$options['name']}\">";
     foreach ($options['options'] as &$opt) {
-      if ($opt == $options['value']) {
-        echo "<option selected>";
+      if (gettype($opt) == "array") {
+        $display = $opt[0];
+        $value = $opt[1];
       } else {
-        echo "<option>";
+        $display = $value = $opt;
       }
-      echo $opt . "</option>";
+
+      if ($value == $options['value']) {
+        echo "<option selected";
+      } else {
+        echo "<option";
+      }
+      echo " value='". $value . "'>" . $display . "</option>";
     }
     echo "</select>";
     do_action('settings_api_util_after_select');

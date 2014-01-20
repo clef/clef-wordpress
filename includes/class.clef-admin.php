@@ -13,7 +13,7 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
-        add_action( 'admin_notices', array(__CLASS__, 'display_errors') );
+        add_action('admin_notices', array(__CLASS__, 'display_errors') );
 
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
@@ -22,6 +22,8 @@ class ClefAdmin extends ClefBase {
         add_action('admin_notices', array(__CLASS__, 'edit_profile_errors'));
 
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
+
+        ClefBadge::hook_onboarding();
     }
 
     public static function display_errors() {
@@ -40,8 +42,7 @@ class ClefAdmin extends ClefBase {
         }
         
         if(preg_match("/clef/", $settings_page_name)) {
-            wp_register_style('wpclef_styles', CLEF_URL . 'assets/css/wpclef.css', FALSE, '1.0.0');
-            wp_enqueue_style('wpclef_styles');
+            Clef::register_styles();
 
             wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.0', TRUE );
             wp_enqueue_script('wpclef_keys');
@@ -183,6 +184,28 @@ class ClefAdmin extends ClefBase {
             $override_settings->addField('url', "Use this URL to allow passwords:", Settings_API_Util_Field::TYPE_TEXTFIELD);
         }
 
+        $support_clef_settings = $form->addSection('support_clef', 'Support Clef', array(__CLASS__, 'print_support_clef_descript'));
+        $support_clef_settings->addField(
+            'badge', 
+            "Support Clef by automatically adding a link!",
+            Settings_API_Util_Field::TYPE_SELECT,
+            "disabled",
+            array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
+        );
+        $support_clef_settings->addField(
+            "badge_code", 
+            "Manually add a badge", 
+            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
+            array("value" => htmlentities('<a href="https://getclef.com/wordpress-login" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'))
+        );
+        $support_clef_settings->addField(
+            "link_code", 
+            "Manually add a link", 
+            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
+            array("value" => htmlentities('<a href="https://getclef.com/wordpress-login" class="clef-badge" >WordPress Login Protected by Clef</a>'))
+        );
+
+
         return $form;
     }
 
@@ -222,6 +245,10 @@ class ClefAdmin extends ClefBase {
 
     public static function print_override_descript() {
         echo "<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
+    }
+
+    public static function print_support_clef_descript() {
+        echo "<p>Clef is, and will always be, free for you and your users. We'd really appreciate it if you'd support us (and show visitors they are browsing a secure site) by adding a link to Clef in your site footer!</p>";
     }
 }
 

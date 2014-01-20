@@ -223,6 +223,8 @@
 
                 }
 
+                ClefOnboarding::mark_login();
+
                 // Log in the user
                 $_SESSION['logged_in_at'] = time();
 
