@@ -22,6 +22,7 @@ class ClefAdmin extends ClefBase {
         add_action('admin_notices', array(__CLASS__, 'edit_profile_errors'));
 
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
+
     }
 
     public static function display_errors() {
@@ -67,7 +68,7 @@ class ClefAdmin extends ClefBase {
             $_SESSION['Clef_Messages'] = array_unique( $_SESSION['Clef_Messages'] );
             echo '<div id="login_error">';
             foreach ( $_SESSION['Clef_Messages'] as $message ) {
-                echo '<p><strong>ERROR</strong>: '. $message . ' </p>';
+                _e( '<p><strong>ERROR</strong>: '. $message . ' </p>', 'clef');
             }
             echo '</div>';
             $_SESSION['Clef_Messages'] = array();
@@ -82,17 +83,17 @@ class ClefAdmin extends ClefBase {
         if (self::bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
             add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
             if (self::is_multisite_enabled() && self::individual_settings()) {
-                add_submenu_page("bruteprotect-config", "Clef Multisite Options", "Clef Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+                add_submenu_page("bruteprotect-config", __("Clef Multisite Options", 'clef'), __("Clef Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
             }
         } else {
-            add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
+            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", 'clef', array(__CLASS__, 'general_settings'));
             if (self::is_multisite_enabled() && self::individual_settings()) {
-                add_submenu_page('clef','Settings','Settings','manage_options','clef', array(__CLASS__, 'general_settings'));
-                add_submenu_page("clef", "Multisite Options", "Enable Multisite", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+                add_submenu_page('clef', __('Settings', 'clef'), __('Settings', 'clef'),'manage_options','clef', array(__CLASS__, 'general_settings'));
+                add_submenu_page("clef", __("Multisite Options", 'clef'), __("Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
             } 
 
             if (!self::bruteprotect_active() && !is_multisite())  {
-                add_submenu_page('clef', 'Add Additional Security', 'Additional Security', 'manage_options', 'clef_other_install', array(__CLASS__, 'other_install_settings'));
+                add_submenu_page('clef', __('Add Additional Security', 'clef'), __('Additional Security', 'clef'), 'manage_options', 'clef_other_install', array(__CLASS__, 'other_install_settings'));
             }
         } 
         
@@ -217,11 +218,11 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function print_api_descript() {
-        echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
+        _e('<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>', 'clef');
     }
 
     public static function print_override_descript() {
-        echo "<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>";
+        _e("<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>", 'clef');
     }
 }
 
