@@ -23,7 +23,7 @@
         public static function login_message() {
             $_SESSION['Clef_Messages'] = array_unique( $_SESSION['Clef_Messages'] );
             foreach ( $_SESSION['Clef_Messages'] as $message ) {
-                echo '<div id="login_error"><p><strong>ERROR</strong>: ' . $message . '</p></div>';
+                echo '<div id="login_error"><p><strong>' . __('ERROR', 'clef') .'</strong>: ' . $message . '</p></div>';
             }
             $_SESSION['Clef_Messages'] = array();
         }
@@ -46,7 +46,7 @@
                     return;
                 } else {
                     wp_enqueue_script('jquery');
-                    login_header(__('Log In'), ''); ?>
+                    login_header(__('Log In'), 'clef'); ?>
                     <form name="loginform" id="loginform" action="" method="post">
                     <?php do_action('login_form'); ?>
                     </form>
@@ -109,7 +109,7 @@
             }
 
             if ($exit) {
-                $_SESSION['Clef_Messages'][] = "Passwords have been disabled.";
+                $_SESSION['Clef_Messages'][] = __( "Passwords have been disabled.", 'clef');
                 header("Location: " . wp_login_url());
                 exit();
             }
@@ -130,7 +130,7 @@
                 $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
 
                 if ( is_wp_error($response)  ) {
-                    $_SESSION['Clef_Messages'][] = "Something went wrong: " . $response->get_error_message();
+                    $_SESSION['Clef_Messages'][] = __( "Something went wrong: ", 'clef' ) . $response->get_error_message();
                     self::redirect_error();
                     return;
                 }
@@ -138,7 +138,7 @@
                 $body = json_decode( $response['body'] );
 
                 if ( !isset($body->success) || $body->success != 1 ) {
-                    $_SESSION['Clef_Messages'][] = 'Error retrieving Clef access token: ' . $body->error;
+                    $_SESSION['Clef_Messages'][] = __( 'Error retrieving Clef access token: ', 'clef') . $body->error;
                     self::redirect_error();
                 }
 
@@ -148,7 +148,7 @@
                 // Get info
                 $response = wp_remote_get( CLEF_API_BASE . "info?access_token={$access_token}" );
                 if ( is_wp_error($response)  ) {
-                    $_SESSION['Clef_Messages'][] = "Something went wrong: " . $response->get_error_message();
+                    $_SESSION['Clef_Messages'][] = __( "Something went wrong: ", 'clef') . $response->get_error_message();
                     self::redirect_error();
                     return;
                 }
@@ -156,7 +156,7 @@
                 $body = json_decode( $response['body'] );
 
                 if ( !isset($body->success) || $body->success != 1 ) {
-                    $_SESSION['Clef_Messages'][] = 'Error retrieving Clef user data: '  . $body->error;
+                    $_SESSION['Clef_Messages'][] = __('Error retrieving Clef user data: ', 'clef')  . $body->error;
                     self::redirect_error();
                 }
 
@@ -190,7 +190,7 @@
                             $users_can_register = get_site_option('users_can_register', 0);
                             if(!$users_can_register) {
                                 // if users cannot register, return to login screen
-                                $_SESSION['Clef_Messages'][] = "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.";
+                                $_SESSION['Clef_Messages'][] = __( "There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef');
                                 self::redirect_error();
                             }
 
@@ -206,7 +206,7 @@
 
                             $id = wp_insert_user($userdata);
                             if(is_wp_error($id)) {
-                                $_SESSION['Clef_Messages'][] = "An error occurred when creating your new account: " . $res->get_error_message();
+                                $_SESSION['Clef_Messages'][] = __( "An error occurred when creating your new account: ", 'clef') . $res->get_error_message();
                                 self::redirect_error();
                             }
                             $user = get_user_by('id', $id );
