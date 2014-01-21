@@ -6,8 +6,9 @@
         const MS_OVERRIDE_OPTION = 'clef_multisite_override';
 
         private static $_individual_settings = null;
+        private static $_settings = null;
 
-        public static function setting( $name , $value=false ) {
+        public static function setting( $name , $value=false, $refresh=false) {
 
             if (self::individual_settings()) {
                 $getter = 'get_option';
@@ -17,21 +18,19 @@
                 $setter = 'update_site_option';
             }
 
-            static $clef_settings = NULL;
-            if ( $clef_settings === NULL ) {
-                $clef_settings = $getter( CLEF_OPTIONS_NAME );
-            }
+            if ($refresh || !self::$_settings) {
+                self::$_settings = $getter( CLEF_OPTIONS_NAME );
+            } 
 
-            
             if ($value) {
                 
-                $clef_settings[$name] = $value;
+                self::$_settings[$name] = $value;
 
-                $setter(CLEF_OPTIONS_NAME, $clef_settings);
+                $setter(CLEF_OPTIONS_NAME, self::$_settings);
                 return $value;
             } else {
-                if ( isset( $clef_settings[$name] ) ) {
-                    return $clef_settings[$name];
+                if ( isset( self::$_settings[$name] ) ) {
+                    return self::$_settings[$name];
                 }
             }
 
@@ -48,15 +47,14 @@
                 $setter = 'update_site_option';
             }
 
-            static $clef_settings = NULL;
-            if ( $clef_settings === NULL ) {
-                $clef_settings = $getter( CLEF_OPTIONS_NAME );
+            if (!self::$_settings) {
+                self::$_settings = $getter( CLEF_OPTIONS_NAME );
             }
 
-            if (isset($clef_settings[$name])) {
-                $value = $clef_settings[$name];
-                unset($clef_settings[$name]);
-                $setter(CLEF_OPTIONS_NAME, $clef_settings);
+            if (isset(self::$_settings[$name])) {
+                $value = self::$_settings[$name];
+                unset(self::$_settings[$name]);
+                $setter(CLEF_OPTIONS_NAME, self::$_settings);
                 return $value;
             }
             

@@ -111,7 +111,7 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public static function print_api_descript() {
-        echo '<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>';
+        _e('<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>', 'clef');
     }
 }
 

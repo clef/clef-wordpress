@@ -2,8 +2,8 @@
 /*
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
-Description: Clef lets you log in and register on your Wordpress site using only your phone — forget your usernames and passwords.
-Version: 1.8.1.2
+Description: Clef lets you log in and register on your WordPress site using only your phone — forget your usernames and passwords.
+Version: 1.9
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -25,15 +25,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 if ( ! defined('ABSPATH') ) exit();
 
 // Useful global constants
-define( 'CLEF_VERSION', '1.8.1.2' );
+define( 'CLEF_VERSION', '1.9' );
 define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
-define( 'CLEF_DEBUG', false);
+define( 'CLEF_DEBUG', true);
 if (CLEF_DEBUG) {
     require_once('includes/lib/symlink-fix.php');
 }
 define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
-// define( 'CLEF_BASE', 'https://clef.io');
+// define( 'CLEF_BASE', 'http://arya.dev:5000');
+// define('CLEF_JS_URL', CLEF_BASE . '/static/javascripts/v3/clef.js');
 define( 'CLEF_BASE', 'https://clef.io' );
 define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
 define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
@@ -44,17 +45,22 @@ require_once('includes/lib/utils.inc');
 require_once('includes/class.clef-base.php');
 require_once('includes/class.clef-settings.php');
 require_once('includes/class.clef.php');
+require_once('includes/class.clef-onboarding.php');
 require_once('includes/class.clef-admin.php');
 require_once('includes/class.clef-network-admin.php');
 require_once('includes/class.clef-login.php');
 require_once('includes/class.clef-logout.php');
+require_once('includes/class.clef-badge.php');
 
 register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugin'));
 register_deactivation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'deactivate_plugin'));
 register_uninstall_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'uninstall_plugin'));
 
+// Load translations
+load_plugin_textdomain( 'clef', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 if (!Clef::setting("version") || CLEF_VERSION != Clef::setting("version")) {
-    Clef::update(CLEF_VERSION);
+    Clef::update(CLEF_VERSION, Clef::setting("version"));
 }
 
 add_action( 'init', array('Clef', 'init'));

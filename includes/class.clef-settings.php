@@ -24,6 +24,14 @@
         public static function validate(array $input) {
             $input =  parent::validate($input);
 
+            if (isset($input['clef_settings_app_id'])) {
+                $input['clef_settings_app_id'] = esc_attr($input['clef_settings_app_id']);
+            }
+
+            if (isset($input['clef_settings_app_secret'])) {
+                $input['clef_settings_app_secret'] = esc_attr($input['clef_settings_app_secret']);
+            }
+
             if (isset($input['clef_password_settings_force'])) {
                 if (!get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
                     unset($input['clef_password_settings_force']);
@@ -31,8 +39,8 @@
                     add_settings_error(
                         CLEF_OPTIONS_NAME,
                         esc_attr("settings_updated"),
-                        "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>.",
-                        "error"
+                        __( "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>." , 'clef'),
+                        __( "error", 'clef')
                     );
                 }
             }

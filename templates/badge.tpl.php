@@ -1,0 +1,1 @@
+<a href="https://getclef.com/wordpress-login" class="clef-badge <?php if ($pretty) {?> pretty <?php } ?>" >WordPress Login Protected by Clef</a>

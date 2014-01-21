@@ -35,7 +35,8 @@ module.exports = function( grunt ) {
             all: {
                 files: {
                     'assets/js/clef_heartbeat.js': ['assets/js/src/clef_heartbeat.js'],
-                    'assets/js/keys.js': ['assets/js/src/keys.js']
+                    'assets/js/keys.js': ['assets/js/src/keys.js'],
+                    'assets/js/badge.js': ['assets/js/src/badge.js']
                 },
                 options: {
                     banner: '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +

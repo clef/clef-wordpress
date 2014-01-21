@@ -3,7 +3,6 @@
     class ClefLogout extends ClefBase {
 
         public static function init() {
-
             add_filter( 'heartbeat_received',  array(__CLASS__, "hook_heartbeat"), 10, 3);
 
             if (isset($_POST)) {
@@ -24,11 +23,22 @@
 
                 $response = wp_remote_post( CLEF_API_BASE . 'logout', array( 'method' => 'POST',
                     'timeout' => 45, 'body' => $args ) ); 
+
                 $body = json_decode( $response['body'] );
 
                 if (isset($body->success) && isset($body->clef_id)) {
                     self::set_user_logged_out_at($body->clef_id);
+                    $return = array(
+                        "success" => true
+                    );
+                } else {
+                    $return = array(
+                        "success" => false,
+                        "error" => $body->error
+                    );
                 }
+                echo(json_encode($return));
+                exit();
             }
         }
 
