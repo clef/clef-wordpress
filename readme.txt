@@ -87,7 +87,8 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 = 1.9 =
 
-* New features: automatically add a badge showing off that your login is protected by Clef
+* New feature: automatically add a badge showing off that your login is protected by Clef
+* New feature: adds framework for adding translations to plugin
 * Various stability fixes
 
 = 1.8.1.2 =
