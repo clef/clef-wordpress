@@ -58,7 +58,7 @@ class ClefBadge extends ClefBase {
             self::setting(self::SETTING_NAME, $_POST['enable']);
             ClefOnboarding::set_key(self::PROMPT_HIDDEN, true);
         } else if (isset($_POST['disable']) && $_POST['disable']) {
-            ClefOnboarding::set_key(self::PROMPT_HIDDEN, $_POST['disable']);
+            ClefOnboarding::set_key(self::PROMPT_HIDDEN, true);
         }
 
         echo json_encode(array( "success" => true ));
