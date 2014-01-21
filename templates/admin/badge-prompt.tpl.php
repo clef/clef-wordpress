@@ -1,7 +1,7 @@
 <div class="updated clef-badge-prompt">
     <div class="badge-fade">
         <?php if ($had_clef_before_onboarding) { ?>
-            <h3><?php _e("You just logged in securely with Clef!", "clef");</h3>
+            <h3><?php _e("You just logged in securely with Clef!", "clef"); ?></h3>
         <?php } else { ?>
             <h3><?php _e("You just completed your first login with Clef!", "clef"); ?></h3>
         <?php } ?>
