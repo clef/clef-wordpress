@@ -35,7 +35,7 @@ class Clef extends ClefBase {
             $user = get_user_by( 'login', $_POST['user_login'] );
             
             if ( (self::setting( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
-                $_SESSION['Clef_Messages'][] = "Lost password resets have been disabled.";
+                $_SESSION['Clef_Messages'][] = __("Lost password resets have been disabled.", 'clef');
                 header("Location: " . wp_login_url());
                 exit();
             }

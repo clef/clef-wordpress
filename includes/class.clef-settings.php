@@ -39,8 +39,8 @@
                     add_settings_error(
                         CLEF_OPTIONS_NAME,
                         esc_attr("settings_updated"),
-                        "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>.",
-                        "error"
+                        __( "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>." , 'clef'),
+                        __( "error", 'clef')
                     );
                 }
             }

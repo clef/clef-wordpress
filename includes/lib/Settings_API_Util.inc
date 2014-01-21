@@ -237,7 +237,7 @@ class Settings_API_Util_Field {
     }
 
 
-    add_settings_field($section->id.'_'.$id, $title, array(__CLASS__, $type), $section->settings->id, $section->id, $values);
+    add_settings_field($section->id.'_'.$id, __( $title, 'clef' ), array(__CLASS__, $type), $section->settings->id, $section->id, $values);
   }
 
   ///////////////////

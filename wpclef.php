@@ -56,6 +56,9 @@ register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugi
 register_deactivation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'deactivate_plugin'));
 register_uninstall_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'uninstall_plugin'));
 
+// Load translations
+load_plugin_textdomain( 'clef', false, dirname( plugin_basename( __FILE__ ) ) );
+
 if (!Clef::setting("version") || CLEF_VERSION != Clef::setting("version")) {
     Clef::update(CLEF_VERSION, Clef::setting("version"));
 }
