@@ -1,324 +1,320 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-01-20 17:02-0800\n"
-"PO-Revision-Date: 2014-01-20 17:07-0800\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: en\n"
+"POT-Creation-Date: 2014-01-20 17:57-0800\n"
+"PO-Revision-Date: 2014-01-20 18:04-0800\n"
+"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
+"Language-Team: Clef <support@getclef.com>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.3\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SearchPath-0: .\n"
 
-#: includes/class.clef-admin.php:71
+#: ../includes/class.clef-admin.php:71
 msgid "<p><strong>ERROR</strong>: "
 msgstr ""
 
-#: includes/class.clef-admin.php:86
+#: ../includes/class.clef-admin.php:86
 msgid "Clef Multisite Options"
 msgstr ""
 
-#: includes/class.clef-admin.php:86
+#: ../includes/class.clef-admin.php:86
 msgid "Clef Enable Multisite"
 msgstr ""
 
-#: includes/class.clef-admin.php:89
+#: ../includes/class.clef-admin.php:89
 msgid "Clef"
 msgstr ""
 
-#: includes/class.clef-admin.php:91
-#: templates/network_admin/multisite-settings-enabled.tpl.php:5
+#: ../includes/class.clef-admin.php:91
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:5
 msgid "Settings"
 msgstr ""
 
-#: includes/class.clef-admin.php:92
+#: ../includes/class.clef-admin.php:92
 msgid "Multisite Options"
 msgstr ""
 
-#: includes/class.clef-admin.php:92
+#: ../includes/class.clef-admin.php:92
 msgid "Enable Multisite"
 msgstr ""
 
-#: includes/class.clef-admin.php:96
+#: ../includes/class.clef-admin.php:96
 msgid "Add Additional Security"
 msgstr ""
 
-#: includes/class.clef-admin.php:96
+#: ../includes/class.clef-admin.php:96
 msgid "Additional Security"
 msgstr ""
 
-#: includes/class.clef-admin.php:121
+#: ../includes/class.clef-admin.php:121
 msgid "Clef Settings"
-msgstr ""
+msgstr "Configuración de Clef"
 
-#: includes/class.clef-admin.php:162
+#: ../includes/class.clef-admin.php:162
 msgid "App ID"
 msgstr ""
 
-#: includes/class.clef-admin.php:163
+#: ../includes/class.clef-admin.php:163
 msgid "App Secret"
 msgstr ""
 
-#: includes/class.clef-admin.php:166
+#: ../includes/class.clef-admin.php:166
 msgid "Disable passwords for Clef users."
 msgstr ""
 
-#: includes/class.clef-admin.php:169
+#: ../includes/class.clef-admin.php:169
 msgid ""
 "Disable passwords for all users with privileges greater than or equal to "
 msgstr ""
 
-#: includes/class.clef-admin.php:174
+#: ../includes/class.clef-admin.php:174
 msgid "Disable passwords for all users and hide the password login form."
 msgstr ""
 
-#: includes/class.clef-admin.php:184
+#: ../includes/class.clef-admin.php:184
 msgid "Use this URL to allow passwords:"
 msgstr ""
 
-#: includes/class.clef-admin.php:187
+#: ../includes/class.clef-admin.php:187
 msgid "Support Clef"
 msgstr ""
 
-#: includes/class.clef-admin.php:190
+#: ../includes/class.clef-admin.php:190
 msgid "Support Clef by automatically adding a link!"
 msgstr ""
 
-#: includes/class.clef-admin.php:197
+#: ../includes/class.clef-admin.php:197
 msgid "Manually add a badge"
 msgstr ""
 
-#: includes/class.clef-admin.php:203
+#: ../includes/class.clef-admin.php:203
 msgid "Manually add a link"
 msgstr ""
 
-#: includes/class.clef-admin.php:243 includes/class.clef-network-admin.php:114
+#: ../includes/class.clef-admin.php:243
+#: ../includes/class.clef-network-admin.php:114
 msgid ""
 "<p>To manage the Clef application that syncs with your plugin, please visit "
 "<a href=\"https://developer.getclef.com\">the Clef developer site</a>.</p>"
 msgstr ""
 
-#: includes/class.clef-admin.php:247
+#: ../includes/class.clef-admin.php:247
 msgid ""
 "<p>If you choose to allow only Clef logins on your site, you can set an "
 "'override' URL. </br> With this URL, you'll be able to log into your site "
 "with passwords even if Clef-only mode is enabled.</p>"
 msgstr ""
 
-#: includes/class.clef-admin.php:251
+#: ../includes/class.clef-admin.php:251
 msgid ""
 "<p>Clef is, and will always be, free for you and your users. We'd really "
 "appreciate it if you'd support us (and show visitors they are browsing a "
 "secure site) by adding a link to Clef in your site footer!</p>"
 msgstr ""
 
-#: includes/class.clef-login.php:26
+#: ../includes/class.clef-login.php:26
 msgid "ERROR"
 msgstr ""
 
-#: includes/class.clef-login.php:49
+#: ../includes/class.clef-login.php:49
 msgid "Log In"
 msgstr ""
 
-#: includes/class.clef-login.php:112
+#: ../includes/class.clef-login.php:112
 msgid "Passwords have been disabled."
 msgstr ""
 
-#: includes/class.clef-login.php:133 includes/class.clef-login.php:151
+#: ../includes/class.clef-login.php:133 ../includes/class.clef-login.php:151
 msgid "Something went wrong: "
 msgstr ""
 
-#: includes/class.clef-login.php:141
+#: ../includes/class.clef-login.php:141
 msgid "Error retrieving Clef access token: "
 msgstr ""
 
-#: includes/class.clef-login.php:159
+#: ../includes/class.clef-login.php:159
 msgid "Error retrieving Clef user data: "
 msgstr ""
 
-#: includes/class.clef-login.php:193
+#: ../includes/class.clef-login.php:193
 msgid ""
 "There's no user whose email address matches your phone's Clef account. You "
 "must either connect your Clef account on your WordPress profile page or use "
 "the same email for both WordPress and Clef."
 msgstr ""
 
-#: includes/class.clef-login.php:209
+#: ../includes/class.clef-login.php:209
 msgid "An error occurred when creating your new account: "
 msgstr ""
 
-#: includes/class.clef-settings.php:42
+#: ../includes/class.clef-settings.php:42
 msgid ""
 "Please link your Clef account before you fully disable passwords. You can do "
 "this <a href='"
 msgstr ""
 
-#: includes/class.clef-settings.php:43
+#: ../includes/class.clef-settings.php:43
 msgid "error"
 msgstr ""
 
-#: includes/class.clef.php:38
+#: ../includes/class.clef.php:38
 msgid "Lost password resets have been disabled."
 msgstr ""
 
-#: templates/tutorial.tpl.php:4
+#: ../templates/tutorial.tpl.php:4
 msgid "Setup Wizard"
 msgstr ""
 
-#: templates/tutorial.tpl.php:5
+#: ../templates/tutorial.tpl.php:5
 msgid "Something not working? Try the guide"
 msgstr ""
 
-#: templates/tutorial.tpl.php:6
+#: ../templates/tutorial.tpl.php:6
 msgid "here "
 msgstr ""
 
-#: templates/tutorial.tpl.php:7
+#: ../templates/tutorial.tpl.php:7
 msgid "or email "
 msgstr ""
 
-#: templates/user_profile.tpl.php:2
+#: ../templates/user_profile.tpl.php:2
 msgid "Connect your Clef account"
 msgstr ""
 
-#: templates/user_profile.tpl.php:3
+#: ../templates/user_profile.tpl.php:3
 msgid ""
 "Click the Clef button and sync your phone to enable Clef logins for this "
 "WordPress account."
 msgstr ""
 
-#: templates/user_profile.tpl.php:10 templates/user_profile.tpl.php:15
+#: ../templates/user_profile.tpl.php:10 ../templates/user_profile.tpl.php:15
 msgid "Disconnect Clef account"
 msgstr ""
 
-#: templates/user_profile.tpl.php:11
+#: ../templates/user_profile.tpl.php:11
 msgid ""
 "Click the checkbox and update your profile to disconnect the current Clef "
 "account."
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:4
+#: ../templates/admin/badge-prompt.tpl.php:4
 msgid "You just logged in securely with Clef!"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:6
+#: ../templates/admin/badge-prompt.tpl.php:6
 msgid "You just completed your first login with Clef!"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:8
+#: ../templates/admin/badge-prompt.tpl.php:8
 msgid ""
 "Let your visitors know that you are protected with the Clef login by adding "
 "a Clef badge to the footer of your page. </br> This helps your visitors know "
 "they are browsing a secure site and helps us spread the word about Clef."
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:9
+#: ../templates/admin/badge-prompt.tpl.php:9
 msgid "Add protected by Clef badge"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:10
+#: ../templates/admin/badge-prompt.tpl.php:10
 msgid "Not right now"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:13
+#: ../templates/admin/badge-prompt.tpl.php:13
 msgid "How about a small link?"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:14
+#: ../templates/admin/badge-prompt.tpl.php:14
 msgid ""
 "We're dedicated to protecting the WordPress community for <b>free, forever</"
 "b> and we'd really appreciate your support!"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:15
+#: ../templates/admin/badge-prompt.tpl.php:15
 msgid "Add protected by Clef link"
 msgstr ""
 
-#: templates/admin/badge-prompt.tpl.php:16
+#: ../templates/admin/badge-prompt.tpl.php:16
 msgid "I'll support Clef another way"
 msgstr ""
 
-#: templates/admin/multisite-disabled.tpl.php:3
+#: ../templates/admin/multisite-disabled.tpl.php:3
 msgid "Clef for Multisite is overridden"
 msgstr ""
 
-#: templates/admin/multisite-disabled.tpl.php:4
+#: ../templates/admin/multisite-disabled.tpl.php:4
 msgid ""
 "Currently, you've decided to use your own settings for Clef. To re-enabled "
 "the settings configured by your Multisite administrator, please click the "
 "button below."
 msgstr ""
 
-#: templates/admin/multisite-disabled.tpl.php:7
-#: templates/network_admin/multisite-settings-disabled.tpl.php:9
+#: ../templates/admin/multisite-disabled.tpl.php:7
+#: ../templates/network_admin/multisite-settings-disabled.tpl.php:9
 msgid "Enable multisite"
 msgstr ""
 
-#: templates/admin/multsite-enabled.tpl.php:3
+#: ../templates/admin/multsite-enabled.tpl.php:3
 msgid "Clef for Multisite is enabled"
 msgstr ""
 
-#: templates/admin/multsite-enabled.tpl.php:4
+#: ../templates/admin/multsite-enabled.tpl.php:4
 msgid ""
 "Your Clef installation is currently managed by your multisite administrator. "
 "To use your own Clef settings, please click the button below."
 msgstr ""
 
-#: templates/admin/multsite-enabled.tpl.php:7
+#: ../templates/admin/multsite-enabled.tpl.php:7
 msgid "Override multisite"
 msgstr ""
 
-#: templates/admin/other-install.tpl.php:3
+#: ../templates/admin/other-install.tpl.php:3
 msgid "Add more security to your site"
 msgstr ""
 
-#: templates/admin/other-install.tpl.php:4
+#: ../templates/admin/other-install.tpl.php:4
 msgid "Other plugins that Clef recommends for the security of your site."
 msgstr ""
 
-#: templates/admin/other-install.tpl.php:7
+#: ../templates/admin/other-install.tpl.php:7
 msgid ""
 "BruteProtect is a cloud-powered Brute Force attack prevention plugin. It "
 "leverages millions of WordPress sites to identify and block malicious IPs."
 msgstr ""
 
-#: templates/admin/other-install.tpl.php:8
+#: ../templates/admin/other-install.tpl.php:8
 msgid "Install and Activate BruteProtect"
 msgstr ""
 
-#: templates/network_admin/multisite-settings-disabled.tpl.php:4
+#: ../templates/network_admin/multisite-settings-disabled.tpl.php:4
 msgid "Enable Clef on Multisites"
 msgstr ""
 
-#: templates/network_admin/multisite-settings-disabled.tpl.php:5
+#: ../templates/network_admin/multisite-settings-disabled.tpl.php:5
 msgid "Enabling this will copy your Clef settings to every multisite."
 msgstr ""
 
-#: templates/network_admin/multisite-settings-enabled.tpl.php:4
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:4
 msgid "Clef for Multisite is Enabled"
 msgstr ""
 
-#: templates/network_admin/multisite-settings-enabled.tpl.php:8
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:8
 msgid "Allow individual multi-sites to override settings"
 msgstr ""
 
-#: templates/network_admin/multisite-settings-enabled.tpl.php:15
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:15
 msgid "Disable Multsite"
 msgstr ""
 
-#: templates/network_admin/multisite-settings-enabled.tpl.php:16
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:16
 msgid ""
 "Disabling multisite will force individual sites to set their own settings."
 msgstr ""
 
-#: templates/network_admin/multisite-settings-enabled.tpl.php:21
+#: ../templates/network_admin/multisite-settings-enabled.tpl.php:21
 msgid "Disable multisite"
 msgstr ""
