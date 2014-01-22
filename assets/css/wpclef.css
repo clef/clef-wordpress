@@ -30,7 +30,7 @@ body {
     text-indent: -579px;
     height: 50px;
     width: 140px;
-    background: url(../img/badge.png);
+    background: url("http://bit.ly/clef-wordpress-badge");
     background-size: 100% 100%;
     opacity: .8; }
     .clef-badge.pretty:hover {
