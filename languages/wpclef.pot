@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-01-20 17:57-0800\n"
-"PO-Revision-Date: 2014-01-20 17:57-0800\n"
+"POT-Creation-Date: 2014-01-22 09:27-0800\n"
+"PO-Revision-Date: 2014-01-22 09:27-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Clef <support@getclef.com>\n"
 "Language: en\n"
@@ -56,12 +56,20 @@ msgstr ""
 msgid "Clef Settings"
 msgstr ""
 
+#: ../includes/class.clef-admin.php:159
+msgid "API Settings"
+msgstr ""
+
 #: ../includes/class.clef-admin.php:162
 msgid "App ID"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:163
 msgid "App Secret"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:165
+msgid "Password Settings"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:166
@@ -75,6 +83,14 @@ msgstr ""
 
 #: ../includes/class.clef-admin.php:174
 msgid "Disable passwords for all users and hide the password login form."
+msgstr ""
+
+#: ../includes/class.clef-admin.php:175
+msgid "Override Settings"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:177
+msgid "Set an override key"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:184

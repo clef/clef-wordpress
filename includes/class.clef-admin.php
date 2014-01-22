@@ -156,13 +156,13 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-        $settings = $form->addSection('clef_settings', 'API Settings', array(__CLASS__, 'print_api_descript'));
+        $settings = $form->addSection('clef_settings', __('API Settings'), array(__CLASS__, 'print_api_descript'));
         $values = $settings->settings->values;
 
         $settings->addField('app_id', __('App ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', __('App Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
 
-        $pw_settings = $form->addSection('clef_password_settings', 'Password Settings', '');
+        $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'disable_certain_passwords', 
@@ -172,9 +172,9 @@ class ClefAdmin extends ClefBase {
             array( "options" => array("Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
         );
         $pw_settings->addField('force', __('Disable passwords for all users and hide the password login form.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
-        $override_settings = $form->addSection('clef_override_settings', 'Override Settings', array(__CLASS__, 'print_override_descript'));
+        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
 
-        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">Set an override key</a>';
+        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">' . __("Set an override key") . '</a>';
         
         $override_settings->addField('key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
         $key = Clef::setting( 'clef_override_settings_key' );
