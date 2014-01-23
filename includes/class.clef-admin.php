@@ -27,21 +27,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function display_messages() {
-        
-        error_log(print_r(get_settings_errors(CLEF_OPTIONS_NAME), true));
-        if (get_settings_errors(CLEF_OPTIONS_NAME)) {
-            settings_errors( CLEF_OPTIONS_NAME );
-        } else {
-            error_log(print_r($_GET, true));
-            if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
-                $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
-                error_log($form->is_configured());
-                if ($form->is_configured()) {
-                    $user_configured = !!get_user_meta(wp_get_current_user()->ID, 'clef_id');
-                    include CLEF_TEMPLATE_PATH . 'admin/configured-message.tpl.php';
-                }
-            }
-        }
+        settings_errors( CLEF_OPTIONS_NAME );
     }
 
     public static function admin_enqueue_scripts($hook) {
