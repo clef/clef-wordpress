@@ -13,7 +13,7 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
-        add_action('admin_notices', array(__CLASS__, 'display_errors') );
+        add_action('admin_notices', array(__CLASS__, 'display_messages') );
 
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
@@ -26,8 +26,22 @@ class ClefAdmin extends ClefBase {
         ClefBadge::hook_onboarding();
     }
 
-    public static function display_errors() {
-        settings_errors( CLEF_OPTIONS_NAME );
+    public static function display_messages() {
+        
+        error_log(print_r(get_settings_errors(CLEF_OPTIONS_NAME), true));
+        if (get_settings_errors(CLEF_OPTIONS_NAME)) {
+            settings_errors( CLEF_OPTIONS_NAME );
+        } else {
+            error_log(print_r($_GET, true));
+            if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
+                $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
+                error_log($form->is_configured());
+                if ($form->is_configured()) {
+                    $user_configured = !!get_user_meta(wp_get_current_user()->ID, 'clef_id');
+                    include CLEF_TEMPLATE_PATH . 'admin/configured-message.tpl.php';
+                }
+            }
+        }
     }
 
     public static function admin_enqueue_scripts($hook) {
@@ -205,7 +219,7 @@ class ClefAdmin extends ClefBase {
         # if the app is configured, add the API settings at the bottom of
         # the form
         if ($form->is_configured()) {
-            self::add_api_settings($form);
+            self::add_api_settings($form, true);
         }
 
         return $form;
@@ -253,10 +267,13 @@ class ClefAdmin extends ClefBase {
         _e("<p>Clef is, and will always be, free for you and your users. We'd really appreciate it if you'd support us (and show visitors they are browsing a secure site) by adding a link to Clef in your site footer!</p>", "clef");
     }
 
-    public static function add_api_settings($form) {
+    public static function add_api_settings($form, $configured=false) {
         $settings = $form->addSection('clef_settings', __('API Settings'), array(__CLASS__, 'print_api_descript'));
         $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        if (!$configured) {
+            $settings->addField('oauth_code', '', Settings_API_Util_Field::TYPE_HIDDEN, '');
+        }
         return $settings;
     }
 }

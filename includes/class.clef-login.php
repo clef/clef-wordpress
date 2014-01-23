@@ -120,47 +120,13 @@
             if ( isset( $_REQUEST['clef_callback'] ) && isset( $_REQUEST['code'] ) ) {
 
                 // Authenticate
-
-                $args = array(
-                    'code' => $_REQUEST['code'],
-                    'app_id' => self::setting( 'clef_settings_app_id' ),
-                    'app_secret' => self::setting( 'clef_settings_app_secret' ),
-                );
-
-                $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
-
-                if ( is_wp_error($response)  ) {
-                    $_SESSION['Clef_Messages'][] = __( "Something went wrong: ", 'clef' ) . $response->get_error_message();
-                    self::redirect_error();
-                    return;
-                }
-
-                $body = json_decode( $response['body'] );
-
-                if ( !isset($body->success) || $body->success != 1 ) {
-                    $_SESSION['Clef_Messages'][] = __( 'Error retrieving Clef access token: ', 'clef') . $body->error;
+                try {
+                    $info = self::exchange_oauth_code_for_info($_REQUEST['code']);
+                } catch (LoginException $e) {
+                    $_SESSION['Clef_Messages'][] = $e->getMessage();
                     self::redirect_error();
                 }
 
-                $access_token = $body->access_token;
-                $_SESSION['wpclef_access_token'] = $access_token;
-
-                // Get info
-                $response = wp_remote_get( CLEF_API_BASE . "info?access_token={$access_token}" );
-                if ( is_wp_error($response)  ) {
-                    $_SESSION['Clef_Messages'][] = __( "Something went wrong: ", 'clef') . $response->get_error_message();
-                    self::redirect_error();
-                    return;
-                }
-
-                $body = json_decode( $response['body'] );
-
-                if ( !isset($body->success) || $body->success != 1 ) {
-                    $_SESSION['Clef_Messages'][] = __('Error retrieving Clef user data: ', 'clef')  . $body->error;
-                    self::redirect_error();
-                }
-
-                $info = $body->info;
                 $clef_id = $info->id;
                 $email = isset($info->email) ? $info->email : "";
                 $first_name = isset($info->first_name) ? $info->first_name : "";
