@@ -103,12 +103,7 @@ class ClefAdmin extends ClefBase {
         if (self::individual_settings()) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-            $values = $form->values;
-
-            if(!isset($values['clef_settings_app_id']) ||
-                !isset($values['clef_settings_app_secret']) || 
-                $values['clef_settings_app_id'] == "" ||
-                $values['clef_settings_app_secret'] == "") {
+            if(!$form->is_configured()) {
                 $site_name = urlencode(get_option('blogname'));
                 $site_domain = urlencode(get_option('siteurl'));
                 $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
@@ -116,9 +111,11 @@ class ClefAdmin extends ClefBase {
                     $tutorial_url .= '&bruteprotect=true';
                 }
                 include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
-            } 
+            } else {
+                include CLEF_TEMPLATE_PATH."admin/settings-header.tpl.php";
+            }
 
-            $form->renderBasicForm(__('Clef Settings', "clef"), Settings_API_Util::ICON_SETTINGS);   
+            $form->renderBasicForm('', Settings_API_Util::ICON_SETTINGS);   
         } else {
             include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
         }
@@ -156,11 +153,11 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-        $settings = $form->addSection('clef_settings', __('API Settings'), array(__CLASS__, 'print_api_descript'));
-        $values = $settings->settings->values;
-
-        $settings->addField('app_id', __('App ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        $settings->addField('app_secret', __('App Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        # if the app is not configured, add the API settings at the top of
+        # the form
+        if (!$form->is_configured()) {
+            self::add_api_settings($form);
+        }
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
@@ -205,6 +202,11 @@ class ClefAdmin extends ClefBase {
             array("value" => htmlentities('<a href="http://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'))
         );
 
+        # if the app is configured, add the API settings at the bottom of
+        # the form
+        if ($form->is_configured()) {
+            self::add_api_settings($form);
+        }
 
         return $form;
     }
@@ -240,7 +242,7 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function print_api_descript() {
-        _e('<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>', 'clef');
+        _e('<p>For more advanced settings, log in to your <a href="https://developer.getclef.com">Clef dashboard</a> or contact <a href="mailto:support@getclef.com">support@getclef.com</a>.</p>', 'clef');
     }
 
     public static function print_override_descript() {
@@ -249,6 +251,13 @@ class ClefAdmin extends ClefBase {
 
     public static function print_support_clef_descript() {
         _e("<p>Clef is, and will always be, free for you and your users. We'd really appreciate it if you'd support us (and show visitors they are browsing a secure site) by adding a link to Clef in your site footer!</p>", "clef");
+    }
+
+    public static function add_api_settings($form) {
+        $settings = $form->addSection('clef_settings', __('API Settings'), array(__CLASS__, 'print_api_descript'));
+        $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        return $settings;
     }
 }
 
