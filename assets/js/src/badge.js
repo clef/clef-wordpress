@@ -30,6 +30,10 @@
         });
 
         $prompt.find('.no-badge').click(function() {
+
+            var data = $.extend( { disable: true }, ajaxData);
+            $.post(ajaxurl, data, function(data) {}, 'json');
+
             $prompt.find('.badge-fade').fadeOut(function() {
                 $prompt.find('.link-fade').fadeIn();
             });
@@ -42,7 +46,6 @@
             sending = true;
 
             var data = $.extend( { disable: true }, ajaxData);
-
             $prompt.slideUp();
             $.post(ajaxurl, data, function(data) {}, 'json');
         });
