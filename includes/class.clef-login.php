@@ -3,7 +3,7 @@
 
         public static function init() {
             add_action('login_form', array( __CLASS__, 'login_form' ) );
-            add_action('wp_authenticate', array(__CLASS__, 'disable_passwords'));
+            add_action('wp_authenticate_user', array(__CLASS__, 'disable_passwords'));
             add_action('login_form_login', array( __CLASS__, 'disable_login_form' ) );
             add_action('login_message', array( __CLASS__, 'login_message' ) );
             add_filter('wp_login_failed', array(__CLASS__, 'handle_login_failed'));
@@ -56,12 +56,11 @@
             }
         }
 
-        public static function disable_passwords($username) {
+        public static function disable_passwords($user) {
             if (empty($_POST)) return;
 
             $exit = false;
-            $user = false;
-            
+
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
                 return;
             }
@@ -71,12 +70,8 @@
             }
 
             if (self::setting( 'clef_password_settings_disable_passwords' )) {
-                if(username_exists($username)) {
-                    $user = get_user_by('login', $username);
-
-                    if (get_user_meta($user->ID, 'clef_id')) {
-                        $exit = true;
-                    }
+                if (get_user_meta($user->ID, 'clef_id')) {
+                    $exit = true;
                 }
             }
 
@@ -90,28 +85,28 @@
                     "administrator",
                     "super administrator"
                 );
-                if (!$user) {
-                    $user = get_user_by('login', $username);
-                    if ($user) {
-                        foreach ($user->roles as &$role) {
-                            $rank = array_search($role, $role_map);
-                            if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
-                                $exit = true;
-                                break;
-                            }
-                        } 
-                    }
 
-                    if ($max_role == "super administrator" && is_super_admin($user->ID)) {
+                foreach ($user->roles as &$role) {
+                    $rank = array_search($role, $role_map);
+                    if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
                         $exit = true;
+                        break;
                     }
+                } 
+
+                if ($max_role == "super administrator" && is_super_admin($user->ID)) {
+                    $exit = true;
                 }
+
             }
 
             if ($exit) {
-                $_SESSION['Clef_Messages'][] = __("Passwords have been disabled.", 'clef');
-                header("Location: " . wp_login_url());
-                exit();
+                add_filter('xmlrpc_login_error', function() {
+                    return new IXR_Error( 403, "Passwords have been disabled for this user." );
+                });
+                return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
+            } else {
+                return $user;
             }
         }
 
