@@ -63,8 +63,15 @@
                         add_settings_error(
                             CLEF_OPTIONS_NAME,
                             esc_attr("settings_updated"),
-                            __("You're configured and ready to use Clef. Click the logout button on your phone and you'll be automatically logged out in a few seconds. <span style='display:none;' id='logout-hook-error'><br/></br>Looks like something went wrong with our automatic configuration of your logout hook. We've sent you an email to get it fixed. For now, click <a href='$logout_url'>this link</a> to logout and try Clef!</span>"),
+                            __("You're configured and ready to use Clef. Click the logout button on your phone and you'll be automatically logged out in a few seconds."),
                             "updated"
+                        );
+
+                        add_settings_error(
+                            CLEF_OPTIONS_NAME,
+                            esc_attr("settings_updated"),
+                            __("Looks like something went wrong with our automatic configuration of your logout hook. We've sent you an email to get it fixed. For now, click <a href='$logout_url'>this link</a> to logout and try Clef!"),
+                            "error logout-hook-error"
                         );
                     } catch (LoginException $e) {
                         $message = __("Your site is configured, but there was an error automatically connecting your Clef account. Please try linking your Clef account again <a href='" . admin_url('profile.php#clef') . "'>here</a>. If the issue persists, please email <a href='mailto:support@getclef.com'>support@getclef.com</a>.");

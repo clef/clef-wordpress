@@ -50,3 +50,6 @@ body {
   position: relative;
   left: 30px;
   top: 1px; }
+
+.logout-hook-error {
+  display: none; }

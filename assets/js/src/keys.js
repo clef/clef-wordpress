@@ -20,7 +20,7 @@
 
         // show logout error message after an amount of time
         setTimeout(function() {
-            $('#logout-hook-error').slideDown();
+            $('.logout-hook-error').slideDown();
         }, 20000);
     });
 
