@@ -1,6 +1,6 @@
 (function($) {
     function handleKeys(data) {
-        if (!(/http:\/\/arya.dev:5000/.test(data.origin))){
+        if (!(/https:\/\/clef.io/.test(data.origin))){
             return;
         }
         var appID = data.data.appID,
