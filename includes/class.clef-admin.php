@@ -44,7 +44,7 @@ class ClefAdmin extends ClefBase {
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.0', TRUE );
+            wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.1', TRUE );
             wp_enqueue_script('wpclef_keys');
         } 
     }
