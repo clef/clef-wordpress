@@ -61,7 +61,7 @@
 
             $exit = false;
 
-            if (isset($_REQUEST['override']) && self::valid_override($_REQUEST['override'])) {
+            if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
                 return;
             }
 
