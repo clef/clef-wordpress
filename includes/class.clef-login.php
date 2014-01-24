@@ -101,11 +101,10 @@
             }
 
             if ($exit) {
-                $msg = "Passwords have been disabled for this user.";
-                add_filter('xmlrpc_login_error', function() use ($msg) {
-                    return new IXR_Error( 403, $msg );
+                add_filter('xmlrpc_login_error', function() {
+                    return new IXR_Error( 403, "Passwords have been disabled for this user." );
                 });
-                return new WP_Error('passwords_disabled', $msg);
+                return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
             } else {
                 return $user;
             }
