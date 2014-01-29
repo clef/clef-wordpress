@@ -169,10 +169,17 @@ class ClefAdmin extends ClefBase {
             array( "options" => array("Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
         );
         $pw_settings->addField('force', __('Disable passwords for all users and hide the password login form.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
-        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
 
+        if (self::passwords_disabled()) {
+            $pw_settings->addField(
+                'xml_allowed', 
+                __('Always allow passwords for XML API (necessary for things like the WordPress mobile app)'),
+                Settings_API_Util_Field::TYPE_CHECKBOX
+            );
+        }
+
+        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
         $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">' . __("Set an override key") . '</a>';
-        
         $override_settings->addField('key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
         $key = Clef::setting( 'clef_override_settings_key' );
 

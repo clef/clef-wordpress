@@ -100,7 +100,7 @@
 
             }
 
-            if ($exit) {
+            if ($exit && !(XMLRPC_REQUEST && self::xml_passwords_enabled())) {
                 add_filter('xmlrpc_login_error', function() {
                     return new IXR_Error( 403, "Passwords have been disabled for this user." );
                 });

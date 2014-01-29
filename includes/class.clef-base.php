@@ -176,5 +176,15 @@
         public static function bruteprotect_active() {
             return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
         }
+
+        public static function passwords_disabled() {
+            return self::setting('clef_password_settings_disable_passwords') 
+                || self::setting('clef_password_settings_force') 
+                || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
+        }
+
+        public static function xml_passwords_enabled() {
+            return !self::passwords_disabled() || (self::passwords_disabled() && self::setting('clef_password_settings_xml_allowed'));
+        }
     }
 ?>
