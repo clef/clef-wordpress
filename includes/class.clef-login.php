@@ -101,9 +101,7 @@
             }
 
             if ($exit && !(XMLRPC_REQUEST && self::xml_passwords_enabled())) {
-                add_filter('xmlrpc_login_error', function() {
-                    return new IXR_Error( 403, "Passwords have been disabled for this user." );
-                });
+                add_filter('xmlrpc_login_error', array(__CLASS__, "return_xml_error_message"));
                 return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
             } else {
                 return $user;
@@ -198,6 +196,10 @@
         private static function valid_override($override) {
             $valid_override = self::setting('clef_override_settings_key');
             return $valid_override && $valid_override != "" && $override == $valid_override;
+        }
+
+        public static function return_xml_error_message() {
+            return new IXR_Error( 403, "Passwords have been disabled for this user." );
         }
     }
 ?>
