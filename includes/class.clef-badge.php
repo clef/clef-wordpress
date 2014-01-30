@@ -20,6 +20,7 @@ class ClefBadge extends ClefBase {
         if (empty($_POST)) {
             self::register_styles();  
             self::register_scripts();      
+            self::hide_prompt();
             add_action('admin_notices', array(__CLASS__, 'badge_prompt_html'));
         } else {
             add_action('wp_ajax_clef_badge_prompt', array(__CLASS__, 'handle_badge_prompt_ajax'));
@@ -56,12 +57,15 @@ class ClefBadge extends ClefBase {
     public static function handle_badge_prompt_ajax() {
         if (isset($_POST['enable'])) {
             self::setting(self::SETTING_NAME, $_POST['enable']);
-            ClefOnboarding::set_key(self::PROMPT_HIDDEN, true);
-        } else if (isset($_POST['disable']) && $_POST['disable']) {
-            ClefOnboarding::set_key(self::PROMPT_HIDDEN, true);
-        }
+        } 
+
+        self::hide_prompt();
 
         echo json_encode(array( "success" => true ));
         die(); 
+    }
+
+    public static function hide_prompt() {
+        ClefOnboarding::set_key(self::PROMPT_HIDDEN, true);
     }
 }
