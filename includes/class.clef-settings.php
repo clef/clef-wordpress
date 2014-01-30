@@ -70,7 +70,7 @@
                         add_settings_error(
                             CLEF_OPTIONS_NAME,
                             esc_attr("settings_updated"),
-                            __("Looks like something went wrong with our automatic configuration of your logout hook. We've sent you an email to get it fixed. For now, click <a href='$logout_url'>this link</a> to logout and try Clef!"),
+                            __("Didn't get logged out? Something may have gone wrong with our automatic configuration of your logout hook. We've sent you an email to get it fixed. For now, click <a href='$logout_url'>this link</a> to logout and try Clef!"),
                             "error logout-hook-error"
                         );
                     } catch (LoginException $e) {
