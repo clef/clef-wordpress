@@ -18,9 +18,9 @@ The easiest and most secure way to log in to WordPress: no passwords, no tempora
 = Hello Password-Free WordPress Logins! =
 http://vimeo.com/77091221
 
-= Single Sign-On (and Single Sign-Off!) =
+= Addictively Convenient Single Sign-On (and Sign-Off!) =
 
-Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using the Clef app, you can sign into all of your Clef-enabled sites with a single click in your browser. And once you sign out of the Clef app on your phone, you are automatically signed out of all your WordPress sites.
+Whether you administer one or one-thousand WordPress sites, Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using the Clef app, you can sign in securely to all of your Clef-enabled sites with a single click in your browser. And once you sign out of the Clef app on your phone, you are automatically signed out of all your WordPress sites. See the [FAQ](http://wordpress.org/plugins/wpclef/faq/) for more on using Clef's SSO with WordPress.
 
 == Installation ==
 
@@ -74,6 +74,20 @@ When the **disable passwords** option is selected, the Clef Plugin hardens your 
 - malicious password resets (regardless of whether one's e-mail account has been compromised)
 - bruteforce attacks
 - XML-RPC-API-based attacks
+
+= How does Clef's secure single sign-on/off (SSO) feature work with WordPress? =
+
+Clef's secure SSO feature is arguably the most useful (and most addictive!) feature that Clef provides. Our users frequently tell us that they immediately fall in love with Clef's SSO once they start using it, and we think you will too. Here's how it works.
+
+Ordinary (i.e., non-Clef-enabled) WP authentication has one key: your user name and password. Turn the key on (i.e., input your user name & password), and you are logged in. Turn the key off (i.e., manually pressing the "Log Out" link), and you are logged out.
+
+Clef-enabled WP authentication has two keys: a parent key (i.e., the Clef smartphone app) and a child key (i.e., Clef's "Log in with your phone" button on the WordPress log in page). The relation between these keys is important. The parent key always takes priority over the child keys. The child keys will not turn on until the parent key is turned on. When the parent key is turned off, all child keys are turned off. This twofold key design both increases your site's authentication security and enhances its usability with SSO functionality. 
+
+Clef's SSO workflow looks like this:
+
+1. At the beginning of your work period, turn on the parent key (i.e., sign in to the Clef app by pressing the "Log in with your phone" button at one of your Clef-enabled sites and syncing your phone with the Wave). Set the timer to expire at the end of your work period, or press the infinity button to keep the parent key turned on until you manually turn it off.
+1. On your computer sign in to as many additional Clef-enabled WordPress sites as you desire by turning on the child key on those sites (i.e., pressing the "Log in with your phone" button). You can also sign out of these sites manually (i.e., turn off thier child keys) while the parent key remains turned on.
+1. When you are done working, turn off the parent key (i.e., sign out of the Clef app). All child keys that were turned on during your session will be turned off automatically (i.e., you will be automatically logged out of all of your Clef-enabled sites).
 
 = Can existing users on my WordPress site sign in with Clef? =
 
