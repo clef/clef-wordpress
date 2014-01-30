@@ -200,13 +200,13 @@ class ClefAdmin extends ClefBase {
             "badge_code", 
             __("Manually add a badge", "clef"), 
             Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="http://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'))
+            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'))
         );
         $support_clef_settings->addField(
             "link_code", 
             __("Manually add a link", "clef"), 
             Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="http://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'))
+            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'))
         );
 
         # if the app is configured, add the API settings at the bottom of
