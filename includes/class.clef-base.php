@@ -25,6 +25,7 @@
             } 
 
             if ($value) {
+                
                 self::$_settings[$name] = $value;
 
                 $setter(CLEF_OPTIONS_NAME, self::$_settings);
