@@ -100,6 +100,10 @@ class Clef extends ClefBase {
     public static function update($version, $previous_version){
         $settings_changes = false;
 
+        if ($version == "1.9.1" && version_compare($previous_version, "1.9.1", '<')) {
+            ClefBadge::hide_prompt();
+        }
+
         if ($version == "1.9" && version_compare($previous_version, "1.9", '<')) {
            if (!$previous_version) {
                 $previous_version = $version;

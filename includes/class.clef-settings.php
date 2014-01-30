@@ -40,9 +40,54 @@
                         CLEF_OPTIONS_NAME,
                         esc_attr("settings_updated"),
                         __( "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>." , 'clef'),
-                        __( "error", 'clef')
+                        "error"
                     );
                 }
+            }
+
+            if (isset($input['clef_settings_oauth_code'])) {
+                $oauth_code = $input['clef_settings_oauth_code'];
+
+                if ($oauth_code != "" && strlen($oauth_code) == 32)  {
+
+                    try {
+                        $info = ClefBase::exchange_oauth_code_for_info(
+                            $oauth_code,
+                            $input['clef_settings_app_id'],
+                            $input['clef_settings_app_secret']
+                        );
+                        ClefBase::associate_clef_id($info->id);
+
+                        $logout_url = wp_logout_url();
+
+                        add_settings_error(
+                            CLEF_OPTIONS_NAME,
+                            esc_attr("settings_updated"),
+                            __("You're configured and ready to use Clef. Click the logout button on your phone and you'll be automatically logged out in a few seconds."),
+                            "updated"
+                        );
+
+                        add_settings_error(
+                            CLEF_OPTIONS_NAME,
+                            esc_attr("settings_updated"),
+                            __("Didn't get logged out? Something may have gone wrong with our automatic configuration of your logout hook. We've sent you an email to get it fixed. For now, click <a href='$logout_url'>this link</a> to logout and try Clef!"),
+                            "error logout-hook-error"
+                        );
+                    } catch (LoginException $e) {
+                        $message = __("Your site is configured, but there was an error automatically connecting your Clef account. Please try linking your Clef account again <a href='" . admin_url('profile.php#clef') . "'>here</a>. If the issue persists, please email <a href='mailto:support@getclef.com'>support@getclef.com</a>.");
+                        $message .= "<br/><br/>";
+                        $message .= $e->getMessage();
+
+                        add_settings_error(
+                            CLEF_OPTIONS_NAME,
+                            esc_attr("settings_updated"),
+                            $message,
+                            "error"
+                        );
+                    }
+                }
+
+                $input['clef_settings_oauth_code'] = "";
             }
 
             return $input;
@@ -65,6 +110,17 @@
 
             return $instances[$id];
 
+        }
+
+        public function is_configured() {
+            $values = $this->values;
+            $configured = isset($values['clef_settings_app_id']) && isset($values['clef_settings_app_secret']);
+
+            if ($configured) {
+                $configured = $values['clef_settings_app_id'] != "" && $values['clef_settings_app_secret'] != "";
+            }
+
+            return $configured;
         }
     }
 ?>
