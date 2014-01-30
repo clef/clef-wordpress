@@ -32,7 +32,7 @@ if (CLEF_DEBUG) {
 }
 
 // Useful global constants
-define( 'CLEF_VERSION', '1.9' );
+define( 'CLEF_VERSION', '1.9.1' );
 define( 'CLEF_PATH', trailingslashit(WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__))) );
 define( 'CLEF_URL', plugin_dir_url( __FILE__ ) );
 define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
