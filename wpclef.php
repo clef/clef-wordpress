@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your WordPress site using only your phone — forget your usernames and passwords.
-Version: 1.9
+Version: 1.9.1
 Author: David Michael Ross
 Author URI: http://www.davidmichaelross.com/
 License: MIT
@@ -24,22 +24,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if ( ! defined('ABSPATH') ) exit();
 
-// Useful global constants
-define( 'CLEF_VERSION', '1.9' );
-define( 'CLEF_PATH',    WP_PLUGIN_DIR . '/wpclef/' );
-define( 'CLEF_DEBUG', false);
+if (!defined('CLEF_DEBUG')) {
+    define('CLEF_DEBUG', false);
+}
 if (CLEF_DEBUG) {
     require_once('includes/lib/symlink-fix.php');
 }
-define( 'CLEF_URL',     plugin_dir_url( __FILE__ ) );
-define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
-// define( 'CLEF_BASE', 'http://arya.dev:5000');
-// define('CLEF_JS_URL', CLEF_BASE . '/static/javascripts/v3/clef.js');
-define( 'CLEF_BASE', 'https://clef.io' );
-define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
-define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
-define( 'CLEF_OPTIONS_NAME', 'wpclef');
 
+// Useful global constants
+define( 'CLEF_VERSION', '1.9.1' );
+define( 'CLEF_PATH', trailingslashit(WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__))) );
+define( 'CLEF_URL', plugin_dir_url( __FILE__ ) );
+define( 'CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
+define( 'CLEF_OPTIONS_NAME', 'wpclef');
+if (!defined('CLEF_BASE')) define( 'CLEF_BASE', 'https://clef.io' );
+if (!defined('CLEF_JS_URL')) define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
+if (!defined('CLEF_API_BASE')) define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
 
 require_once('includes/lib/utils.inc');
 require_once('includes/class.clef-base.php');

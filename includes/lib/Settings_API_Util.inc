@@ -209,6 +209,7 @@ class Settings_API_Util_Field {
   const TYPE_CHECKBOX = 'checkbox';
   const TYPE_RADIO = 'radio';
   const TYPE_SELECT = 'select';
+  const TYPE_HIDDEN = 'hidden';
 
   public $section;
 
@@ -338,6 +339,21 @@ class Settings_API_Util_Field {
     $html = ob_get_contents();
     ob_end_clean();
     apply_filters('settings_api_util_select', $html);
+    echo $html;
+  }
+
+  /**
+  * Hidden
+  * @param array $options
+  */
+  public static function hidden(array $options) {
+    ob_start();
+    do_action('settings_api_util_pre_hidden');
+    echo "<input type=\"hidden\" name=\"{$options['name']}\" value=\"{$options['value']}\"/>";
+    do_action('settings_api_util_after_hidden');
+    $html = ob_get_contents();
+    ob_end_clean();
+    apply_filters('settings_api_util_hidden', $html);
     echo $html;
   }
 

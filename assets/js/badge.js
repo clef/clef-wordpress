@@ -1,4 +1,4 @@
-/*! Clef for WordPress - v1.9
+/*! Clef for WordPress - v1.9.1
  * http://getclef.com
  * Copyright (c) 2014; * Licensed GPLv2+ */
-(function(e){e(document).ready(function(){var n=e(".clef-badge-prompt"),t={action:"clef_badge_prompt"},a=!1;n.find(".add-badge").click(function(i){if(i.preventDefault(),!a){a=!0;var c=e.extend({enable:"badge"},t);n.slideUp(),e.post(ajaxurl,c,function(){},"json")}}),n.find(".add-link").click(function(i){if(i.preventDefault(),!a){a=!0;var c=e.extend({enable:"link"},t);n.slideUp(),e.post(ajaxurl,c,function(){},"json")}}),n.find(".no-badge").click(function(){n.find(".badge-fade").fadeOut(function(){n.find(".link-fade").fadeIn()})}),n.find(".no-link, .dismiss").click(function(i){if(i.preventDefault(),!a){a=!0;var c=e.extend({disable:!0},t);n.slideUp(),e.post(ajaxurl,c,function(){},"json")}})})}).call(this,jQuery);
+(function(e){e(document).ready(function(){var t=e(".clef-badge-prompt"),a={action:"clef_badge_prompt"},n=!1;t.find(".add-badge").click(function(i){if(i.preventDefault(),!n){n=!0;var c=e.extend({enable:"badge"},a);t.slideUp(),e.post(ajaxurl,c,function(){},"json")}}),t.find(".no-badge, .dismiss").click(function(){var n=e.extend({disable:!0},a);e.post(ajaxurl,n,function(){},"json"),t.slideUp()})})}).call(this,jQuery);
