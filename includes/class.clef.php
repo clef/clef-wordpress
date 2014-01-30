@@ -100,22 +100,28 @@ class Clef extends ClefBase {
     public static function update($version, $previous_version){
         $settings_changes = false;
 
-        if ($version == "1.9.1" && version_compare($previous_version, "1.9.1", '<')) {
-            ClefBadge::hide_prompt();
-        }
+        if ($previous_version) {
+            if (version_compare($previous_version, "1.9.1.1", '<')) {
+                ClefBadge::hide_prompt();
+            }
 
-        if ($version == "1.9" && version_compare($previous_version, "1.9", '<')) {
-           if (!$previous_version) {
-                $previous_version = $version;
-           }
-           self::setting('installed_at', $previous_version);
+            if (version_compare($previous_version, "1.9", '<')) {
+               if (!$previous_version) {
+                    $previous_version = $version;
+               }
+               self::setting('installed_at', $previous_version);
+            }
+
+            if (version_compare($previous_version, "1.8.0", '<')) {
+                $settings_changes = array(
+                    "clef_password_settings_override_key" => "clef_override_settings_key"
+                );
+            }
+        } else {
+            self::setting('installed_at', $version);
         }
         
-        if (version_compare($version, "1.8.0", '<')) {
-            $settings_changes = array(
-                "clef_password_settings_override_key" => "clef_override_settings_key"
-            );
-        }
+        
 
         if ($settings_changes) {
             foreach ($settings_changes as $old_name => $new_name) {
