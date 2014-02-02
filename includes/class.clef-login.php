@@ -17,7 +17,7 @@
         public static function login_form() {
             $app_id = self::setting( 'clef_settings_app_id' );
             $app_secret = self::setting( 'clef_settings_app_secret' );
-            if( !empty( $app_id ) && !empty( $app_secret ) ) {
+            if(self::is_configured()) {
                 $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
 
                 # add redirect to if it exists

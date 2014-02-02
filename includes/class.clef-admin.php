@@ -135,7 +135,7 @@ class ClefAdmin extends ClefBase {
         if (self::individual_settings()) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-            if(!$form->is_configured()) {
+            if(!self::is_configured()) {
                 $site_name = urlencode(get_option('blogname'));
                 $site_domain = urlencode(get_option('siteurl'));
                 $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
@@ -187,7 +187,7 @@ class ClefAdmin extends ClefBase {
 
         # if the app is not configured, add the API settings at the top of
         # the form
-        if (!$form->is_configured()) {
+        if (!self::is_configured()) {
             self::add_api_settings($form);
         }
 
@@ -243,7 +243,7 @@ class ClefAdmin extends ClefBase {
 
         # if the app is configured, add the API settings at the bottom of
         # the form
-        if ($form->is_configured()) {
+        if (self::is_configured()) {
             self::add_api_settings($form, true);
         }
 

@@ -111,16 +111,5 @@
             return $instances[$id];
 
         }
-
-        public function is_configured() {
-            $values = $this->values;
-            $configured = isset($values['clef_settings_app_id']) && isset($values['clef_settings_app_secret']);
-
-            if ($configured) {
-                $configured = $values['clef_settings_app_id'] != "" && $values['clef_settings_app_secret'] != "";
-            }
-
-            return $configured;
-        }
     }
 ?>

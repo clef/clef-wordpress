@@ -181,6 +181,8 @@
         }
 
         public static function passwords_are_disabled_for_user($user, $override= false) {
+            if (!self::is_configured()) return false;
+
             if (!is_a($user, 'WP_User')) {
                 $user = get_userdata((int) $user);
             }
@@ -224,6 +226,13 @@
 
         public static function xml_passwords_enabled() {
             return !self::passwords_disabled() || (self::passwords_disabled() && self::setting('clef_password_settings_xml_allowed'));
+        }
+
+        public static function is_configured() {
+            $app_id = self::setting('clef_settings_app_id');
+            $app_secret = self::setting('clef_settings_app_secret');
+
+            return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
         }
     }
 ?>
