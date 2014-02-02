@@ -18,15 +18,8 @@
             $app_id = self::setting( 'clef_settings_app_id' );
             $app_secret = self::setting( 'clef_settings_app_secret' );
             if(self::is_configured()) {
-                $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
-
-                # add redirect to if it exists
-                if (isset($_REQUEST['redirect_to'])) {
-                    $redirect_url = add_query_arg(
-                        array('redirect_to' => $_REQUEST['redirect_to']), 
-                        $redirect_url
-                    );
-                }
+                $redirect_url = wp_login_url() . "?" . $_SERVER['QUERY_STRING'];
+                $redirect_url = add_query_arg(array( 'clef' => 'true'), $redirect_url);
 
                 include CLEF_TEMPLATE_PATH."login_page.tpl.php";
             }
