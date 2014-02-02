@@ -7,19 +7,23 @@ class ClefAdmin extends ClefBase {
 
     public static function init() {
         add_action('admin_init', array(__CLASS__, "other_install"));
-        add_action('admin_menu', array(__CLASS__, "admin_menu"));
         add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_init', array(__CLASS__, "settings_form"));
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
+        add_action('admin_init', array(__CLASS__, "connect_clef_account"));
+
+        add_action('admin_menu', array(__CLASS__, "admin_menu"));
+
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
+
         add_action('admin_notices', array(__CLASS__, 'display_messages') );
 
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
+
         add_action('edit_user_profile_update', array(__CLASS__, 'edit_user_profile_update'));
         add_action('personal_options_update', array(__CLASS__, 'edit_user_profile_update'));
-        add_action('admin_notices', array(__CLASS__, 'edit_profile_errors'));
 
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
 
@@ -31,7 +35,6 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_enqueue_scripts($hook) {
-
         $exploded_path = explode('/', $hook);
         $settings_page_name = array_shift($exploded_path);
 
@@ -51,9 +54,16 @@ class ClefAdmin extends ClefBase {
 
     public static function show_user_profile() {
         $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
-        $app_id = self::setting( 'clef_settings_app_id' );
-        $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
-        $redirect_url .=  ("&state=" . wp_create_nonce("connect_clef"));
+        if (!$connected) {
+            $app_id = self::setting( 'clef_settings_app_id' );
+            $redirect_url = add_query_arg(
+                array(
+                    'state' => wp_create_nonce("connect_clef"),
+                    'clef' => true,
+                    'connecting' => true
+                ), get_edit_profile_url(wp_get_current_user()->ID)
+            );
+        }
         include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
     }
 
@@ -63,15 +73,37 @@ class ClefAdmin extends ClefBase {
         }
     }
 
-    public static function edit_profile_errors($errors) {
-        if (isset($_SESSION['Clef_Messages']) && !empty($_SESSION['Clef_Messages'])) {
-            $_SESSION['Clef_Messages'] = array_unique( $_SESSION['Clef_Messages'] );
-            echo '<div id="login_error">';
-            foreach ( $_SESSION['Clef_Messages'] as $message ) {
-                _e('<p><strong>ERROR</strong>: '. $message . ' </p>', 'clef');
+    public static function connect_clef_account() {
+        if (isset($_REQUEST['clef']) && isset($_REQUEST['connecting']) &&
+        isset($_REQUEST['code'])) {
+
+            // do state CSRF check
+            if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) {
+                die();
             }
-            echo '</div>';
-            $_SESSION['Clef_Messages'] = array();
+
+            try {
+                $info = self::exchange_oauth_code_for_info($_REQUEST['code']);
+            } catch (LoginException $e) {
+                add_settings_error(
+                    CLEF_OPTIONS_NAME,
+                    esc_attr("settings_updated"),
+                    __("Error while connecting your Clef account: ", "clef") . $e->getMessage(),
+                    "updated"
+                );
+                return;
+            }
+
+            self::associate_clef_id($info->id);
+            // Log in the user
+            $_SESSION['logged_in_at'] = time();
+
+            add_settings_error(
+                CLEF_OPTIONS_NAME,
+                esc_attr("settings_updated"),
+                __("Successfully connected your Clef account.", "clef"),
+                "updated"
+            );
         }
     }
 

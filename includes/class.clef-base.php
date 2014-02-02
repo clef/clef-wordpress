@@ -110,8 +110,6 @@
 
             if ( is_wp_error($response)  ) {
                 throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
-                // $_SESSION['Clef_Messages'][] = ;
-                // self::redirect_error();
             }
 
             $body = json_decode( $response['body'] );
@@ -180,6 +178,48 @@
             return self::setting('clef_password_settings_disable_passwords') 
                 || self::setting('clef_password_settings_force') 
                 || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
+        }
+
+        public static function passwords_are_disabled_for_user($user, $override= false) {
+            if (!is_a($user, 'WP_User')) {
+                $user = get_userdata((int) $user);
+            }
+
+            $disabled = false;
+
+            if (self::setting('clef_password_settings_force')) {
+                $disabled = true;
+            }
+
+            if (self::setting( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) {
+                $disabled = true;
+            }
+
+            $disable_certain_passwords = self::setting( 'clef_password_settings_disable_certain_passwords');
+            if ($disable_certain_passwords && $disable_certain_passwords != 'Disabled') {
+                $max_role = strtolower($disable_certain_passwords);
+                $role_map = array( 
+                    "subscriber",
+                    "editor",
+                    "author",
+                    "administrator",
+                    "super administrator"
+                );
+
+                foreach ($user->roles as &$role) {
+                    $rank = array_search($role, $role_map);
+                    if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
+                        $disabled = true;
+                        break;
+                    }
+                } 
+
+                if ($max_role == "super administrator" && is_super_admin($user->ID)) {
+                    $disabled = true;
+                }
+            }
+
+            return $disabled;
         }
 
         public static function xml_passwords_enabled() {
