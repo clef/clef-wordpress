@@ -50,7 +50,7 @@ class ClefBadge extends ClefBase {
     }
 
     public static function register_scripts() {
-        wp_register_script('badge', CLEF_URL . 'assets/js/badge.js', array('jquery'), '1.0.0', TRUE );
+        self::register_script('badge');
         wp_enqueue_script('badge');
     }
 

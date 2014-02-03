@@ -22,7 +22,7 @@ class Clef extends ClefBase {
     }
 
     public static function register_styles() {
-        wp_register_style('wpclef', CLEF_URL . 'assets/css/wpclef.min.css', FALSE, '1.0.0');
+        self::register_style('wpclef');
         wp_enqueue_style('wpclef');
     }
 
