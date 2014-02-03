@@ -70,6 +70,8 @@ gulp.task('images', function() {
 });
 
 gulp.task('watch', function() {
+    gulp.start('default');
+    
     server.listen(35729, function(err) {
         if (err) {
             return gutil.log(err);
