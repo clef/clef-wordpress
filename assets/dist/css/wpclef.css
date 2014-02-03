@@ -32,7 +32,7 @@ body {
     width: 140px;
     background: url("https://bit.ly/clef-wordpress-badge");
     background-size: 100% 100%;
-    opacity: .8; }
+    opacity: 0.8; }
     .clef-badge.pretty:hover {
       opacity: 1; }
 

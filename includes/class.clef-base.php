@@ -234,5 +234,36 @@
 
             return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
         }
+
+        public static function register_script($name, $dependencies=array('jquery')) {
+            $ident = "wpclef-" . $name;
+            if (CLEF_DEBUG)  {
+                $name .= '.min';
+            }
+            $name .= '.js';
+            wp_register_script(
+                $ident, 
+                CLEF_URL .'assets/dist/js/' . $name, 
+                $dependencies, 
+                CLEF_VERSION, 
+                TRUE
+            );
+            return $ident;
+        }
+
+        public static function register_style($name) {
+            $ident = "wpclef-" . $name;
+            if (CLEF_DEBUG) {
+                $name .= '.min';
+            }
+            $name .= '.css';
+            wp_register_style(
+                $ident, 
+                CLEF_URL . 'assets/dist/css/' . $name, 
+                FALSE, 
+                CLEF_VERSION
+            ); 
+            return $ident;
+        }
     }
 ?>

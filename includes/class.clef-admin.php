@@ -40,15 +40,15 @@ class ClefAdmin extends ClefBase {
 
         // only register clef logout if user is a clef user
         if (get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
-            wp_register_script('wpclef_logout', CLEF_URL .'assets/js/clef_heartbeat.js', array('jquery'), '1.0', TRUE);
+            self::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
         
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.1', TRUE );
-            wp_enqueue_script('wpclef_keys');
+            $ident = self::register_script('keys');
+            wp_enqueue_script($ident);
         } 
     }
 
