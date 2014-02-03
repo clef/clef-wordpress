@@ -63,8 +63,8 @@ gulp.task('coffee', function() {
 
 gulp.task('images', function() {
     return gulp.src('assets/src/img/**/*')
-        .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true})))
-        .pipe(gulp.dest('assets/dist/img'))
+        .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true}))
+        .pipe(gulp.dest('assets/dist/img/'))
         .pipe(livereload(server))
         .pipe(notify({message: "Images minified."}));
 });
