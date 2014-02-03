@@ -22,8 +22,8 @@ class Clef extends ClefBase {
     }
 
     public static function register_styles() {
-        self::register_style('wpclef');
-        wp_enqueue_style('wpclef');
+        $ident = self::register_style('wpclef');
+        wp_enqueue_style($ident);
     }
 
     public static function create_table($name) {

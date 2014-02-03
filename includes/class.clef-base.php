@@ -236,30 +236,34 @@
         }
 
         public static function register_script($name, $dependencies=array('jquery')) {
+            $ident = "wpclef-" . $name;
             if (CLEF_DEBUG)  {
                 $name .= '.min';
             }
             $name .= '.js';
             wp_register_script(
-                'wpclef-' . $name, 
+                $ident, 
                 CLEF_URL .'assets/dist/js/' . $name, 
                 $dependencies, 
                 CLEF_VERSION, 
                 TRUE
             );
+            return $ident;
         }
 
         public static function register_style($name) {
+            $ident = "wpclef-" . $name;
             if (CLEF_DEBUG) {
                 $name .= '.min';
             }
             $name .= '.css';
             wp_register_style(
-                'wpclef-' . $name, 
+                $ident, 
                 CLEF_URL . 'assets/dist/css/' . $name, 
                 FALSE, 
                 CLEF_VERSION
             ); 
+            return $ident;
         }
     }
 ?>
