@@ -47,7 +47,7 @@ class ClefAdmin extends ClefBase {
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            $ident = self::register_script('keys');
+            $ident = self::register_script('settings', array('jquery', 'backbone', 'underscore'));
             wp_enqueue_script($ident);
         } 
     }
@@ -136,18 +136,20 @@ class ClefAdmin extends ClefBase {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
             if(!self::is_configured()) {
-                $site_name = urlencode(get_option('blogname'));
-                $site_domain = urlencode(get_option('siteurl'));
-                $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
+                $options = self::get_settings();
+                $setup = array();
+                $setup['siteName'] = get_option('blogname');
+                $setup['siteDomain'] = get_option('siteurl');
+                $setup['source'] = "wordpress";
                 if (get_site_option("bruteprotect_installed_clef")) {
-                    $tutorial_url .= '&bruteprotect=true';
+                    $setup['source'] = "bruteprotect";
                 }
-                include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
-            } else {
-                include CLEF_TEMPLATE_PATH."admin/settings-header.tpl.php";
-            }
+                $options['setup'] = $setup;
+                $options['configured'] = self::is_configured();
+                $options['clefBase'] = CLEF_BASE;
 
-            $form->renderBasicForm('', Settings_API_Util::ICON_SETTINGS);   
+                include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
+            }
         } else {
             include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
         }
@@ -302,5 +304,3 @@ class ClefAdmin extends ClefBase {
         return $settings;
     }
 }
-
-?>

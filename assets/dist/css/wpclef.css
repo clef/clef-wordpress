@@ -36,6 +36,21 @@ body {
     .clef-badge.pretty:hover {
       opacity: 1; }
 
+#clef-settings-container {
+  width: 100%;
+  height: 100%; }
+  #clef-settings-container #clef-tutorial {
+    width: 100%;
+    height: 100%;
+    display: block; }
+    #clef-settings-container #clef-tutorial .sub {
+      display: none; }
+      #clef-settings-container #clef-tutorial .sub .button {
+        display: block; }
+      #clef-settings-container #clef-tutorial .sub iframe {
+        width: 250px;
+        height: 280px; }
+
 .bruteprotect-install {
   background: #515953;
   padding: 40px;

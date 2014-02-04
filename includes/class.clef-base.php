@@ -10,8 +10,7 @@
         private static $_individual_settings = null;
         private static $_settings = null;
 
-        public static function setting( $name , $value=false, $refresh=false) {
-
+        public static function get_settings() {
             if (self::individual_settings()) {
                 $getter = 'get_option';
                 $setter = 'update_option';
@@ -20,8 +19,12 @@
                 $setter = 'update_site_option';
             }
 
+            return $getter( CLEF_OPTIONS_NAME );
+        }
+
+        public static function setting( $name , $value=false, $refresh=false) {
             if ($refresh || !self::$_settings) {
-                self::$_settings = $getter( CLEF_OPTIONS_NAME );
+                self::$_settings = self::get_settings();
             } 
 
             if ($value) {
@@ -237,7 +240,7 @@
 
         public static function register_script($name, $dependencies=array('jquery')) {
             $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG)  {
+            if (!CLEF_DEBUG)  {
                 $name .= '.min';
             }
             $name .= '.js';
@@ -253,7 +256,7 @@
 
         public static function register_style($name) {
             $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG) {
+            if (!CLEF_DEBUG) {
                 $name .= '.min';
             }
             $name .= '.css';
