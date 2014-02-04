@@ -57,12 +57,12 @@
         }
 
         public static function disable_passwords($user) {
-            if (empty($_POST)) return;
+            if (empty($_POST)) return $user;
 
             $exit = false;
 
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
-                return;
+                return $user;
             }
 
             if (self::setting('clef_password_settings_force')) {
@@ -100,7 +100,7 @@
 
             }
 
-            if ($exit && !(XMLRPC_REQUEST && self::xml_passwords_enabled())) {
+            if ($exit && !(defined('XMLRPC_REQUEST') && XMLRPC_REQUEST && self::xml_passwords_enabled())) {
                 add_filter('xmlrpc_login_error', array(__CLASS__, "return_xml_error_message"));
                 return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
             } else {
