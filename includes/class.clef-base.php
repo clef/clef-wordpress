@@ -235,6 +235,19 @@
             return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
         }
 
+        public static function set_html_content_type() {
+            return 'text/html';
+        }
+
+        public static function render_template($name, $variables) {
+            extract($variables);
+            ob_start();
+            require(CLEF_TEMPLATE_PATH . $name . '.php');
+            $template = ob_get_contents();
+            ob_end_clean();
+            return $template;
+        }
+
         public static function register_script($name, $dependencies=array('jquery')) {
             $ident = "wpclef-" . $name;
             if (CLEF_DEBUG)  {
