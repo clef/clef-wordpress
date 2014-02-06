@@ -5,10 +5,6 @@ class Clef extends ClefBase {
     private static $TABLES = array();
 
     public static function init() {
-        if ( !session_id() ) {
-            session_start();
-        }
-
         if (is_network_admin()) {
             ClefNetworkAdmin::init();
         } else if (is_admin()) {

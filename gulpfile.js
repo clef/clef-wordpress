@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     header = require('gulp-header'),
     lr = require('tiny-lr'),
     filter = require('gulp-filter'),
+    plumber = require('gulp-plumber'),
     server = lr();
 
 var pkg = require('./package.json');
@@ -31,7 +32,8 @@ gulp.task('default', function() {
 
 gulp.task('sass', function() {
     return gulp.src('assets/src/sass/**/*.scss')
-        .pipe(sass({ style: 'expanded' }))
+        .pipe(plumber())
+        .pipe(sass({ style: 'expanded' })).on('error', gutil.log)
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         .pipe(gulp.dest('assets/dist/css/'))
         .pipe(livereload(server))
@@ -43,6 +45,7 @@ gulp.task('sass', function() {
 
 gulp.task('coffee', function() {
     return gulp.src('assets/src/coffee/**/*.coffee')
+        .pipe(plumber())
         .pipe(coffeelint({ 
             "indentation": {
                 "name": "indentation",
@@ -70,8 +73,6 @@ gulp.task('images', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.start('default');
-    
     server.listen(35729, function(err) {
         if (err) {
             return gutil.log(err);

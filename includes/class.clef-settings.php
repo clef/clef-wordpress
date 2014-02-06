@@ -24,6 +24,8 @@
         public static function validate(array $input) {
             $input =  parent::validate($input);
 
+            
+
             if (isset($input['clef_settings_app_id'])) {
                 $input['clef_settings_app_id'] = esc_attr($input['clef_settings_app_id']);
             }

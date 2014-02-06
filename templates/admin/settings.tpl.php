@@ -16,9 +16,9 @@
             <h1>You're all configured</h1>
         </div>
     </div>
-    <div id="clef-settings" style="display:none;">
-        <h1><?php _e("Clef"); ?></h1>
-        <!-- <div id="fb-root"></div>
+    <div id="clef-settings">
+        <h1><?php _e("Clef", "clef"); ?></h1>
+        <div id="fb-root"></div>
         <div class="fb-like" data-href="https://www.facebook.com/getclef" data-width="200" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
         <a href="https://twitter.com/getclef" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @getclef</a>
         <script>(function(d, s, id) {
@@ -28,10 +28,8 @@
             js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=241719455859280";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
-        <?php $form->renderBasicForm('', Settings_API_Util::ICON_SETTINGS); ?>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <?php include CLEF_TEMPLATE_PATH . 'admin/form.tpl.php'; ?>
     </div>
 </div>
-<script>
-    var options = JSON.parse('<?php echo json_encode($options); ?>');
-</script>
+<script type="text/javascript"> var options = <?php echo json_encode($options); ?></script>

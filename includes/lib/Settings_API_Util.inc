@@ -103,7 +103,7 @@ class Settings_API_Util {
     if(!empty($this->introHTML)) {
       echo '<div class="intro">' . $this->introHTML . '</div>';
     }
-    echo '<form id="wp_clef" action="' . $url . '" method="POST">';
+    echo '<form id="' . $this->id . '" action="' . $url . '" method="POST">';
     settings_fields($this->id);
     do_settings_sections($this->id);
 
@@ -142,7 +142,6 @@ class Settings_API_Util {
     return $this->sections[$id];
 
   }
-
 }
 
 class Settings_API_Util_Section {
@@ -219,6 +218,7 @@ class Settings_API_Util_Field {
     $this->name = $id;
     $this->optionID = $section->id.'_'.$id;
     $this->defaultValue = $defaultValue;
+    $this->type = $type;
 
     $values = array(
       'id'   =>$section->settings->optionName.'_'.$this->optionID,
@@ -237,8 +237,13 @@ class Settings_API_Util_Field {
       $values = array_merge($values, $additionalArgs);
     }
 
+    $this->values = $values;
 
     add_settings_field($section->id.'_'.$id, __( $title, 'clef' ), array(__CLASS__, $type), $section->settings->id, $section->id, $values);
+  }
+
+  function render($opts = array()) {
+    call_user_func(array(__CLASS__, $this->type), array_merge($opts, $this->values));
   }
 
   ///////////////////
@@ -250,10 +255,10 @@ class Settings_API_Util_Field {
    * @param array $options
    */
   public static function textfield(array $options) {
-
+    if (!isset($options['placeholder'])) $options['placeholder'] = '';
     ob_start();
     do_action('settings_api_util_pre_textfield');
-    echo "<input type=\"text\" name=\"{$options['name']}\" value=\"{$options['value']}\" id=\"{$options['name']}\" class=\"regular-text\" />";
+    echo "<input type=\"text\" name=\"{$options['name']}\" value=\"{$options['value']}\" id=\"{$options['name']}\" class=\"regular-text\" placeholder=\"{$options['placeholder']}\" />";
     do_action('settings_api_util_after_textfield');
     $html = ob_get_contents();
     ob_end_clean();
@@ -285,9 +290,9 @@ class Settings_API_Util_Field {
     ob_start();
     do_action('settings_api_util_pre_checkbox');
     if($options['value']) {
-      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" onclick=\"javascript: if(this.value == 1) { this.value = 0; } else { this.value = 1; }\" checked>";
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" checked>";
     } else {
-      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" onclick=\"javascript: if(this.value == 1) { this.value = 0; } else { this.value = 1; }\">";
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\">";
     }
     do_action('settings_api_util_after_checkbox');
     $html = ob_get_contents();

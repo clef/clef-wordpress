@@ -13,13 +13,21 @@
         public static function get_settings() {
             if (self::individual_settings()) {
                 $getter = 'get_option';
-                $setter = 'update_option';
             } else {
                 $getter = 'get_site_option';
-                $setter = 'update_site_option';
             }
 
             return $getter( CLEF_OPTIONS_NAME );
+        }
+
+        public static function set_settings($settings) {
+            if (self::individual_settings()) {
+                $setter = 'update_option';
+            } else {
+                $setter = 'update_site_option';
+            }
+
+            return $setter( CLEF_OPTIONS_NAME, $settings);
         }
 
         public static function setting( $name , $value=false, $refresh=false) {
@@ -30,7 +38,7 @@
             if ($value) {
                 self::$_settings[$name] = $value;
 
-                $setter(CLEF_OPTIONS_NAME, self::$_settings);
+                self::set_settings(self::$_settings);
                 return $value;
             } else {
                 if ( isset( self::$_settings[$name] ) ) {
@@ -249,7 +257,7 @@
                 CLEF_URL .'assets/dist/js/' . $name, 
                 $dependencies, 
                 CLEF_VERSION, 
-                TRUE
+                true
             );
             return $ident;
         }
@@ -263,7 +271,7 @@
             wp_register_style(
                 $ident, 
                 CLEF_URL . 'assets/dist/css/' . $name, 
-                FALSE, 
+                false, 
                 CLEF_VERSION
             ); 
             return $ident;

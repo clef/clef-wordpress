@@ -27,6 +27,13 @@ class ClefAdmin extends ClefBase {
 
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
 
+        require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
+        new AjaxSettings(array( 
+            "options_name" => CLEF_OPTIONS_NAME, 
+            "initialize" => false, 
+            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/"
+        ));
+
         ClefBadge::hook_onboarding();
     }
 
@@ -135,21 +142,19 @@ class ClefAdmin extends ClefBase {
         if (self::individual_settings()) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-            if(!self::is_configured()) {
-                $options = self::get_settings();
-                $setup = array();
-                $setup['siteName'] = get_option('blogname');
-                $setup['siteDomain'] = get_option('siteurl');
-                $setup['source'] = "wordpress";
-                if (get_site_option("bruteprotect_installed_clef")) {
-                    $setup['source'] = "bruteprotect";
-                }
-                $options['setup'] = $setup;
-                $options['configured'] = self::is_configured();
-                $options['clefBase'] = CLEF_BASE;
-
-                include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
+            $options = self::get_settings();
+            $setup = array();
+            $setup['siteName'] = get_option('blogname');
+            $setup['siteDomain'] = get_option('siteurl');
+            $setup['source'] = "wordpress";
+            if (get_site_option("bruteprotect_installed_clef")) {
+                $setup['source'] = "bruteprotect";
             }
+            $options['setup'] = $setup;
+            $options['configured'] = self::is_configured();
+            $options['clefBase'] = CLEF_BASE;
+
+            include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
         } else {
             include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
         }
@@ -187,40 +192,27 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-        # if the app is not configured, add the API settings at the top of
-        # the form
-        if (!self::is_configured()) {
-            self::add_api_settings($form);
-        }
+        self::add_api_settings($form, self::is_configured());
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
-        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'disable_certain_passwords', 
-            __('Disable passwords for all users with privileges greater than or equal to ', "clef"), 
+            __('Disable certain passwords', "clef"), 
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
             array( "options" => array("Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
         );
-        $pw_settings->addField('force', __('Disable passwords for all users and hide the password login form.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        if (self::passwords_disabled()) {
-            $pw_settings->addField(
-                'xml_allowed', 
-                __('Always allow passwords for XML API (necessary for things like the WordPress mobile app)'),
-                Settings_API_Util_Field::TYPE_CHECKBOX
-            );
-        }
+        $pw_settings->addField(
+            'xml_allowed', 
+            __('Allow XML'),
+            Settings_API_Util_Field::TYPE_CHECKBOX
+        );
 
         $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
-        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">' . __("Set an override key") . '</a>';
-        $override_settings->addField('key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
-        $key = Clef::setting( 'clef_override_settings_key' );
-
-        if (!empty($key)) {
-            $override_settings->settings->values['clef_override_settings_url'] = wp_login_url() .'?override=' .$key;
-            $override_settings->addField('url', __("Use this URL to allow passwords:", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        }
+        $override_settings->addField('key', "Override key", Settings_API_Util_Field::TYPE_TEXTFIELD); 
 
         $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"), array(__CLASS__, 'print_support_clef_descript'));
         $support_clef_settings->addField(
@@ -230,24 +222,6 @@ class ClefAdmin extends ClefBase {
             "disabled",
             array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
         );
-        $support_clef_settings->addField(
-            "badge_code", 
-            __("Manually add a badge", "clef"), 
-            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'))
-        );
-        $support_clef_settings->addField(
-            "link_code", 
-            __("Manually add a link", "clef"), 
-            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'))
-        );
-
-        # if the app is configured, add the API settings at the bottom of
-        # the form
-        if (self::is_configured()) {
-            self::add_api_settings($form, true);
-        }
 
         return $form;
     }
