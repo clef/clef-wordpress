@@ -53,8 +53,11 @@ class ClefAdmin extends ClefBase {
         } 
     }
 
-    public static function show_user_profile() {
-        $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
+    public static function show_user_profile($user) {
+        if (!$user) {
+            $user = wp_get_current_user();
+        }
+        $connected = !!get_user_meta($user->ID, "clef_id", true);
         if (!$connected) {
             $app_id = self::setting( 'clef_settings_app_id' );
             $redirect_url = add_query_arg(
