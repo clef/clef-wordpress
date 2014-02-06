@@ -61,11 +61,10 @@
         }
 
         public static function disable_passwords($user) {
-            return $user;
-            if (empty($_POST)) return;
+            if (empty($_POST)) return $user;
 
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
-                return;
+                return $user;
             }
 
             $disable = self::passwords_are_disabled_for_user($user->ID);
