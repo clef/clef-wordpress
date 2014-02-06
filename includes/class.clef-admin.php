@@ -82,7 +82,7 @@ class ClefAdmin extends ClefBase {
             $other_users = get_users(array('exclude' => array(get_current_user_id())));
             $invite_codes = array();
             foreach ($other_users as $user) {
-                $invite_code = new InviteCode();
+                $invite_code = new InviteCode($user);
                 update_user_meta($user->ID, 'clef_invite_code', $invite_code);
 
                 $invite_link = $invite_code->get_link();
