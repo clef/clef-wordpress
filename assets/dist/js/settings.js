@@ -1,97 +1,25 @@
 (function($) {
-  var AppView, FormVisualization, SettingsModel, SettingsView, SubTutorialView, TutorialView;
+  var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     id: "clef-settings-container",
     initialize: function(opts) {
       this.opts = opts;
-      this.settings = new SettingsView(_.extend(this.opts, {
+      this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
-      }));
-      this.settings.render();
-      return window.onbeforeunload = (function(_this) {
-        return function(e) {
-          if (_this.settings.isSaving()) {
-            return "Some settings are still being saved. Are you sure you want to navigate away?";
-          }
-        };
-      })(this);
-    }
-  });
-  TutorialView = Backbone.View.extend({
-    el: $('#clef-tutorial'),
-    events: {
-      "click .next": "next",
-      "click .previous": "previous"
-    },
-    initialize: function(opts) {
-      var sub, _i, _len, _ref;
-      this.opts = opts;
-      this.subs = [];
-      _ref = this.$el.find('.sub');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        sub = _ref[_i];
-        this.subs.push(new SubTutorialView({
-          el: sub
-        }));
-      }
-      this.currentSub = this.subs[0];
-      return $(window).on('message', this.handleLogin.bind(this));
-    },
-    render: function() {
-      this.currentSub.render();
-      this.loadIFrame();
-      return this.$el.fadeIn();
-    },
-    next: function() {
-      var newSub;
-      newSub = this.subs[_.indexOf(this.subs, this.currentSub) + 1];
-      if (newSub) {
-        if (newSub.isLogin() && this.loggedIn) {
-          newSub = this.subs[_.indexOf(this.subs, this.newSub) + 1];
-        }
-        this.currentSub.hide();
-        newSub.render();
-        return this.currentSub = newSub;
+      }, this.opts));
+      this.tutorial = new TutorialView(_.extend({}, this.opts));
+      if (this.settings.isConfigured()) {
+        return this.settings.render();
+      } else {
+        this.tutorial.render();
+        return this.listenToOnce(this.tutorial, 'applicationCreated', this.configure.bind(this));
       }
     },
-    previous: function() {
-      var newSub;
-      newSub = this.subs[_.indexOf(this.subs, this.currentSub) - 1];
-      if (newSub) {
-        this.currentSub.hide();
-        newSub.render();
-        return this.currentSub = newSub;
-      }
-    },
-    loadIFrame: function() {
-      var frame;
-      frame = this.$el.find("iframe");
-      return frame.attr('src', frame.data('src'));
-    },
-    handleLogin: function() {
-      this.loggedIn = true;
-      if (this.currentSub.isLogin()) {
-        return this.next();
-      }
-    }
-  });
-  SubTutorialView = Backbone.View.extend({
-    initialize: function(opts) {
-      this.opts = opts;
-      return this.setElement($(this.opts.el));
-    },
-    render: function() {
-      return this.$el.show();
-    },
-    hide: function() {
-      return this.$el.hide();
-    },
-    remove: function() {
-      return this.$el.remove();
-    },
-    isLogin: function() {
-      return this.$el.find('iframe').length;
+    configure: function(data) {
+      this.settings.model.configure(data);
+      this.tutorial.hide();
+      return this.settings.render();
     }
   });
   SettingsView = AjaxSettingsView.extend({
@@ -101,11 +29,18 @@
       this.formView = new FormVisualization({
         model: this.model
       });
-      this.xmlEl = this.model.cfindInput('clef_password_settings_xml_allowed').parents('.input-container');
+      this.xmlEl = this.model.cFindInput('clef_password_settings_xml_allowed').parents('.input-container');
       this.overrideContainer = this.$el.find('.override-settings');
       this.overrideButtonContainer = this.$el.find('.override-buttons');
       this.setOverrideLink();
-      return this.badgePreviewContainer = this.$el.find('.support-settings .footer-preview');
+      this.badgePreviewContainer = this.$el.find('.support-settings .footer-preview');
+      return window.onbeforeunload = (function(_this) {
+        return function(e) {
+          if (_this.isSaving()) {
+            return "Settings are being saved. Still want to navigate away?";
+          }
+        };
+      })(this);
     },
     updated: function(obj, data) {
       SettingsView.__super__.updated.call(this, obj, data);
@@ -149,15 +84,17 @@
       setting = this.model.badgeSetting();
       this.badgePreviewContainer.toggle(setting !== "disabled");
       return this.badgePreviewContainer.find('a').toggleClass('pretty', setting === "badge");
+    },
+    isConfigured: function() {
+      return this.model.isConfigured();
     }
   });
   SettingsModel = AjaxSettingsModel.extend({
+    cFindInput: function(name) {
+      return this.findInput("wpclef[" + name + "]");
+    },
     cget: function(key) {
       return this.get("wpclef[" + key + "]");
-    },
-    cfindInput: function(name) {
-      name = "wpclef[" + name + "]";
-      return SettingsModel.__super__.findInput.call(this, name);
     },
     passwordsDisabled: function() {
       return !!parseInt(this.cget('clef_password_settings_disable_passwords')) || this.cget('clef_password_settings_disable_certain_passwords') !== "Disabled" || this.passwordsFullyDisabled();
@@ -173,6 +110,15 @@
     },
     badgeSetting: function() {
       return this.cget('support_clef_badge').toLowerCase();
+    },
+    isConfigured: function() {
+      return !!(this.cget('clef_settings_app_id') && this.cget('clef_settings_app_secret'));
+    },
+    configure: function(data) {
+      return this.save({
+        'wpclef[clef_settings_app_id]': data.appID,
+        'wpclef[clef_settings_app_secret]': data.appSecret
+      });
     }
   });
   FormVisualization = Backbone.View.extend({
@@ -211,3 +157,94 @@
     return serialized;
   };
 }).call(this, jQuery);
+
+(function($, Backbone) {
+  var SubTutorialView, TutorialView;
+  TutorialView = Backbone.View.extend({
+    el: $('#clef-tutorial'),
+    events: {
+      "click .next": "next",
+      "click .previous": "previous"
+    },
+    iframePath: '/iframes/application/create/v1',
+    initialize: function(opts) {
+      var sub, _i, _len, _ref;
+      this.opts = opts;
+      this.subs = [];
+      _ref = this.$el.find('.sub');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        sub = _ref[_i];
+        this.subs.push(new SubTutorialView({
+          el: sub
+        }));
+      }
+      this.currentSub = this.subs[0];
+      return $(window).on('message', this.handleConfirm.bind(this));
+    },
+    hide: function(cb) {
+      return this.$el.fadeOut(cb);
+    },
+    render: function() {
+      this.currentSub.render();
+      this.loadIFrame();
+      return this.$el.fadeIn();
+    },
+    next: function() {
+      var newSub;
+      newSub = this.subs[_.indexOf(this.subs, this.currentSub) + 1];
+      if (newSub) {
+        if (newSub.isLogin() && this.loggedIn) {
+          newSub = this.subs[_.indexOf(this.subs, this.newSub) + 1];
+        }
+        this.currentSub.hide();
+        newSub.render();
+        return this.currentSub = newSub;
+      }
+    },
+    previous: function() {
+      var newSub;
+      newSub = this.subs[_.indexOf(this.subs, this.currentSub) - 1];
+      if (newSub) {
+        this.currentSub.hide();
+        newSub.render();
+        return this.currentSub = newSub;
+      }
+    },
+    loadIFrame: function() {
+      var frame, src;
+      frame = this.$el.find("iframe");
+      src = "" + this.opts.clefBase + this.iframePath + "?source=wordpress&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      return frame.attr('src', src);
+    },
+    handleConfirm: function(data) {
+      if (!data.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
+        return;
+      }
+      return this.trigger('applicationCreated', data.originalEvent.data);
+    },
+    onConfigured: function() {
+      return setTimeout((function() {
+        return $(".logout-hook-error").slideDown();
+      }), 20000);
+    }
+  });
+  SubTutorialView = Backbone.View.extend({
+    initialize: function(opts) {
+      this.opts = opts;
+      return this.setElement($(this.opts.el));
+    },
+    render: function() {
+      return this.$el.show();
+    },
+    hide: function() {
+      return this.$el.hide();
+    },
+    remove: function() {
+      return this.$el.remove();
+    },
+    isLogin: function() {
+      return this.$el.find('iframe').length;
+    }
+  });
+  return this.TutorialView = TutorialView;
+}).call(this, jQuery, Backbone);

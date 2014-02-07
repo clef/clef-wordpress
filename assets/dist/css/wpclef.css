@@ -43,29 +43,24 @@ body {
 
 #clef-settings-container {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  position: relative; }
   #clef-settings-container #clef-tutorial {
     width: 100%;
     height: 100%;
-    display: block; }
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0; }
     #clef-settings-container #clef-tutorial .sub {
       display: none; }
-      #clef-settings-container #clef-tutorial .sub .button {
-        display: block; }
       #clef-settings-container #clef-tutorial .sub iframe {
         width: 250px;
         height: 280px; }
-  #clef-settings-container #clef-settings tr.updated {
-    position: relative;
-    border: 1px solid green; }
-    #clef-settings-container #clef-settings tr.updated::after {
-      display: block;
-      background: black;
-      position: absolute;
-      right: 0;
-      top: 10px;
-      width: 50px;
-      height: 50px; }
+  #clef-settings-container #clef-settings {
+    position: aboslute;
+    top: 0;
+    left: 0; }
 
 #clef-settings-form .settings-section {
   background: white;
