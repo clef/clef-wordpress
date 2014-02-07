@@ -1,4 +1,9 @@
-@import "_badge.scss";
+@import "bourbon/_bourbon";
+@import "_grid-settings";
+@import "neat/_neat";
+@import "_badge";
+@import "_settings";
+@import "_form";
 
 .bruteprotect-install {
     background: #515953;

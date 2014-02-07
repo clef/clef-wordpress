@@ -1,0 +1,27 @@
+#clef-settings-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    #clef-tutorial {
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .sub {
+            display: none;
+            iframe {
+                width: 250px;
+                height: 280px;
+            }
+        }
+    } 
+
+    #clef-settings {
+        position: aboslute;
+        top: 0;
+        left: 0;
+    }
+}

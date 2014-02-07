@@ -50,7 +50,7 @@
                     return;
                 } else {
                     wp_enqueue_script('jquery');
-                    login_header(__('Log In'), 'clef'); ?>
+                    login_header(__('Log In', 'clef')); ?>
                     <form name="loginform" id="loginform" action="" method="post">
                     <?php do_action('login_form'); ?>
                     </form>
@@ -61,15 +61,15 @@
         }
 
         public static function disable_passwords($user) {
-            if (empty($_POST)) return;
+            if (empty($_POST)) return $user;
 
             if (isset($_POST['override']) && self::valid_override($_POST['override'])) {
-                return;
+                return $user;
             }
 
             $disable = self::passwords_are_disabled_for_user($user->ID);
 
-            if ($disable && !(XMLRPC_REQUEST && self::xml_passwords_enabled())) {
+            if ($disable && !(defined('XMLRPC_REQUEST') && XMLRPC_REQUEST && self::xml_passwords_enabled())) {
                 add_filter('xmlrpc_login_error', array(__CLASS__, "return_xml_error_message"));
                 return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
             } else {

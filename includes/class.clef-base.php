@@ -10,24 +10,35 @@
         private static $_individual_settings = null;
         private static $_settings = null;
 
-        public static function setting( $name , $value=false, $refresh=false) {
-
+        public static function get_settings() {
             if (self::individual_settings()) {
                 $getter = 'get_option';
-                $setter = 'update_option';
             } else {
                 $getter = 'get_site_option';
+            }
+
+            return $getter( CLEF_OPTIONS_NAME );
+        }
+
+        public static function set_settings($settings) {
+            if (self::individual_settings()) {
+                $setter = 'update_option';
+            } else {
                 $setter = 'update_site_option';
             }
 
+            return $setter( CLEF_OPTIONS_NAME, $settings);
+        }
+
+        public static function setting( $name , $value=false, $refresh=false) {
             if ($refresh || !self::$_settings) {
-                self::$_settings = $getter( CLEF_OPTIONS_NAME );
+                self::$_settings = self::get_settings();
             } 
 
             if ($value) {
                 self::$_settings[$name] = $value;
 
-                $setter(CLEF_OPTIONS_NAME, self::$_settings);
+                self::set_settings(self::$_settings);
                 return $value;
             } else {
                 if ( isset( self::$_settings[$name] ) ) {
@@ -250,7 +261,7 @@
 
         public static function register_script($name, $dependencies=array('jquery')) {
             $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG)  {
+            if (!CLEF_DEBUG)  {
                 $name .= '.min';
             }
             $name .= '.js';
@@ -259,21 +270,21 @@
                 CLEF_URL .'assets/dist/js/' . $name, 
                 $dependencies, 
                 CLEF_VERSION, 
-                TRUE
+                true
             );
             return $ident;
         }
 
         public static function register_style($name) {
             $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG) {
+            if (!CLEF_DEBUG) {
                 $name .= '.min';
             }
             $name .= '.css';
             wp_register_style(
                 $ident, 
                 CLEF_URL . 'assets/dist/css/' . $name, 
-                FALSE, 
+                false, 
                 CLEF_VERSION
             ); 
             return $ident;
