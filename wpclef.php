@@ -51,6 +51,7 @@ require_once('includes/class.clef-network-admin.php');
 require_once('includes/class.clef-login.php');
 require_once('includes/class.clef-logout.php');
 require_once('includes/class.clef-badge.php');
+require_once('includes/class.clef-invite-code.php');
 
 register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugin'));
 register_deactivation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'deactivate_plugin'));

@@ -191,12 +191,11 @@
                 || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
         }
 
-        public static function passwords_are_disabled_for_user($user, $override= false) {
+        /* 
+         * $user :: WP_User 
+         */
+        public static function passwords_are_disabled_for_user($user, $override=false) {
             if (!self::is_configured()) return false;
-
-            if (!is_a($user, 'WP_User')) {
-                $user = get_userdata((int) $user);
-            }
 
             $disabled = false;
 
@@ -250,13 +249,39 @@
             return 'text/html';
         }
 
+        /**
+         * Runs esc_html on strings. Leaves input untouched if it's not 
+         * a string.
+         *
+         * return :: mixed
+         */
+        private static function escape_string($maybe_string) {
+            $escaped = $maybe_string;
+            if (is_string($maybe_string)) {
+                $escaped = esc_html($maybe_string);
+            }
+            return $escaped;
+        }
+
+        /**
+         * Renders the specified template, giving it access to $variables. 
+         * Strings are escaped.
+         *
+         * $name :: string
+         *   The name (with no .php extension) of a file in 
+         *   templates/.
+         * $variables :: array
+         *   A list of variables to be used in the 
+         *   template.
+         *
+         * return :: string
+         */
         public static function render_template($name, $variables) {
-            extract($variables);
+            $escaped_variables = array_map(array(__CLASS__, 'escape_string'), $variables);
+            extract($escaped_variables, EXTR_SKIP);
             ob_start();
             require(CLEF_TEMPLATE_PATH . $name . '.php');
-            $template = ob_get_contents();
-            ob_end_clean();
-            return $template;
+            return ob_get_clean();
         }
 
         public static function register_script($name, $dependencies=array('jquery')) {
@@ -273,6 +298,20 @@
                 true
             );
             return $ident;
+        }
+
+        public static function isset_GET($key) {
+            if (!isset($_GET[$key])) {
+                return null;
+            }
+            return $_GET[$key];
+        }
+
+        public static function isset_POST($key) {
+            if (!isset($_POST[$key])) {
+                return null;
+            }
+            return $_POST[$key];
         }
 
         public static function register_style($name) {

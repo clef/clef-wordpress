@@ -11,6 +11,7 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "settings_form"));
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
         add_action('admin_init', array(__CLASS__, "connect_clef_account"));
+        add_action('admin_init', array(__CLASS__, "invite_users"));
 
         add_action('admin_menu', array(__CLASS__, "admin_menu"));
 
@@ -59,8 +60,11 @@ class ClefAdmin extends ClefBase {
         } 
     }
 
-    public static function show_user_profile() {
-        $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
+    public static function show_user_profile($user) {
+        if (!$user) {
+            $user = wp_get_current_user();
+        }
+        $connected = !!get_user_meta($user->ID, "clef_id", true);
         if (!$connected) {
             $app_id = self::setting( 'clef_settings_app_id' );
             $redirect_url = add_query_arg(
@@ -77,6 +81,26 @@ class ClefAdmin extends ClefBase {
     public static function edit_user_profile_update($user_id) {
         if (isset($_POST['remove_clef']) && $_POST['remove_clef']) {
             self::dissociate_clef_id($user_id);
+        }
+    }
+
+    public static function invite_users() {
+        if (isset($_REQUEST['invite_users']) && $_REQUEST['invite_users']) {
+            $other_users = get_users(array('exclude' => array(get_current_user_id())));
+            $invite_codes = array();
+            foreach ($other_users as $user) {
+                $invite_code = new InviteCode($user);
+                update_user_meta($user->ID, 'clef_invite_code', $invite_code);
+
+                $invite_link = $invite_code->get_link();
+                $to = $user->user_email;
+                $subject = 'Set up Clef for your account';
+                $message = Clef::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
+
+                add_filter('wp_mail_content_type', array(__CLASS__, 'set_html_content_type'));
+                wp_mail($to, $subject, $message);
+                remove_filter('wp_mail_content_type', array(__CLASS__, 'set_html_content_type'));
+            }
         }
     }
 
@@ -224,6 +248,7 @@ class ClefAdmin extends ClefBase {
             array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
         );
 
+        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"), array(__CLASS__, 'print_invite_users_descript'));
         return $form;
     }
 
@@ -255,6 +280,12 @@ class ClefAdmin extends ClefBase {
             }
             exit();
         }
+    }
+
+    public static function print_invite_users_descript() {
+        $url = add_query_arg(array('page' => 'clef', 'invite_users' => 'true'), admin_url('admin.php'));
+        _e('<p>Invite users of your site here.</p>', 'clef');
+        _e("<a href='$url'>Invite all users</a>", 'clef');
     }
 
     public static function print_api_descript() {
