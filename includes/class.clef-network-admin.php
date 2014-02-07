@@ -62,9 +62,14 @@ class ClefNetworkAdmin extends ClefAdmin {
         $form_url = "edit.php?action=clef_multisite";
         if (get_site_option(self::MS_ENABLED_OPTION)) {
             $allow_override = get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
-            include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-enabled.tpl.php';
+            echo ClefUtils::render_template('network_admin/multisite-settings-enabled.tpl', array(
+                "form_url" => $form_url,
+                "allow_override" => $allow_override
+            ));
         } else {
-            include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-disabled.tpl.php';
+            echo ClefUtils::render_template('network_admin/multisite-settings-disabled.tpl', array(
+                "form_url" => $form_url
+            ));
         }
     }
 
