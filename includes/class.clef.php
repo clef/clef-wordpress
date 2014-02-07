@@ -5,19 +5,6 @@ class Clef extends ClefBase {
     private static $TABLES = array();
 
     public static function init() {
-
-        if ( !session_id() ) {
-            session_start();
-        }
-
-        if ( !isset( $_SESSION['Clef_Messages'] ) ) {
-            $_SESSION['Clef_Messages'] = array();
-        }
-
-        add_action('lost_password', array( 'Clef', 'disable_lost_password_form' ) );
-        add_action('lostpassword_post', array( 'Clef', 'disable_lost_password_form' ) );
-        add_filter('wp_authenticate_user', array('Clef', 'clear_logout_hook'));
-
         if (is_network_admin()) {
             ClefNetworkAdmin::init();
         } else if (is_admin()) {
@@ -28,30 +15,11 @@ class Clef extends ClefBase {
         ClefLogout::init();
 
         ClefBadge::hook_display();
- }
-    
-    public static function disable_lost_password_form() {
-        if (!empty($_POST['user_login'])) {
-            $user = get_user_by( 'login', $_POST['user_login'] );
-            
-            if ( (self::setting( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) || (self::setting( 'clef_password_settings_force' ) == 1)) {
-                $_SESSION['Clef_Messages'][] = __("Lost password resets have been disabled.", 'clef');
-                header("Location: " . wp_login_url());
-                exit();
-            }
-        }
-    }
-
-    public static function clear_logout_hook($user) {
-        if (isset($_SESSION['logged_in_at'])) {
-            unset($_SESSION['logged_in_at']);
-        }
-        return $user;
     }
 
     public static function register_styles() {
-        wp_register_style('wpclef', CLEF_URL . 'assets/css/wpclef.min.css', FALSE, '1.0.0');
-        wp_enqueue_style('wpclef');
+        $ident = self::register_style('wpclef');
+        wp_enqueue_style($ident);
     }
 
     public static function create_table($name) {
@@ -120,8 +88,6 @@ class Clef extends ClefBase {
         } else {
             self::setting('installed_at', $version);
         }
-        
-        
 
         if ($settings_changes) {
             foreach ($settings_changes as $old_name => $new_name) {

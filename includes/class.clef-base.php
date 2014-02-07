@@ -10,24 +10,35 @@
         private static $_individual_settings = null;
         private static $_settings = null;
 
-        public static function setting( $name , $value=false, $refresh=false) {
-
+        public static function get_settings() {
             if (self::individual_settings()) {
                 $getter = 'get_option';
-                $setter = 'update_option';
             } else {
                 $getter = 'get_site_option';
+            }
+
+            return $getter( CLEF_OPTIONS_NAME );
+        }
+
+        public static function set_settings($settings) {
+            if (self::individual_settings()) {
+                $setter = 'update_option';
+            } else {
                 $setter = 'update_site_option';
             }
 
+            return $setter( CLEF_OPTIONS_NAME, $settings);
+        }
+
+        public static function setting( $name , $value=false, $refresh=false) {
             if ($refresh || !self::$_settings) {
-                self::$_settings = $getter( CLEF_OPTIONS_NAME );
+                self::$_settings = self::get_settings();
             } 
 
             if ($value) {
                 self::$_settings[$name] = $value;
 
-                $setter(CLEF_OPTIONS_NAME, self::$_settings);
+                self::set_settings(self::$_settings);
                 return $value;
             } else {
                 if ( isset( self::$_settings[$name] ) ) {
@@ -110,8 +121,6 @@
 
             if ( is_wp_error($response)  ) {
                 throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
-                // $_SESSION['Clef_Messages'][] = ;
-                // self::redirect_error();
             }
 
             $body = json_decode( $response['body'] );
@@ -182,8 +191,90 @@
                 || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
         }
 
+        public static function passwords_are_disabled_for_user($user, $override= false) {
+            if (!self::is_configured()) return false;
+
+            if (!is_a($user, 'WP_User')) {
+                $user = get_userdata((int) $user);
+            }
+
+            $disabled = false;
+
+            if (self::setting('clef_password_settings_force')) {
+                $disabled = true;
+            }
+
+            if (self::setting( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) {
+                $disabled = true;
+            }
+
+            $disable_certain_passwords = self::setting( 'clef_password_settings_disable_certain_passwords');
+            if ($disable_certain_passwords && $disable_certain_passwords != 'Disabled') {
+                $max_role = strtolower($disable_certain_passwords);
+                $role_map = array( 
+                    "subscriber",
+                    "editor",
+                    "author",
+                    "administrator",
+                    "super administrator"
+                );
+
+                foreach ($user->roles as &$role) {
+                    $rank = array_search($role, $role_map);
+                    if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
+                        $disabled = true;
+                        break;
+                    }
+                } 
+
+                if ($max_role == "super administrator" && is_super_admin($user->ID)) {
+                    $disabled = true;
+                }
+            }
+
+            return $disabled;
+        }
+
         public static function xml_passwords_enabled() {
             return !self::passwords_disabled() || (self::passwords_disabled() && self::setting('clef_password_settings_xml_allowed'));
+        }
+
+        public static function is_configured() {
+            $app_id = self::setting('clef_settings_app_id');
+            $app_secret = self::setting('clef_settings_app_secret');
+
+            return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
+        }
+
+        public static function register_script($name, $dependencies=array('jquery')) {
+            $ident = "wpclef-" . $name;
+            if (!CLEF_DEBUG)  {
+                $name .= '.min';
+            }
+            $name .= '.js';
+            wp_register_script(
+                $ident, 
+                CLEF_URL .'assets/dist/js/' . $name, 
+                $dependencies, 
+                CLEF_VERSION, 
+                true
+            );
+            return $ident;
+        }
+
+        public static function register_style($name) {
+            $ident = "wpclef-" . $name;
+            if (!CLEF_DEBUG) {
+                $name .= '.min';
+            }
+            $name .= '.css';
+            wp_register_style(
+                $ident, 
+                CLEF_URL . 'assets/dist/css/' . $name, 
+                false, 
+                CLEF_VERSION
+            ); 
+            return $ident;
         }
     }
 ?>

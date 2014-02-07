@@ -7,21 +7,32 @@ class ClefAdmin extends ClefBase {
 
     public static function init() {
         add_action('admin_init', array(__CLASS__, "other_install"));
-        add_action('admin_menu', array(__CLASS__, "admin_menu"));
         add_action('admin_init', array(__CLASS__, "setup_plugin"));
         add_action('admin_init', array(__CLASS__, "settings_form"));
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
+        add_action('admin_init', array(__CLASS__, "connect_clef_account"));
+
+        add_action('admin_menu', array(__CLASS__, "admin_menu"));
+
         add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
         add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
+
         add_action('admin_notices', array(__CLASS__, 'display_messages') );
 
         add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
         add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
+
         add_action('edit_user_profile_update', array(__CLASS__, 'edit_user_profile_update'));
         add_action('personal_options_update', array(__CLASS__, 'edit_user_profile_update'));
-        add_action('admin_notices', array(__CLASS__, 'edit_profile_errors'));
 
         add_action('options_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
+
+        require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
+        new AjaxSettings(array( 
+            "options_name" => CLEF_OPTIONS_NAME, 
+            "initialize" => false, 
+            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/"
+        ));
 
         ClefBadge::hook_onboarding();
     }
@@ -31,29 +42,35 @@ class ClefAdmin extends ClefBase {
     }
 
     public static function admin_enqueue_scripts($hook) {
-
         $exploded_path = explode('/', $hook);
         $settings_page_name = array_shift($exploded_path);
 
         // only register clef logout if user is a clef user
         if (get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
-            wp_register_script('wpclef_logout', CLEF_URL .'assets/js/clef_heartbeat.js', array('jquery'), '1.0', TRUE);
+            self::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
         
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            wp_register_script('wpclef_keys', CLEF_URL . 'assets/js/keys.js', array('jquery'), '1.0.1', TRUE );
-            wp_enqueue_script('wpclef_keys');
+            $ident = self::register_script('settings', array('jquery', 'backbone', 'underscore'));
+            wp_enqueue_script($ident);
         } 
     }
 
     public static function show_user_profile() {
         $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
-        $app_id = self::setting( 'clef_settings_app_id' );
-        $redirect_url = trailingslashit( home_url() ) . "?clef_callback=clef_callback&connecting=true";
-        $redirect_url .=  ("&state=" . wp_create_nonce("connect_clef"));
+        if (!$connected) {
+            $app_id = self::setting( 'clef_settings_app_id' );
+            $redirect_url = add_query_arg(
+                array(
+                    'state' => wp_create_nonce("connect_clef"),
+                    'clef' => true,
+                    'connecting' => true
+                ), get_edit_profile_url(wp_get_current_user()->ID)
+            );
+        }
         include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
     }
 
@@ -63,15 +80,37 @@ class ClefAdmin extends ClefBase {
         }
     }
 
-    public static function edit_profile_errors($errors) {
-        if (isset($_SESSION['Clef_Messages']) && !empty($_SESSION['Clef_Messages'])) {
-            $_SESSION['Clef_Messages'] = array_unique( $_SESSION['Clef_Messages'] );
-            echo '<div id="login_error">';
-            foreach ( $_SESSION['Clef_Messages'] as $message ) {
-                _e('<p><strong>ERROR</strong>: '. $message . ' </p>', 'clef');
+    public static function connect_clef_account() {
+        if (isset($_REQUEST['clef']) && isset($_REQUEST['connecting']) &&
+        isset($_REQUEST['code'])) {
+
+            // do state CSRF check
+            if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) {
+                die();
             }
-            echo '</div>';
-            $_SESSION['Clef_Messages'] = array();
+
+            try {
+                $info = self::exchange_oauth_code_for_info($_REQUEST['code']);
+            } catch (LoginException $e) {
+                add_settings_error(
+                    CLEF_OPTIONS_NAME,
+                    esc_attr("settings_updated"),
+                    __("Error while connecting your Clef account: ", "clef") . $e->getMessage(),
+                    "updated"
+                );
+                return;
+            }
+
+            self::associate_clef_id($info->id);
+            // Log in the user
+            $_SESSION['logged_in_at'] = time();
+
+            add_settings_error(
+                CLEF_OPTIONS_NAME,
+                esc_attr("settings_updated"),
+                __("Successfully connected your Clef account.", "clef"),
+                "updated"
+            );
         }
     }
 
@@ -103,19 +142,19 @@ class ClefAdmin extends ClefBase {
         if (self::individual_settings()) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-            if(!$form->is_configured()) {
-                $site_name = urlencode(get_option('blogname'));
-                $site_domain = urlencode(get_option('siteurl'));
-                $tutorial_url = CLEF_BASE . '/iframes/wordpress?domain=' . $site_domain . '&name=' . $site_name;
-                if (get_site_option("bruteprotect_installed_clef")) {
-                    $tutorial_url .= '&bruteprotect=true';
-                }
-                include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
-            } else {
-                include CLEF_TEMPLATE_PATH."admin/settings-header.tpl.php";
+            $options = self::get_settings();
+            $setup = array();
+            $setup['siteName'] = get_option('blogname');
+            $setup['siteDomain'] = get_option('siteurl');
+            $setup['source'] = "wordpress";
+            if (get_site_option("bruteprotect_installed_clef")) {
+                $setup['source'] = "bruteprotect";
             }
+            $options['setup'] = $setup;
+            $options['configured'] = self::is_configured();
+            $options['clefBase'] = CLEF_BASE;
 
-            $form->renderBasicForm('', Settings_API_Util::ICON_SETTINGS);   
+            include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
         } else {
             include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
         }
@@ -153,40 +192,27 @@ class ClefAdmin extends ClefBase {
     public static function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
 
-        # if the app is not configured, add the API settings at the top of
-        # the form
-        if (!$form->is_configured()) {
-            self::add_api_settings($form);
-        }
+        self::add_api_settings($form, self::is_configured());
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
-        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'disable_certain_passwords', 
-            __('Disable passwords for all users with privileges greater than or equal to ', "clef"), 
+            __('Disable certain passwords', "clef"), 
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
             array( "options" => array("Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
         );
-        $pw_settings->addField('force', __('Disable passwords for all users and hide the password login form.', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        if (self::passwords_disabled()) {
-            $pw_settings->addField(
-                'xml_allowed', 
-                __('Always allow passwords for XML API (necessary for things like the WordPress mobile app)'),
-                Settings_API_Util_Field::TYPE_CHECKBOX
-            );
-        }
+        $pw_settings->addField(
+            'xml_allowed', 
+            __('Allow XML'),
+            Settings_API_Util_Field::TYPE_CHECKBOX
+        );
 
         $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
-        $override_msg = '<a href="javascript:void(0);" onclick="document.getElementById(\'wpclef[clef_override_settings_key]\').value=\''. md5(uniqid(mt_rand(), true)) .'\'">' . __("Set an override key") . '</a>';
-        $override_settings->addField('key', $override_msg, Settings_API_Util_Field::TYPE_TEXTFIELD); 
-        $key = Clef::setting( 'clef_override_settings_key' );
-
-        if (!empty($key)) {
-            $override_settings->settings->values['clef_override_settings_url'] = wp_login_url() .'?override=' .$key;
-            $override_settings->addField('url', __("Use this URL to allow passwords:", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        }
+        $override_settings->addField('key', "Override key", Settings_API_Util_Field::TYPE_TEXTFIELD); 
 
         $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"), array(__CLASS__, 'print_support_clef_descript'));
         $support_clef_settings->addField(
@@ -196,24 +222,6 @@ class ClefAdmin extends ClefBase {
             "disabled",
             array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
         );
-        $support_clef_settings->addField(
-            "badge_code", 
-            __("Manually add a badge", "clef"), 
-            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'))
-        );
-        $support_clef_settings->addField(
-            "link_code", 
-            __("Manually add a link", "clef"), 
-            Settings_API_Util_Field::TYPE_TEXTFIELD, "", 
-            array("value" => htmlentities('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'))
-        );
-
-        # if the app is configured, add the API settings at the bottom of
-        # the form
-        if ($form->is_configured()) {
-            self::add_api_settings($form, true);
-        }
 
         return $form;
     }
@@ -270,5 +278,3 @@ class ClefAdmin extends ClefBase {
         return $settings;
     }
 }
-
-?>
