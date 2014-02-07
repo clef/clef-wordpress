@@ -41,7 +41,7 @@
         }
 
         public static function disable_login_form($user) {
-            if ( (self::setting( 'clef_password_settings_force' ) == 1) && empty($_POST)) {
+            if ( (self::setting( 'clef_password_settings_force' ) == 1) && !isset($_REQUEST['clef']) && !isset($_REQUEST['code'])) {
                 $key = self::setting( 'clef_override_settings_key' );
                 if (is_user_logged_in()) {
                     header("Location: " . admin_url() );
@@ -79,7 +79,6 @@
 
         public static function authenticate_clef($user, $username, $password) {
             if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
-
                 // Authenticate
                 try {
                     $info = self::exchange_oauth_code_for_info($_REQUEST['code']);
