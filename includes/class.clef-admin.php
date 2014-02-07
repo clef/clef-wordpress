@@ -153,6 +153,7 @@ class ClefAdmin extends ClefBase {
             $options['setup'] = $setup;
             $options['configured'] = self::is_configured();
             $options['clefBase'] = CLEF_BASE;
+            $options['options_name'] = CLEF_OPTIONS_NAME;
 
             include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
         } else {

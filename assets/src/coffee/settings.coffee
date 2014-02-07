@@ -4,72 +4,25 @@
     AppView = Backbone.View.extend
         id: "clef-settings-container"
         initialize: (@opts) ->
-            @settings = new SettingsView _.extend @opts, { options_name: "wpclef" }
+            @settings = new SettingsView (
+                _.extend { options_name: "wpclef" }, @opts
+            )
+            @tutorial = new TutorialView _.extend {}, @opts
+
+            if @settings.isConfigured()
+                @settings.render()
+            else
+                @tutorial.render()
+                @listenToOnce(
+                    @tutorial, 
+                    'applicationCreated', 
+                    @configure.bind this
+                )
+
+        configure: (data) ->
+            @settings.model.configure(data)
+            @tutorial.hide()
             @settings.render()
-
-            window.onbeforeunload = (e) =>
-                if @settings.isSaving()
-                    "Some settings are still being saved. Are you sure you want to navigate away?"
-
-    TutorialView = Backbone.View.extend
-        el: $('#clef-tutorial')
-        events:
-            "click .next": "next"
-            "click .previous": "previous"
-
-        initialize: (@opts) ->
-            @subs = []
-            for sub in @$el.find('.sub')
-                @subs.push new SubTutorialView { el: sub }
-
-            @currentSub = @subs[0]
-
-            $(window).on 'message', @handleLogin.bind(this)
-
-        render: ()->
-            @currentSub.render()
-            @loadIFrame()
-            @$el.fadeIn()
-
-        next: () ->
-            newSub = @subs[_.indexOf(@subs, @currentSub) + 1]
-            if newSub
-                if newSub.isLogin() && @loggedIn
-                    newSub = @subs[_.indexOf(@subs, @newSub) + 1]
-                    
-                @currentSub.hide()
-                newSub.render()
-                @currentSub = newSub
-
-        previous: ()->
-            newSub = @subs[_.indexOf(@subs, @currentSub) - 1]
-            if newSub
-                @currentSub.hide()
-                newSub.render()
-                @currentSub = newSub
-
-        loadIFrame: () ->
-            frame = @$el.find("iframe")
-            frame.attr('src', frame.data('src'))
-
-        handleLogin: () ->
-            @loggedIn = true
-            if @currentSub.isLogin()
-                @next()
-
-            # @createApplication()
-
-    SubTutorialView = Backbone.View.extend
-        initialize: (@opts) ->
-            @setElement($(@opts.el))
-        render: () ->
-            @$el.show()
-        hide: () ->
-            @$el.hide()
-        remove: () ->
-            @$el.remove()
-        isLogin: () ->
-            @$el.find('iframe').length
 
     SettingsView =  AjaxSettingsView.extend
         initialize: (opts) ->
@@ -78,7 +31,7 @@
 
             @formView = new FormVisualization( model: @model )
             @xmlEl = @model
-                .cfindInput('clef_password_settings_xml_allowed')
+                .cFindInput('clef_password_settings_xml_allowed')
                 .parents('.input-container')
 
             @overrideContainer = @$el.find '.override-settings'
@@ -86,6 +39,10 @@
             @setOverrideLink()
 
             @badgePreviewContainer = @$el.find '.support-settings .footer-preview'
+
+            window.onbeforeunload = (e) =>
+                if @isSaving()
+                    "Settings are being saved. Still want to navigate away?"
 
         updated: (obj, data) ->
             SettingsView.__super__.updated.call(this, obj, data)
@@ -135,14 +92,15 @@
                 setting == "badge"
             )
 
+        isConfigured: () ->
+            @model.isConfigured()
 
-    
     SettingsModel = AjaxSettingsModel.extend
+        cFindInput: (name) ->
+            @findInput "wpclef[#{name}]"
+
         cget: (key) ->
             @get "wpclef[#{key}]"
-        cfindInput: (name) ->
-            name = "wpclef[#{name}]"
-            SettingsModel.__super__.findInput.call(this, name)
 
         passwordsDisabled: () ->
             !!parseInt(@cget('clef_password_settings_disable_passwords')) || 
@@ -160,7 +118,14 @@
 
         badgeSetting: () ->
             @cget('support_clef_badge').toLowerCase()
-            
+
+        isConfigured: () ->
+            !!(@cget('clef_settings_app_id') && @cget('clef_settings_app_secret'))
+
+        configure: (data) ->
+            @save
+                'wpclef[clef_settings_app_id]': data.appID
+                'wpclef[clef_settings_app_secret]': data.appSecret
 
     FormVisualization = Backbone.View.extend
         el: $("#login-form-view")

@@ -44,24 +44,34 @@ gulp.task('sass', function() {
 });
 
 gulp.task('coffee', function() {
-    return gulp.src('assets/src/coffee/**/*.coffee')
-        .pipe(plumber())
-        .pipe(coffeelint({ 
-            "indentation": {
-                "name": "indentation",
-                "value": 4,
-                "level": "error"
-            }
-        }))
-        .pipe(coffeelint.reporter())
-        .pipe(coffee({bare: true})).on('error', gutil.log)
-        .pipe(gulp.dest('assets/dist/js/'))
-        .pipe(livereload(server))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(uglify())
-        .pipe(header(banner, { pkg: pkg }))
-        .pipe(gulp.dest('assets/dist/js/'))
-        .pipe(notify({ message: "Coffeescript compiled." }));
+    build(gulp.src(['assets/src/coffee/**/*.coffee', '!**/settings.coffee', '!**/tutorial.coffee']));
+    build(gulp.src(['assets/src/coffee/settings.coffee', 'assets/src/coffee/tutorial.coffee']), 'settings.js');
+
+    function build(strm, output) {
+        strm = strm
+            .pipe(plumber())
+            .pipe(coffeelint({ 
+                "indentation": {
+                    "name": "indentation",
+                    "value": 4,
+                    "level": "error"
+                }
+            }))
+            .pipe(coffeelint.reporter())
+            .pipe(coffee({bare: true})).on('error', gutil.log);
+
+        if (output) {
+            strm = strm.pipe(concat(output));
+        }
+
+        strm
+            .pipe(gulp.dest('assets/dist/js/'))
+            .pipe(livereload(server))
+            .pipe(rename({suffix: '.min'}))
+            .pipe(uglify())
+            .pipe(header(banner, { pkg: pkg }))
+            .pipe(gulp.dest('assets/dist/js/'));
+    }
 });
 
 gulp.task('images', function() {
