@@ -11,6 +11,7 @@ class ClefAdmin extends ClefBase {
         add_action('admin_init', array(__CLASS__, "settings_form"));
         add_action('admin_init', array(__CLASS__, "multisite_settings_edit"));
         add_action('admin_init', array(__CLASS__, "connect_clef_account"));
+        add_action('admin_init', array(__CLASS__, "invite_users"));
 
         add_action('admin_menu', array(__CLASS__, "admin_menu"));
 
@@ -40,20 +41,23 @@ class ClefAdmin extends ClefBase {
 
         // only register clef logout if user is a clef user
         if (get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
-            self::register_script('clef_heartbeat');
+            ClefUtils::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
         
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            $ident = self::register_script('keys');
+            $ident = ClefUtils::register_script('keys');
             wp_enqueue_script($ident);
         } 
     }
 
-    public static function show_user_profile() {
-        $connected = !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
+    public static function show_user_profile($user) {
+        if (!$user) {
+            $user = wp_get_current_user();
+        }
+        $connected = !!get_user_meta($user->ID, "clef_id", true);
         if (!$connected) {
             $app_id = self::setting( 'clef_settings_app_id' );
             $redirect_url = add_query_arg(
@@ -64,12 +68,36 @@ class ClefAdmin extends ClefBase {
                 ), get_edit_profile_url(wp_get_current_user()->ID)
             );
         }
-        include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
+        echo ClefUtils::render_template('user_profile.tpl', array(
+            "connected" => $connected,
+            "app_id" => $app_id,
+            "redirect_url" => $redirect_url
+        ));
     }
 
     public static function edit_user_profile_update($user_id) {
         if (isset($_POST['remove_clef']) && $_POST['remove_clef']) {
             self::dissociate_clef_id($user_id);
+        }
+    }
+
+    public static function invite_users() {
+        if (isset($_REQUEST['invite_users']) && $_REQUEST['invite_users']) {
+            $other_users = get_users(array('exclude' => array(get_current_user_id())));
+            $invite_codes = array();
+            foreach ($other_users as $user) {
+                $invite_code = new InviteCode($user);
+                update_user_meta($user->ID, 'clef_invite_code', $invite_code);
+
+                $invite_link = $invite_code->get_link();
+                $to = $user->user_email;
+                $subject = 'Set up Clef for your account';
+                $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
+
+                add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+                wp_mail($to, $subject, $message);
+                remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+            }
         }
     }
 
@@ -142,30 +170,33 @@ class ClefAdmin extends ClefBase {
                 if (get_site_option("bruteprotect_installed_clef")) {
                     $tutorial_url .= '&bruteprotect=true';
                 }
-                include CLEF_TEMPLATE_PATH."tutorial.tpl.php";
+                echo ClefUtils::render_template('tutorial.tpl', array(
+                    "tutorial_url" => $tutorial_url
+                ));
             } else {
-                include CLEF_TEMPLATE_PATH."admin/settings-header.tpl.php";
+                echo ClefUtils::render_template('admin/settings-header.tpl');
             }
 
             $form->renderBasicForm('', Settings_API_Util::ICON_SETTINGS);   
         } else {
-            include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
+            echo ClefUtils::render_template('admin/multisite-enabled.tpl');
         }
     }
 
     public static function multisite_settings() {
-        include CLEF_TEMPLATE_PATH . "admin/multisite-disabled.tpl.php";
+        echo ClefUtils::render_template('admin/multisite-disabled.tpl');
     }
 
     public static function other_install_settings() {
         require_once 'lib/plugin-installer/installer.php';
 
         $installer = new PluginInstaller( array( "name" => "BruteProtect", "slug" => "bruteprotect" ) );
-
         // pass in current URL as base URL
         $url = $installer->url();
 
-        include CLEF_TEMPLATE_PATH . "admin/other-install.tpl.php";
+        echo ClefUtils::render_template('admin/other-install.tpl', array(
+            "url" => $url
+        ));
     }
 
     public static function other_install() {
@@ -247,6 +278,7 @@ class ClefAdmin extends ClefBase {
             self::add_api_settings($form, true);
         }
 
+        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"), array(__CLASS__, 'print_invite_users_descript'));
         return $form;
     }
 
@@ -278,6 +310,12 @@ class ClefAdmin extends ClefBase {
             }
             exit();
         }
+    }
+
+    public static function print_invite_users_descript() {
+        $url = add_query_arg(array('page' => 'clef', 'invite_users' => 'true'), admin_url('admin.php'));
+        _e('<p>Invite users of your site here.</p>', 'clef');
+        _e("<a href='$url'>Invite all users</a>", 'clef');
     }
 
     public static function print_api_descript() {

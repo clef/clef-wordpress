@@ -42,6 +42,7 @@ if (!defined('CLEF_JS_URL')) define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
 if (!defined('CLEF_API_BASE')) define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
 
 require_once('includes/lib/utils.inc');
+require_once('includes/class.clef-utils.php');
 require_once('includes/class.clef-base.php');
 require_once('includes/class.clef-settings.php');
 require_once('includes/class.clef.php');
@@ -51,6 +52,7 @@ require_once('includes/class.clef-network-admin.php');
 require_once('includes/class.clef-login.php');
 require_once('includes/class.clef-logout.php');
 require_once('includes/class.clef-badge.php');
+require_once('includes/class.clef-invite-code.php');
 
 register_activation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'activate_plugin'));
 register_deactivation_hook(CLEF_PATH . 'wpclef.php', array('Clef', 'deactivate_plugin'));

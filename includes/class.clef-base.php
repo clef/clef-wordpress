@@ -166,6 +166,12 @@
             return $wpdb->prefix . $tablename;
         }
 
+        /**
+         * Returns whether Clef is activated network-wide and whether it has 
+         * been enabled on the whole network. 
+         *
+         * @return bool
+         */
         protected static function is_multisite_enabled() {
             return is_plugin_active_for_network('wpclef/wpclef.php') && get_site_option(self::MS_ENABLED_OPTION);
         }
@@ -174,18 +180,26 @@
             return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
         }
 
+        /**
+         * Returns whether passwords are disabled site-wide.
+         *
+         * @return bool
+         */
         public static function passwords_disabled() {
             return self::setting('clef_password_settings_disable_passwords') 
                 || self::setting('clef_password_settings_force') 
                 || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
         }
 
-        public static function passwords_are_disabled_for_user($user, $override= false) {
+        /**
+         * Returns whether passwords are disabled for a specific user based on 
+         * user roles.
+         *
+         * @param WP_User $user
+         * @return bool
+         */
+        public static function passwords_are_disabled_for_user($user) {
             if (!self::is_configured()) return false;
-
-            if (!is_a($user, 'WP_User')) {
-                $user = get_userdata((int) $user);
-            }
 
             $disabled = false;
 
@@ -235,48 +249,5 @@
             return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
         }
 
-        public static function set_html_content_type() {
-            return 'text/html';
-        }
-
-        public static function render_template($name, $variables) {
-            extract($variables);
-            ob_start();
-            require(CLEF_TEMPLATE_PATH . $name . '.php');
-            $template = ob_get_contents();
-            ob_end_clean();
-            return $template;
-        }
-
-        public static function register_script($name, $dependencies=array('jquery')) {
-            $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG)  {
-                $name .= '.min';
-            }
-            $name .= '.js';
-            wp_register_script(
-                $ident, 
-                CLEF_URL .'assets/dist/js/' . $name, 
-                $dependencies, 
-                CLEF_VERSION, 
-                TRUE
-            );
-            return $ident;
-        }
-
-        public static function register_style($name) {
-            $ident = "wpclef-" . $name;
-            if (CLEF_DEBUG) {
-                $name .= '.min';
-            }
-            $name .= '.css';
-            wp_register_style(
-                $ident, 
-                CLEF_URL . 'assets/dist/css/' . $name, 
-                FALSE, 
-                CLEF_VERSION
-            ); 
-            return $ident;
-        }
     }
 ?>
