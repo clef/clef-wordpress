@@ -37,12 +37,14 @@ class ClefBadge extends ClefBase {
 
     public static function draw() {
         $pretty = self::setting(self::SETTING_NAME) == "badge";
-        include CLEF_TEMPLATE_PATH . "badge.tpl.php";
+        echo ClefUtils::render_template('badge.tpl', array("pretty" => $pretty));
     }
 
     public static function badge_prompt_html() {
         $had_clef_before_onboarding = ClefOnboarding::had_clef_before_onboarding();
-        include CLEF_TEMPLATE_PATH . "admin/badge-prompt.tpl.php";
+        echo ClefUtils::render_template('admin/badge-prompt.tpl', array(
+            "had_clef_before_onboarding" => $had_clef_before_onboarding
+        ));
     }
 
     public static function register_styles() {
@@ -50,7 +52,7 @@ class ClefBadge extends ClefBase {
     }
 
     public static function register_scripts() {
-        $ident = self::register_script('badge');
+        $ident = ClefUtils::register_script('badge');
         wp_enqueue_script($ident);
     }
 

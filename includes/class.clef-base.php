@@ -177,6 +177,12 @@
             return $wpdb->prefix . $tablename;
         }
 
+        /**
+         * Returns whether Clef is activated network-wide and whether it has 
+         * been enabled on the whole network. 
+         *
+         * @return bool
+         */
         protected static function is_multisite_enabled() {
             return is_plugin_active_for_network('wpclef/wpclef.php') && get_site_option(self::MS_ENABLED_OPTION);
         }
@@ -185,16 +191,25 @@
             return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
         }
 
+        /**
+         * Returns whether passwords are disabled site-wide.
+         *
+         * @return bool
+         */
         public static function passwords_disabled() {
             return self::setting('clef_password_settings_disable_passwords') 
                 || self::setting('clef_password_settings_force') 
                 || self::setting('clef_password_settings_disable_certain_passwords') != "Disabled";
         }
 
-        /* 
-         * $user :: WP_User 
+        /**
+         * Returns whether passwords are disabled for a specific user based on 
+         * user roles.
+         *
+         * @param WP_User $user
+         * @return bool
          */
-        public static function passwords_are_disabled_for_user($user, $override=false) {
+        public static function passwords_are_disabled_for_user($user) {
             if (!self::is_configured()) return false;
 
             $disabled = false;
@@ -243,90 +258,6 @@
             $app_secret = self::setting('clef_settings_app_secret');
 
             return $app_id && $app_secret && !empty($app_id) && !empty($app_secret);
-        }
-
-        public static function set_html_content_type() {
-            return 'text/html';
-        }
-
-        /**
-         * Runs esc_html on strings. Leaves input untouched if it's not 
-         * a string.
-         *
-         * return :: mixed
-         */
-        private static function escape_string($maybe_string) {
-            $escaped = $maybe_string;
-            if (is_string($maybe_string)) {
-                $escaped = esc_html($maybe_string);
-            }
-            return $escaped;
-        }
-
-        /**
-         * Renders the specified template, giving it access to $variables. 
-         * Strings are escaped.
-         *
-         * $name :: string
-         *   The name (with no .php extension) of a file in 
-         *   templates/.
-         * $variables :: array
-         *   A list of variables to be used in the 
-         *   template.
-         *
-         * return :: string
-         */
-        public static function render_template($name, $variables) {
-            $escaped_variables = array_map(array(__CLASS__, 'escape_string'), $variables);
-            extract($escaped_variables, EXTR_SKIP);
-            ob_start();
-            require(CLEF_TEMPLATE_PATH . $name . '.php');
-            return ob_get_clean();
-        }
-
-        public static function register_script($name, $dependencies=array('jquery')) {
-            $ident = "wpclef-" . $name;
-            if (!CLEF_DEBUG)  {
-                $name .= '.min';
-            }
-            $name .= '.js';
-            wp_register_script(
-                $ident, 
-                CLEF_URL .'assets/dist/js/' . $name, 
-                $dependencies, 
-                CLEF_VERSION, 
-                true
-            );
-            return $ident;
-        }
-
-        public static function isset_GET($key) {
-            if (!isset($_GET[$key])) {
-                return null;
-            }
-            return $_GET[$key];
-        }
-
-        public static function isset_POST($key) {
-            if (!isset($_POST[$key])) {
-                return null;
-            }
-            return $_POST[$key];
-        }
-
-        public static function register_style($name) {
-            $ident = "wpclef-" . $name;
-            if (!CLEF_DEBUG) {
-                $name .= '.min';
-            }
-            $name .= '.css';
-            wp_register_style(
-                $ident, 
-                CLEF_URL . 'assets/dist/css/' . $name, 
-                false, 
-                CLEF_VERSION
-            ); 
-            return $ident;
         }
     }
 ?>

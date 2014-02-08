@@ -18,7 +18,7 @@ class Clef extends ClefBase {
     }
 
     public static function register_styles() {
-        $ident = self::register_style('wpclef');
+        $ident = ClefUtils::register_style('wpclef');
         wp_enqueue_style($ident);
     }
 
@@ -101,7 +101,6 @@ class Clef extends ClefBase {
 
         self::setting("version", $version);
     }
-
 }
 
 ?>

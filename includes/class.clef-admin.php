@@ -48,14 +48,14 @@ class ClefAdmin extends ClefBase {
 
         // only register clef logout if user is a clef user
         if (get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
-            self::register_script('clef_heartbeat');
+            ClefUtils::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
         
         if(preg_match("/clef/", $settings_page_name)) {
             Clef::register_styles();
 
-            $ident = self::register_script('settings', array('jquery', 'backbone', 'underscore'));
+            $ident = ClefUtils::register_script('settings', array('jquery', 'backbone', 'underscore'));
             wp_enqueue_script($ident);
         } 
     }
@@ -75,7 +75,11 @@ class ClefAdmin extends ClefBase {
                 ), get_edit_profile_url(wp_get_current_user()->ID)
             );
         }
-        include CLEF_TEMPLATE_PATH."user_profile.tpl.php";
+        echo ClefUtils::render_template('user_profile.tpl', array(
+            "connected" => $connected,
+            "app_id" => $app_id,
+            "redirect_url" => $redirect_url
+        ));
     }
 
     public static function edit_user_profile_update($user_id) {
@@ -95,11 +99,11 @@ class ClefAdmin extends ClefBase {
                 $invite_link = $invite_code->get_link();
                 $to = $user->user_email;
                 $subject = 'Set up Clef for your account';
-                $message = Clef::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
+                $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
 
-                add_filter('wp_mail_content_type', array(__CLASS__, 'set_html_content_type'));
+                add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
                 wp_mail($to, $subject, $message);
-                remove_filter('wp_mail_content_type', array(__CLASS__, 'set_html_content_type'));
+                remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
             }
         }
     }
@@ -179,25 +183,29 @@ class ClefAdmin extends ClefBase {
             $options['clefBase'] = CLEF_BASE;
             $options['options_name'] = CLEF_OPTIONS_NAME;
 
-            include CLEF_TEMPLATE_PATH . "admin/settings.tpl.php";  
+            echo ClefUtils::render_template('admin/settings.tpl', array(
+                "form" => $form,
+                "options" => $options,
+            ));
         } else {
-            include CLEF_TEMPLATE_PATH . "admin/multsite-enabled.tpl.php";
+            echo ClefUtils::render_template('admin/multisite-enabled.tpl');
         }
     }
 
     public static function multisite_settings() {
-        include CLEF_TEMPLATE_PATH . "admin/multisite-disabled.tpl.php";
+        echo ClefUtils::render_template('admin/multisite-disabled.tpl');
     }
 
     public static function other_install_settings() {
         require_once 'lib/plugin-installer/installer.php';
 
         $installer = new PluginInstaller( array( "name" => "BruteProtect", "slug" => "bruteprotect" ) );
-
         // pass in current URL as base URL
         $url = $installer->url();
 
-        include CLEF_TEMPLATE_PATH . "admin/other-install.tpl.php";
+        echo ClefUtils::render_template('admin/other-install.tpl', array(
+            "url" => $url
+        ));
     }
 
     public static function other_install() {

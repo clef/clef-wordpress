@@ -21,7 +21,7 @@
         public static function redirect_if_invite_code($redirect_to, $request, $user) {
             if (isset($_REQUEST['clef_invite_code'])) {
                 $invite_code = $_REQUEST['clef_invite_code'];
-                $invite_email = base64_decode(Clef::isset_GET('clef_invite_id'));
+                $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
                 $error = self::validate_invite_code($invite_code, $invite_email);
                 if (!$error) {
                     return get_edit_user_link();
@@ -31,8 +31,8 @@
         }
 
         public static function validate_invite() {
-            $invite_code = Clef::isset_GET('clef_invite_code');
-            $invite_email = base64_decode(Clef::isset_GET('clef_invite_id'));
+            $invite_code = ClefUtils::isset_GET('clef_invite_code');
+            $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
             $error = self::validate_invite_code($invite_code, $invite_email);
             if ($invite_code && $error) {
                 return '<div id="login_error">' . $error . '</div>';
@@ -53,13 +53,13 @@
 
                 $passwords_disabled = Clef::setting('clef_password_settings_force');
 
-                $override_key = Clef::isset_GET('override');
+                $override_key = ClefUtils::isset_GET('override');
                 if (!self::is_valid_override_key($override_key)) {
                     $override_key = null;
                 }
 
-                $invite_code = Clef::isset_GET('clef_invite_code');
-                $invite_email_encoded = Clef::isset_GET('clef_invite_id');
+                $invite_code = ClefUtils::isset_GET('clef_invite_code');
+                $invite_email_encoded = ClefUtils::isset_GET('clef_invite_id');
                 if (!self::has_valid_invite_code()) {
                     $invite_code = null;
                     $invite_email = null;
@@ -68,7 +68,7 @@
                 }
 
                 $app_id = self::setting( 'clef_settings_app_id' );
-                echo Clef::render_template('login_page.tpl', array(
+                echo ClefUtils::render_template('login_page.tpl', array(
                     "passwords_disabled" => $passwords_disabled,
                     "override_key" => $override_key,
                     "redirect_url" => $redirect_url,
@@ -138,7 +138,7 @@
         public static function disable_login_form($user) {
             if ( (self::setting( 'clef_password_settings_force' ) == 1) && !isset($_REQUEST['clef']) && !isset($_REQUEST['code'])) {
 
-                $override_key = Clef::isset_GET('override');
+                $override_key = ClefUtils::isset_GET('override');
 
                 $is_overridden = self::is_valid_override_key($override_key) || self::has_valid_invite_code();
 
