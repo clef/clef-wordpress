@@ -19,7 +19,7 @@
       $prompt.slideUp();
       return $.post(ajaxurl, data, (function() {}), "json");
     });
-    return $prompt.find(".no-badge, .dismiss").click(function() {
+    return $prompt.find(".no-badge, .dismiss").click(function(e) {
       var data;
       e.preventDefault();
       if (sending) {

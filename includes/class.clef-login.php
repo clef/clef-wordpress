@@ -8,7 +8,7 @@
             add_filter('wp_authenticate_user', array(__CLASS__, 'clear_logout_hook'));
 
             add_action('login_form', array( __CLASS__, 'login_form' ) );
-            add_action('login_form_login', array( __CLASS__, 'disable_login_form' ) );
+            add_action('login_body_class', array( __CLASS__, 'add_login_form_classes' ) );
             add_filter('wp_login_failed', array(__CLASS__, 'handle_login_failed'));
 
             add_filter('login_message', array(__CLASS__, 'validate_invite'));
@@ -135,28 +135,12 @@
             return !$error;
         }
 
-        public static function disable_login_form($user) {
-            if ( (self::setting( 'clef_password_settings_force' ) == 1) && !isset($_REQUEST['clef']) && !isset($_REQUEST['code'])) {
-
-                $override_key = ClefUtils::isset_GET('override');
-
-                $is_overridden = self::is_valid_override_key($override_key) || self::has_valid_invite_code();
-
-                if (is_user_logged_in()) {
-                    header("Location: " . admin_url() );
-                    exit();
-                } elseif ($is_overridden) {
-                    return;
-                } else {
-                    wp_enqueue_script('jquery');
-                    login_header(__('Log In', 'clef')); ?>
-                    <form name="loginform" id="loginform" action="" method="post">
-                    <?php do_action('login_form'); ?>
-                    </form>
-                    <?php login_footer();
-                    exit();
-                }
+        public static function add_login_form_classes($classes) {
+            array_push($classes, 'clef-login-form');
+            if (self::setting( 'clef_password_settings_force' )) {
+                array_push($classes, 'clef-hidden');
             }
+            return $classes;
         }
 
         public static function disable_passwords($user) {
