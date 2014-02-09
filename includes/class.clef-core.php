@@ -54,8 +54,8 @@ class ClefCore {
         load_plugin_textdomain( 'clef', false, CLEF_PATH . 'languages/' );
 
         add_action('clef_plugin_updated', array($this, 'plugin_updated'), 10, 2);
-        add_action('clef_register_plugin_hooks', array('ClefSetup', 'register_plugin_hooks'));
 
+        // Run migrations and other hooks upon plugin update
         $old_version = $settings->get('version');
         $current_version = CLEF_VERSION;
         if (!$old_version || $current_version != $old_version) {
@@ -63,7 +63,6 @@ class ClefCore {
         }
 
         if (CLEF_IS_BASE_PLUGIN) {
-            do_action('clef_register_plugin_hooks');
             do_action('clef_hook_admin_menu');
         }
 
