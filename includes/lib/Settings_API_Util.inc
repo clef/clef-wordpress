@@ -34,7 +34,7 @@ class Settings_API_Util {
    * @param string $optionName Name to store settings under in the WordPress wp_options table. Defaults to $id.
    * @return SN_Tracker_Admin instance
    */
-  public static function forID($id, $optionName = null) {
+  public static function forID($id, $optionName = null, $rest=null) {
 
     if(null === $optionName) {
       $optionName = $id;
@@ -365,3 +365,4 @@ class Settings_API_Util_Field {
 }
 
 }
+?>
