@@ -24,18 +24,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if (!defined('ABSPATH')) exit();
 
-if (!defined('CLEF_DEBUG')) {
-    define('CLEF_DEBUG', false);
-}
-if (CLEF_DEBUG) {
-    require_once('includes/lib/symlink-fix.php');
-}
+if (!defined('CLEF_DEBUG')) define('CLEF_DEBUG', false);
+if (CLEF_DEBUG) require_once('includes/lib/symlink-fix.php');
 
-// Useful global constants
-
-if (!defined('CLEF_IS_BASE_PLUGIN')) {
-    define('CLEF_IS_BASE_PLUGIN', true);
-}
+if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', true);
 
 require_once('clef-require.php'); 
 ?>
