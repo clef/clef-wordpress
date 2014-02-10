@@ -125,9 +125,11 @@ class ClefUtils {
         delete_user_meta($user_id, "clef_id");
     }
 
-    public static function exchange_oauth_code_for_info($code, $app_id=false, $app_secret=false) {
-        if (!$app_id) $app_id = self::setting( 'clef_settings_app_id' );
-        if (!$app_secret) $app_secret = self::setting( 'clef_settings_app_secret' );
+    public static function exchange_oauth_code_for_info($code, $settings=null, $app_id=false, $app_secret=false) {
+        if ($settings) {
+            if (!$app_id) $app_id = $settings->get( 'clef_settings_app_id' );
+            if (!$app_secret) $app_secret = $settings->get( 'clef_settings_app_secret' );
+        }
 
         $args = array(
             'code' => $code,

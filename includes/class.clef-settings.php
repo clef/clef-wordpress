@@ -51,6 +51,7 @@ class ClefSettings extends Settings_API_Util {
                 try {
                     $info = ClefUtils::exchange_oauth_code_for_info(
                         $oauth_code,
+                        $this->settings,
                         $input['clef_settings_app_id'],
                         $input['clef_settings_app_secret']
                     );

@@ -132,7 +132,7 @@ class ClefAdmin {
             }
 
             try {
-                $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code']);
+                $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
             } catch (LoginException $e) {
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
