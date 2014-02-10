@@ -36,7 +36,7 @@
                     width: auto;
                     margin: 0;
                 }
-                input {
+                input[type="checkbox"] {
                     @include media($tablet) {
                         width: 25px;
                     }

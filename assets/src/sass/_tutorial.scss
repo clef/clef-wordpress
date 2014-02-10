@@ -1,0 +1,131 @@
+#clef-tutorial {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .sub {
+        display: none;
+        @include outer-container();
+        .row {
+            @include span-columns(8);
+            @include shift(1);
+        }
+        margin-top: 30px;
+
+        h1 {
+            line-height: 1.3em;
+        }
+    }
+
+    .intro {
+        text-align: center;
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+        .button {
+            @include button($blue);
+        }
+        .quotes {
+            background: #DDD;
+            padding: 5px;
+            blockquote {
+                color: #333;
+                text-align: left;
+                font-weight: 700;
+                font-size: 17px;
+                line-height: 1.2em;
+                margin-bottom: 70px;
+                .highlight {
+                    background: none;
+                    border: none;
+                    text-decoration: underline;
+                }
+                cite {
+                    font-weight: 300;
+                    float: right;
+                    clear: both;
+                    margin-top: 30px;
+                }
+                .highlight {
+                    padding: 3px 5px;
+                    text-decoration: none;
+                    display: inline-block;
+                    transform: skewX(-3deg);
+                    color: white;
+                    &.red {
+                        @include highlight($red);
+                    }
+                    &.orange {
+                        @include highlight($orange);
+                    }
+                    &.green {
+                        @include highlight($green);
+                    }
+                }
+            }
+        }
+
+        .skip {
+            float: right;
+            color: #AAA;
+            text-decoration: none;
+            margin-top: 5px;
+            &:hover {
+                color: #999;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .sync {
+        .row {
+            @include span-columns(6);
+            @include shift(2);
+            background: #FFF;
+        }
+        h1 {
+            margin: 15px;
+            margin-bottom: 0;
+            font-size: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #EEE;
+            display: inline-block;
+        }
+        iframe {
+            width: 225px;
+            height: 415px;
+            display: block;
+            margin: 30px auto;
+        }
+
+        .user {
+            display: none;
+            opacity: 0;
+            iframe {
+                height: 250px;
+            }
+        }
+
+        &.user  {
+            @include transition(1s);
+            .no-user {
+                display:none;
+            }
+            .user {
+                transition: 1s;
+                display: block;
+                opacity: 1;
+            } 
+            iframe {
+                @include transition(1s);
+                height: 250px;
+            }
+        }
+    }
+} 

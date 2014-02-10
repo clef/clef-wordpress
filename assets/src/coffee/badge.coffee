@@ -14,7 +14,7 @@
             $prompt.slideUp()
             $.post ajaxurl, data, (() ->), "json"
 
-        $prompt.find(".no-badge, .dismiss").click ->
+        $prompt.find(".no-badge, .dismiss").click (e) ->
             e.preventDefault()
 
             return  if sending

@@ -179,15 +179,22 @@
         }));
       }
       this.currentSub = this.subs[0];
-      return $(window).on('message', this.handleConfirm.bind(this));
+      return $(window).on('message', this.handleMessages.bind(this));
     },
     hide: function(cb) {
       return this.$el.fadeOut(cb);
     },
     render: function() {
-      this.currentSub.render();
-      this.loadIFrame();
-      return this.$el.fadeIn();
+      if (this.userIsLoggedIn) {
+        $.each(this.subs, function(i, el) {
+          return el.userify();
+        });
+      }
+      if (!this.$el.is(':visible')) {
+        this.currentSub.render();
+        this.loadIFrame();
+        return this.$el.fadeIn();
+      }
     },
     next: function() {
       var newSub;
@@ -216,11 +223,17 @@
       src = "" + this.opts.clefBase + this.iframePath + "?source=wordpress&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
       return frame.attr('src', src);
     },
-    handleConfirm: function(data) {
+    handleMessages: function(data) {
       if (!data.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
         return;
       }
-      return this.trigger('applicationCreated', data.originalEvent.data);
+      data = data.originalEvent.data;
+      if (data.type === "keys") {
+        return this.trigger('applicationCreated', data);
+      } else if (data.type === "user") {
+        this.userIsLoggedIn = true;
+        return this.render();
+      }
     },
     onConfigured: function() {
       return setTimeout((function() {
@@ -244,6 +257,9 @@
     },
     isLogin: function() {
       return this.$el.find('iframe').length;
+    },
+    userify: function() {
+      return this.$el.addClass('user');
     }
   });
   return this.TutorialView = TutorialView;

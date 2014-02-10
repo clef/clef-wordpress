@@ -19,6 +19,7 @@ class ClefLogin {
         add_action('wp_authenticate_user', array($this, 'disable_passwords'));
         // Clear logout hook if the user is logging in again
         add_filter('wp_authenticate_user', array($this, 'clear_logout_hook'));
+        add_action('login_body_class', array($this, 'add_login_form_classes' ));
 
         // Render the login form with the Clef button no matter what
         add_action('login_form', array( $this, 'login_form' ) );
@@ -27,6 +28,7 @@ class ClefLogin {
         add_action('login_form_login', array( $this, 'disable_login_form' ) );
 
         add_filter('wp_login_failed', array($this, 'handle_login_failed'));
+        add_action('login_enqueue_scripts', array($this, 'load_scripts'));
 
         // Show an error message if there is an invite code but it is invalid
         add_filter('login_message', array($this, 'validate_invite'));
@@ -37,6 +39,10 @@ class ClefLogin {
         // Redirect to an Clef onboarding page if a user logs in with an invite 
         // code
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
+    }
+
+    public function load_scripts() {
+        ClefUtils::register_styles();
     }
 
     public function redirect_if_invite_code($redirect_to, $request, $user) {
@@ -72,7 +78,7 @@ class ClefLogin {
                 );
             }
 
-            $passwords_disabled = Clef::setting('clef_password_settings_force');
+            $passwords_disabled = $this->settings->get('clef_password_settings_force');
 
             $override_key = ClefUtils::isset_GET('override');
             if (!$this->is_valid_override_key($override_key)) {
@@ -141,6 +147,14 @@ class ClefLogin {
                     "Please contact your administrator for a new one.";
         }
     }
+        
+    public function add_login_form_classes($classes) {
+        array_push($classes, 'clef-login-form');
+        if ($this->settings->get( 'clef_password_settings_force' )) {
+            array_push($classes, 'clef-hidden');
+        }
+        return $classes;
+    }
 
     private function has_valid_invite_code() {
         if (!isset($_REQUEST['clef_invite_code']) || !isset($_REQUEST['clef_invite_id'])) {
@@ -205,7 +219,7 @@ class ClefLogin {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
             // Authenticate
             try {
-                $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code']);
+                $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
             } catch (LoginException $e) {
                 return new WP_Error('clef', $e->getMessage());
             }
