@@ -89,6 +89,11 @@ class ClefUtils {
         return $ident;
     }
 
+    public static function register_styles() {
+        wp_register_style('wpclef', CLEF_URL . 'assets/dist/css/wpclef.min.css', FALSE, CLEF_VERSION);
+        wp_enqueue_style('wpclef');
+    }
+
     public static function register_style($name) {
         $ident = "wpclef-" . $name;
         if (CLEF_DEBUG) {
@@ -102,6 +107,64 @@ class ClefUtils {
             CLEF_VERSION
         ); 
         return $ident;
+    }
+
+    public static function associate_clef_id($clef_id, $user_id=false) {
+        if (!$user_id) {
+            $user_id = wp_get_current_user()->ID;
+        }
+
+        update_user_meta($user_id, 'clef_id', $clef_id);
+    }
+
+    public static function dissociate_clef_id($user_id=false) {
+        if (!$user_id) {
+            $user_id = wp_get_current_user()->ID;
+        }
+        
+        delete_user_meta($user_id, "clef_id");
+    }
+
+    public static function exchange_oauth_code_for_info($code, $settings=null, $app_id=false, $app_secret=false) {
+        if ($settings) {
+            if (!$app_id) $app_id = $settings->get( 'clef_settings_app_id' );
+            if (!$app_secret) $app_secret = $settings->get( 'clef_settings_app_secret' );
+        }
+
+        $args = array(
+            'code' => $code,
+            'app_id' => $app_id,
+            'app_secret' => $app_secret,
+        );
+
+        $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
+
+        if ( is_wp_error($response)  ) {
+            throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
+        }
+
+        $body = json_decode( $response['body'] );
+
+        if ( !isset($body->success) || $body->success != 1 ) {
+            throw new LoginException(__( 'Error retrieving Clef access token: ', 'clef') . $body->error);
+        }
+
+        $access_token = $body->access_token;
+        $_SESSION['wpclef_access_token'] = $access_token;
+
+        // Get info
+        $response = wp_remote_get( CLEF_API_BASE . "info?access_token={$access_token}" );
+        if ( is_wp_error($response)  ) {
+            throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
+        }
+
+        $body = json_decode( $response['body'] );
+
+        if ( !isset($body->success) || $body->success != 1 ) {
+            throw new LoginException(__('Error retrieving Clef user data: ', 'clef')  . $body->error);
+        }
+
+        return $body->info;
     }
 }
 ?>
