@@ -14,15 +14,19 @@
 
             @currentSub = @subs[0]
 
-            $(window).on 'message', @handleConfirm.bind(this)
+            $(window).on 'message', @handleMessages.bind(this)
 
         hide: (cb) ->
             @$el.fadeOut(cb)
 
         render: ()->
-            @currentSub.render()
-            @loadIFrame()
-            @$el.fadeIn()
+            if @userIsLoggedIn
+                $.each @subs, (i, el) -> el.userify()
+
+            if !@$el.is(':visible')
+                @currentSub.render()
+                @loadIFrame()
+                @$el.fadeIn()
 
         next: () ->
             newSub = @subs[_.indexOf(@subs, @currentSub) + 1]
@@ -48,9 +52,14 @@
                     &name=#{encodeURIComponent(@opts.setup.siteName)}"
             frame.attr('src', src)
 
-        handleConfirm: (data) ->
+        handleMessages: (data) ->
             return unless data.originalEvent.origin.indexOf @opts.clefBase >= 0
-            @trigger 'applicationCreated', data.originalEvent.data
+            data = data.originalEvent.data
+            if data.type == "keys"
+                @trigger 'applicationCreated', data 
+            else if data.type == "user"
+                @userIsLoggedIn = true
+                @render()
 
         onConfigured: () ->
             setTimeout (()->
@@ -69,6 +78,8 @@
             @$el.remove()
         isLogin: () ->
             @$el.find('iframe').length
+        userify: () ->
+            @$el.addClass 'user'
 
     this.TutorialView = TutorialView
 

@@ -45,22 +45,153 @@ body {
   width: 100%;
   height: 100%;
   position: relative; }
-  #clef-settings-container #clef-tutorial {
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-    #clef-settings-container #clef-tutorial .sub {
-      display: none; }
-      #clef-settings-container #clef-tutorial .sub iframe {
-        width: 250px;
-        height: 280px; }
   #clef-settings-container #clef-settings {
     position: aboslute;
     top: 0;
     left: 0; }
+
+#clef-tutorial {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  #clef-tutorial .sub {
+    display: none;
+    *zoom: 1;
+    max-width: 75em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px; }
+    #clef-tutorial .sub:before, #clef-tutorial .sub:after {
+      content: " ";
+      display: table; }
+    #clef-tutorial .sub:after {
+      clear: both; }
+    #clef-tutorial .sub .row {
+      display: block;
+      float: left;
+      margin-right: 2.5641%;
+      width: 79.48718%;
+      margin-left: 10.25641%; }
+      #clef-tutorial .sub .row:last-child {
+        margin-right: 0; }
+    #clef-tutorial .sub h1 {
+      line-height: 1.3em; }
+  #clef-tutorial .intro {
+    text-align: center; }
+    #clef-tutorial .intro h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 0;
+      font-weight: 500; }
+    #clef-tutorial .intro .button {
+      text-align: center;
+      display: inline-block;
+      margin: 40px auto;
+      background: #0D9DDB;
+      border: none;
+      -webkit-box-shadow: 3px 3px #07587b;
+      box-shadow: 3px 3px #07587b;
+      border-radius: 0;
+      font-weight: bold;
+      font-size: 18px; }
+      #clef-tutorial .intro .button:hover {
+        background: #0c8cc3; }
+    #clef-tutorial .intro .quotes {
+      background: #DDD;
+      padding: 5px; }
+      #clef-tutorial .intro .quotes blockquote {
+        color: #333;
+        text-align: left;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 1.2em;
+        margin-bottom: 70px; }
+        #clef-tutorial .intro .quotes blockquote .highlight {
+          background: none;
+          border: none;
+          text-decoration: underline; }
+        #clef-tutorial .intro .quotes blockquote cite {
+          font-weight: 300;
+          float: right;
+          clear: both;
+          margin-top: 30px; }
+        #clef-tutorial .intro .quotes blockquote .highlight {
+          padding: 3px 5px;
+          text-decoration: none;
+          display: inline-block;
+          -webkit-transform: skewX(-3deg);
+          -ms-transform: skewX(-3deg);
+          transform: skewX(-3deg);
+          color: white; }
+          #clef-tutorial .intro .quotes blockquote .highlight.red {
+            color: white;
+            font-weight: bold;
+            background: rgba(246, 80, 88, 0.6); }
+            #clef-tutorial .intro .quotes blockquote .highlight.red:hover {
+              background: #F65058; }
+          #clef-tutorial .intro .quotes blockquote .highlight.orange {
+            color: white;
+            font-weight: bold;
+            background: rgba(255, 153, 64, 0.6); }
+            #clef-tutorial .intro .quotes blockquote .highlight.orange:hover {
+              background: #FF9940; }
+          #clef-tutorial .intro .quotes blockquote .highlight.green {
+            color: white;
+            font-weight: bold;
+            background: rgba(0, 186, 110, 0.6); }
+            #clef-tutorial .intro .quotes blockquote .highlight.green:hover {
+              background: #00BA6E; }
+    #clef-tutorial .intro .skip {
+      float: right;
+      color: #AAA;
+      text-decoration: none;
+      margin-top: 5px; }
+      #clef-tutorial .intro .skip:hover {
+        color: #999;
+        text-decoration: underline; }
+  #clef-tutorial .sync .row {
+    display: block;
+    float: left;
+    margin-right: 2.5641%;
+    width: 58.97436%;
+    margin-left: 20.51282%;
+    background: #FFF; }
+    #clef-tutorial .sync .row:last-child {
+      margin-right: 0; }
+  #clef-tutorial .sync h1 {
+    margin: 15px;
+    margin-bottom: 0;
+    font-size: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #EEE;
+    display: inline-block; }
+  #clef-tutorial .sync iframe {
+    width: 225px;
+    height: 415px;
+    display: block;
+    margin: 30px auto; }
+  #clef-tutorial .sync .user {
+    display: none;
+    opacity: 0; }
+    #clef-tutorial .sync .user iframe {
+      height: 250px; }
+  #clef-tutorial .sync.user {
+    -webkit-transition: 1s;
+    transition: 1s; }
+    #clef-tutorial .sync.user .no-user {
+      display: none; }
+    #clef-tutorial .sync.user .user {
+      -webkit-transition: 1s;
+      transition: 1s;
+      display: block;
+      opacity: 1; }
+    #clef-tutorial .sync.user iframe {
+      -webkit-transition: 1s;
+      transition: 1s;
+      height: 250px; }
 
 #clef-settings-form .settings-section {
   background: white;
@@ -129,7 +260,7 @@ body {
             float: none;
             margin: 10px 0; } }
       @media screen and (max-width: 768px) {
-        #clef-settings-form .settings-section .inputs-container .input-container input {
+        #clef-settings-form .settings-section .inputs-container .input-container input[type="checkbox"] {
           width: 25px; } }
   #clef-settings-form .settings-section.override-settings .inputs-container {
     margin-bottom: 20px; }
