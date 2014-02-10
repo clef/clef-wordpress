@@ -1,4 +1,4 @@
-<?php 
+<?php if (!class_exists('Clef')) {
 
 class Clef {
     private static $instance = null;
@@ -39,3 +39,5 @@ class Clef {
 }
 
 Clef::start();
+
+} ?>
