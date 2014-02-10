@@ -24,7 +24,7 @@ class AjaxSettings {
             $this::VERSION,
             TRUE
         );
-        wp_localize_script($ident, 'ajaxSettingsOptions', $this->options);
+        wp_localize_script($ident, 'ajaxSetOpt', $this->options);
         wp_enqueue_script($ident);
     }
 

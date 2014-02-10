@@ -44,7 +44,8 @@ class ClefAdmin {
         new AjaxSettings(array( 
             "options_name" => CLEF_OPTIONS_NAME, 
             "initialize" => false, 
-            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/"
+            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/",
+            "formSelector" => "#clef-form"
         ));
 
 
