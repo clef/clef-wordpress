@@ -161,7 +161,6 @@ class ClefAdmin {
         // let's not add anything to the menu
         if ($this->settings->multisite_disallow_settings_override()) return;
 
-        echo $this->settings->settings_path;
         if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
             add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
             if ($this->settings->is_multisite_enabled() && $this->settings->use_individual_settings) {
