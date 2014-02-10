@@ -2,8 +2,10 @@
     Backbone.emulateHTTP = true
 
     AppView = Backbone.View.extend
-        id: "clef-settings-container"
+        el: $('#clef-settings-container')
+        connectClefAccountAction: ajaxurl + "?action=connect_clef_account"
         initialize: (@opts) ->
+            @$msgContainer = @$el.find('.message')
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
@@ -14,15 +16,39 @@
             else
                 @tutorial.render()
                 @listenToOnce(
-                    @tutorial, 
-                    'applicationCreated', 
+                    @tutorial,
+                    'applicationCreated',
                     @configure.bind this
                 )
 
         configure: (data) ->
+            @connectClefAccount data
+
             @settings.model.configure(data)
             @tutorial.hide()
             @settings.render()
+
+        connectClefAccount: (data) ->
+            connectData =
+                _wp_nonce: @opts.setup._wp_nonce
+                clefID: data.clefID
+
+            $.post @connectClefAccountAction,
+                connectData,
+                (data) =>
+                    if data.error
+                        msg = "There was a problem automatically connecting \
+                        your Clef account: #{data.error}."
+                        @displayMessage msg, "error"
+
+        displayMessage: (msg, opts) ->
+            @$msgContainer.find('p').text(msg)
+            @$msgContainer.addClass(opts.type).slideDown()
+            if opts.fade
+                setTimeout (() -> @$msgContainer.slideUp()), 3000
+
+
+
 
     SettingsView =  AjaxSettingsView.extend
         initialize: (opts) ->
@@ -69,12 +95,12 @@
             key = @model.overrideKey()
             return if !key
             if !@overrideBase
-                @overrideBase = @overrideContainer.find('label').text() 
+                @overrideBase = @overrideContainer.find('label').text()
 
             button = @overrideButtonContainer.find('a')
             button.on 'click', (e) -> e.preventDefault()
             button.attr(
-                'href', 
+                'href',
                 @overrideBase + key
             )
 
@@ -103,8 +129,8 @@
             @get "wpclef[#{key}]"
 
         passwordsDisabled: () ->
-            !!parseInt(@cget('clef_password_settings_disable_passwords')) || 
-            @cget('clef_password_settings_disable_certain_passwords') != "Disabled" || 
+            !!parseInt(@cget('clef_password_settings_disable_passwords')) ||
+            @cget('clef_password_settings_disable_certain_passwords') != "Disabled" ||
             @passwordsFullyDisabled()
 
         passwordsFullyDisabled: () ->
@@ -120,7 +146,8 @@
             @cget('support_clef_badge').toLowerCase()
 
         isConfigured: () ->
-            !!(@cget('clef_settings_app_id') && @cget('clef_settings_app_secret'))
+            !!(@cget('clef_settings_app_id') &&
+                @cget('clef_settings_app_secret'))
 
         configure: (data) ->
             @save
@@ -138,7 +165,8 @@
 
         render: () ->
             @$el.html(@template)
-            @$el.find('input[type="submit"]').on 'click', (e) -> e.preventDefault()
+            @$el.find('input[type="submit"]').on 'click', 
+                (e) -> e.preventDefault()
             @toggleForm()
 
         toggleForm: (e) ->

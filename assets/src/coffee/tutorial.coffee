@@ -56,7 +56,7 @@
             return unless data.originalEvent.origin.indexOf @opts.clefBase >= 0
             data = data.originalEvent.data
             if data.type == "keys"
-                @trigger 'applicationCreated', data 
+                @trigger 'applicationCreated', data
             else if data.type == "user"
                 @userIsLoggedIn = true
                 @render()

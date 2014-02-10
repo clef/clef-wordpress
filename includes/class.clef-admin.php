@@ -4,7 +4,7 @@ require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
 
 class ClefAdmin {
     const FORM_ID = "clef";
-    const CLASS_NAME = "ClefAdmin";
+    const CONNECT_CLEF_NONCE_NAME = "connect_clef_account";
 
     private static $instance = null;
 
@@ -38,12 +38,15 @@ class ClefAdmin {
 
         add_action('options_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
 
+        add_action('wp_ajax_connect_clef_account', array($this, 'ajax_connect_clef_account'));
+
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
         new AjaxSettings(array( 
             "options_name" => CLEF_OPTIONS_NAME, 
             "initialize" => false, 
             "base_url" => CLEF_URL . "/includes/lib/ajax-settings/"
         ));
+
 
         // Display the badge message, if appropriate
         do_action('clef_hook_onboarding');
@@ -122,6 +125,19 @@ class ClefAdmin {
         }
     }
 
+     public function ajax_connect_clef_account() {
+        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
+            wp_send_json(array( "error" => "invalid nonce" ));
+        }
+
+        if (!ClefUtils::isset_POST('clefID')) {
+            wp_send_json(array( "error" => "invalid Clef ID"));
+        }
+
+        ClefUtils::associate_clef_id($_POST["clefID"]);
+        wp_send_json(array("success" => true));
+    }
+
     public function connect_clef_account() {
         if (isset($_REQUEST['clef']) && isset($_REQUEST['connecting']) &&
         isset($_REQUEST['code'])) {
@@ -192,6 +208,7 @@ class ClefAdmin {
             if (get_site_option("bruteprotect_installed_clef")) {
                 $setup['source'] = "bruteprotect";
             }
+            $setup['_wp_nonce'] = wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME);
             $options['setup'] = $setup;
             $options['configured'] = $this->settings->is_configured();
             $options['clefBase'] = CLEF_BASE;
@@ -205,6 +222,8 @@ class ClefAdmin {
             echo ClefUtils::render_template('admin/multisite-enabled.tpl');
         }
     }
+
+
 
     public function multisite_settings() {
         echo ClefUtils::render_template('admin/multisite-disabled.tpl');
@@ -239,7 +258,10 @@ class ClefAdmin {
     public function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
-        $this->add_api_settings($form);
+
+        $settings = $form->addSection('clef_settings', __('API Settings'));
+        $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
@@ -258,10 +280,10 @@ class ClefAdmin {
             Settings_API_Util_Field::TYPE_CHECKBOX
         );
 
-        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'), array(__CLASS__, 'print_override_descript'));
+        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'));
         $override_settings->addField('key', "Override key", Settings_API_Util_Field::TYPE_TEXTFIELD); 
 
-        $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"), array(__CLASS__, 'print_support_clef_descript'));
+        $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"));
         $support_clef_settings->addField(
             'badge', 
             __("Support Clef by automatically adding a link!", "clef"),
@@ -270,7 +292,7 @@ class ClefAdmin {
             array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
         );
 
-        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"), array(__CLASS__, 'print_invite_users_descript'));
+        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"));
         return $form;
     }
 
@@ -304,16 +326,6 @@ class ClefAdmin {
         }
     }
 
-    public function add_api_settings($form) {
-        $settings = $form->addSection('clef_settings', __('API Settings'), array(__CLASS__, 'print_api_descript'));
-        $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        if (!$this->settings->is_configured()) {
-            $settings->addField('oauth_code', '', Settings_API_Util_Field::TYPE_HIDDEN, '');
-        }
-        return $settings;
-    }
-
     public function bruteprotect_active() {
         return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
     }
@@ -322,18 +334,6 @@ class ClefAdmin {
         $url = add_query_arg(array('page' => 'clef', 'invite_users' => 'true'), admin_url('admin.php'));
         _e('<p>Invite users of your site here.</p>', 'clef');
         _e("<a href='$url'>Invite all users</a>", 'clef');
-    }
-
-    public static function print_api_descript() {
-        _e('<p>For more advanced settings, log in to your <a href="https://developer.getclef.com">Clef dashboard</a> or contact <a href="mailto:support@getclef.com">support@getclef.com</a>.</p>', 'clef');
-    }
-
-    public static function print_override_descript() {
-        _e("<p>If you choose to allow only Clef logins on your site, you can set an 'override' URL. </br> With this URL, you'll be able to log into your site with passwords even if Clef-only mode is enabled.</p>", 'clef');
-    }
-
-    public static function print_support_clef_descript() {
-        _e("<p>Clef is, and will always be, free for you and your users. We'd really appreciate it if you'd support us (and show visitors they are browsing a secure site) by adding a link to Clef in your site footer!</p>", "clef");
     }
 
     public static function start($settings) {

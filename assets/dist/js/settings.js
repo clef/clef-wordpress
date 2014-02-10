@@ -2,9 +2,11 @@
   var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
-    id: "clef-settings-container",
+    el: $('#clef-settings-container'),
+    connectClefAccountAction: ajaxurl + "?action=connect_clef_account",
     initialize: function(opts) {
       this.opts = opts;
+      this.$msgContainer = this.$el.find('.message');
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
@@ -17,9 +19,35 @@
       }
     },
     configure: function(data) {
+      this.connectClefAccount(data);
       this.settings.model.configure(data);
       this.tutorial.hide();
       return this.settings.render();
+    },
+    connectClefAccount: function(data) {
+      var connectData;
+      connectData = {
+        _wp_nonce: this.opts.setup._wp_nonce,
+        clefID: data.clefID
+      };
+      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
+        return function(data) {
+          var msg;
+          if (data.error) {
+            msg = "There was a problem automatically connecting your Clef account: " + data.error + ".";
+            return _this.displayMessage(msg, "error");
+          }
+        };
+      })(this));
+    },
+    displayMessage: function(msg, opts) {
+      this.$msgContainer.find('p').text(msg);
+      this.$msgContainer.addClass(opts.type).slideDown();
+      if (opts.fade) {
+        return setTimeout((function() {
+          return this.$msgContainer.slideUp();
+        }), 3000);
+      }
     }
   });
   SettingsView = AjaxSettingsView.extend({

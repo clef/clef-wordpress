@@ -45,6 +45,10 @@ body {
   width: 100%;
   height: 100%;
   position: relative; }
+  #clef-settings-container .message {
+    margin-top: 20px;
+    margin-left: 0;
+    display: none; }
   #clef-settings-container #clef-settings {
     position: aboslute;
     top: 0;
