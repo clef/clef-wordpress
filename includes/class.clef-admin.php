@@ -67,7 +67,7 @@ class ClefAdmin {
             wp_enqueue_script('wpclef_logout');
         }
         
-        if(preg_match("/clef/", $settings_page_name)) {
+        if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
             ClefUtils::register_styles();
             $ident = ClefUtils::register_script('settings', array('jquery', 'backbone', 'underscore'));
             wp_enqueue_script($ident);
@@ -161,15 +161,16 @@ class ClefAdmin {
         // let's not add anything to the menu
         if ($this->settings->multisite_disallow_settings_override()) return;
 
+        echo $this->settings->settings_path;
         if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
-            add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", 'clef', array($this, 'general_settings'));
+            add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
             if ($this->settings->is_multisite_enabled() && $this->settings->use_individual_settings) {
                 add_submenu_page("bruteprotect-config", __("Clef Multisite Options", 'clef'), __("Clef Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
             }
         } else {
-            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", 'clef', array($this, 'general_settings'));
+            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
             if ($this->settings->is_multisite_enabled() && $this->settings->user_individual_settings) {
-                add_submenu_page('clef', __('Settings', 'clef'), __('Settings', 'clef'),'manage_options','clef', array($this, 'general_settings'));
+                add_submenu_page('clef', __('Settings', 'clef'), __('Settings', 'clef'),'manage_options', $this->settings->settings_path, array($this, 'general_settings'));
                 add_submenu_page("clef", __("Multisite Options", 'clef'), __("Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
             } 
 
@@ -286,7 +287,7 @@ class ClefAdmin {
                 update_option(self::MS_OVERRIDE_OPTION, !$override);
             }
 
-            wp_redirect(add_query_arg(array('page' => 'clef', 'updated' => 'true'), admin_url('admin.php')));
+            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path, 'updated' => 'true'), admin_url('admin.php')));
             exit();
         }
     }
@@ -296,9 +297,9 @@ class ClefAdmin {
             delete_option("Clef_Activated");
 
             if ($this->bruteprotect_active()) {
-                wp_redirect(admin_url('/admin.php?page=clef'));
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('admin.php')));
             } else {
-                wp_redirect(admin_url('/options.php?page=clef'));
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
             }
             exit();
         }

@@ -8,11 +8,17 @@ class ClefInternalSettings {
     private static $instance = null;
 
     public $use_individual_settings;
+    public $settings_path;
     private $settings;
 
     private function __construct() {
         $this->use_individual_settings = $this->check_individual_settings();
         $this->settings = $this->get_site_option();
+        add_action('admin_menu', array($this, 'apply_settings_path_filter'), 9);
+    }
+
+    public function apply_settings_path_filter() {
+        $this->settings_path = apply_filters('clef_settings_path', 'clef');
     }
 
     private function check_individual_settings() {

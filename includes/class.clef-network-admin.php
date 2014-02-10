@@ -121,7 +121,7 @@ class ClefNetworkAdmin extends ClefAdmin {
                 update_site_option(self::MS_ENABLED_OPTION, true);
             }
 
-            wp_redirect(network_admin_url('admin.php?page=clef'));
+            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), network_admin_url('admin.php')));
 
             exit();
         }
