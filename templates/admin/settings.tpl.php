@@ -1,4 +1,5 @@
 <div id="clef-settings-container">
+    <div class="message"><p></p></div>
     <div id="clef-tutorial" style="display:none;">
         <?php include CLEF_TEMPLATE_PATH . 'admin/tutorial.tpl.php'; ?>
     </div>

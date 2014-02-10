@@ -162,7 +162,6 @@ class ClefLogin {
         }
         $incoming_invite_code = $_REQUEST['clef_invite_code'];
         $invite_email = base64_decode($_REQUEST['clef_invite_id']);
-        error_log(print_r($invite_email));
         if (!$incoming_invite_code || !$invite_email) {
             return false;
         }
