@@ -65,6 +65,8 @@ class ClefCore {
         if (CLEF_IS_BASE_PLUGIN) {
             do_action('clef_hook_admin_menu');
         }
+
+        add_action('clef_render_settings', array($admin, 'general_settings'));
     }
 
     public function plugin_updated($version, $previous_version) {
