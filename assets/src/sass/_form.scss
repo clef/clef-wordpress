@@ -46,6 +46,7 @@
 
         &.override-settings {
             .inputs-container {
+                @include span-columns(10);
                 .input-container {
                     background: none;
                     padding: 0;
@@ -59,7 +60,7 @@
                     padding-left: 10px;
                     background: #DDD;
                     padding: 1px 5px;
-                    font-size: 9px;
+                    font-size: 11px;
                     @include media($tablet) {
                         width: 100%;
                         font-size: 12px;
@@ -67,6 +68,15 @@
                 }
                 input {
                     float: left;
+                }
+                .generate-override {
+                    display: block;
+                    width: auto;
+                    clear: both;
+                    cursor: pointer;
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
                 margin-bottom: 20px;
             }

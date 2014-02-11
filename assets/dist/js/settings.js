@@ -51,6 +51,13 @@
     }
   });
   SettingsView = AjaxSettingsView.extend({
+    addEvents: {
+      "click .generate-override": "generateOverride"
+    },
+    constructor: function(opts) {
+      this.events = _.extend(this.events, this.addEvents);
+      return SettingsView.__super__.constructor.call(this, opts);
+    },
     initialize: function(opts) {
       this.modelClass = SettingsModel;
       SettingsView.__super__.initialize.call(this, opts);
@@ -79,7 +86,7 @@
       SettingsView.__super__.render.call(this);
       passwordsDisabled = this.model.passwordsDisabled();
       this.xmlEl.toggle(passwordsDisabled);
-      this.overrideContainer.toggle(passwordsDisabled);
+      this.toggleOverrideContainer(passwordsDisabled);
       this.overrideButtonContainer.toggle(this.model.overrideIsSet());
       this.renderSupportBadge();
       if (this.$el.is(':not(:visible)')) {
@@ -88,6 +95,16 @@
     },
     toggleInputs: function(e) {
       return this.formView.toggleForm(!!parseInt(e.currentTarget.value));
+    },
+    toggleOverrideContainer: function(show) {
+      return this.overrideContainer.toggle(show);
+    },
+    generateOverride: function() {
+      var rnd;
+      rnd = Math.random().toString(36).slice(2);
+      return this.model.save({
+        'wpclef[clef_override_settings_key]': rnd
+      });
     },
     setOverrideLink: function() {
       var button, key;

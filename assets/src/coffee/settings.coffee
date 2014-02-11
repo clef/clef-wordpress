@@ -51,6 +51,13 @@
 
 
     SettingsView =  AjaxSettingsView.extend
+        addEvents: 
+            "click .generate-override": "generateOverride"
+
+        constructor: (opts) ->
+            @events = _.extend @events, @addEvents
+            SettingsView.__super__.constructor.call(this, opts)
+
         initialize: (opts) ->
             @modelClass = SettingsModel
             SettingsView.__super__.initialize.call(this, opts)
@@ -79,7 +86,7 @@
             passwordsDisabled = @model.passwordsDisabled()
 
             @xmlEl.toggle passwordsDisabled
-            @overrideContainer.toggle passwordsDisabled
+            @toggleOverrideContainer passwordsDisabled
 
             @overrideButtonContainer.toggle @model.overrideIsSet()
 
@@ -90,6 +97,13 @@
 
         toggleInputs: (e) ->
             @formView.toggleForm(!!parseInt(e.currentTarget.value))
+
+        toggleOverrideContainer: (show) ->
+            @overrideContainer.toggle show
+
+        generateOverride: () ->
+            rnd = Math.random().toString(36).slice(2)
+            @model.save 'wpclef[clef_override_settings_key]': rnd
 
         setOverrideLink: () ->
             key = @model.overrideKey()
@@ -120,6 +134,7 @@
 
         isConfigured: () ->
             @model.isConfigured()
+
 
     SettingsModel = AjaxSettingsModel.extend
         cFindInput: (name) ->
