@@ -30,4 +30,7 @@ if (CLEF_DEBUG) require_once('includes/lib/symlink-fix.php');
 if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', true);
 
 require_once('clef-require.php'); 
+
+Clef::start();
+
 ?>
