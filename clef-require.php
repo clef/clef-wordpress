@@ -20,6 +20,7 @@ class Clef {
 
         if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', false);
 
+        if (!defined('CLEF_DEBUG')) define('CLEF_DEBUG', false);
         define('CLEF_PATH', plugin_dir_path(__FILE__));
         define('CLEF_URL', plugin_dir_url(__FILE__));
         define('CLEF_TEMPLATE_PATH', CLEF_PATH . 'templates/');
