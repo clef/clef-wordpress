@@ -142,7 +142,7 @@
       return this.get("wpclef[" + key + "]");
     },
     passwordsDisabled: function() {
-      return !!parseInt(this.cget('clef_password_settings_disable_passwords')) || this.cget('clef_password_settings_disable_certain_passwords') !== "Disabled" || this.passwordsFullyDisabled();
+      return !!parseInt(this.cget('clef_password_settings_disable_passwords')) || this.cget('clef_password_settings_disable_certain_passwords') !== "" || this.passwordsFullyDisabled();
     },
     passwordsFullyDisabled: function() {
       return !!parseInt(this.cget('clef_password_settings_force'));
@@ -231,9 +231,7 @@
     },
     render: function() {
       if (this.userIsLoggedIn) {
-        $.each(this.subs, function(i, el) {
-          return el.userify();
-        });
+        this.$el.addClass('user');
       }
       if (!this.$el.is(':visible')) {
         this.currentSub.render();
@@ -302,9 +300,6 @@
     },
     isLogin: function() {
       return this.$el.find('iframe').length;
-    },
-    userify: function() {
-      return this.$el.addClass('user');
     }
   });
   return this.TutorialView = TutorialView;

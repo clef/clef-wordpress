@@ -21,7 +21,7 @@
 
         render: ()->
             if @userIsLoggedIn
-                $.each @subs, (i, el) -> el.userify()
+                @$el.addClass 'user'
 
             if !@$el.is(':visible')
                 @currentSub.render()
@@ -78,8 +78,6 @@
             @$el.remove()
         isLogin: () ->
             @$el.find('iframe').length
-        userify: () ->
-            @$el.addClass 'user'
 
     this.TutorialView = TutorialView
 

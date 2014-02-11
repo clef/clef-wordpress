@@ -179,17 +179,17 @@ body {
     opacity: 0; }
     #clef-tutorial .sync .user iframe {
       height: 250px; }
-  #clef-tutorial .sync.user {
+  #clef-tutorial.user .sync {
     -webkit-transition: 1s;
     transition: 1s; }
-    #clef-tutorial .sync.user .no-user {
+    #clef-tutorial.user .sync .no-user {
       display: none; }
-    #clef-tutorial .sync.user .user {
+    #clef-tutorial.user .sync .user {
       -webkit-transition: 1s;
       transition: 1s;
       display: block;
       opacity: 1; }
-    #clef-tutorial .sync.user iframe {
+    #clef-tutorial.user .sync iframe {
       -webkit-transition: 1s;
       transition: 1s;
       height: 250px; }

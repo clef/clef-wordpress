@@ -108,8 +108,11 @@
                 height: 250px;
             }
         }
+    }
 
-        &.user  {
+
+    &.user {
+        .sync {
             @include transition(1s);
             .no-user {
                 display:none;
@@ -125,4 +128,5 @@
             }
         }
     }
+
 } 

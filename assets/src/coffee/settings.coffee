@@ -145,7 +145,7 @@
 
         passwordsDisabled: () ->
             !!parseInt(@cget('clef_password_settings_disable_passwords')) ||
-            @cget('clef_password_settings_disable_certain_passwords') != "Disabled" ||
+            @cget('clef_password_settings_disable_certain_passwords') != "" ||
             @passwordsFullyDisabled()
 
         passwordsFullyDisabled: () ->
