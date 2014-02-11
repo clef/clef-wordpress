@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="preview-container">
-               <div class="footer-preview">
+               <div class="ftr-preview">
                    <h4>Preview of your support</h4> 
                    <a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>
                </div>

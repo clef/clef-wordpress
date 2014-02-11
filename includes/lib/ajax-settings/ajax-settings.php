@@ -72,8 +72,21 @@ class AjaxSettings {
 
         update_option($this->name(), $to_be_saved);
 
-        echo json_encode(array( "success" => true ));
-        die();
+        $errors = get_settings_errors();
+        $response = array();
+
+        if (!empty($errors)) {
+            $error_messages = array();
+            foreach ($errors as &$error) {
+                $error_messages[$error['code']] = $error['message'];
+            }
+            $response['errors'] = $error_messages;
+            header('HTTP/1.0 400');
+        } else {
+            $response['success'] = true;
+        }
+
+        wp_send_json($response);
     }
 
     function name() {

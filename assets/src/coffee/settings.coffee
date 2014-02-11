@@ -21,6 +21,9 @@
                     @configure.bind this
                 )
 
+            @listenTo @settings, 'message', (data) ->
+                @displayMessage data.message, type: data.type
+
         configure: (data) ->
             @connectClefAccount data
 
@@ -51,8 +54,14 @@
 
 
     SettingsView =  AjaxSettingsView.extend
-        addEvents: 
+        errorTemplate: _.template "<div class='error form-error'>\
+                                    <%=message%>\
+                                   </div>"
+        genericErrorMessage: "Something went wrong, please refresh \
+        and try again."
+        addEvents:
             "click .generate-override": "generateOverride"
+            "click input[type='submit']:not(.ajax-ignore)": "saveForm"
 
         constructor: (opts) ->
             @events = _.extend @events, @addEvents
@@ -71,8 +80,10 @@
             @overrideButtonContainer = @$el.find '.override-buttons'
             @setOverrideLink()
 
-            @badgePreviewContainer = @$el.find '.support-settings .footer-preview'
+            @badgePreviewContainer = @$el.find '.support-settings .ftr-preview'
 
+            @listenTo @model, "change", @clearErrors
+            @listenTo @model, "error", @error
             window.onbeforeunload = (e) =>
                 if @isSaving()
                     "Settings are being saved. Still want to navigate away?"
@@ -135,6 +146,40 @@
         isConfigured: () ->
             @model.isConfigured()
 
+        clearErrors: (model, data) ->
+            # when a model changes, if it previously was error'd, clear them
+            # so we can reshow them (or do away with them) on model save
+            for inputName, v of model.changed
+                inp = @model.findInput(inputName).parents '.input-container'
+                if inp.hasClass 'error'
+                    inp.removeClass('error').next('.error.form-error').remove()
+
+        error: (model, data) ->
+            # no error messages, add a generic error message
+            if !data.responseJSON.errors
+                @trigger 'message', message: @genericErrorMessage, type: 'error'
+                window.scrollTo 0, 0
+                return
+
+            # loop over all error messages and display them
+            for inputName, msg of data.responseJSON.errors
+                inp = @model.cFindInput(inputName).parents '.input-container'
+                if inp.hasClass 'error'
+                    inp.next('.error.form-error').html msg
+                else
+                    inp.addClass('error').after(@errorTemplate(message: msg))
+
+        saveForm: (e) ->
+            e.preventDefault()
+
+            @model.save {},
+                success: () =>
+                    @trigger 'message',
+                        message: "Settings saved.",
+                        type: 'updated'
+                    window.scrollTo 0, 0
+
+                error: @model.saveError.bind(@model)
 
     SettingsModel = AjaxSettingsModel.extend
         cFindInput: (name) ->
@@ -169,6 +214,7 @@
                 'wpclef[clef_settings_app_id]': data.appID
                 'wpclef[clef_settings_app_secret]': data.appSecret
 
+
     FormVisualization = Backbone.View.extend
         el: $("#login-form-view")
         template: _.template($('#form-template').html())
@@ -180,7 +226,7 @@
 
         render: () ->
             @$el.html(@template)
-            @$el.find('input[type="submit"]').on 'click', 
+            @$el.find('input[type="submit"]').on 'click',
                 (e) -> e.preventDefault()
             @toggleForm()
 

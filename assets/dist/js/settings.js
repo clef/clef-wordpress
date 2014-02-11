@@ -12,11 +12,16 @@
       }, this.opts));
       this.tutorial = new TutorialView(_.extend({}, this.opts));
       if (this.settings.isConfigured()) {
-        return this.settings.render();
+        this.settings.render();
       } else {
         this.tutorial.render();
-        return this.listenToOnce(this.tutorial, 'applicationCreated', this.configure.bind(this));
+        this.listenToOnce(this.tutorial, 'applicationCreated', this.configure.bind(this));
       }
+      return this.listenTo(this.settings, 'message', function(data) {
+        return this.displayMessage(data.message, {
+          type: data.type
+        });
+      });
     },
     configure: function(data) {
       this.connectClefAccount(data);
@@ -51,8 +56,11 @@
     }
   });
   SettingsView = AjaxSettingsView.extend({
+    errorTemplate: _.template("<div class='error form-error'><%=message%></div>"),
+    genericErrorMessage: "Something went wrong, please refresh and try again.",
     addEvents: {
-      "click .generate-override": "generateOverride"
+      "click .generate-override": "generateOverride",
+      "click input[type='submit']:not(.ajax-ignore)": "saveForm"
     },
     constructor: function(opts) {
       this.events = _.extend(this.events, this.addEvents);
@@ -68,7 +76,9 @@
       this.overrideContainer = this.$el.find('.override-settings');
       this.overrideButtonContainer = this.$el.find('.override-buttons');
       this.setOverrideLink();
-      this.badgePreviewContainer = this.$el.find('.support-settings .footer-preview');
+      this.badgePreviewContainer = this.$el.find('.support-settings .ftr-preview');
+      this.listenTo(this.model, "change", this.clearErrors);
+      this.listenTo(this.model, "error", this.error);
       return window.onbeforeunload = (function(_this) {
         return function(e) {
           if (_this.isSaving()) {
@@ -132,6 +142,61 @@
     },
     isConfigured: function() {
       return this.model.isConfigured();
+    },
+    clearErrors: function(model, data) {
+      var inp, inputName, v, _ref, _results;
+      _ref = model.changed;
+      _results = [];
+      for (inputName in _ref) {
+        v = _ref[inputName];
+        inp = this.model.findInput(inputName).parents('.input-container');
+        if (inp.hasClass('error')) {
+          _results.push(inp.removeClass('error').next('.error.form-error').remove());
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    },
+    error: function(model, data) {
+      var inp, inputName, msg, _ref, _results;
+      if (!data.responseJSON.errors) {
+        this.trigger('message', {
+          message: this.genericErrorMessage,
+          type: 'error'
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      _ref = data.responseJSON.errors;
+      _results = [];
+      for (inputName in _ref) {
+        msg = _ref[inputName];
+        inp = this.model.cFindInput(inputName).parents('.input-container');
+        if (inp.hasClass('error')) {
+          _results.push(inp.next('.error.form-error').html(msg));
+        } else {
+          _results.push(inp.addClass('error').after(this.errorTemplate({
+            message: msg
+          })));
+        }
+      }
+      return _results;
+    },
+    saveForm: function(e) {
+      e.preventDefault();
+      return this.model.save({}, {
+        success: (function(_this) {
+          return function() {
+            _this.trigger('message', {
+              message: "Settings saved.",
+              type: 'updated'
+            });
+            return window.scrollTo(0, 0);
+          };
+        })(this),
+        error: this.model.saveError.bind(this.model)
+      });
     }
   });
   SettingsModel = AjaxSettingsModel.extend({

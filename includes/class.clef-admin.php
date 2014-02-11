@@ -83,16 +83,14 @@ class ClefAdmin {
             $user = wp_get_current_user();
         }
         $connected = !!get_user_meta($user->ID, "clef_id", true);
-        if (!$connected) {
-            $app_id = $this->settings->get( 'clef_settings_app_id' );
-            $redirect_url = add_query_arg(
-                array(
-                    'state' => wp_create_nonce("connect_clef"),
-                    'clef' => true,
-                    'connecting' => true
-                ), get_edit_profile_url(wp_get_current_user()->ID)
-            );
-        }
+        $app_id = $this->settings->get( 'clef_settings_app_id' );
+        $redirect_url = add_query_arg(
+            array(
+                'state' => wp_create_nonce("connect_clef"),
+                'clef' => true,
+                'connecting' => true
+            ), get_edit_profile_url(wp_get_current_user()->ID)
+        );
         echo ClefUtils::render_template('user_profile.tpl', array(
             "connected" => $connected,
             "app_id" => $app_id,

@@ -210,6 +210,8 @@ body {
     display: table; }
   #clef-settings-form .settings-section:after {
     clear: both; }
+  #clef-settings-form .settings-section .error.form-error {
+    float: left; }
   #clef-settings-form .settings-section .inputs-container {
     display: block;
     float: left;
@@ -310,7 +312,7 @@ body {
     @media screen and (max-width: 768px) {
       #clef-settings-form .settings-section.support-settings .preview-container {
         display: none; } }
-    #clef-settings-form .settings-section.support-settings .preview-container .footer-preview {
+    #clef-settings-form .settings-section.support-settings .preview-container .ftr-preview {
       background: #fff;
       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
@@ -318,7 +320,7 @@ body {
       font-weight: 400;
       overflow: hidden;
       margin-top: 5px; }
-      #clef-settings-form .settings-section.support-settings .preview-container .footer-preview a {
+      #clef-settings-form .settings-section.support-settings .preview-container .ftr-preview a {
         margin-top: 20px; }
   #clef-settings-form .settings-section.clef-settings .inputs-container label {
     display: block;

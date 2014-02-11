@@ -30,13 +30,13 @@ class ClefSettings extends Settings_API_Util {
             $input['clef_settings_app_secret'] = esc_attr($input['clef_settings_app_secret']);
         }
 
-        if (isset($input['clef_password_settings_force'])) {
+        if (isset($input['clef_password_settings_force']) && $input['clef_password_settings_force'] == "1") {
             if (!get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
                 unset($input['clef_password_settings_force']);
                 $url = admin_url('profile.php#clef');
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
-                    esc_attr("settings_updated"),
+                    'clef_password_settings_force',
                     __( "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>." , 'clef'),
                     "error"
                 );
