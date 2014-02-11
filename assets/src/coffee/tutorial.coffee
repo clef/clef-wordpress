@@ -21,7 +21,11 @@
 
         render: ()->
             if @userIsLoggedIn
-                @$el.addClass 'user'
+                if !@currentSub.$el.hasClass 'sync'
+                    @$el.addClass 'no-sync'
+                else
+                    @$el.addClass 'user'
+                    
 
             if !@$el.is(':visible')
                 @currentSub.render()

@@ -84,15 +84,12 @@
         .row {
             @include span-columns(6);
             @include shift(2);
-            background: #FFF;
         }
         h1 {
-            margin: 15px;
-            margin-bottom: 0;
             font-size: 20px;
             padding-bottom: 5px;
             border-bottom: 1px solid #EEE;
-            display: inline-block;
+            text-align: center;
         }
         iframe {
             width: 225px;
@@ -101,31 +98,48 @@
             margin: 30px auto;
         }
 
-        .user {
-            display: none;
+        .user, .no-sync {
             opacity: 0;
+            display: none;
             iframe {
                 height: 250px;
             }
         }
     }
 
+    .user, .no-sync {
+        width: 225px;
+        margin: auto;
+        h1 {
+            text-align: left;
+        }
+        text-align: left;
+    }
+
+
+    &.user, &.no-sync {
+        .no-user {
+            display: none;
+        }
+
+        iframe {
+            margin-top: -40px;
+            height: 250px;
+            transition: 1s 1s;
+        }
+    }
 
     &.user {
-        .sync {
-            @include transition(1s);
-            .no-user {
-                display:none;
-            }
-            .user {
-                transition: 1s;
-                display: block;
-                opacity: 1;
-            } 
-            iframe {
-                @include transition(1s);
-                height: 250px;
-            }
+        .user {
+            display: block;
+            opacity: 1;
+        }
+    }
+
+    &.no-sync {
+        .no-sync {
+            display: block;
+            opacity: 1;
         }
     }
 

@@ -158,41 +158,43 @@ body {
     float: left;
     margin-right: 2.5641%;
     width: 58.97436%;
-    margin-left: 20.51282%;
-    background: #FFF; }
+    margin-left: 20.51282%; }
     #clef-tutorial .sync .row:last-child {
       margin-right: 0; }
   #clef-tutorial .sync h1 {
-    margin: 15px;
-    margin-bottom: 0;
     font-size: 20px;
     padding-bottom: 5px;
     border-bottom: 1px solid #EEE;
-    display: inline-block; }
+    text-align: center; }
   #clef-tutorial .sync iframe {
     width: 225px;
     height: 415px;
     display: block;
     margin: 30px auto; }
-  #clef-tutorial .sync .user {
-    display: none;
-    opacity: 0; }
-    #clef-tutorial .sync .user iframe {
+  #clef-tutorial .sync .user, #clef-tutorial .sync .no-sync {
+    opacity: 0;
+    display: none; }
+    #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
       height: 250px; }
-  #clef-tutorial.user .sync {
-    -webkit-transition: 1s;
-    transition: 1s; }
-    #clef-tutorial.user .sync .no-user {
-      display: none; }
-    #clef-tutorial.user .sync .user {
-      -webkit-transition: 1s;
-      transition: 1s;
-      display: block;
-      opacity: 1; }
-    #clef-tutorial.user .sync iframe {
-      -webkit-transition: 1s;
-      transition: 1s;
-      height: 250px; }
+  #clef-tutorial .user, #clef-tutorial .no-sync {
+    width: 225px;
+    margin: auto;
+    text-align: left; }
+    #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {
+      text-align: left; }
+  #clef-tutorial.user .no-user, #clef-tutorial.no-sync .no-user {
+    display: none; }
+  #clef-tutorial.user iframe, #clef-tutorial.no-sync iframe {
+    margin-top: -40px;
+    height: 250px;
+    -webkit-transition: 1s 1s;
+    transition: 1s 1s; }
+  #clef-tutorial.user .user {
+    display: block;
+    opacity: 1; }
+  #clef-tutorial.no-sync .no-sync {
+    display: block;
+    opacity: 1; }
 
 #clef-settings-form .settings-section {
   background: white;

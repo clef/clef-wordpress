@@ -296,7 +296,11 @@
     },
     render: function() {
       if (this.userIsLoggedIn) {
-        this.$el.addClass('user');
+        if (!this.currentSub.$el.hasClass('sync')) {
+          this.$el.addClass('no-sync');
+        } else {
+          this.$el.addClass('user');
+        }
       }
       if (!this.$el.is(':visible')) {
         this.currentSub.render();

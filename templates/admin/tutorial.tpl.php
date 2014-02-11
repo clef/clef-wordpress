@@ -25,8 +25,16 @@
 </div>        
 <div class="sub sync">
     <div class="row">
-        <h1 class='no-user'>Sync with the wave to set up your blog</h1>
-        <h1 class='user'>Click the button to complete setup</h1>
+        <h1 class='no-user'>First, sync with the Wave</h1>
+        <div class="user">
+            <h1>One more click!</h1>
+            <p>We've automatically configured Clef for your site. Click the button below to complete setup!</p>
+        </div>
+        <div class="no-sync">
+            <h1>One click setup!</h1>
+            <p>You're already logged in to Clef, so setting up this site is extra easy. Just click the button below and you'll be configured.</p>
+            <!-- <p>Clef uses single sign on: when you sync once, you're logged in everywhere. You <b>already synced</b>, so you don't need to again.</p> -->
+        </div>
         <iframe src="" frameborder="0"></iframe>
     </div>
 </div>
