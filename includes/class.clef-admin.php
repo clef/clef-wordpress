@@ -249,7 +249,7 @@ class ClefAdmin {
             __('Disable certain passwords', "clef"), 
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
-            array( "options" => array("Disabled", "Editor", "Author", "Administrator", "Super Administrator" ) )
+            array( "options" => array("", "Contributor", "Author", "Editor", "Administrator", "Super Administrator" ) )
         );
         $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
 
