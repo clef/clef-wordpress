@@ -39,6 +39,4 @@ class Clef {
     }
 }
 
-Clef::start();
-
 } ?>
