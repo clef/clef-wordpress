@@ -19,13 +19,12 @@ class ClefLogin {
         add_action('wp_authenticate_user', array($this, 'disable_passwords'));
         // Clear logout hook if the user is logging in again
         add_filter('wp_authenticate_user', array($this, 'clear_logout_hook'));
+
+        // adds classes which hide login form if appropriate
         add_action('login_body_class', array($this, 'add_login_form_classes' ));
 
         // Render the login form with the Clef button no matter what
         add_action('login_form', array( $this, 'login_form' ) );
-        // Disable the standard username and password inputs and only render 
-        // the Clef button, according to settings
-        add_action('login_form_login', array( $this, 'disable_login_form' ) );
 
         add_filter('wp_login_failed', array($this, 'handle_login_failed'));
         add_action('login_enqueue_scripts', array($this, 'load_scripts'));
@@ -150,8 +149,12 @@ class ClefLogin {
         
     public function add_login_form_classes($classes) {
         array_push($classes, 'clef-login-form');
+         $override_key = ClefUtils::isset_GET('override');
+
         if ($this->settings->get( 'clef_password_settings_force' )) {
-            array_push($classes, 'clef-hidden');
+            if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
+                array_push($classes, 'clef-hidden');
+            }
         }
         return $classes;
     }
@@ -167,30 +170,6 @@ class ClefLogin {
         }
         $error = $this->validate_invite_code($incoming_invite_code, $invite_email);
         return !$error;
-    }
-
-    public function disable_login_form($user) {
-        if ( ($this->settings->get( 'clef_password_settings_force' ) == 1) && !isset($_REQUEST['clef']) && !isset($_REQUEST['code'])) {
-
-            $override_key = ClefUtils::isset_GET('override');
-
-            $is_overridden = $this->is_valid_override_key($override_key) || $this->has_valid_invite_code();
-
-            if (is_user_logged_in()) {
-                header("Location: " . admin_url() );
-                exit();
-            } elseif ($is_overridden) {
-                return;
-            } else {
-                wp_enqueue_script('jquery');
-                login_header(__('Log In', 'clef')); ?>
-                <form name="loginform" id="loginform" action="" method="post">
-                <?php do_action('login_form'); ?>
-                </form>
-                <?php login_footer();
-                exit();
-            }
-        }
     }
 
     public function disable_passwords($user) {
