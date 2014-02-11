@@ -44,6 +44,7 @@
                 <div class="input-container">
                     <label for=""><?php echo wp_login_url() ?>?override=</label>
                     <?php $form->getSection('clef_override_settings')->getField('key')->render(array("placeholder" => "Enter override key here")); ?>
+                    <a class="generate-override">generate a secure override url for me</a>
                 </div>
            </div>
            <div class="override-buttons">
