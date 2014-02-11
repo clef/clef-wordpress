@@ -411,9 +411,11 @@ body {
   height: 35px;
   margin: auto;
   margin-bottom: 30px; }
-.clef-login-form.clef-hidden #login form {
+.clef-login-form.clef-hidden #login form#loginform {
   padding: 40px 20px; }
-  .clef-login-form.clef-hidden #login form input, .clef-login-form.clef-hidden #login form label {
+  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
     display: none; }
 .clef-login-form.clef-hidden .clef-button-container {
   margin-bottom: 0; }
+.clef-login-form.clef-hidden p#nav {
+  display: none; }

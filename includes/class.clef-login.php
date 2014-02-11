@@ -257,7 +257,7 @@ class ClefLogin {
     }
 
     public function disable_password_reset($user_id) {
-        $user = get_user_by('id', $user_id);
+        $user = get_user_by('id', (int) $user_id);
         return !$this->settings->passwords_are_disabled_for_user($user);
     }
 
