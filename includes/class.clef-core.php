@@ -53,6 +53,12 @@ class ClefCore {
         // Load translations
         load_plugin_textdomain( 'clef', false, CLEF_PATH . 'languages/' );
 
+        // Register public hooks
+        if ($admin) {
+            add_action('clef_render_settings', array($admin, 'general_settings'));
+        }
+        add_action('clef_plugin_uninstall', array('ClefSetup', 'uninstall_plugin'));
+
         add_action('clef_plugin_updated', array($this, 'plugin_updated'), 10, 2);
 
         // Run migrations and other hooks upon plugin update
@@ -64,10 +70,6 @@ class ClefCore {
 
         if (CLEF_IS_BASE_PLUGIN) {
             do_action('clef_hook_admin_menu');
-        }
-
-        if ($admin) {
-            add_action('clef_render_settings', array($admin, 'general_settings'));
         }
     }
 
