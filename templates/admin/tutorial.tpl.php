@@ -33,11 +33,23 @@
         <div class="no-sync">
             <h1>One click setup!</h1>
             <p>You're already logged in to Clef, so setting up this site is extra easy. Just click the button below and you'll be configured.</p>
-            <!-- <p>Clef uses single sign on: when you sync once, you're logged in everywhere. You <b>already synced</b>, so you don't need to again.</p> -->
         </div>
         <iframe src="" frameborder="0"></iframe>
     </div>
 </div>
 <div class="sub">
-    <h1>You're all configured</h1>
+    <div class="row">
+        <h1>You're all set up — want to invite other users?</h1>
+        <p>Your WordPress site has been configured to work with Clef and your Clef account has been automatically connected to the WordPress account you are currently logged in to. </p>
+        <div class="button next">next</div>
+    </div>
+</div>
+<div class="waltz">
+   <div class="row">
+        <img src="<?php echo CLEF_URL . "assets/dist/img/waltz.png" ?>" alt="Waltz">
+        <h1>Want to use Clef everywhere?</h1>
+        <p>Since you use Chrome, you can use Clef on sites like Facebook, Gmail, and Twitter with <a href="http://getwaltz.com">Waltz</a>.</p>
+        <a class="button button-primary button-hero" href="http://getwaltz.com" target="_blank">Get Waltz</a>
+        <a href="#" class="button button-hero next">Go to settings</a>
+   </div> 
 </div>

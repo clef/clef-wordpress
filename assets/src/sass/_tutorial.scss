@@ -107,6 +107,14 @@
         }
     }
 
+    .waltz {
+        display: none;
+        margin-top: 80px;
+        img {
+            @include span-columns(3);
+        }
+    }
+
     .user, .no-sync {
         width: 225px;
         margin: auto;

@@ -3,7 +3,6 @@
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     el: $('#clef-settings-container'),
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account",
     initialize: function(opts) {
       this.opts = opts;
       this.$msgContainer = this.$el.find('.message');
@@ -15,44 +14,32 @@
         this.settings.render();
       } else {
         this.tutorial.render();
-        this.listenToOnce(this.tutorial, 'applicationCreated', this.configure.bind(this));
+        this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
+        this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
       }
-      return this.listenTo(this.settings, 'message', function(data) {
-        return this.displayMessage(data.message, {
-          type: data.type
-        });
-      });
+      this.listenTo(this.settings, 'message', this.displayMessage);
+      return this.listenTo(this.tutorial, 'message', this.displayMessage);
     },
     configure: function(data) {
-      this.connectClefAccount(data);
-      this.settings.model.configure(data);
-      this.tutorial.hide();
-      return this.settings.render();
+      return this.settings.model.configure(data);
     },
-    connectClefAccount: function(data) {
-      var connectData;
-      connectData = {
-        _wp_nonce: this.opts.setup._wp_nonce,
-        clefID: data.clefID
-      };
-      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
-        return function(data) {
-          var msg;
-          if (data.error) {
-            msg = "There was a problem automatically connecting your Clef account: " + data.error + ".";
-            return _this.displayMessage(msg, "error");
-          }
-        };
-      })(this));
-    },
-    displayMessage: function(msg, opts) {
-      this.$msgContainer.find('p').text(msg);
+    displayMessage: function(opts) {
+      this.$msgContainer.find('p').text(opts.message);
       this.$msgContainer.addClass(opts.type).slideDown();
       if (opts.fade) {
         return setTimeout((function() {
           return this.$msgContainer.slideUp();
         }), 3000);
       }
+    },
+    hideTutorial: function() {
+      if (this.settings.isConfigured()) {
+        this.displayMessage("You're all set up!", {
+          type: "updated"
+        });
+      }
+      this.tutorial.hide();
+      return this.settings.render();
     }
   });
   SettingsView = AjaxSettingsView.extend({
@@ -98,10 +85,7 @@
       this.xmlEl.toggle(passwordsDisabled);
       this.toggleOverrideContainer(passwordsDisabled);
       this.overrideButtonContainer.toggle(this.model.overrideIsSet());
-      this.renderSupportBadge();
-      if (this.$el.is(':not(:visible)')) {
-        return this.$el.fadeIn();
-      }
+      return this.renderSupportBadge();
     },
     toggleInputs: function(e) {
       return this.formView.toggleForm(!!parseInt(e.currentTarget.value));
@@ -272,14 +256,19 @@
   var SubTutorialView, TutorialView;
   TutorialView = Backbone.View.extend({
     el: $('#clef-tutorial'),
+    connectClefAccountAction: ajaxurl + "?action=connect_clef_account",
     events: {
       "click .next": "next",
-      "click .previous": "previous"
+      "click .previous": "previous",
+      "click .done": "done"
     },
     iframePath: '/iframes/application/create/v1',
     initialize: function(opts) {
       var sub, _i, _len, _ref;
       this.opts = opts;
+      if (window.chrome) {
+        this.$el.find('.waltz').addClass('sub');
+      }
       this.subs = [];
       _ref = this.$el.find('.sub');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -292,7 +281,7 @@
       return $(window).on('message', this.handleMessages.bind(this));
     },
     hide: function(cb) {
-      return this.$el.fadeOut(cb);
+      return this.$el.slideUp(cb);
     },
     render: function() {
       if (this.userIsLoggedIn) {
@@ -308,6 +297,9 @@
         return this.$el.fadeIn();
       }
     },
+    done: function() {
+      return this.trigger("done");
+    },
     next: function() {
       var newSub;
       newSub = this.subs[_.indexOf(this.subs, this.currentSub) + 1];
@@ -318,6 +310,8 @@
         this.currentSub.hide();
         newSub.render();
         return this.currentSub = newSub;
+      } else {
+        return this.done();
       }
     },
     previous: function() {
@@ -341,7 +335,12 @@
       }
       data = data.originalEvent.data;
       if (data.type === "keys") {
-        return this.trigger('applicationCreated', data);
+        return this.connectClefAccount(data, (function(_this) {
+          return function() {
+            _this.trigger('applicationCreated', data);
+            return _this.next();
+          };
+        })(this));
       } else if (data.type === "user") {
         this.userIsLoggedIn = true;
         return this.render();
@@ -351,6 +350,29 @@
       return setTimeout((function() {
         return $(".logout-hook-error").slideDown();
       }), 20000);
+    },
+    connectClefAccount: function(data, cb) {
+      var connectData;
+      connectData = {
+        _wp_nonce: this.opts.setup._wp_nonce,
+        clefID: data.clefID
+      };
+      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
+        return function(data) {
+          var msg;
+          if (data.error) {
+            msg = "There was a problem automatically connecting your Clef account: " + data.error + ". Please refresh and try again.";
+            return _this.trigger('message', {
+              message: msg,
+              type: "error"
+            });
+          } else {
+            if (typeof cb === "function") {
+              return cb();
+            }
+          }
+        };
+      })(this));
     }
   });
   SubTutorialView = Backbone.View.extend({

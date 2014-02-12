@@ -176,6 +176,16 @@ body {
     display: none; }
     #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
       height: 250px; }
+  #clef-tutorial .waltz {
+    display: none;
+    margin-top: 80px; }
+    #clef-tutorial .waltz img {
+      display: block;
+      float: left;
+      margin-right: 2.5641%;
+      width: 28.20513%; }
+      #clef-tutorial .waltz img:last-child {
+        margin-right: 0; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     width: 225px;
     margin: auto;

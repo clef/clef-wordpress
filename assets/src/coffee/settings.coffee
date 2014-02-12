@@ -3,7 +3,6 @@
 
     AppView = Backbone.View.extend
         el: $('#clef-settings-container')
-        connectClefAccountAction: ajaxurl + "?action=connect_clef_account"
         initialize: (@opts) ->
             @$msgContainer = @$el.find('.message')
             @settings = new SettingsView (
@@ -15,43 +14,27 @@
                 @settings.render()
             else
                 @tutorial.render()
-                @listenToOnce(
-                    @tutorial,
-                    'applicationCreated',
-                    @configure.bind this
-                )
+                @listenToOnce @tutorial, 'applicationCreated', @configure
+                @listenToOnce @tutorial, 'done', @hideTutorial
 
-            @listenTo @settings, 'message', (data) ->
-                @displayMessage data.message, type: data.type
+            @listenTo @settings, 'message', @displayMessage
+            @listenTo @tutorial, 'message', @displayMessage
 
         configure: (data) ->
-            @connectClefAccount data
-
             @settings.model.configure(data)
-            @tutorial.hide()
-            @settings.render()
 
-        connectClefAccount: (data) ->
-            connectData =
-                _wp_nonce: @opts.setup._wp_nonce
-                clefID: data.clefID
-
-            $.post @connectClefAccountAction,
-                connectData,
-                (data) =>
-                    if data.error
-                        msg = "There was a problem automatically connecting \
-                        your Clef account: #{data.error}."
-                        @displayMessage msg, "error"
-
-        displayMessage: (msg, opts) ->
-            @$msgContainer.find('p').text(msg)
+        displayMessage: (opts) ->
+            @$msgContainer.find('p').text(opts.message)
             @$msgContainer.addClass(opts.type).slideDown()
             if opts.fade
                 setTimeout (() -> @$msgContainer.slideUp()), 3000
 
+        hideTutorial: () ->
+            if @settings.isConfigured()
+                @displayMessage "You're all set up!", type: "updated"
 
-
+            @tutorial.hide()
+            @settings.render()
 
     SettingsView =  AjaxSettingsView.extend
         errorTemplate: _.template "<div class='error form-error'>\
@@ -102,9 +85,6 @@
             @overrideButtonContainer.toggle @model.overrideIsSet()
 
             @renderSupportBadge()
-
-            if @$el.is(':not(:visible)')
-                @$el.fadeIn()
 
         toggleInputs: (e) ->
             @formView.toggleForm(!!parseInt(e.currentTarget.value))
@@ -232,7 +212,6 @@
 
         toggleForm: (e) ->
             @$el.toggleClass('only-clef', @model.passwordsFullyDisabled())
-
 
 
     this.AppView = AppView

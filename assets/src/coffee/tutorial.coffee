@@ -1,13 +1,18 @@
 (($, Backbone) ->
     TutorialView = Backbone.View.extend
         el: $('#clef-tutorial')
+        connectClefAccountAction: ajaxurl + "?action=connect_clef_account"
         events:
             "click .next": "next"
             "click .previous": "previous"
+            "click .done": "done"
 
         iframePath: '/iframes/application/create/v1'
 
         initialize: (@opts) ->
+            if window.chrome
+                @$el.find('.waltz').addClass 'sub'
+
             @subs = []
             for sub in @$el.find('.sub')
                 @subs.push new SubTutorialView { el: sub }
@@ -17,7 +22,7 @@
             $(window).on 'message', @handleMessages.bind(this)
 
         hide: (cb) ->
-            @$el.fadeOut(cb)
+            @$el.slideUp(cb)
 
         render: ()->
             if @userIsLoggedIn
@@ -25,12 +30,15 @@
                     @$el.addClass 'no-sync'
                 else
                     @$el.addClass 'user'
-                    
+
 
             if !@$el.is(':visible')
                 @currentSub.render()
                 @loadIFrame()
                 @$el.fadeIn()
+
+        done: () ->
+            @trigger "done"
 
         next: () ->
             newSub = @subs[_.indexOf(@subs, @currentSub) + 1]
@@ -41,6 +49,8 @@
                 @currentSub.hide()
                 newSub.render()
                 @currentSub = newSub
+            else
+                @done()
 
         previous: ()->
             newSub = @subs[_.indexOf(@subs, @currentSub) - 1]
@@ -60,7 +70,11 @@
             return unless data.originalEvent.origin.indexOf @opts.clefBase >= 0
             data = data.originalEvent.data
             if data.type == "keys"
-                @trigger 'applicationCreated', data
+                @connectClefAccount data, 
+                    () => 
+                        @trigger 'applicationCreated', data
+                        @next()
+
             else if data.type == "user"
                 @userIsLoggedIn = true
                 @render()
@@ -70,6 +84,23 @@
                 # show logout error message after an amount of time
                 $(".logout-hook-error").slideDown()
             ), 20000
+
+        connectClefAccount: (data, cb) ->
+            connectData =
+                _wp_nonce: @opts.setup._wp_nonce
+                clefID: data.clefID
+
+            $.post @connectClefAccountAction,
+                connectData,
+                (data) =>
+                    if data.error
+                        msg = "There was a problem automatically connecting \
+                        your Clef account: #{data.error}. Please refresh \
+                        and try again."
+                        @trigger 'message', message: msg, type: "error"
+                    else
+                        cb() if typeof(cb) == "function"
+
 
     SubTutorialView = Backbone.View.extend
         initialize: (@opts) ->
