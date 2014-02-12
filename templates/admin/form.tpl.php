@@ -37,6 +37,7 @@
                 <div id="login-form-view" class="login"></div>
             </div>
         </div>
+        <div id="invite-users-settings" class="settings-section"></div>
         <div class="override-settings settings-section">
            <div class="inputs-container">
                 <h3>Override settings</h3> 
@@ -88,6 +89,26 @@
         <input type="submit" name="submit" class="button button-primary" value="<?php _e('Save'); ?>">
     </form>
 </div>
+
+<script id="invite-users-template" type="text/template">
+    <div class="inputs-container">
+        <h3>Invite your users</h3>
+        <p>Send an email with an invite link to your users and get them started with Clef.</p>
+        <p>If you've already disabled passwords site-wide, users can use their invite links to log in temporarily using passwords.</p>
+        <div class="input-container">
+            <label for="">Send an email to all users with privileges greater than or equal to </label>
+            <select class="ajax-ignore" name="invite-users-role">
+                <option selected value="Everyone">Everyone</option>
+                <option value="Contributor">Contributor</option>
+                <option value="Author">Author</option>
+                <option value="Editor">Editor</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Super Administrator">Super Administrator</option>
+            </select>
+        </div>
+        <a href="#" name="invite-users-button" class="button button-primary">Invite Users</a>
+    </div>
+</script>
 
 <script id="form-template" type="text/template">
     <h4>Preview of your login form</h4>

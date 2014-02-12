@@ -166,5 +166,31 @@ class ClefUtils {
 
         return $body->info;
     }
+
+    public static function user_fulfills_role($user, $role) {
+        $fulfills_role = false;
+        $role_map = array( 
+            "subscriber",
+            "contributor",
+            "author",
+            "editor",
+            "administrator",
+            "super administrator"
+        );
+
+        foreach ($user->roles as &$role) {
+            $rank = array_search($role, $role_map);
+            if ($rank != 0 && $rank >= array_search($role, $role_map)) {
+                $fulfills_role = true;
+                break;
+            }
+        } 
+
+        if ($role == "super administrator" && is_super_admin($user->ID)) {
+            $fulfills_role = true;
+        }
+        return $fulfills_role;
+    }
+
 }
 ?>
