@@ -405,7 +405,7 @@
     connectClefAccount: function(data, cb) {
       var connectData;
       connectData = {
-        _wp_nonce: this.opts.setup._wp_nonce,
+        _wp_nonce: this.opts.setup._wp_nonce_connect_clef,
         clefID: data.clefID
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
