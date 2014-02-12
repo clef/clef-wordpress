@@ -14,7 +14,7 @@ class ClefInternalSettings {
     private function __construct() {
         $this->use_individual_settings = $this->check_individual_settings();
         $this->settings = $this->get_site_option();
-        add_action('admin_menu', array($this, 'apply_settings_path_filter'), 9);
+        add_action('admin_menu', array($this, 'apply_settings_path_filter'), 11);
     }
 
     public function apply_settings_path_filter() {
@@ -119,26 +119,7 @@ class ClefInternalSettings {
 
         if ($disable_certain_passwords && $disable_certain_passwords != "") {
             $max_role = strtolower($disable_certain_passwords);
-            $role_map = array( 
-                "subscriber",
-                "contributor",
-                "author",
-                "editor",
-                "administrator",
-                "super administrator"
-            );
-
-            foreach ($user->roles as &$role) {
-                $rank = array_search($role, $role_map);
-                if ($rank != 0 && $rank >= array_search($max_role, $role_map)) {
-                    $disabled = true;
-                    break;
-                }
-            } 
-
-            if ($max_role == "super administrator" && is_super_admin($user->ID)) {
-                $disabled = true;
-            }
+            $disabled = ClefUtils::user_fulfills_role($user, $max_role);
         }
 
         return $disabled;

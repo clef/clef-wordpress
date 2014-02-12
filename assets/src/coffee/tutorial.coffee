@@ -70,8 +70,8 @@
             return unless data.originalEvent.origin.indexOf @opts.clefBase >= 0
             data = data.originalEvent.data
             if data.type == "keys"
-                @connectClefAccount data, 
-                    () => 
+                @connectClefAccount data,
+                    () =>
                         @trigger 'applicationCreated', data
                         @next()
 

@@ -1,5 +1,5 @@
 (function($) {
-  var AppView, FormVisualization, SettingsModel, SettingsView;
+  var AppView, FormVisualization, InviteUsersView, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     el: $('#clef-settings-container'),
@@ -42,6 +42,55 @@
       return this.settings.render();
     }
   });
+  InviteUsersView = Backbone.View.extend({
+    el: '#invite-users-settings',
+    events: {
+      "click a[name='invite-users-button']": 'inviteUsers'
+    },
+    messageTemplate: _.template("<div class='<%=type%> invite-users-message'><%=message%></div>"),
+    showMessage: function(type, message) {
+      var $messageEl;
+      $messageEl = this.$el.find('.invite-users-message');
+      if ($messageEl.length) {
+        $messageEl.remove();
+      }
+      return this.$el.find('h3').first().after(this.messageTemplate({
+        type: type,
+        message: message
+      }));
+    },
+    template: _.template($('#invite-users-template').html()),
+    initialize: function(opts) {
+      this.opts = opts;
+    },
+    inviteUsersAction: ajaxurl + "?action=clef_invite_users",
+    inviteUsers: function(e) {
+      var data;
+      e.preventDefault();
+      data = {
+        _wp_nonce: this.opts.setup._wp_nonce_invite_users,
+        roles: $("select[name='invite-users-role']").val()
+      };
+      return $.post(this.inviteUsersAction, data, (function(_this) {
+        return function(data) {
+          var msg, type;
+          msg = "";
+          type = "";
+          if (data.error) {
+            msg = "There was a problem sending invites: " + data.error + ".";
+            type = "error";
+          } else if (data.success) {
+            msg = "Emails have been sent to your users.";
+            type = "updated";
+          }
+          return _this.showMessage(type, msg);
+        };
+      })(this));
+    },
+    render: function() {
+      return this.$el.html(this.template);
+    }
+  });
   SettingsView = AjaxSettingsView.extend({
     errorTemplate: _.template("<div class='error form-error'><%=message%></div>"),
     genericErrorMessage: "Something went wrong, please refresh and try again.",
@@ -56,6 +105,7 @@
     initialize: function(opts) {
       this.modelClass = SettingsModel;
       SettingsView.__super__.initialize.call(this, opts);
+      this.inviteUsersView = new InviteUsersView(opts);
       this.formView = new FormVisualization({
         model: this.model
       });
@@ -85,6 +135,7 @@
       this.xmlEl.toggle(passwordsDisabled);
       this.toggleOverrideContainer(passwordsDisabled);
       this.overrideButtonContainer.toggle(this.model.overrideIsSet());
+      this.inviteUsersView.render();
       return this.renderSupportBadge();
     },
     toggleInputs: function(e) {

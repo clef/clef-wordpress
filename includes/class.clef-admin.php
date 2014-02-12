@@ -5,6 +5,7 @@ require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
 class ClefAdmin {
     const FORM_ID = "clef";
     const CONNECT_CLEF_NONCE_NAME = "connect_clef_account";
+    const INVITE_USERS_NONCE_NAME = "clef_invite_users";
 
     private static $instance = null;
 
@@ -21,7 +22,6 @@ class ClefAdmin {
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
         add_action('admin_init', array($this, "connect_clef_account"));
-        add_action('admin_init', array($this, "invite_users"));
 
         add_action('clef_hook_admin_menu', array($this, "hook_admin_menu"));
 
@@ -39,6 +39,7 @@ class ClefAdmin {
         add_action('options_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
 
         add_action('wp_ajax_connect_clef_account', array($this, 'ajax_connect_clef_account'));
+        add_action('wp_ajax_clef_invite_users', array($this, 'ajax_invite_users'));
 
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
         new AjaxSettings(array( 
@@ -104,24 +105,58 @@ class ClefAdmin {
         }
     }
 
-    public function invite_users() {
-        if (isset($_REQUEST['invite_users']) && $_REQUEST['invite_users']) {
-            $other_users = get_users(array('exclude' => array(get_current_user_id())));
-            $invite_codes = array();
-            foreach ($other_users as $user) {
-                $invite_code = new InviteCode($user);
-                update_user_meta($user->ID, 'clef_invite_code', $invite_code);
-
-                $invite_link = $invite_code->get_link();
-                $to = $user->user_email;
-                $subject = 'Set up Clef for your account';
-                $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
-
-                add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-                wp_mail($to, $subject, $message);
-                remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+    /**
+     * @return array Users filtered by >= $role
+     */
+    private function filter_users_by_role($users, $role) {
+        $filtered_users = array();
+        if ($role === 'everyone')  {
+            $filtered_users = $users;
+        }
+        else {
+            foreach ($users as $user) {
+                if (ClefUtils::user_fulfills_role($user, $role)) {
+                    $filtered_users[] = $user;
+                }
             }
         }
+        return $filtered_users;
+    }
+
+    private function send_invite_email($user, $invite_code) {
+        $invite_link = $invite_code->get_link();
+        $to = $user->user_email;
+        $subject = 'Set up Clef for your account';
+        $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
+
+        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+        error_log($to . '\n' . $subject . '\n' . $message . '\n');
+        wp_mail($to, $subject, $message);
+        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+    }
+
+    public function ajax_invite_users() {
+        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::INVITE_USERS_NONCE_NAME)) {
+            wp_send_json(array( "error" => "invalid nonce" ));
+        }
+
+        $role = strtolower(ClefUtils::isset_POST('roles'));
+        if (!$role) {
+            wp_send_json(array( "error" => "invalid roles" ));
+        }
+
+        $other_users = get_users(array('exclude' => array(get_current_user_id())));
+        $filtered_users = $this->filter_users_by_role($other_users, $role);
+
+        if (empty($filtered_users)) {
+            wp_send_json(array( "error" => "there are no other users with this role or greater" ));
+        }
+        foreach ($filtered_users as &$user) {
+            $invite_code = new InviteCode($user);
+            update_user_meta($user->ID, 'clef_invite_code', $invite_code);
+            $this->send_invite_email($user, $invite_code);
+        }
+        wp_send_json(array("success" => true));
     }
 
      public function ajax_connect_clef_account() {
@@ -207,10 +242,12 @@ class ClefAdmin {
             if (get_site_option("bruteprotect_installed_clef")) {
                 $setup['source'] = "bruteprotect";
             }
-            $setup['_wp_nonce'] = wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME);
+            $setup['_wp_nonce_connect_clef'] = wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME);
+            $setup['_wp_nonce_invite_users'] = wp_create_nonce(self::INVITE_USERS_NONCE_NAME);
             $options['setup'] = $setup;
             $options['configured'] = $this->settings->is_configured();
             $options['clefBase'] = CLEF_BASE;
+            $options['settings_path'] = $this->settings->settings_path;
             $options['options_name'] = CLEF_OPTIONS_NAME;
 
             echo ClefUtils::render_template('admin/settings.tpl', array(
