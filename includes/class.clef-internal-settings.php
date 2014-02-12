@@ -14,11 +14,12 @@ class ClefInternalSettings {
     private function __construct() {
         $this->use_individual_settings = $this->check_individual_settings();
         $this->settings = $this->get_site_option();
+        $this->settings_path = 'clef';
         add_action('admin_menu', array($this, 'apply_settings_path_filter'), 11);
     }
 
     public function apply_settings_path_filter() {
-        $this->settings_path = apply_filters('clef_settings_path', 'clef');
+        $this->settings_path = apply_filters('clef_settings_path', $this->settings_path);
     }
 
     private function check_individual_settings() {
