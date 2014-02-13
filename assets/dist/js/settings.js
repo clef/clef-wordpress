@@ -42,7 +42,7 @@
             type = "error";
           } else if (data.success) {
             _this.trigger("invited");
-            msg = "Emails have been sent to your users.";
+            msg = "Email invitations have been sent to your users.";
             type = "updated";
           }
           return _this.showMessage(type, msg);

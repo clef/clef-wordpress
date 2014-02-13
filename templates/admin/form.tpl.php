@@ -30,14 +30,13 @@
                         <?php $form->getSection('clef_password_settings')->getField('force')->render(); ?>
                     </div>
                     <div class="input-container">
-                        <label for="">Always allow passwords for XML API (necessary for things like the WordPress mobile app)</label>
+                        <label for="">Allow passwords for API (necessary for things like the WordPress mobile app)</label>
                         <?php $form->getSection('clef_password_settings')->getField('xml_allowed')->render(); ?>
                     </div>
                 </div>
                 <div id="login-form-view" class="login"></div>
             </div>
         </div>
-        <div id="invite-users-settings" class="settings-section"></div>
         <div class="override-settings settings-section">
            <div class="inputs-container">
                 <h3>Override settings</h3> 
@@ -72,6 +71,7 @@
                </div>
             </div>
         </div>
+        <div id="invite-users-settings" class="settings-section"></div>
         <div class="clef-settings settings-section">
             <div class="inputs-container">
                 <h3>Clef API Settings</h3>

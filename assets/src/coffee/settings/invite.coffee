@@ -37,7 +37,7 @@
                         type = "error"
                     else if data.success
                         @trigger "invited"
-                        msg = "Emails have been sent to your users."
+                        msg = "Email invitations have been sent to your users."
                         type = "updated"
                     @showMessage type, msg
 

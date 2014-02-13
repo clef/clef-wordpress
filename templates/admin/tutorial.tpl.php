@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <a href="#" class='skip'>Skip setup, I already have Clef API keys</a>
+        <a href="#" class='skip done'>Skip setup, I already have Clef API keys</a>
     </div>
 </div>        
 <div class="sub sync">
@@ -39,7 +39,7 @@
 </div>
 <div class="sub invite">
     <div class="row">
-        <h1>You're all set up — want to invite other users?</h1>
+        <h1>You're all set up — want to invite your users?</h1>
         <div class="invite-users-container"></div>
         <div class="button next">Continue</div>
     </div>
