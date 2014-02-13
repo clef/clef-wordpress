@@ -60,6 +60,49 @@
 }).call(this, jQuery);
 
 (function($) {
+  var MultisiteNetworkOptionsView, MultisiteOptionsModel, MultisiteOptionsView;
+  MultisiteOptionsView = AjaxSettingsView.extend({
+    el: '#clef-multisite-options',
+    enabled_template: _.template($('#multisite-enabled-template').html()),
+    disabled_template: _.template($('#multisite-disabled-template').html()),
+    initialize: function(opts) {
+      this.modelClass = MultisiteOptionsModel;
+      return MultisiteOptionsView.__super__.initialize.call(this, opts);
+    },
+    render: function() {
+      var template;
+      if (this.opts.overridden_by_network_settings) {
+        template = this.enabled_template;
+      } else {
+        template = this.disabled_template;
+      }
+      return this.$el.html(template());
+    }
+  });
+  MultisiteNetworkOptionsView = MultisiteOptionsView.extend({
+    render: function() {
+      var template;
+      console.log(this.modelClass);
+      if (this.opts.network_settings_enabled) {
+        template = this.enabled_template;
+      } else {
+        template = this.disabled_template;
+      }
+      return this.$el.html(template());
+    }
+  });
+  MultisiteOptionsModel = AjaxSettingsModel.extend({
+    parse: function(data, options) {
+      options.url = ajaxurl + '?action=clef_multisite_options';
+      return MultisiteOptionsModel.__super__.parse.call(this, data, options);
+    }
+  });
+  this.MultisiteOptionsModel = MultisiteOptionsModel;
+  this.MultisiteOptionsView = MultisiteOptionsView;
+  return this.MultisiteNetworkOptionsView = MultisiteNetworkOptionsView;
+}).call(this, jQuery);
+
+(function($) {
   var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
@@ -71,15 +114,28 @@
         options_name: "wpclef"
       }, this.opts));
       this.tutorial = new TutorialView(_.extend({}, this.opts));
+      if (this.opts.is_network_settings) {
+        this.multisiteOptionsView = new MultisiteNetworkOptionsView(this.opts);
+      } else {
+        this.multisiteOptionsView = new MultisiteOptionsView(this.opts);
+      }
+      this.render();
+      this.listenTo(this.settings, 'message', this.displayMessage);
+      return this.listenTo(this.tutorial, 'message', this.displayMessage);
+    },
+    render: function() {
+      if (this.opts.overridden_by_network_settings) {
+        this.multisiteOptionsView.render();
+        return;
+      }
       if (this.settings.isConfigured()) {
-        this.settings.render();
+        this.multisiteOptionsView.render();
+        return this.settings.show();
       } else {
         this.tutorial.render();
         this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
-        this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+        return this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
       }
-      this.listenTo(this.settings, 'message', this.displayMessage);
-      return this.listenTo(this.tutorial, 'message', this.displayMessage);
     },
     configure: function(data) {
       return this.settings.model.configure(data);
@@ -115,6 +171,7 @@
       return SettingsView.__super__.constructor.call(this, opts);
     },
     initialize: function(opts) {
+      this.opts = opts;
       this.modelClass = SettingsModel;
       SettingsView.__super__.initialize.call(this, opts);
       this.inviteUsersView = new InviteUsersView(opts);
@@ -128,13 +185,14 @@
       this.badgePreviewContainer = this.$el.find('.support-settings .ftr-preview');
       this.listenTo(this.model, "change", this.clearErrors);
       this.listenTo(this.model, "error", this.error);
-      return window.onbeforeunload = (function(_this) {
+      window.onbeforeunload = (function(_this) {
         return function(e) {
           if (_this.isSaving()) {
             return "Settings are being saved. Still want to navigate away?";
           }
         };
       })(this);
+      return this.render();
     },
     updated: function(obj, data) {
       SettingsView.__super__.updated.call(this, obj, data);
@@ -144,6 +202,7 @@
       var passwordsDisabled;
       SettingsView.__super__.render.call(this);
       passwordsDisabled = this.model.passwordsDisabled();
+      $('#clef-settings-header').show();
       this.xmlEl.toggle(passwordsDisabled);
       this.toggleOverrideContainer(passwordsDisabled);
       this.overrideButtonContainer.toggle(this.model.overrideIsSet());

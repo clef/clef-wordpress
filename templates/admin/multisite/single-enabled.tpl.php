@@ -1,4 +1,3 @@
-
 <form action="admin.php?action=clef_multisite" method="POST">
     <div class="settings-section">
         <div class="inputs-container">
@@ -9,4 +8,3 @@
         </div>
     </div>
 </form>
-

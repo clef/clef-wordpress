@@ -9,16 +9,28 @@
                 _.extend { options_name: "wpclef" }, @opts
             )
             @tutorial = new TutorialView _.extend {}, @opts
+            if @opts.is_network_settings
+                @multisiteOptionsView = new MultisiteNetworkOptionsView(@opts)
+            else
+                @multisiteOptionsView = new MultisiteOptionsView(@opts)
+
+            @render()
+
+            @listenTo @settings, 'message', @displayMessage
+            @listenTo @tutorial, 'message', @displayMessage
+
+        render: ->
+            if @opts.overridden_by_network_settings
+                @multisiteOptionsView.render()
+                return
 
             if @settings.isConfigured()
-                @settings.render()
+                @multisiteOptionsView.render()
+                @settings.show()
             else
                 @tutorial.render()
                 @listenToOnce @tutorial, 'applicationCreated', @configure
                 @listenToOnce @tutorial, 'done', @hideTutorial
-
-            @listenTo @settings, 'message', @displayMessage
-            @listenTo @tutorial, 'message', @displayMessage
 
         configure: (data) ->
             @settings.model.configure(data)
@@ -50,7 +62,7 @@
             @events = _.extend @events, @addEvents
             SettingsView.__super__.constructor.call(this, opts)
 
-        initialize: (opts) ->
+        initialize: (@opts) ->
             @modelClass = SettingsModel
             SettingsView.__super__.initialize.call(this, opts)
 
@@ -64,6 +76,7 @@
             @overrideButtonContainer = @$el.find '.override-buttons'
             @setOverrideLink()
 
+
             @badgePreviewContainer = @$el.find '.support-settings .ftr-preview'
 
             @listenTo @model, "change", @clearErrors
@@ -72,6 +85,8 @@
                 if @isSaving()
                     "Settings are being saved. Still want to navigate away?"
 
+            @render()
+
         updated: (obj, data) ->
             SettingsView.__super__.updated.call(this, obj, data)
             @setOverrideLink()
@@ -79,6 +94,8 @@
         render: () ->
             SettingsView.__super__.render.call this
             passwordsDisabled = @model.passwordsDisabled()
+
+            $('#clef-settings-header').show()
 
             @xmlEl.toggle passwordsDisabled
             @toggleOverrideContainer passwordsDisabled

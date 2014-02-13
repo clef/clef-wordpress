@@ -1,8 +1,10 @@
 <div id="clef-settings-container">
     <div class="message"><p></p></div>
+<?php if (!$options['overridden_by_network_settings']) { ?>
     <div id="clef-tutorial" style="display:none;">
         <?php include CLEF_TEMPLATE_PATH . 'admin/tutorial.tpl.php'; ?>
     </div>
+<?php } ?>
     <div id="clef-settings">
         <?php include CLEF_TEMPLATE_PATH . 'admin/form.tpl.php'; ?>
     </div>
@@ -32,5 +34,7 @@
         </div>
     </div>
 </script>
+
+<?php include CLEF_TEMPLATE_PATH . 'admin/multisite.tpl.php'; ?>
 
 <script type="text/javascript"> var options = <?php echo json_encode($options); ?></script>
