@@ -56,6 +56,11 @@ class ClefAdmin {
 
     public function hook_admin_menu() {
         add_action('admin_menu', array($this, 'admin_menu'));
+        add_action('user_admin_menu', array($this, 'user_admin_menu'));
+    }
+
+    public function user_admin_menu() {
+        echo('hey');
     }
 
     public function display_messages() {
@@ -80,10 +85,7 @@ class ClefAdmin {
     }
 
     public function show_user_profile($user) {
-        if (!$user) {
-            $user = wp_get_current_user();
-        }
-        $connected = !!get_user_meta($user->ID, "clef_id", true);
+        $connected = ClefUtils::current_user_has_clef();
         $app_id = $this->settings->get( 'clef_settings_app_id' );
         $redirect_url = add_query_arg(
             array(
@@ -206,27 +208,33 @@ class ClefAdmin {
         }
     }
 
+    public function render_connect_clef_account() {
+        echo ClefUtils::render_template('admin/connect.tpl', array());
+    }
+
     public function admin_menu() {
         // if the single site override of settings is not allowed
         // let's not add anything to the menu
         if ($this->settings->multisite_disallow_settings_override()) return;
 
         if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
+            $menu_name = "bruteprotect-config";
             add_submenu_page("bruteprotect-config", "Clef", "Clef", "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
-            if ($this->settings->is_multisite_enabled() && $this->settings->use_individual_settings) {
-                add_submenu_page("bruteprotect-config", __("Clef Multisite Options", 'clef'), __("Clef Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
-            }
         } else {
-            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
-            if ($this->settings->is_multisite_enabled() && $this->settings->user_individual_settings) {
-                add_submenu_page('clef', __('Settings', 'clef'), __('Settings', 'clef'),'manage_options', $this->settings->settings_path, array($this, 'general_settings'));
-                add_submenu_page("clef", __("Multisite Options", 'clef'), __("Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
+            $menu_name = $this->settings->settings_path;
+            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", $menu_name, array($this, 'general_settings'));
+            if ($this->settings->is_multisite_enabled() && $this->settings->use_individual_settings) {
+                add_submenu_page($menu_name, __('Settings', 'clef'), __('Settings', 'clef'), 'manage_options', $this->settings->settings_path, array($this, 'general_settings'));
             } 
-
-            if (!$this->bruteprotect_active() && !is_multisite())  {
-                add_submenu_page('clef', __('Add Additional Security', 'clef'), __('Additional Security', 'clef'), 'manage_options', 'clef_other_install', array($this, 'other_install_settings'));
-            }
         } 
+
+        if (!ClefUtils::current_user_has_clef()) {
+            add_submenu_page($menu_name, __('Connect Clef account', 'clef'), __('Connect Clef account', 'clef'), 'read', 'connect_clef_account', array($this, 'render_connect_clef_account'));
+        }
+
+        if (!$this->bruteprotect_active() && !is_multisite())  {
+            add_submenu_page($menu_name, __('Add Additional Security', 'clef'), __('Additional Security', 'clef'), 'manage_options', 'clef_other_install', array($this, 'other_install_settings'));
+        }
         
     }
 

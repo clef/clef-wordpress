@@ -109,6 +109,10 @@ class ClefUtils {
         return $ident;
     }
 
+    public static function current_user_has_clef() {
+        return !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
+    }
+
     public static function associate_clef_id($clef_id, $user_id=false) {
         if (!$user_id) {
             $user_id = wp_get_current_user()->ID;
