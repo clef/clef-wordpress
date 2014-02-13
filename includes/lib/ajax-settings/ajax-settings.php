@@ -45,15 +45,20 @@ class AjaxSettings {
     function handle_settings_save() {
         $settings = json_decode(file_get_contents( "php://input" ), true);
         $option_page = $settings['option_page'];
+        $network_wide = isset($_REQUEST['network_wide']) && $_REQUEST['network_wide'];
 
         if (!wp_verify_nonce($settings['_wpnonce'], $option_page . "-options")) {
             wp_die(__('Cheatin&#8217; uh?'));
         }
 
-        $capability = 'manage_options';
-        $capability = apply_filters( "option_page_capability_{$option_page}", $capability );
-        if ( !current_user_can( $capability ) )
-            wp_die(__('Cheatin&#8217; uh?'));
+        if ($network_wide) {
+
+        } else {
+            $capability = 'manage_options';
+            $capability = apply_filters( "option_page_capability_{$option_page}", $capability );
+            if ( !current_user_can( $capability ) )
+                wp_die(__('Cheatin&#8217; uh?'));
+        }
 
         $whitelist_options = apply_filters( 'whitelist_options', array() );
         $options = $whitelist_options[$settings['option_page']];
@@ -73,7 +78,7 @@ class AjaxSettings {
             } 
         }
 
-        if ($this->options['network_wide']) {
+        if ($network_wide) {
             update_site_option($this->name(), $to_be_saved);
         } else {
             update_option($this->name(), $to_be_saved);
