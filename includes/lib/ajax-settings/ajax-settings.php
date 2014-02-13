@@ -79,7 +79,7 @@ class AjaxSettings {
             } 
         }
 
-        if ($network_wide) {
+        if ($is_network_wide) {
             update_site_option($this->name(), $to_be_saved);
         } else {
             update_option($this->name(), $to_be_saved);
