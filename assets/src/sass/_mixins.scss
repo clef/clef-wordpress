@@ -26,3 +26,9 @@
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
     border: 1px solid #e5e5e5;
 }
+
+@mixin widget() {
+    @include widget-border();
+    background: white;
+    padding: 20px 25px;
+}

@@ -161,16 +161,16 @@ body {
         color: #999;
         text-decoration: underline; }
   #clef-tutorial .sync .row {
-    padding: 10px 25px;
     display: block;
     float: left;
     margin-right: 2.5641%;
     width: 58.97436%;
     margin-left: 20.51282%;
-    background: white;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    border: 1px solid #e5e5e5; }
+    border: 1px solid #e5e5e5;
+    background: white;
+    padding: 20px 25px; }
     #clef-tutorial .sync .row:last-child {
       margin-right: 0; }
   #clef-tutorial .sync h1 {
@@ -189,11 +189,11 @@ body {
     #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
       height: 250px; }
   #clef-tutorial .invite .invite-users {
-    background: white;
-    padding: 20px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    border: 1px solid #e5e5e5; }
+    border: 1px solid #e5e5e5;
+    background: white;
+    padding: 20px 25px; }
     #clef-tutorial .invite .invite-users .header h3 {
       display: none; }
     #clef-tutorial .invite .invite-users .header h4 {
@@ -203,16 +203,41 @@ body {
   #clef-tutorial .invite .next {
     margin-top: 10px;
     float: right; }
+  #clef-tutorial .using-clef .row {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e5e5;
+    background: white;
+    padding: 20px 25px; }
+    #clef-tutorial .using-clef .row h1 {
+      border-bottom: 1px solid #EEE;
+      padding-bottom: 5px;
+      display: inline-block; }
+    #clef-tutorial .using-clef .row h3 {
+      color: #333; }
+    #clef-tutorial .using-clef .row .next {
+      margin: 20px 0; }
   #clef-tutorial .waltz {
-    display: none;
-    margin-top: 80px; }
-    #clef-tutorial .waltz img {
-      display: block;
-      float: left;
-      margin-right: 2.5641%;
-      width: 28.20513%; }
-      #clef-tutorial .waltz img:last-child {
-        margin-right: 0; }
+    display: none; }
+    #clef-tutorial .waltz .row {
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e5e5e5;
+      background: white;
+      padding: 20px 25px;
+      padding: 40px 25px;
+      margin-top: 80px; }
+      #clef-tutorial .waltz .row h1 {
+        margin-top: 0; }
+      #clef-tutorial .waltz .row img {
+        display: block;
+        float: left;
+        margin-right: 2.5641%;
+        width: 28.20513%; }
+        #clef-tutorial .waltz .row img:last-child {
+          margin-right: 0; }
+      #clef-tutorial .waltz .row .next {
+        margin-left: 10px; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {

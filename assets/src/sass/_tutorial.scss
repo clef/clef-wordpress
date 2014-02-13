@@ -82,11 +82,9 @@
 
     .sync {
         .row {
-            padding: 10px 25px;
             @include span-columns(6);
-            @include shift(2);
-            background: white;
-            @include widget-border();
+            @include shift(2);   
+            @include widget();
         }
         h1 {
             font-size: 20px;
@@ -112,9 +110,7 @@
 
     .invite {
         .invite-users {
-            background: white;
-            padding: 20px;
-            @include widget-border();
+            @include widget();
             .header {
                 h3 {
                     display: none;
@@ -133,13 +129,50 @@
         }
     }
 
-    .waltz {
-        display: none;
-        margin-top: 80px;
-        img {
-            @include span-columns(3);
+    .using-clef {
+        .row {
+            @include widget();
+            h1 {
+                border-bottom: 1px solid #EEE;
+                padding-bottom: 5px;
+                display: inline-block;
+            }
+            h3 {
+                color: #333;
+            }
+            .next {
+                margin: 20px 0;
+            }
         }
     }
+
+    .waltz {
+        display: none;
+        .row {
+            @include widget();
+            padding: 40px 25px;
+            margin-top: 80px;
+            h1 {
+                margin-top: 0;
+            }
+            img {
+                @include span-columns(3);
+            }
+            .next {
+                margin-left: 10px;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     .user, .no-sync {
         h1 {
