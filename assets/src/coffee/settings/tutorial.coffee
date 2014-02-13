@@ -65,7 +65,7 @@
                 @currentSub = newSub
 
         loadIFrame: () ->
-            frame = @$el.find("iframe")
+            frame = @$el.find("iframe.setup")
             src = "#{@opts.clefBase}#{@iframePath}?source=wordpress\
                     &domain=#{encodeURIComponent(@opts.setup.siteDomain)}\
                     &name=#{encodeURIComponent(@opts.setup.siteName)}"
@@ -125,7 +125,7 @@
         remove: () ->
             @$el.remove()
         isLogin: () ->
-            @$el.find('iframe').length
+            @$el.find('iframe.setup').length
 
     this.TutorialView = TutorialView
 

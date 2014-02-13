@@ -393,7 +393,7 @@
     },
     loadIFrame: function() {
       var frame, src;
-      frame = this.$el.find("iframe");
+      frame = this.$el.find("iframe.setup");
       src = "" + this.opts.clefBase + this.iframePath + "?source=wordpress&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
       return frame.attr('src', src);
     },
@@ -468,7 +468,7 @@
       return this.$el.remove();
     },
     isLogin: function() {
-      return this.$el.find('iframe').length;
+      return this.$el.find('iframe.setup').length;
     }
   });
   return this.TutorialView = TutorialView;

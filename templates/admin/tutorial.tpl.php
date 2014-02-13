@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <a href="#" class='skip done'>Skip setup, I already have Clef API keys</a>
+        <a href="#" class='skip'>Skip setup, I already have Clef API keys</a>
     </div>
 </div>        
 <div class="sub sync">
@@ -34,7 +34,7 @@
             <h1>One click setup!</h1>
             <p>You're already logged in to Clef, so setting up this site is extra easy. Just click the button below and you'll be configured.</p>
         </div>
-        <iframe src="" frameborder="0"></iframe>
+        <iframe class="setup" src="" frameborder="0"></iframe>
     </div>
 </div>
 <div class="sub invite">
