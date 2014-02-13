@@ -1,5 +1,66 @@
 (function($) {
-  var AppView, FormVisualization, InviteUsersView, SettingsModel, SettingsView;
+  var InviteUsersView;
+  InviteUsersView = Backbone.View.extend({
+    el: '#invite-users-settings',
+    events: {
+      "click a[name='invite-users-button']": 'inviteUsers'
+    },
+    messageTemplate: _.template("<div class='<%=type%> invite-users-message'><%=message%></div>"),
+    showMessage: function(type, message) {
+      var $messageEl;
+      $messageEl = this.$el.find('.invite-users-message');
+      if ($messageEl.length) {
+        $messageEl.remove();
+      }
+      return this.$el.find('.button').first().before(this.messageTemplate({
+        type: type,
+        message: message
+      }));
+    },
+    template: _.template($('#invite-users-template').html()),
+    initialize: function(opts) {
+      this.opts = opts;
+      if (this.opts.el) {
+        return this.setElement(this.opts.el);
+      }
+    },
+    inviteUsersAction: ajaxurl + "?action=clef_invite_users",
+    inviteUsers: function(e) {
+      var data;
+      e.preventDefault();
+      data = {
+        _wp_nonce: this.opts.setup._wp_nonce_invite_users,
+        roles: $("select[name='invite-users-role']").val()
+      };
+      return $.post(this.inviteUsersAction, data, (function(_this) {
+        return function(data) {
+          var msg, type;
+          msg = "";
+          type = "";
+          if (data.error) {
+            msg = "There was a problem sending invites: " + data.error + ".";
+            type = "error";
+          } else if (data.success) {
+            _this.trigger("invited");
+            msg = "Emails have been sent to your users.";
+            type = "updated";
+          }
+          return _this.showMessage(type, msg);
+        };
+      })(this));
+    },
+    hideButton: function() {
+      return this.$el.find('.button').hide();
+    },
+    render: function() {
+      return this.$el.html(this.template);
+    }
+  });
+  return this.InviteUsersView = InviteUsersView;
+}).call(this, jQuery);
+
+(function($) {
+  var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     el: $('#clef-settings-container'),
@@ -40,55 +101,6 @@
       }
       this.tutorial.hide();
       return this.settings.render();
-    }
-  });
-  InviteUsersView = Backbone.View.extend({
-    el: '#invite-users-settings',
-    events: {
-      "click a[name='invite-users-button']": 'inviteUsers'
-    },
-    messageTemplate: _.template("<div class='<%=type%> invite-users-message'><%=message%></div>"),
-    showMessage: function(type, message) {
-      var $messageEl;
-      $messageEl = this.$el.find('.invite-users-message');
-      if ($messageEl.length) {
-        $messageEl.remove();
-      }
-      return this.$el.find('h3').first().after(this.messageTemplate({
-        type: type,
-        message: message
-      }));
-    },
-    template: _.template($('#invite-users-template').html()),
-    initialize: function(opts) {
-      this.opts = opts;
-    },
-    inviteUsersAction: ajaxurl + "?action=clef_invite_users",
-    inviteUsers: function(e) {
-      var data;
-      e.preventDefault();
-      data = {
-        _wp_nonce: this.opts.setup._wp_nonce_invite_users,
-        roles: $("select[name='invite-users-role']").val()
-      };
-      return $.post(this.inviteUsersAction, data, (function(_this) {
-        return function(data) {
-          var msg, type;
-          msg = "";
-          type = "";
-          if (data.error) {
-            msg = "There was a problem sending invites: " + data.error + ".";
-            type = "error";
-          } else if (data.success) {
-            msg = "Emails have been sent to your users.";
-            type = "updated";
-          }
-          return _this.showMessage(type, msg);
-        };
-      })(this));
-    },
-    render: function() {
-      return this.$el.html(this.template);
     }
   });
   SettingsView = AjaxSettingsView.extend({
@@ -329,7 +341,11 @@
         }));
       }
       this.currentSub = this.subs[0];
-      return $(window).on('message', this.handleMessages.bind(this));
+      this.inviter = new InviteUsersView(_.extend({
+        el: this.$el.find('.invite-users-container')
+      }, this.opts));
+      $(window).on('message', this.handleMessages.bind(this));
+      return this.listenTo(this.inviter, "invited", this.usersInvited);
     },
     hide: function(cb) {
       return this.$el.slideUp(cb);
@@ -345,7 +361,8 @@
       if (!this.$el.is(':visible')) {
         this.currentSub.render();
         this.loadIFrame();
-        return this.$el.fadeIn();
+        this.$el.fadeIn();
+        return this.inviter.render();
       }
     },
     done: function() {
@@ -424,6 +441,16 @@
           }
         };
       })(this));
+    },
+    usersInvited: function() {
+      this.inviter.hideButton();
+      return setTimeout((function(_this) {
+        return function() {
+          if (_this.currentSub.$el.hasClass('invite')) {
+            return _this.currentSub.$el.find('.button').addClass('button-primary');
+          }
+        };
+      })(this), 1000);
     }
   });
   SubTutorialView = Backbone.View.extend({

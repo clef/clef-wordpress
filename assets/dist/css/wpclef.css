@@ -53,6 +53,13 @@ body {
     position: aboslute;
     top: 0;
     left: 0; }
+  #clef-settings-container .invite-users .invite-users-message {
+    margin: 10px 0 0 0; }
+  #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4 {
+    margin-top: 0;
+    margin-bottom: 5px; }
+  #clef-settings-container .invite-users .button {
+    margin-top: 20px; }
 
 #clef-tutorial {
   width: 100%;
@@ -154,11 +161,16 @@ body {
         color: #999;
         text-decoration: underline; }
   #clef-tutorial .sync .row {
+    padding: 10px 25px;
     display: block;
     float: left;
     margin-right: 2.5641%;
     width: 58.97436%;
-    margin-left: 20.51282%; }
+    margin-left: 20.51282%;
+    background: white;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e5e5; }
     #clef-tutorial .sync .row:last-child {
       margin-right: 0; }
   #clef-tutorial .sync h1 {
@@ -176,6 +188,21 @@ body {
     display: none; }
     #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
       height: 250px; }
+  #clef-tutorial .invite .invite-users {
+    background: white;
+    padding: 20px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e5e5; }
+    #clef-tutorial .invite .invite-users .header h3 {
+      display: none; }
+    #clef-tutorial .invite .invite-users .header h4 {
+      font-size: 16px; }
+    #clef-tutorial .invite .invite-users .already-disabled {
+      display: none; }
+  #clef-tutorial .invite .next {
+    margin-top: 10px;
+    float: right; }
   #clef-tutorial .waltz {
     display: none;
     margin-top: 80px; }
@@ -187,18 +214,16 @@ body {
       #clef-tutorial .waltz img:last-child {
         margin-right: 0; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
-    width: 225px;
-    margin: auto;
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {
       text-align: left; }
   #clef-tutorial.user .no-user, #clef-tutorial.no-sync .no-user {
     display: none; }
   #clef-tutorial.user iframe, #clef-tutorial.no-sync iframe {
-    margin-top: -40px;
     height: 250px;
     -webkit-transition: 1s 1s;
-    transition: 1s 1s; }
+    transition: 1s 1s;
+    margin-bottom: -40px; }
   #clef-tutorial.user .user {
     display: block;
     opacity: 1; }

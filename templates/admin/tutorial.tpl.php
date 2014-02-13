@@ -25,7 +25,7 @@
 </div>        
 <div class="sub sync">
     <div class="row">
-        <h1 class='no-user'>First, sync with the Wave</h1>
+        <h1 class='no-user'>Sync with the Wave to set up your site</h1>
         <div class="user">
             <h1>One more click!</h1>
             <p>We've automatically configured Clef for your site. Click the button below to complete setup!</p>
@@ -37,11 +37,11 @@
         <iframe src="" frameborder="0"></iframe>
     </div>
 </div>
-<div class="sub">
+<div class="sub invite">
     <div class="row">
         <h1>You're all set up — want to invite other users?</h1>
-        <p>Your WordPress site has been configured to work with Clef and your Clef account has been automatically connected to the WordPress account you are currently logged in to. </p>
-        <div class="button next">next</div>
+        <div class="invite-users-container"></div>
+        <div class="button next">Continue</div>
     </div>
 </div>
 <div class="waltz">

@@ -18,8 +18,12 @@
                 @subs.push new SubTutorialView { el: sub }
 
             @currentSub = @subs[0]
+            @inviter = new InviteUsersView _.extend  { 
+                el: @$el.find '.invite-users-container'
+            }, @opts
 
             $(window).on 'message', @handleMessages.bind(this)
+            @listenTo @inviter, "invited", @usersInvited
 
         hide: (cb) ->
             @$el.slideUp(cb)
@@ -36,6 +40,7 @@
                 @currentSub.render()
                 @loadIFrame()
                 @$el.fadeIn()
+                @inviter.render()
 
         done: () ->
             @trigger "done"
@@ -100,6 +105,14 @@
                         @trigger 'message', message: msg, type: "error"
                     else
                         cb() if typeof(cb) == "function"
+
+        usersInvited: () ->
+            @inviter.hideButton()
+            setTimeout () =>
+                    if @currentSub.$el.hasClass 'invite'
+                        @currentSub.$el
+                            .find('.button').addClass 'button-primary'
+                , 1000
 
 
     SubTutorialView = Backbone.View.extend

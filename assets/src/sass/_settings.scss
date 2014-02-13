@@ -12,4 +12,19 @@
         top: 0;
         left: 0;
     }
+    .invite-users {
+        .invite-users-message {
+            margin: 10px 0 0 0;
+        }
+        .header {
+            h3, h4 {
+                margin-top: 0;
+                margin-bottom: 5px;
+            }
+        } 
+        .button {
+            margin-top: 20px;
+        }
+    }
 }
+

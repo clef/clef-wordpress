@@ -82,8 +82,11 @@
 
     .sync {
         .row {
+            padding: 10px 25px;
             @include span-columns(6);
             @include shift(2);
+            background: white;
+            @include widget-border();
         }
         h1 {
             font-size: 20px;
@@ -107,6 +110,29 @@
         }
     }
 
+    .invite {
+        .invite-users {
+            background: white;
+            padding: 20px;
+            @include widget-border();
+            .header {
+                h3 {
+                    display: none;
+                }
+                h4 {
+                    font-size: 16px;
+                }
+            } 
+            .already-disabled {
+                display: none;
+            }
+        }
+        .next {
+            margin-top: 10px;
+            float: right;
+        }
+    }
+
     .waltz {
         display: none;
         margin-top: 80px;
@@ -116,8 +142,6 @@
     }
 
     .user, .no-sync {
-        width: 225px;
-        margin: auto;
         h1 {
             text-align: left;
         }
@@ -131,9 +155,9 @@
         }
 
         iframe {
-            margin-top: -40px;
             height: 250px;
             transition: 1s 1s;
+            margin-bottom: -40px;
         }
     }
 
