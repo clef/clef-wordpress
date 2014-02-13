@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <a href="#" class='skip'>Skip setup, I already have Clef API keys</a>
+        <a href="#" class='skip done'>Skip setup, I already have Clef API keys</a>
     </div>
 </div>        
 <div class="sub sync">
