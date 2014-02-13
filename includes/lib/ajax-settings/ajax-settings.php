@@ -2,9 +2,12 @@
 
 class AjaxSettings {
     const VERSION = '0.0.1';
+    static $DEFAULTS =  array(
+        "network_wide" => false
+    );
 
     function __construct( $opts=array() ) {
-        $this->options = $opts;
+        $this->options = array_merge($this::$DEFAULTS, $opts);
 
         $this->enqueue_scripts();
         $this->enqueue_styles();
@@ -70,7 +73,11 @@ class AjaxSettings {
             } 
         }
 
-        update_option($this->name(), $to_be_saved);
+        if ($this->options['network_wide']) {
+            update_site_option($this->name(), $to_be_saved);
+        } else {
+            update_option($this->name(), $to_be_saved);
+        }
 
         $errors = get_settings_errors();
         $response = array();
