@@ -1,4 +1,4 @@
-<form action="admin.php?action=clef_multisite" method="POST">
+<form action="admin.php?page=clef&action=clef_multisite" method="POST">
     <div class="settings-section">
         <div class="inputs-container">
             <h2><?php _e('Clef is being managed by multi-site.', 'clef'); ?></h2>

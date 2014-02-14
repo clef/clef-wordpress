@@ -9,28 +9,26 @@
                 _.extend { options_name: "wpclef" }, @opts
             )
             @tutorial = new TutorialView _.extend {}, @opts
-            if @opts.is_network_settings
-                @multisiteOptionsView = new MultisiteNetworkOptionsView(@opts)
-            else
-                @multisiteOptionsView = new MultisiteOptionsView(@opts)
 
-            @render()
+            if @opts.isNetworkSettings
+                delete @opts['formSelector']
+                @multisiteOptionsView = new MultisiteOptionsView(@opts)
 
             @listenTo @settings, 'message', @displayMessage
             @listenTo @tutorial, 'message', @displayMessage
 
-        render: ->
-            if @opts.overridden_by_network_settings
-                @multisiteOptionsView.render()
-                return
+            @render()
 
-            if @settings.isConfigured()
-                @multisiteOptionsView.render()
-                @settings.show()
-            else
-                @tutorial.render()
-                @listenToOnce @tutorial, 'applicationCreated', @configure
-                @listenToOnce @tutorial, 'done', @hideTutorial
+        render: ->
+            if @opts.isUsingIndividualSettings or
+            (@opts.isNetworkSettings && @opts.isNetworkSettingsEnabled)
+                @multisiteOptionsView.show() if @multisiteOptionsView
+                if @settings.isConfigured()
+                    @settings.show()
+                else
+                    @tutorial.render()
+                    @listenToOnce @tutorial, 'applicationCreated', @configure
+                    @listenToOnce @tutorial, 'done', @hideTutorial
 
         configure: (data) ->
             @settings.model.configure(data)
@@ -46,7 +44,7 @@
                 @displayMessage "You're all set up!", type: "updated"
 
             @tutorial.hide()
-            @settings.render()
+            @settings.show()
 
     SettingsView =  AjaxSettingsView.extend
         errorTemplate: _.template "<div class='error form-error'>\
@@ -237,7 +235,7 @@
     this.AppView = AppView
 
     $(document).ready () ->
-        app = new AppView options
+        app = new AppView _.extend ajaxSetOpt, clefOptions
 
     $.fn.serializeObject = (form) ->
         serialized = {}

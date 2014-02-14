@@ -1,8 +1,6 @@
 <div id="clef-settings-form">
-    <h1 id="clef-settings-header"><?php _e("Clef", "clef"); ?></h1>
-    <div id='clef-multisite-options'>
-    </div>
     <form id="clef-form" action="options.php" method="POST">
+        <h1 id="clef-settings-header"><?php _e("Clef", "clef"); ?></h1>
         <!-- <div id="fb-root"></div>
         <div class="fb-like" data-href="https://www.facebook.com/getclef" data-width="200" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
         <a href="https://twitter.com/getclef" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @getclef</a>

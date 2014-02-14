@@ -33,7 +33,7 @@ gulp.task('default', function() {
 gulp.task('sass', function() {
     return gulp.src('assets/src/sass/**/*.scss')
         .pipe(plumber())
-        .pipe(sass({ style: 'expanded' })).on('error', gutil.log)
+        .pipe(sass({ style: 'expanded', bare: true })).on('error', gutil.log)
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         .pipe(gulp.dest('assets/dist/css/'))
         .pipe(livereload(server))

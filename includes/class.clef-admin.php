@@ -16,12 +16,11 @@ class ClefAdmin {
         $this->initialize_hooks();
 
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
-        new AjaxSettings(array( 
+        $this->ajax_settings = AjaxSettings::start(array( 
             "options_name" => CLEF_OPTIONS_NAME, 
             "initialize" => false, 
-            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/",
-            "formSelector" => "#clef-form",
-            "network_wide" => false
+            "base_url" => CLEF_URL . "includes/lib/ajax-settings/",
+            "formSelector" => "#clef-form"
         ));
     }
 
@@ -43,8 +42,6 @@ class ClefAdmin {
 
         add_action('edit_user_profile_update', array($this, 'edit_user_profile_update'));
         add_action('personal_options_update', array($this, 'edit_user_profile_update'));
-
-        add_action('options_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
 
         add_action('wp_ajax_connect_clef_account', array($this, 'ajax_connect_clef_account'));
         add_action('wp_ajax_clef_invite_users', array($this, 'ajax_invite_users'));
@@ -73,7 +70,10 @@ class ClefAdmin {
         
         if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
             ClefUtils::register_styles();
-            $ident = ClefUtils::register_script('settings', array('jquery', 'backbone', 'underscore'));
+            $ident = ClefUtils::register_script(
+                'settings', 
+                array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
+            );
             wp_enqueue_script($ident);
         } 
     }
@@ -250,28 +250,37 @@ class ClefAdmin {
         
     }
 
-    public function general_settings() {
+    public function general_settings($options = false) {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
-        $options = $this->settings->get_site_option();
-        $setup = array();
-        $setup['siteName'] = get_option('blogname');
-        $setup['siteDomain'] = get_option('siteurl');
-        $setup['source'] = "wordpress";
-        if (get_site_option("bruteprotect_installed_clef")) {
-            $setup['source'] = "bruteprotect";
+        if (!$options) {
+            $options = $this->settings->get_site_option();
         }
-        $setup['_wp_nonce_connect_clef'] = wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME);
-        $setup['_wp_nonce_invite_users'] = wp_create_nonce(self::INVITE_USERS_NONCE_NAME);
-        $options['setup'] = $setup;
-        $options['configured'] = $this->settings->is_configured();
-        $options['clefBase'] = CLEF_BASE;
-        $options['settings_path'] = $this->settings->settings_path;
-        $options['options_name'] = CLEF_OPTIONS_NAME;
-        $options['is_network_settings'] = false;
-        $options['overridden_by_network_settings'] = !$this->settings->use_individual_settings;
-        $options['is_multisite'] = is_multisite();
-        $options['network_wide'] = $options['is_network_settings'];
+
+        $options = array_merge(array(
+            'setup' => array(
+                'siteName' => get_option('blogname'),
+                'siteDomain' => get_option('siteurl'),
+                'source' => 'wordpress'
+            ),
+            'nonces' => array(
+                'connectClef' => wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME),
+                'inviteUsers' => wp_create_nonce(self::INVITE_USERS_NONCE_NAME)
+            ),
+            'configured' => $this->settings->is_configured(),
+            'clefBase' => CLEF_BASE,
+            'optionsName' => CLEF_OPTIONS_NAME,
+            'settingsPath' => $this->settings->settings_path,
+            'isMultisite' => is_multisite(),
+            'isNetworkSettings' => false,
+            'isNetworkSettingsEnabled' => $this->settings->network_settings_enabled(),
+            'isSingleSiteSettingsAllowed' => $this->settings->single_site_settings_allowed(),
+            'isUsingIndividualSettings' => $this->settings->use_individual_settings
+        ), $options);
+
+        if (get_site_option("bruteprotect_installed_clef")) {
+            $options['source'] = "bruteprotect";
+        }
 
         echo ClefUtils::render_template('admin/settings.tpl', array(
             "form" => $form,
@@ -353,7 +362,11 @@ class ClefAdmin {
     }
 
     public function multisite_settings_edit() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] == 'clef_multisite') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+            ClefUtils::isset_GET('page') == 'clef' &&
+            ClefUtils::isset_GET('action') == 'clef_multisite' &&
+            !is_network_admin()
+        ) {
             if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
                 die("Security check; nonce failed.");
             }

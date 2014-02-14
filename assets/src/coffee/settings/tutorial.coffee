@@ -18,7 +18,7 @@
                 @subs.push new SubTutorialView { el: sub }
 
             @currentSub = @subs[0]
-            @inviter = new InviteUsersView _.extend  { 
+            @inviter = new InviteUsersView _.extend  {
                 el: @$el.find '.invite-users-container'
             }, @opts
 
@@ -66,7 +66,8 @@
 
         loadIFrame: () ->
             frame = @$el.find("iframe.setup")
-            src = "#{@opts.clefBase}#{@iframePath}?source=wordpress\
+            src = "#{@opts.clefBase}#{@iframePath}?\
+                    source=#{encodeURIComponent(@opts.setup.source)}\
                     &domain=#{encodeURIComponent(@opts.setup.siteDomain)}\
                     &name=#{encodeURIComponent(@opts.setup.siteName)}"
             frame.attr('src', src)
@@ -79,10 +80,15 @@
                     () =>
                         @trigger 'applicationCreated', data
                         @next()
-
             else if data.type == "user"
                 @userIsLoggedIn = true
                 @render()
+            else if data.type == "error"
+                msg = "There was a problem creating a new Clef \
+                application for your WordPress site: #{data.message}\
+                . Please refresh and try again. If the issue, \
+                persists, email support@getclef.com."
+                @trigger 'message', message: msg, type: 'error'
 
         onConfigured: () ->
             setTimeout (()->
@@ -92,7 +98,7 @@
 
         connectClefAccount: (data, cb) ->
             connectData =
-                _wp_nonce: @opts.setup._wp_nonce_connect_clef
+                _wp_nonce: @opts.nonces.connectClef
                 clefID: data.clefID
 
             $.post @connectClefAccountAction,
@@ -108,11 +114,11 @@
 
         usersInvited: () ->
             @inviter.hideButton()
-            setTimeout () =>
-                    if @currentSub.$el.hasClass 'invite'
-                        @currentSub.$el
-                            .find('.button').addClass 'button-primary'
-                , 1000
+            setTimeout (() =>
+                if @currentSub.$el.hasClass 'invite'
+                    @currentSub.$el
+                        .find('.button').addClass 'button-primary'
+                ), 1000
 
 
     SubTutorialView = Backbone.View.extend

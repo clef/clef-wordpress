@@ -3,19 +3,18 @@ require_once(CLEF_PATH . 'includes/class.clef-settings.php');
 
 class ClefNetworkAdmin extends ClefAdmin {
     private static $instance = null;
+    const MULTISITE_SETTINGS_NONCE_NAME = "clef_multisite_settings";
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->initialize_hooks();
 
+        if (is_network_admin()) {
+            $this->initialize_hooks();
+        }
+
+        add_action('wp_ajax_clef_multisite_options', array($this, 'ajax_multisite_options'));
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
-        new AjaxSettings(array( 
-            "options_name" => CLEF_OPTIONS_NAME, 
-            "initialize" => false, 
-            "base_url" => CLEF_URL . "/includes/lib/ajax-settings/",
-            "formSelector" => "#clef-form",
-            "network_wide" => true
-        ));
+        $this->ajax_settings = AjaxSettings::start();
     }
 
     public function initialize_hooks() {
@@ -31,8 +30,7 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         // MULTISITE
         if ($this->network_active()) {
-            add_action('wp_ajax_clef_multisite_options', array($this, 'ajax_multisite_options'));
-            add_action('network_admin_edit_clef', array($this, "general_settings_edit"), 10, 0);
+            // remove_all_actions('network_admin_edit_clef_multisite');
             add_action('network_admin_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
         }
     }
@@ -68,106 +66,37 @@ class ClefNetworkAdmin extends ClefAdmin {
             "manage_options",
             'clef', 
             array($this, 'general_settings'));
-        add_submenu_page(
-            "clef", 
-            "Multisite Options", 
-            "Multisite Options", 
-            "manage_options", 
-            'clef_multisite', 
-            array($this, 'multisite_settings'));
     }
 
-    public function general_settings() {
-        $network_settings_enabled = get_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
-        $allow_single_site_settings = get_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION);
-
-        $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
-
-        $options = $this->settings->get_site_option();
-        $setup = array();
-        $setup['siteName'] = get_option('blogname');
-        $setup['siteDomain'] = get_option('siteurl');
-        $setup['source'] = "wordpress";
-        if (get_site_option("bruteprotect_installed_clef")) {
-            $setup['source'] = "bruteprotect";
-        }
-        $setup['_wp_nonce_connect_clef'] = wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME);
-        $setup['_wp_nonce_invite_users'] = wp_create_nonce(self::INVITE_USERS_NONCE_NAME);
-        $options['setup'] = $setup;
-        $options['configured'] = $this->settings->is_configured();
-        $options['clefBase'] = CLEF_BASE;
-        $options['settings_path'] = $this->settings->settings_path;
-        $options['options_name'] = CLEF_OPTIONS_NAME;
-        $options['is_network_settings'] = true;
-        $options['overridden_by_network_settings'] = false;
-        $options['is_multisite'] = is_multisite();
-        $options['network_wide'] = $options['is_network_settings'];
-        $options['network_settings_enabled'] = $network_settings_enabled;
-        $options['allow_single_site_settings'] = $allow_single_site_settings;
-
-
-        echo ClefUtils::render_template('admin/settings.tpl', array(
-            "form" => $form,
-            "options" => $options
-        ));
-    }
-
-    public function general_settings_edit() {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'clef-options')) {
-            die("Security check; nonce failed.");
-        }
-
-        $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
-
-        $input = $form->validate($_POST['wpclef']);
-
-        foreach ($input as $key => $value) {
-            $this->settings->set($key, $value);
-        }
-
-        wp_redirect(add_query_arg(array('page' => $this->settings->settings_path, 'updated' => 'true'), network_admin_url('admin.php')));
-        exit();
-    }
-
-    public function multisite_settings() {
-        $form_url = "edit.php?action=clef_multisite";
-        if (get_site_option(ClefInternalSettings::MS_ENABLED_OPTION)) {
-            $allow_override = get_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION);
-            echo ClefUtils::render_template('network_admin/multisite-settings-enabled.tpl', array(
-                "form_url" => $form_url,
-                "allow_override" => $allow_override
-            ));
-        } else {
-            echo ClefUtils::render_template('network_admin/multisite-settings-disabled.tpl', array(
-                "form_url" => $form_url
-            ));
-        }
+    public function general_settings($options=array()) {
+        $options['isNetworkSettings'] = true;
+        $options['isUsingIndividualSettings'] = false;
+        $options['network_wide'] = true;
+        parent::general_settings($options);
     }
 
     public function ajax_multisite_options() {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
+        if (!is_super_admin()) wp_send_json(array("error" => "invalid user"));
+
+        $settings = json_decode(file_get_contents( "php://input" ), true);
+
+        if (!wp_verify_nonce($settings['_wpnonce'], $this::MULTISITE_SETTINGS_NONCE_NAME)) {
             wp_send_json(array("error" => "invalid nonce"));
         }
 
-
-        if (isset($_POST['allow_override_form'])) {
-            $value = isset($_POST['allow_override']);
-            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $value);
-        }
-
-        $enabled = get_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
-        
-        if (isset($_POST['disable']) || isset($_POST['enable'])) {
-            update_site_option(ClefInternalSettings::MS_ENABLED_OPTION, !$enabled);
+        if (isset($settings['allow_override'])) {
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $settings['allow_override']);
         }
 
         wp_send_json(array("success" => true));
     }
+
     public function multisite_settings_edit() {
+        if (!is_super_admin()) die("You're not a super admin!");
+
         if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
             die("Security check; nonce failed.");
         }
-
 
         if (isset($_POST['allow_override_form'])) {
             $value = isset($_POST['allow_override']);

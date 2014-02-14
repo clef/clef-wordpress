@@ -29,7 +29,7 @@
       var data;
       e.preventDefault();
       data = {
-        _wp_nonce: this.opts.setup._wp_nonce_invite_users,
+        _wp_nonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val()
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
@@ -60,35 +60,12 @@
 }).call(this, jQuery);
 
 (function($) {
-  var MultisiteNetworkOptionsView, MultisiteOptionsModel, MultisiteOptionsView;
+  var MultisiteOptionsModel, MultisiteOptionsView;
   MultisiteOptionsView = AjaxSettingsView.extend({
-    el: '#clef-multisite-options',
-    enabled_template: _.template($('#multisite-enabled-template').html()),
-    disabled_template: _.template($('#multisite-disabled-template').html()),
+    el: '#multisite-settings',
     initialize: function(opts) {
       this.modelClass = MultisiteOptionsModel;
       return MultisiteOptionsView.__super__.initialize.call(this, opts);
-    },
-    render: function() {
-      var template;
-      if (this.opts.overridden_by_network_settings) {
-        template = this.enabled_template;
-      } else {
-        template = this.disabled_template;
-      }
-      return this.$el.html(template());
-    }
-  });
-  MultisiteNetworkOptionsView = MultisiteOptionsView.extend({
-    render: function() {
-      var template;
-      console.log(this.modelClass);
-      if (this.opts.network_settings_enabled) {
-        template = this.enabled_template;
-      } else {
-        template = this.disabled_template;
-      }
-      return this.$el.html(template());
     }
   });
   MultisiteOptionsModel = AjaxSettingsModel.extend({
@@ -98,8 +75,7 @@
     }
   });
   this.MultisiteOptionsModel = MultisiteOptionsModel;
-  this.MultisiteOptionsView = MultisiteOptionsView;
-  return this.MultisiteNetworkOptionsView = MultisiteNetworkOptionsView;
+  return this.MultisiteOptionsView = MultisiteOptionsView;
 }).call(this, jQuery);
 
 (function($) {
@@ -114,27 +90,26 @@
         options_name: "wpclef"
       }, this.opts));
       this.tutorial = new TutorialView(_.extend({}, this.opts));
-      if (this.opts.is_network_settings) {
-        this.multisiteOptionsView = new MultisiteNetworkOptionsView(this.opts);
-      } else {
+      if (this.opts.isNetworkSettings) {
+        delete this.opts['formSelector'];
         this.multisiteOptionsView = new MultisiteOptionsView(this.opts);
       }
-      this.render();
       this.listenTo(this.settings, 'message', this.displayMessage);
-      return this.listenTo(this.tutorial, 'message', this.displayMessage);
+      this.listenTo(this.tutorial, 'message', this.displayMessage);
+      return this.render();
     },
     render: function() {
-      if (this.opts.overridden_by_network_settings) {
-        this.multisiteOptionsView.render();
-        return;
-      }
-      if (this.settings.isConfigured()) {
-        this.multisiteOptionsView.render();
-        return this.settings.show();
-      } else {
-        this.tutorial.render();
-        this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
-        return this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+      if (this.opts.isUsingIndividualSettings || (this.opts.isNetworkSettings && this.opts.isNetworkSettingsEnabled)) {
+        if (this.multisiteOptionsView) {
+          this.multisiteOptionsView.show();
+        }
+        if (this.settings.isConfigured()) {
+          return this.settings.show();
+        } else {
+          this.tutorial.render();
+          this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
+          return this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+        }
       }
     },
     configure: function(data) {
@@ -156,7 +131,7 @@
         });
       }
       this.tutorial.hide();
-      return this.settings.render();
+      return this.settings.show();
     }
   });
   SettingsView = AjaxSettingsView.extend({
@@ -360,7 +335,7 @@
   this.AppView = AppView;
   $(document).ready(function() {
     var app;
-    return app = new AppView(options);
+    return app = new AppView(_.extend(ajaxSetOpt, clefOptions));
   });
   return $.fn.serializeObject = function(form) {
     var obj, serialized, _i, _len, _ref;
@@ -453,10 +428,11 @@
     loadIFrame: function() {
       var frame, src;
       frame = this.$el.find("iframe.setup");
-      src = "" + this.opts.clefBase + this.iframePath + "?source=wordpress&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
       return frame.attr('src', src);
     },
     handleMessages: function(data) {
+      var msg;
       if (!data.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
         return;
       }
@@ -471,6 +447,12 @@
       } else if (data.type === "user") {
         this.userIsLoggedIn = true;
         return this.render();
+      } else if (data.type === "error") {
+        msg = "There was a problem creating a new Clef application for your WordPress site: " + data.message + ". Please refresh and try again. If the issue, persists, email support@getclef.com.";
+        return this.trigger('message', {
+          message: msg,
+          type: 'error'
+        });
       }
     },
     onConfigured: function() {
@@ -481,7 +463,7 @@
     connectClefAccount: function(data, cb) {
       var connectData;
       connectData = {
-        _wp_nonce: this.opts.setup._wp_nonce_connect_clef,
+        _wp_nonce: this.opts.nonces.connectClef,
         clefID: data.clefID
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
@@ -503,13 +485,13 @@
     },
     usersInvited: function() {
       this.inviter.hideButton();
-      return setTimeout((function(_this) {
+      return setTimeout(((function(_this) {
         return function() {
           if (_this.currentSub.$el.hasClass('invite')) {
             return _this.currentSub.$el.find('.button').addClass('button-primary');
           }
         };
-      })(this), 1000);
+      })(this)), 1000);
     }
   });
   SubTutorialView = Backbone.View.extend({

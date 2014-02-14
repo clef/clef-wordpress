@@ -15,6 +15,66 @@
         top: 0;
         left: 0;
     }
+
+    .settings-section {
+        background: white; 
+        padding: 20px;
+        margin: 20px 0;
+        h3, h4 {
+            margin: 0;
+        }
+        margin-left: 0 !important;
+        @include outer-container();
+
+        .error.form-error {
+            float: left;
+        }
+
+        .inputs-container {
+            @include span-columns(6);
+            @include media($tablet) {
+                @include span-columns(10 of 10);
+            }
+            .input-container {
+                background: #EEE;
+                padding: 10px;
+                margin: 10px 0;
+                @include span-columns(10 of 10);
+                label {
+                    @include span-columns(5);
+                    @include media($tablet) {
+                        @include span-columns(10 of 10);
+                    }
+                    float: left;
+                }
+                input, select {
+                    float: right;
+                    @include media($tablet) {
+                        clear: both;
+                        float: none;
+                        margin: 10px 0;
+                    }
+                    width: auto;
+                    margin: 0;
+                }
+                input[type="checkbox"] {
+                    @include media($tablet) {
+                        width: 25px;
+                    }
+                }
+            }
+        }
+
+        &.multisite {
+            .inputs-container {
+                @include span-columns(5);
+                .input-container {
+                    @include span-columns(5 of 5);
+                }
+            }
+        }
+    }
+    
     .invite-users {
         .invite-users-message {
             margin: 10px 0 0 0;
