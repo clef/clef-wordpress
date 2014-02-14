@@ -29,7 +29,7 @@
       var data;
       e.preventDefault();
       data = {
-        _wp_nonce: this.opts.setup._wp_nonce_invite_users,
+        _wp_nonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val()
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
@@ -60,6 +60,25 @@
 }).call(this, jQuery);
 
 (function($) {
+  var MultisiteOptionsModel, MultisiteOptionsView;
+  MultisiteOptionsView = AjaxSettingsView.extend({
+    el: '#multisite-settings',
+    initialize: function(opts) {
+      this.modelClass = MultisiteOptionsModel;
+      return MultisiteOptionsView.__super__.initialize.call(this, opts);
+    }
+  });
+  MultisiteOptionsModel = AjaxSettingsModel.extend({
+    parse: function(data, options) {
+      options.url = ajaxurl + '?action=clef_multisite_options';
+      return MultisiteOptionsModel.__super__.parse.call(this, data, options);
+    }
+  });
+  this.MultisiteOptionsModel = MultisiteOptionsModel;
+  return this.MultisiteOptionsView = MultisiteOptionsView;
+}).call(this, jQuery);
+
+(function($) {
   var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
@@ -71,15 +90,27 @@
         options_name: "wpclef"
       }, this.opts));
       this.tutorial = new TutorialView(_.extend({}, this.opts));
-      if (this.settings.isConfigured()) {
-        this.settings.render();
-      } else {
-        this.tutorial.render();
-        this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
-        this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+      if (this.opts.isNetworkSettings) {
+        delete this.opts['formSelector'];
+        this.multisiteOptionsView = new MultisiteOptionsView(this.opts);
       }
       this.listenTo(this.settings, 'message', this.displayMessage);
-      return this.listenTo(this.tutorial, 'message', this.displayMessage);
+      this.listenTo(this.tutorial, 'message', this.displayMessage);
+      return this.render();
+    },
+    render: function() {
+      if (this.opts.isUsingIndividualSettings || (this.opts.isNetworkSettings && this.opts.isNetworkSettingsEnabled)) {
+        if (this.multisiteOptionsView) {
+          this.multisiteOptionsView.show();
+        }
+        if (this.settings.isConfigured()) {
+          return this.settings.show();
+        } else {
+          this.tutorial.render();
+          this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
+          return this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+        }
+      }
     },
     configure: function(data) {
       return this.settings.model.configure(data);
@@ -100,7 +131,7 @@
         });
       }
       this.tutorial.hide();
-      return this.settings.render();
+      return this.settings.show();
     }
   });
   SettingsView = AjaxSettingsView.extend({
@@ -115,6 +146,7 @@
       return SettingsView.__super__.constructor.call(this, opts);
     },
     initialize: function(opts) {
+      this.opts = opts;
       this.modelClass = SettingsModel;
       SettingsView.__super__.initialize.call(this, opts);
       this.inviteUsersView = new InviteUsersView(opts);
@@ -128,13 +160,14 @@
       this.badgePreviewContainer = this.$el.find('.support-settings .ftr-preview');
       this.listenTo(this.model, "change", this.clearErrors);
       this.listenTo(this.model, "error", this.error);
-      return window.onbeforeunload = (function(_this) {
+      window.onbeforeunload = (function(_this) {
         return function(e) {
           if (_this.isSaving()) {
             return "Settings are being saved. Still want to navigate away?";
           }
         };
       })(this);
+      return this.render();
     },
     updated: function(obj, data) {
       SettingsView.__super__.updated.call(this, obj, data);
@@ -144,6 +177,7 @@
       var passwordsDisabled;
       SettingsView.__super__.render.call(this);
       passwordsDisabled = this.model.passwordsDisabled();
+      $('#clef-settings-header').show();
       this.xmlEl.toggle(passwordsDisabled);
       this.toggleOverrideContainer(passwordsDisabled);
       this.overrideButtonContainer.toggle(this.model.overrideIsSet());
@@ -301,7 +335,7 @@
   this.AppView = AppView;
   $(document).ready(function() {
     var app;
-    return app = new AppView(options);
+    return app = new AppView(_.extend(ajaxSetOpt, clefOptions));
   });
   return $.fn.serializeObject = function(form) {
     var obj, serialized, _i, _len, _ref;
@@ -394,10 +428,11 @@
     loadIFrame: function() {
       var frame, src;
       frame = this.$el.find("iframe.setup");
-      src = "" + this.opts.clefBase + this.iframePath + "?source=wordpress&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
       return frame.attr('src', src);
     },
     handleMessages: function(data) {
+      var msg;
       if (!data.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
         return;
       }
@@ -412,6 +447,12 @@
       } else if (data.type === "user") {
         this.userIsLoggedIn = true;
         return this.render();
+      } else if (data.type === "error") {
+        msg = "There was a problem creating a new Clef application for your WordPress site: " + data.message + ". Please refresh and try again. If the issue, persists, email support@getclef.com.";
+        return this.trigger('message', {
+          message: msg,
+          type: 'error'
+        });
       }
     },
     onConfigured: function() {
@@ -422,7 +463,7 @@
     connectClefAccount: function(data, cb) {
       var connectData;
       connectData = {
-        _wp_nonce: this.opts.setup._wp_nonce_connect_clef,
+        _wp_nonce: this.opts.nonces.connectClef,
         clefID: data.clefID
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
@@ -444,13 +485,13 @@
     },
     usersInvited: function() {
       this.inviter.hideButton();
-      return setTimeout((function(_this) {
+      return setTimeout(((function(_this) {
         return function() {
           if (_this.currentSub.$el.hasClass('invite')) {
             return _this.currentSub.$el.find('.button').addClass('button-primary');
           }
         };
-      })(this), 1000);
+      })(this)), 1000);
     }
   });
   SubTutorialView = Backbone.View.extend({

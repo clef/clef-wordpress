@@ -6,10 +6,13 @@ class AjaxSettings {
         "network_wide" => false
     );
 
-    function __construct( $opts=array() ) {
+    private static $instance = null;
+
+    private function __construct( $opts ) {
         $this->options = array_merge($this::$DEFAULTS, $opts);
 
-        $this->enqueue_scripts();
+
+        add_action('admin_enqueue_scripts', array($this, "enqueue_scripts"));
         $this->enqueue_styles();
 
         add_action(
@@ -19,7 +22,7 @@ class AjaxSettings {
     }
 
     function enqueue_scripts() {
-        $ident = $this->name() . 'ajax-settings';
+        $ident = $this->identifier();
         wp_register_script(
             $ident,
             $this->options['base_url']  . "js/ajax-settings.min.js",
@@ -32,7 +35,7 @@ class AjaxSettings {
     }
 
     function enqueue_styles() {
-        $ident = $this->name() . 'ajax-settings';
+        $ident = $this->identifier();
         wp_register_style(
             $ident,
             $this->options['base_url'] . 'css/ajax-settings.min.css',
@@ -102,8 +105,25 @@ class AjaxSettings {
         wp_send_json($response);
     }
 
+    function identifier() {
+        return $this->name() . '-ajax-settings';
+    }
+
     function name() {
         return $this->options['options_name'];
+    }
+
+    function update_options($options) {
+        $this->options = array_merge($this->options, $options);
+    }
+
+    public static function start($options = array()) {
+        if (!isset(self::$instance) || self::$instance === null) {
+            self::$instance = new self($options);
+        } else {
+            self::$instance->update_options($options);
+        }
+        return self::$instance;
     }
 }
 
