@@ -217,7 +217,8 @@ class ClefAdmin {
                 add_submenu_page("bruteprotect-config", __("Clef Multisite Options", 'clef'), __("Clef Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
             }
         } else {
-            add_menu_page(__("Clef", 'clef'), __("Clef", 'clef'), "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
+            $clef_menu_title = $this->get_clef_menu_title();
+            add_menu_page(__("Clef", 'clef'), $clef_menu_title, "manage_options", $this->settings->settings_path, array($this, 'general_settings'));
             if ($this->settings->is_multisite_enabled() && $this->settings->user_individual_settings) {
                 add_submenu_page('clef', __('Settings', 'clef'), __('Settings', 'clef'),'manage_options', $this->settings->settings_path, array($this, 'general_settings'));
                 add_submenu_page("clef", __("Multisite Options", 'clef'), __("Enable Multisite", 'clef'), "manage_options", 'clef_multisite', array($this, 'multisite_settings'));
@@ -230,7 +231,28 @@ class ClefAdmin {
         
     }
 
+    /**
+     * Determines whether to badge the Clef menu icon.
+     *
+     * @return string The title of the menu with or without a badge
+     */
+    public function get_clef_menu_title() {
+        $onboarding = ClefOnboarding::start($this->settings);
+        $login_count = $onboarding->get_login_count();
+        $clef_menu_title = __('Clef', 'clef');
+        $hide_waltz_badge = $this->settings->get('hide_waltz_badge');
+        if ($login_count > 3 && !$hide_waltz_badge) {
+            $clef_menu_title .= $this->render_badge(1);
+        }
+        return $clef_menu_title;
+    }
+
+    public function render_badge($count) {
+        return " <span class='update-plugins count-1'><span class='update-count'>" . $count . "</span></span>";
+    }
+
     public function general_settings() {
+        $this->settings->set('hide_waltz_badge', true);
         if ($this->settings->use_individual_settings) {
             $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
