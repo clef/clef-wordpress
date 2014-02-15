@@ -12,13 +12,13 @@
 // Amazing! Function calls are not allowed in the declaration of class variables
 // in PHP!
 //
-// class SaveTest {
+// class SaveTestValid {
 //     public $javascript = array(
 //         "test" => true
 //     );
 // }
 
-// class SaveTest {
+// class SaveTestInvalid {
 //     public $javascript = array(
 //         "test" => test("test")
 //     );
