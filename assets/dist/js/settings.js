@@ -157,9 +157,8 @@
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
         return function(data) {
-          var msg;
           if (data.error) {
-            return msg = _this.showMessage({
+            return _this.showMessage({
               message: _.template(clefTranslations.messages.error.connect)({
                 error: data.error
               }),

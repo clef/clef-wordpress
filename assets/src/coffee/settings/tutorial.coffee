@@ -72,7 +72,6 @@
                 connectData,
                 (data) =>
                     if data.error
-                        msg = 
                         @showMessage
                             message: _.template(
                                 clefTranslations.messages.error.connect
