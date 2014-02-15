@@ -15,7 +15,7 @@
                 message: message
             ))
 
-        template: _.template($('#invite-users-template').html())
+        template: -> _.template($('#invite-users-template').html())
         initialize: (@opts) ->
             if @opts.el
                 @setElement(@opts.el)

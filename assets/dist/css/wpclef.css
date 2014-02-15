@@ -151,29 +151,44 @@ body {
 #clef-tutorial {
   width: 100%;
   height: 100%;
-  display: block; }
+  display: block;
+  margin-top: 40px;
+  *zoom: 1;
+  max-width: 75em;
+  margin-left: auto;
+  margin-right: auto; }
+  #clef-tutorial:before, #clef-tutorial:after {
+    content: " ";
+    display: table; }
+  #clef-tutorial:after {
+    clear: both; }
+  #clef-tutorial .clef-tutorial-container {
+    display: block;
+    float: left;
+    margin-right: 2.5641%;
+    width: 58.97436%;
+    margin-left: 20.51282%; }
+    #clef-tutorial .clef-tutorial-container:last-child {
+      margin-right: 0; }
+  #clef-tutorial .tutorial-message {
+    display: block;
+    float: left;
+    margin-right: 2.5641%;
+    width: 58.97436%;
+    margin-left: 20.51282%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+    #clef-tutorial .tutorial-message:last-child {
+      margin-right: 0; }
   #clef-tutorial .sub {
-    display: none;
-    *zoom: 1;
-    max-width: 75em;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px; }
-    #clef-tutorial .sub:before, #clef-tutorial .sub:after {
-      content: " ";
-      display: table; }
-    #clef-tutorial .sub:after {
-      clear: both; }
-    #clef-tutorial .sub .row {
-      display: block;
-      float: left;
-      margin-right: 2.5641%;
-      width: 79.48718%;
-      margin-left: 10.25641%; }
-      #clef-tutorial .sub .row:last-child {
-        margin-right: 0; }
+    display: none; }
     #clef-tutorial .sub h1 {
-      line-height: 1.3em; }
+      line-height: 1.3em;
+      font-size: 20px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #EEE;
+      margin-bottom: 20px; }
   #clef-tutorial .intro {
     text-align: center; }
     #clef-tutorial .intro h1 {
@@ -247,34 +262,24 @@ body {
       #clef-tutorial .intro .skip:hover {
         color: #999;
         text-decoration: underline; }
-  #clef-tutorial .sync .row {
-    display: block;
-    float: left;
-    margin-right: 2.5641%;
-    width: 58.97436%;
-    margin-left: 20.51282%;
+  #clef-tutorial .sync {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e5e5;
     background: white;
     padding: 20px 25px; }
-    #clef-tutorial .sync .row:last-child {
-      margin-right: 0; }
-  #clef-tutorial .sync h1 {
-    font-size: 20px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #EEE;
-    text-align: center; }
-  #clef-tutorial .sync iframe {
-    width: 225px;
-    height: 415px;
-    display: block;
-    margin: 30px auto; }
-  #clef-tutorial .sync .user, #clef-tutorial .sync .no-sync {
-    opacity: 0;
-    display: none; }
-    #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
-      height: 250px; }
+    #clef-tutorial .sync iframe {
+      width: 225px;
+      height: 415px;
+      display: block;
+      margin: 30px auto; }
+    #clef-tutorial .sync .user, #clef-tutorial .sync .no-sync {
+      opacity: 0;
+      display: none; }
+      #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
+        height: 250px; }
+  #clef-tutorial .invite h1 {
+    margin-bottom: 10px; }
   #clef-tutorial .invite .invite-users {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
@@ -290,41 +295,53 @@ body {
   #clef-tutorial .invite .next {
     margin-top: 10px;
     float: right; }
-  #clef-tutorial .using-clef .row {
+  #clef-tutorial .login {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e5e5;
     background: white;
     padding: 20px 25px; }
-    #clef-tutorial .using-clef .row h1 {
+    #clef-tutorial .login .button-wrapper {
+      margin: 60px auto;
+      width: 190px; }
+    #clef-tutorial .login iframe {
+      margin-top: 10px;
+      width: 100%;
+      height: 180px; }
+  #clef-tutorial .using-clef {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e5e5;
+    background: white;
+    padding: 20px 25px; }
+    #clef-tutorial .using-clef h1 {
       border-bottom: 1px solid #EEE;
       padding-bottom: 5px;
       display: inline-block; }
-    #clef-tutorial .using-clef .row h3 {
+    #clef-tutorial .using-clef h3 {
       color: #333; }
-    #clef-tutorial .using-clef .row .next {
+    #clef-tutorial .using-clef .next {
       margin: 20px 0; }
   #clef-tutorial .waltz {
-    display: none; }
-    #clef-tutorial .waltz .row {
-      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-      border: 1px solid #e5e5e5;
-      background: white;
-      padding: 20px 25px;
-      padding: 40px 25px;
-      margin-top: 80px; }
-      #clef-tutorial .waltz .row h1 {
-        margin-top: 0; }
-      #clef-tutorial .waltz .row img {
-        display: block;
-        float: left;
-        margin-right: 2.5641%;
-        width: 28.20513%; }
-        #clef-tutorial .waltz .row img:last-child {
-          margin-right: 0; }
-      #clef-tutorial .waltz .row .next {
-        margin-left: 10px; }
+    display: none;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e5e5;
+    background: white;
+    padding: 20px 25px;
+    padding: 40px 25px;
+    margin-top: 80px; }
+    #clef-tutorial .waltz h1 {
+      margin-top: 0; }
+    #clef-tutorial .waltz img {
+      display: block;
+      float: left;
+      margin-right: 2.5641%;
+      width: 28.20513%; }
+      #clef-tutorial .waltz img:last-child {
+        margin-right: 0; }
+    #clef-tutorial .waltz .button:not(.button-primary) {
+      margin-left: 10px; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {

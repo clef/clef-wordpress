@@ -17,7 +17,9 @@
         message: message
       }));
     },
-    template: _.template($('#invite-users-template').html()),
+    template: function() {
+      return _.template($('#invite-users-template').html());
+    },
     initialize: function(opts) {
       this.opts = opts;
       if (this.opts.el) {
@@ -78,6 +80,244 @@
   return this.MultisiteOptionsView = MultisiteOptionsView;
 }).call(this, jQuery);
 
+(function($, Backbone) {
+  var ConnectTutorialView, SetupTutorialView, SubTutorialView, TutorialView;
+  TutorialView = Backbone.View.extend({
+    el: $('#clef-tutorial'),
+    messageTemplate: _.template("<div class='<%=type%> tutorial-message'><%=message%></div>"),
+    events: {
+      "click .next": "next",
+      "click .previous": "previous",
+      "click .done": "done"
+    },
+    slideClass: 'sub',
+    initialize: function(opts) {
+      var potentialSubs, sub, _i, _len;
+      this.opts = opts;
+      if (window.chrome) {
+        this.$el.find('.waltz').addClass(this.slideClass);
+      }
+      this.subs = [];
+      potentialSubs = this.$el.find("." + this.slideClass).filter(this.opts.slideFilterSelector);
+      for (_i = 0, _len = potentialSubs.length; _i < _len; _i++) {
+        sub = potentialSubs[_i];
+        this.subs.push(new SubTutorialView({
+          el: sub
+        }));
+      }
+      this.currentSub = this.subs[0];
+      return $(window).on('message', this.handleMessages.bind(this));
+    },
+    hide: function(cb) {
+      return this.$el.slideUp(cb);
+    },
+    render: function() {
+      if (!this.$el.is(':visible')) {
+        this.currentSub.render();
+        return this.$el.fadeIn();
+      }
+    },
+    done: function() {
+      return this.trigger("done");
+    },
+    next: function() {
+      var newSub;
+      newSub = this.subs[_.indexOf(this.subs, this.currentSub) + 1];
+      if (newSub) {
+        if (newSub.isLogin() && this.loggedIn) {
+          newSub = this.subs[_.indexOf(this.subs, this.newSub) + 1];
+        }
+        this.currentSub.hide();
+        newSub.render();
+        this.currentSub = newSub;
+        return this.trigger("next");
+      } else {
+        return this.done();
+      }
+    },
+    previous: function() {
+      var newSub;
+      newSub = this.subs[_.indexOf(this.subs, this.currentSub) - 1];
+      if (newSub) {
+        this.currentSub.hide();
+        newSub.render();
+        return this.currentSub = newSub;
+      }
+    },
+    handleMessages: function(e) {
+      if (!e.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
+        return;
+      }
+      return e.originalEvent.data;
+    },
+    connectClefAccount: function(data, cb) {
+      var connectData;
+      connectData = {
+        _wp_nonce: this.opts.nonces.connectClef,
+        identifier: data.identifier
+      };
+      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
+        return function(data) {
+          var msg;
+          if (data.error) {
+            msg = "There was a problem automatically connecting your Clef account: " + data.error + ". Please refresh and try again.";
+            return _this.trigger('message', {
+              message: msg,
+              type: "error"
+            });
+          } else {
+            if (typeof cb === "function") {
+              return cb(data);
+            }
+          }
+        };
+      })(this));
+    },
+    showMessage: function(opts) {
+      if (this.$currentMessage) {
+        this.$currentMessage.remove();
+      }
+      this.$currentMessage = $(this.messageTemplate(opts)).hide().prependTo(this.$el).slideDown();
+      if (opts.removeNext) {
+        return this.listenToOnce(this, "next", function() {
+          return this.$currentMessage.slideUp();
+        });
+      }
+    }
+  }, {
+    extend: Backbone.View.extend
+  });
+  SubTutorialView = Backbone.View.extend({
+    initialize: function(opts) {
+      this.opts = opts;
+      return this.setElement($(this.opts.el));
+    },
+    render: function() {
+      return this.$el.show();
+    },
+    hide: function() {
+      return this.$el.hide();
+    },
+    remove: function() {
+      return this.$el.remove();
+    },
+    isLogin: function() {
+      return this.$el.find('iframe.setup').length;
+    }
+  });
+  SetupTutorialView = TutorialView.extend({
+    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_clef_id",
+    iframePath: '/iframes/application/create/v1',
+    initialize: function(opts) {
+      opts.slideFilterSelector = '.setup';
+      this.constructor.__super__.initialize.call(this, opts);
+      this.inviter = new InviteUsersView(_.extend({
+        el: this.$el.find('.invite-users-container')
+      }, this.opts));
+      return this.listenTo(this.inviter, "invited", this.usersInvited);
+    },
+    render: function() {
+      if (this.userIsLoggedIn) {
+        if (!this.currentSub.$el.hasClass('sync')) {
+          this.$el.addClass('no-sync');
+        } else {
+          this.$el.addClass('user');
+        }
+      }
+      if (!this.$el.is(':visible')) {
+        this.loadIFrame();
+        this.inviter.render();
+      }
+      return this.constructor.__super__.render.call(this);
+    },
+    loadIFrame: function() {
+      var frame, src;
+      frame = this.$el.find("iframe.setup");
+      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      return frame.attr('src', src);
+    },
+    handleMessages: function(data) {
+      var msg;
+      data = this.constructor.__super__.handleMessages.call(this, data);
+      if (!data) {
+        return;
+      }
+      if (data.type === "keys") {
+        return this.connectClefAccount({
+          identifier: data.clefID
+        }, (function(_this) {
+          return function() {
+            _this.trigger('applicationCreated', data);
+            return _this.next();
+          };
+        })(this));
+      } else if (data.type === "user") {
+        this.userIsLoggedIn = true;
+        return this.render();
+      } else if (data.type === "error") {
+        msg = "There was a problem creating a new Clef application for your WordPress site: " + data.message + ". Please refresh and try again. If the issue, persists, email support@getclef.com.";
+        return this.showMessage({
+          message: msg,
+          type: 'error'
+        });
+      }
+    },
+    onConfigured: function() {
+      return setTimeout((function() {
+        return $(".logout-hook-error").slideDown();
+      }), 20000);
+    },
+    usersInvited: function() {
+      this.inviter.hideButton();
+      return setTimeout(((function(_this) {
+        return function() {
+          if (_this.currentSub.$el.hasClass('invite')) {
+            return _this.currentSub.$el.find('.button').addClass('button-primary');
+          }
+        };
+      })(this)), 1000);
+    }
+  });
+  ConnectTutorialView = TutorialView.extend({
+    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code",
+    render: function() {
+      if (!this.$el.is(':visible')) {
+        this.addButton();
+      }
+      return this.constructor.__super__.render.call(this);
+    },
+    addButton: function() {
+      var target;
+      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', this.opts.redirectURL);
+      this.button = new ClefButton({
+        el: $('#clef-button-target')[0]
+      });
+      this.button.render();
+      return this.button.login = (function(_this) {
+        return function(data) {
+          _this.button.overlayClose();
+          _this.connectClefAccount({
+            identifier: data.code
+          }, function(result) {
+            var msg;
+            msg = "You've successfully connected your account with Clef!";
+            _this.next();
+            return _this.showMessage({
+              message: msg,
+              type: "updated",
+              removeNext: true
+            });
+          });
+          return void 0;
+        };
+      })(this);
+    }
+  });
+  this.TutorialView = TutorialView;
+  this.SetupTutorialView = SetupTutorialView;
+  return this.ConnectTutorialView = ConnectTutorialView;
+}).call(this, jQuery, Backbone);
+
 (function($) {
   var AppView, FormVisualization, SettingsModel, SettingsView;
   Backbone.emulateHTTP = true;
@@ -89,7 +329,7 @@
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
-      this.tutorial = new TutorialView(_.extend({}, this.opts));
+      this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
       if (this.opts.isNetworkSettings) {
         delete this.opts['formSelector'];
         this.multisiteOptionsView = new MultisiteOptionsView(this.opts);
@@ -314,7 +554,9 @@
   });
   FormVisualization = Backbone.View.extend({
     el: $("#login-form-view"),
-    template: _.template($('#form-template').html()),
+    template: function() {
+      return _.template($('#form-template').html());
+    },
     initialize: function(opts) {
       this.opts = opts;
       this.model = this.opts.model;
@@ -333,10 +575,6 @@
     }
   });
   this.AppView = AppView;
-  $(document).ready(function() {
-    var app;
-    return app = new AppView(_.extend(ajaxSetOpt, clefOptions));
-  });
   return $.fn.serializeObject = function(form) {
     var obj, serialized, _i, _len, _ref;
     serialized = {};
@@ -348,169 +586,3 @@
     return serialized;
   };
 }).call(this, jQuery);
-
-(function($, Backbone) {
-  var SubTutorialView, TutorialView;
-  TutorialView = Backbone.View.extend({
-    el: $('#clef-tutorial'),
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account",
-    events: {
-      "click .next": "next",
-      "click .previous": "previous",
-      "click .done": "done"
-    },
-    iframePath: '/iframes/application/create/v1',
-    initialize: function(opts) {
-      var sub, _i, _len, _ref;
-      this.opts = opts;
-      if (window.chrome) {
-        this.$el.find('.waltz').addClass('sub');
-      }
-      this.subs = [];
-      _ref = this.$el.find('.sub');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        sub = _ref[_i];
-        this.subs.push(new SubTutorialView({
-          el: sub
-        }));
-      }
-      this.currentSub = this.subs[0];
-      this.inviter = new InviteUsersView(_.extend({
-        el: this.$el.find('.invite-users-container')
-      }, this.opts));
-      $(window).on('message', this.handleMessages.bind(this));
-      return this.listenTo(this.inviter, "invited", this.usersInvited);
-    },
-    hide: function(cb) {
-      return this.$el.slideUp(cb);
-    },
-    render: function() {
-      if (this.userIsLoggedIn) {
-        if (!this.currentSub.$el.hasClass('sync')) {
-          this.$el.addClass('no-sync');
-        } else {
-          this.$el.addClass('user');
-        }
-      }
-      if (!this.$el.is(':visible')) {
-        this.currentSub.render();
-        this.loadIFrame();
-        this.$el.fadeIn();
-        return this.inviter.render();
-      }
-    },
-    done: function() {
-      return this.trigger("done");
-    },
-    next: function() {
-      var newSub;
-      newSub = this.subs[_.indexOf(this.subs, this.currentSub) + 1];
-      if (newSub) {
-        if (newSub.isLogin() && this.loggedIn) {
-          newSub = this.subs[_.indexOf(this.subs, this.newSub) + 1];
-        }
-        this.currentSub.hide();
-        newSub.render();
-        return this.currentSub = newSub;
-      } else {
-        return this.done();
-      }
-    },
-    previous: function() {
-      var newSub;
-      newSub = this.subs[_.indexOf(this.subs, this.currentSub) - 1];
-      if (newSub) {
-        this.currentSub.hide();
-        newSub.render();
-        return this.currentSub = newSub;
-      }
-    },
-    loadIFrame: function() {
-      var frame, src;
-      frame = this.$el.find("iframe.setup");
-      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
-      return frame.attr('src', src);
-    },
-    handleMessages: function(data) {
-      var msg;
-      if (!data.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
-        return;
-      }
-      data = data.originalEvent.data;
-      if (data.type === "keys") {
-        return this.connectClefAccount(data, (function(_this) {
-          return function() {
-            _this.trigger('applicationCreated', data);
-            return _this.next();
-          };
-        })(this));
-      } else if (data.type === "user") {
-        this.userIsLoggedIn = true;
-        return this.render();
-      } else if (data.type === "error") {
-        msg = "There was a problem creating a new Clef application for your WordPress site: " + data.message + ". Please refresh and try again. If the issue, persists, email support@getclef.com.";
-        return this.trigger('message', {
-          message: msg,
-          type: 'error'
-        });
-      }
-    },
-    onConfigured: function() {
-      return setTimeout((function() {
-        return $(".logout-hook-error").slideDown();
-      }), 20000);
-    },
-    connectClefAccount: function(data, cb) {
-      var connectData;
-      connectData = {
-        _wp_nonce: this.opts.nonces.connectClef,
-        clefID: data.clefID
-      };
-      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
-        return function(data) {
-          var msg;
-          if (data.error) {
-            msg = "There was a problem automatically connecting your Clef account: " + data.error + ". Please refresh and try again.";
-            return _this.trigger('message', {
-              message: msg,
-              type: "error"
-            });
-          } else {
-            if (typeof cb === "function") {
-              return cb();
-            }
-          }
-        };
-      })(this));
-    },
-    usersInvited: function() {
-      this.inviter.hideButton();
-      return setTimeout(((function(_this) {
-        return function() {
-          if (_this.currentSub.$el.hasClass('invite')) {
-            return _this.currentSub.$el.find('.button').addClass('button-primary');
-          }
-        };
-      })(this)), 1000);
-    }
-  });
-  SubTutorialView = Backbone.View.extend({
-    initialize: function(opts) {
-      this.opts = opts;
-      return this.setElement($(this.opts.el));
-    },
-    render: function() {
-      return this.$el.show();
-    },
-    hide: function() {
-      return this.$el.hide();
-    },
-    remove: function() {
-      return this.$el.remove();
-    },
-    isLogin: function() {
-      return this.$el.find('iframe.setup').length;
-    }
-  });
-  return this.TutorialView = TutorialView;
-}).call(this, jQuery, Backbone);

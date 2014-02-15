@@ -8,7 +8,7 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
-            @tutorial = new TutorialView _.extend {}, @opts
+            @tutorial = new SetupTutorialView _.extend {}, @opts
 
             if @opts.isNetworkSettings
                 delete @opts['formSelector']
@@ -215,7 +215,7 @@
 
     FormVisualization = Backbone.View.extend
         el: $("#login-form-view")
-        template: _.template($('#form-template').html())
+        template: () -> _.template($('#form-template').html())
 
         initialize: (@opts) ->
             @model = @opts.model
@@ -231,11 +231,7 @@
         toggleForm: (e) ->
             @$el.toggleClass('only-clef', @model.passwordsFullyDisabled())
 
-
     this.AppView = AppView
-
-    $(document).ready () ->
-        app = new AppView _.extend ajaxSetOpt, clefOptions
 
     $.fn.serializeObject = (form) ->
         serialized = {}

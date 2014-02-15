@@ -50,7 +50,7 @@ class ClefLogin {
             $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
             $error = $this->validate_invite_code($invite_code, $invite_email);
             if (!$error) {
-                return get_edit_user_link();
+                return admin_url('admin.php?page=connect_clef_account');
             }
         }
         return $redirect_to;
@@ -173,6 +173,7 @@ class ClefLogin {
     }
 
     public function disable_passwords($user) {
+        return $user;
         if (empty($_POST)) return $user;
 
         if (isset($_POST['override']) && $this->is_valid_override_key($_POST['override'])) {

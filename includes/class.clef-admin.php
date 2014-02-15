@@ -43,7 +43,9 @@ class ClefAdmin {
         add_action('edit_user_profile_update', array($this, 'edit_user_profile_update'));
         add_action('personal_options_update', array($this, 'edit_user_profile_update'));
 
-        add_action('wp_ajax_connect_clef_account', array($this, 'ajax_connect_clef_account'));
+        add_action('wp_ajax_connect_clef_account_clef_id', array($this, 'ajax_connect_clef_account_with_clef_id'));
+        add_action('wp_ajax_connect_clef_account_oauth_code', array($this, 'ajax_connect_clef_account_with_oauth_code'));
+
         add_action('wp_ajax_clef_invite_users', array($this, 'ajax_invite_users'));
 
         // Display the badge message, if appropriate
@@ -79,10 +81,7 @@ class ClefAdmin {
     }
 
     public function show_user_profile($user) {
-        if (!$user) {
-            $user = wp_get_current_user();
-        }
-        $connected = !!get_user_meta($user->ID, "clef_id", true);
+        $connected = ClefUtils::current_user_has_clef();
         $app_id = $this->settings->get( 'clef_settings_app_id' );
         $redirect_url = add_query_arg(
             array(
@@ -158,16 +157,37 @@ class ClefAdmin {
         wp_send_json(array("success" => true));
     }
 
-     public function ajax_connect_clef_account() {
+     public function ajax_connect_clef_account_with_clef_id() {
         if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
             wp_send_json(array( "error" => "invalid nonce" ));
         }
 
-        if (!ClefUtils::isset_POST('clefID')) {
+        if (!ClefUtils::isset_POST('identifier')) {
             wp_send_json(array( "error" => "invalid Clef ID"));
         }
 
-        ClefUtils::associate_clef_id($_POST["clefID"]);
+        ClefUtils::associate_clef_id($_POST["identifier"]);
+        wp_send_json(array("success" => true));
+    }
+
+    public function ajax_connect_clef_account_with_oauth_code() {
+        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
+            wp_send_json(array( "error" => "invalid nonce" ));
+        }
+
+        if (!ClefUtils::isset_POST('identifier')) {
+            wp_send_json(array( "error" => "invalid OAuth Code"));
+        }
+
+        try {
+            $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_POST('identifier'), $this->settings);
+        } catch (LoginException $e) {
+            wp_send_json(array( "error" => $e->getMessage()));
+        }
+
+        ClefUtils::associate_clef_id($info->id);
+        $_SESSION['logged_in_at'] = time();
+
         wp_send_json(array("success" => true));
     }
 
@@ -205,48 +225,60 @@ class ClefAdmin {
         }
     }
 
+    public function render_connect_clef_account() {
+        echo ClefUtils::render_template(
+            'admin/connect.tpl', 
+            array( 
+                "options" => array(
+                    "appID" => $this->settings->get( 'clef_settings_app_id' ),
+                    "redirectURL" => add_query_arg(array( 'clef' => 'true'), wp_login_url()),
+                    "clefJSURL" => CLEF_JS_URL,
+                    "nonces" => array(
+                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME)
+                    )
+                )
+            )
+        );
+    }
+
     public function admin_menu() {
         // if the single site override of settings is not allowed
         // let's not add anything to the menu
         if ($this->settings->multisite_disallow_settings_override()) return;
 
         if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
+            $menu_name = 'bruteprotect-config';
             add_submenu_page(
-                "bruteprotect-config", 
+                $menu_name, 
                 "Clef", 
                 "Clef", 
                 "manage_options", 
                 $this->settings->settings_path, 
-                array($this, 'general_settings'));
+                array($this, 'general_settings')
+            );
         } else {
+            $menu_name = $this->settings->settings_path;
             add_menu_page(
                 __("Clef", 'clef'), 
                 __("Clef", 'clef'), 
                 "manage_options", 
-                $this->settings->settings_path, 
-                array($this, 'general_settings'));
-            if ($this->settings->is_multisite_enabled() && 
-                $this->settings->use_individual_settings) {
-
-                add_submenu_page(
-                    'clef', 
-                    __('Settings', 'clef'), 
-                    __('Settings', 'clef'),
-                    'manage_options', 
-                    $this->settings->settings_path, 
-                    array($this, 'general_settings'));
-            } 
-
-            if (!$this->bruteprotect_active() && !is_multisite())  {
-                add_submenu_page(
-                    'clef', 
-                    __('Add Additional Security', 'clef'), 
-                    __('Additional Security', 'clef'), 
-                    'manage_options', 
-                    'clef_other_install', 
-                    array($this, 'other_install_settings'));
-            }
+                $menu_name, 
+                array($this, 'general_settings')
+            );
         } 
+
+        add_submenu_page(
+            (ClefUtils::current_user_has_clef() ? null : $menu_name), 
+            __('Connect Clef account', 'clef'), 
+            __('Connect Clef account', 'clef'), 
+            'read', 
+            'connect_clef_account', 
+            array($this, 'render_connect_clef_account')
+        );
+
+        if (!$this->bruteprotect_active() && !is_multisite())  {
+            add_submenu_page($menu_name, __('Add Additional Security', 'clef'), __('Additional Security', 'clef'), 'manage_options', 'clef_other_install', array($this, 'other_install_settings'));
+        }
         
     }
 
