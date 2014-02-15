@@ -202,11 +202,6 @@
 
                 return undefined
 
-        message: (opts) ->
-
-
-
-
     this.TutorialView = TutorialView
     this.SetupTutorialView = SetupTutorialView
     this.ConnectTutorialView = ConnectTutorialView

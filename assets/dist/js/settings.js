@@ -311,8 +311,7 @@
           return void 0;
         };
       })(this);
-    },
-    message: function(opts) {}
+    }
   });
   this.TutorialView = TutorialView;
   this.SetupTutorialView = SetupTutorialView;

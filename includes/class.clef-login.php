@@ -50,7 +50,7 @@ class ClefLogin {
             $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
             $error = $this->validate_invite_code($invite_code, $invite_email);
             if (!$error) {
-                return get_edit_user_link();
+                return admin_url('admin.php?page=connect_clef_account');
             }
         }
         return $redirect_to;
