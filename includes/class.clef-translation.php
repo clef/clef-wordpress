@@ -6,24 +6,6 @@
  * @since 2.0
  */
 
-// This syntax peculiarity was found by @jessepollak on 2/14/2014. It is a
-// valuable artifact and should not be deleted. Create a new PHP file, copy and
-// paste the code in below, and observe the syntax error in one, but not the other.
-// Amazing! Function calls are not allowed in the declaration of class variables
-// in PHP!
-//
-// class SaveTestValid {
-//     public $javascript = array(
-//         "test" => true
-//     );
-// }
-
-// class SaveTestInvalid {
-//     public $javascript = array(
-//         "test" => test("test")
-//     );
-// }
-
 class ClefTranslation {
     public static function javascript() {
         return array(
