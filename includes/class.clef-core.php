@@ -35,14 +35,11 @@ class ClefCore {
         $badge->hook_display();
 
         // Admin functions and hooks
-        $admin = null;
         require_once(CLEF_PATH . 'includes/class.clef-admin.php');
+        $admin = ClefAdmin::start($settings);
+
         require_once(CLEF_PATH . 'includes/class.clef-network-admin.php');
-        if (is_network_admin()) {
-            $admin = ClefNetworkAdmin::start($settings);
-        } else if (is_admin()) {
-            $admin = ClefAdmin::start($settings);
-        }
+        $network_admin = ClefNetworkAdmin::start($settings);
 
         // Plugin setup hooks
         require_once(CLEF_PATH . 'includes/class.clef-setup.php');

@@ -143,6 +143,14 @@ class ClefInternalSettings {
         return $this->is_multisite_enabled() && !get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
     }
 
+    public function network_settings_enabled() {
+        return !!get_site_option($this::MS_ENABLED_OPTION);
+    }
+
+    public function single_site_settings_allowed() {
+        return !!get_site_option($this::MS_ALLOW_OVERRIDE_OPTION);
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null) {
             self::$instance = new self;

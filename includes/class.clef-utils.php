@@ -75,7 +75,7 @@ class ClefUtils {
 
     public static function register_script($name, $dependencies=array('jquery')) {
         $ident = "wpclef-" . $name;
-        if (CLEF_DEBUG)  {
+        if (!CLEF_DEBUG)  {
             $name .= '.min';
         }
         $name .= '.js';
@@ -96,7 +96,7 @@ class ClefUtils {
 
     public static function register_style($name) {
         $ident = "wpclef-" . $name;
-        if (CLEF_DEBUG) {
+        if (!CLEF_DEBUG) {
             $name .= '.min';
         }
         $name .= '.css';

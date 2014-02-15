@@ -15,7 +15,7 @@
                 message: message
             ))
 
-        template: _.template($('#invite-users-template').html())
+        template: -> _.template($('#invite-users-template').html())
         initialize: (@opts) ->
             if @opts.el
                 @setElement(@opts.el)
@@ -24,7 +24,7 @@
         inviteUsers: (e) ->
             e.preventDefault()
             data =
-                _wp_nonce: @opts.setup._wp_nonce_invite_users
+                _wp_nonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
             $.post @inviteUsersAction,
                 data,

@@ -173,6 +173,7 @@ class ClefLogin {
     }
 
     public function disable_passwords($user) {
+        return $user;
         if (empty($_POST)) return $user;
 
         if (isset($_POST['override']) && $this->is_valid_override_key($_POST['override'])) {
