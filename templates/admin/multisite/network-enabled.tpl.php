@@ -1,9 +1,9 @@
 <div class="settings-section">
     <form action="edit.php?action=clef_multisite" method="POST">
         <div class="inputs-container">
-            <h2><?php _e('Disable network-wide settings', 'clef') ?></h2>
-            <p><?php _e('Currently, you control Clef settings for all the sites in your network. If you disable network-wide settings, individual sites in the network will need to manage their own Clef settings.', 'clef') ?></p>
-                <?php wp_nonce_field("clef_multisite") ?>
+            <h2><?php _e('Disable network-wide settings', 'clef'); ?></h2>
+            <p><?php _e('Currently, you control Clef settings for all the sites in your network. If you disable network-wide settings, individual sites in the network will need to manage their own Clef settings.', 'clef'); ?></p>
+                <?php wp_nonce_field("clef_multisite"); ?>
                 <input type="hidden" name="disable" value="1">
                 <input type="submit" value="<?php _e('Disable network-wide settings', 'clef'); ?>" class="button-primary ajax-ignore">
             </div>

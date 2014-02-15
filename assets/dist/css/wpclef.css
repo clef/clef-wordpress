@@ -141,7 +141,8 @@ body {
         #clef-settings-container .settings-section.multisite .inputs-container .input-container:last-child {
           margin-right: 0; }
   #clef-settings-container .invite-users .invite-users-message {
-    margin: 10px 0 0 0; }
+    margin: 10px 0 0 0;
+    clear: both; }
   #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4 {
     margin-top: 0;
     margin-bottom: 5px; }

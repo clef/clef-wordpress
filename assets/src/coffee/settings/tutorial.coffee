@@ -72,10 +72,11 @@
                 connectData,
                 (data) =>
                     if data.error
-                        msg = "There was a problem automatically connecting \
-                        your Clef account: #{data.error}. Please refresh \
-                        and try again."
-                        @trigger 'message', message: msg, type: "error"
+                        @showMessage
+                            message: _.template(
+                                clefTranslations.messages.error.connect
+                            )(error: data.error), 
+                            type: "error"
                     else
                         cb(data) if typeof(cb) == "function"
 
@@ -152,11 +153,11 @@
                 @userIsLoggedIn = true
                 @render()
             else if data.type == "error"
-                msg = "There was a problem creating a new Clef \
-                application for your WordPress site: #{data.message}\
-                . Please refresh and try again. If the issue, \
-                persists, email support@getclef.com."
-                @showMessage message: msg, type: 'error'
+                @showMessage 
+                    message: _.template(
+                        clefTranslations.messages.error.create
+                    )(error: data.message)
+                    type: 'error'
 
         onConfigured: () ->
             setTimeout (()->
@@ -192,11 +193,9 @@
                 @button.overlayClose()
                 @connectClefAccount identifier: data.code,
                     (result) =>
-                        msg = "You've successfully connected your account \
-                        with Clef!"
                         @next()
                         @showMessage 
-                            message: msg, 
+                            message: clefTranslations.messages.success.connect, 
                             type: "updated"
                             removeNext: true
 

@@ -6,16 +6,13 @@
       "click a[name='invite-users-button']": 'inviteUsers'
     },
     messageTemplate: _.template("<div class='<%=type%> invite-users-message'><%=message%></div>"),
-    showMessage: function(type, message) {
+    showMessage: function(data) {
       var $messageEl;
       $messageEl = this.$el.find('.invite-users-message');
       if ($messageEl.length) {
         $messageEl.remove();
       }
-      return this.$el.find('.button').first().before(this.messageTemplate({
-        type: type,
-        message: message
-      }));
+      return this.$el.find('.button').first().before(this.messageTemplate(data));
     },
     template: function() {
       return _.template($('#invite-users-template').html());
@@ -36,18 +33,20 @@
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
         return function(data) {
-          var msg, type;
-          msg = "";
-          type = "";
           if (data.error) {
-            msg = "There was a problem sending invites: " + data.error + ".";
-            type = "error";
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.invite)({
+                error: data.error
+              }),
+              type: "error"
+            });
           } else if (data.success) {
             _this.trigger("invited");
-            msg = "Email invitations have been sent to your users.";
-            type = "updated";
+            return _this.showMessage({
+              message: clefTranslations.messages.success.invite,
+              type: "updated"
+            });
           }
-          return _this.showMessage(type, msg);
         };
       })(this));
     },
@@ -158,11 +157,11 @@
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
         return function(data) {
-          var msg;
           if (data.error) {
-            msg = "There was a problem automatically connecting your Clef account: " + data.error + ". Please refresh and try again.";
-            return _this.trigger('message', {
-              message: msg,
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.connect)({
+                error: data.error
+              }),
               type: "error"
             });
           } else {
@@ -237,7 +236,6 @@
       return frame.attr('src', src);
     },
     handleMessages: function(data) {
-      var msg;
       data = this.constructor.__super__.handleMessages.call(this, data);
       if (!data) {
         return;
@@ -255,9 +253,10 @@
         this.userIsLoggedIn = true;
         return this.render();
       } else if (data.type === "error") {
-        msg = "There was a problem creating a new Clef application for your WordPress site: " + data.message + ". Please refresh and try again. If the issue, persists, email support@getclef.com.";
         return this.showMessage({
-          message: msg,
+          message: _.template(clefTranslations.messages.error.create)({
+            error: data.message
+          }),
           type: 'error'
         });
       }
@@ -299,11 +298,9 @@
           _this.connectClefAccount({
             identifier: data.code
           }, function(result) {
-            var msg;
-            msg = "You've successfully connected your account with Clef!";
             _this.next();
             return _this.showMessage({
-              message: msg,
+              message: clefTranslations.messages.success.connect,
               type: "updated",
               removeNext: true
             });
@@ -366,7 +363,8 @@
     },
     hideTutorial: function() {
       if (this.settings.isConfigured()) {
-        this.displayMessage("You're all set up!", {
+        this.displayMessage(clefTranslations.messages.success.configured);
+        ({
           type: "updated"
         });
       }
@@ -376,7 +374,7 @@
   });
   SettingsView = AjaxSettingsView.extend({
     errorTemplate: _.template("<div class='error form-error'><%=message%></div>"),
-    genericErrorMessage: "Something went wrong, please refresh and try again.",
+    genericErrorMessage: clefTranslations.messages.error.generic,
     addEvents: {
       "click .generate-override": "generateOverride",
       "click input[type='submit']:not(.ajax-ignore)": "saveForm"
@@ -403,7 +401,7 @@
       window.onbeforeunload = (function(_this) {
         return function(e) {
           if (_this.isSaving()) {
-            return "Settings are being saved. Still want to navigate away?";
+            return clefTranslations.messages.saving;
           }
         };
       })(this);

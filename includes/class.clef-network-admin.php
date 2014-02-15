@@ -30,7 +30,6 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         // MULTISITE
         if ($this->network_active()) {
-            // remove_all_actions('network_admin_edit_clef_multisite');
             add_action('network_admin_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
         }
     }
@@ -61,8 +60,8 @@ class ClefNetworkAdmin extends ClefAdmin {
             array($this, 'general_settings'));
         add_submenu_page(
             'clef',
-            'Settings',
-            'Settings', 
+            __('Settings', "clef"),
+            __('Settings', "clef"), 
             "manage_options",
             'clef', 
             array($this, 'general_settings'));
@@ -76,12 +75,12 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function ajax_multisite_options() {
-        if (!is_super_admin()) wp_send_json(array("error" => "invalid user"));
+        if (!is_super_admin()) wp_send_json(array("error" => __('Cheatin&#8217; uh?', 'clef')));
 
         $settings = json_decode(file_get_contents( "php://input" ), true);
 
         if (!wp_verify_nonce($settings['_wpnonce'], $this::MULTISITE_SETTINGS_NONCE_NAME)) {
-            wp_send_json(array("error" => "invalid nonce"));
+            wp_send_json(array("error" => __("invalid nonce", "clef")));
         }
 
         if (isset($settings['allow_override'])) {
@@ -92,10 +91,10 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function multisite_settings_edit() {
-        if (!is_super_admin()) die("You're not a super admin!");
+        if (!is_super_admin()) die(__('Cheatin&#8217; uh?', 'clef'));
 
         if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
-            die("Security check; nonce failed.");
+            die(__("Security check; nonce failed.", "clef"));
         }
 
         if (isset($_POST['allow_override_form'])) {

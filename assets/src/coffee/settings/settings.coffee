@@ -41,7 +41,8 @@
 
         hideTutorial: () ->
             if @settings.isConfigured()
-                @displayMessage "You're all set up!", type: "updated"
+                @displayMessage clefTranslations.messages.success.configured
+                type: "updated"
 
             @tutorial.hide()
             @settings.show()
@@ -50,8 +51,7 @@
         errorTemplate: _.template "<div class='error form-error'>\
                                     <%=message%>\
                                    </div>"
-        genericErrorMessage: "Something went wrong, please refresh \
-        and try again."
+        genericErrorMessage: clefTranslations.messages.error.generic
         addEvents:
             "click .generate-override": "generateOverride"
             "click input[type='submit']:not(.ajax-ignore)": "saveForm"
@@ -81,7 +81,7 @@
             @listenTo @model, "error", @error
             window.onbeforeunload = (e) =>
                 if @isSaving()
-                    "Settings are being saved. Still want to navigate away?"
+                    clefTranslations.messages.saving
 
             @render()
 
