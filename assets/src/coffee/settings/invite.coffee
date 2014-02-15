@@ -7,13 +7,10 @@
             _.template "<div class='<%=type%> invite-users-message'>\
                           <%=message%>\
                         </div>"
-        showMessage: (type, message) ->
+        showMessage: (data) ->
             $messageEl = @$el.find('.invite-users-message')
             $messageEl.remove() if $messageEl.length
-            @$el.find('.button').first().before(@messageTemplate(
-                type: type
-                message: message
-            ))
+            @$el.find('.button').first().before(@messageTemplate(data))
 
         template: -> _.template($('#invite-users-template').html())
         initialize: (@opts) ->
@@ -29,17 +26,17 @@
             $.post @inviteUsersAction,
                 data,
                 (data) =>
-                    msg = ""
-                    type = ""
                     if data.error
-                        msg = "There was a problem sending invites: \
-                        #{data.error}."
-                        type = "error"
+                        @showMessage
+                            message: _.template(
+                                clefTranslations.messages.error.invite
+                            )(error: data.error)
+                            type: "error"
                     else if data.success
                         @trigger "invited"
-                        msg = "Email invitations have been sent to your users."
-                        type = "updated"
-                    @showMessage type, msg
+                        @showMessage
+                            message: clefTranslations.messages.success.invite
+                            type:"updated"
 
         hideButton: () ->
             @$el.find('.button').hide()

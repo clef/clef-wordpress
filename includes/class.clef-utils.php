@@ -86,6 +86,7 @@ class ClefUtils {
             CLEF_VERSION, 
             TRUE
         );
+        wp_localize_script($ident, "clefTranslations", ClefTranslation::javascript());
         return $ident;
     }
 

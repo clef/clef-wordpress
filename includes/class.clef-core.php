@@ -12,6 +12,7 @@ class ClefCore {
         // General utility functions
         require_once(CLEF_PATH . 'includes/lib/utils.inc');
         require_once(CLEF_PATH . 'includes/class.clef-utils.php');
+        require_once(CLEF_PATH . 'includes/class.clef-translation.php');
 
         // Site options
         require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');

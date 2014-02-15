@@ -124,7 +124,7 @@ class ClefAdmin {
     protected function send_invite_email($user, $invite_code) {
         $invite_link = $invite_code->get_link();
         $to = $user->user_email;
-        $subject = 'Set up Clef for your account';
+        $subject = __('Set up Clef for your account', "clef");
         $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
 
         add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
@@ -135,19 +135,19 @@ class ClefAdmin {
 
     public function ajax_invite_users() {
         if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::INVITE_USERS_NONCE_NAME)) {
-            wp_send_json(array( "error" => "invalid nonce" ));
+            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
         }
 
         $role = strtolower(ClefUtils::isset_POST('roles'));
         if (!$role) {
-            wp_send_json(array( "error" => "invalid roles" ));
+            wp_send_json(array( "error" => __("invalid roles", "clef") ));
         }
 
         $other_users = get_users(array('exclude' => array(get_current_user_id())));
         $filtered_users = $this->filter_users_by_role($other_users, $role);
 
         if (empty($filtered_users)) {
-            wp_send_json(array( "error" => "there are no other users with this role or greater" ));
+            wp_send_json(array( "error" => __("there are no other users with this role or greater", "clef") ));
         }
         foreach ($filtered_users as &$user) {
             $invite_code = new InviteCode($user);
@@ -159,11 +159,11 @@ class ClefAdmin {
 
      public function ajax_connect_clef_account_with_clef_id() {
         if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
-            wp_send_json(array( "error" => "invalid nonce" ));
+            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
         }
 
         if (!ClefUtils::isset_POST('identifier')) {
-            wp_send_json(array( "error" => "invalid Clef ID"));
+            wp_send_json(array( "error" => __("invalid Clef ID", "clef")));
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
@@ -172,11 +172,11 @@ class ClefAdmin {
 
     public function ajax_connect_clef_account_with_oauth_code() {
         if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
-            wp_send_json(array( "error" => "invalid nonce" ));
+            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
         }
 
         if (!ClefUtils::isset_POST('identifier')) {
-            wp_send_json(array( "error" => "invalid OAuth Code"));
+            wp_send_json(array( "error" => __("invalid OAuth Code", "clef")));
         }
 
         try {
@@ -378,7 +378,7 @@ class ClefAdmin {
         );
 
         $override_settings = $form->addSection('clef_override_settings', __('Override Settings'));
-        $override_settings->addField('key', "Override key", Settings_API_Util_Field::TYPE_TEXTFIELD); 
+        $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD); 
 
         $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"));
         $support_clef_settings->addField(
@@ -386,7 +386,7 @@ class ClefAdmin {
             __("Support Clef by automatically adding a link!", "clef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "disabled",
-            array("options" => array(array("Badge", "badge") , array("Link", "link"), array("Disabled", "disabled")))
+            array("options" => array(array(__("Badge", "clef"), "badge") , array(__("Link", "clef"), "link"), array(__("Disabled", "clef"), "disabled")))
         );
 
         $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"));
@@ -400,7 +400,7 @@ class ClefAdmin {
             !is_network_admin()
         ) {
             if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
-                die("Security check; nonce failed.");
+                die(__("Security check; nonce failed.", "clef"));
             }
 
             $override = get_option(ClefInternalSettings::MS_OVERRIDE_OPTION);
