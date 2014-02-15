@@ -67,7 +67,7 @@
             <div class="preview-container">
                <div class="ftr-preview">
                    <h4><?php _e("Preview of your support", "clef"); ?></h4> 
-                   <a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>
+                   <a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" ><?php _e("WordPress Login Protected by Clef", "clef"); ?></a>
                </div>
             </div>
         </div>
