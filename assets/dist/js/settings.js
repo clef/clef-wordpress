@@ -494,7 +494,9 @@
           message: this.genericErrorMessage,
           type: 'error'
         });
-        window.scrollTo(0, 0);
+        $('html, body').animate({
+          scrollTop: 0
+        }, "show");
         return;
       }
       _ref = data.responseJSON.errors;
@@ -521,7 +523,9 @@
               message: "Settings saved.",
               type: 'updated'
             });
-            return window.scrollTo(0, 0);
+            return $('html, body').animate({
+              scrollTop: 0
+            }, "show");
           };
         })(this),
         error: this.model.saveError.bind(this.model)

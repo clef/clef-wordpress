@@ -160,7 +160,7 @@
             # no error messages, add a generic error message
             if !data.responseJSON.errors
                 @trigger 'message', message: @genericErrorMessage, type: 'error'
-                window.scrollTo 0, 0
+                $('html, body').animate scrollTop: 0, "show"
                 return
 
             # loop over all error messages and display them
@@ -179,7 +179,7 @@
                     @trigger 'message',
                         message: "Settings saved.",
                         type: 'updated'
-                    window.scrollTo 0, 0
+                    $('html, body').animate scrollTop: 0, "show"
 
                 error: @model.saveError.bind(@model)
 
