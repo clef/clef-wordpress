@@ -31,13 +31,14 @@ class ClefSettings extends Settings_API_Util {
         }
 
         if (isset($input['clef_password_settings_force']) && $input['clef_password_settings_force'] == "1") {
-            if (!get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
+            if (!ClefUtils::current_user_has_clef()) {
                 unset($input['clef_password_settings_force']);
                 $url = admin_url('profile.php#clef');
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
                     'clef_password_settings_force',
-                    __( "Please link your Clef account before you fully disable passwords. You can do this <a href='" . $url . "'>here</a>." , 'clef'),
+                    __( "Please link your Clef account before you fully disable passwords. You can do this", "clef") . 
+                    "<a href='" . $url . "'>" . __("here", "clef") . "</a>.",
                     "error"
                 );
             }

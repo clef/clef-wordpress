@@ -50,7 +50,7 @@ class ClefLogin {
             $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
             $error = $this->validate_invite_code($invite_code, $invite_email);
             if (!$error) {
-                return get_edit_user_link();
+                return admin_url('admin.php?page=connect_clef_account');
             }
         }
         return $redirect_to;
@@ -125,7 +125,7 @@ class ClefLogin {
     }
 
     private function validate_invite_code($incoming_invite_code, $email) {
-        $generic_error_message = "Sorry, that isn't a valid invite code.";
+        $generic_error_message = __("Sorry, that isn't a valid invite code.", "clef");
         if (!$incoming_invite_code || !$email) {
             return $generic_error_message;
         }
@@ -142,8 +142,7 @@ class ClefLogin {
         if ((empty($invite_code)) ||
             ($invite_code->created_at < $three_days_ago) ||
             ($invite_code->code !== $incoming_invite_code)) {
-                return "Sorry, this invite link has expired. " . 
-                    "Please contact your administrator for a new one.";
+                return __("Sorry, this invite link has expired. Please contact your administrator for a new one.", "clef");
         }
     }
         
@@ -173,6 +172,7 @@ class ClefLogin {
     }
 
     public function disable_passwords($user) {
+        return $user;
         if (empty($_POST)) return $user;
 
         if (isset($_POST['override']) && $this->is_valid_override_key($_POST['override'])) {
@@ -187,7 +187,7 @@ class ClefLogin {
 
         if ($disabled_for_user && $disabled_for_xml_rpc) {
             add_filter('xmlrpc_login_error', array(__CLASS__, "return_xml_error_message"));
-            return new WP_Error('passwords_disabled', "Passwords have been disabled for this user.");
+            return new WP_Error('passwords_disabled', __("Passwords have been disabled for this user.", "clef"));
         } else {
             return $user;
         }
@@ -269,7 +269,7 @@ class ClefLogin {
     }
 
     public function return_xml_error_message() {
-        return new IXR_Error( 403, "Passwords have been disabled for this user." );
+        return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
     }
 
     public static function start($settings) {

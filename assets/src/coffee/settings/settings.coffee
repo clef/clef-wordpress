@@ -8,17 +8,27 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
-            @tutorial = new TutorialView _.extend {}, @opts
+            @tutorial = new SetupTutorialView _.extend {}, @opts
 
-            if @settings.isConfigured()
-                @settings.render()
-            else
-                @tutorial.render()
-                @listenToOnce @tutorial, 'applicationCreated', @configure
-                @listenToOnce @tutorial, 'done', @hideTutorial
+            if @opts.isNetworkSettings
+                delete @opts['formSelector']
+                @multisiteOptionsView = new MultisiteOptionsView(@opts)
 
             @listenTo @settings, 'message', @displayMessage
             @listenTo @tutorial, 'message', @displayMessage
+
+            @render()
+
+        render: ->
+            if @opts.isUsingIndividualSettings or
+            (@opts.isNetworkSettings && @opts.isNetworkSettingsEnabled)
+                @multisiteOptionsView.show() if @multisiteOptionsView
+                if @settings.isConfigured()
+                    @settings.show()
+                else
+                    @tutorial.render()
+                    @listenToOnce @tutorial, 'applicationCreated', @configure
+                    @listenToOnce @tutorial, 'done', @hideTutorial
 
         configure: (data) ->
             @settings.model.configure(data)
@@ -31,17 +41,17 @@
 
         hideTutorial: () ->
             if @settings.isConfigured()
-                @displayMessage "You're all set up!", type: "updated"
+                @displayMessage clefTranslations.messages.success.configured
+                type: "updated"
 
             @tutorial.hide()
-            @settings.render()
+            @settings.show()
 
     SettingsView =  AjaxSettingsView.extend
         errorTemplate: _.template "<div class='error form-error'>\
                                     <%=message%>\
                                    </div>"
-        genericErrorMessage: "Something went wrong, please refresh \
-        and try again."
+        genericErrorMessage: clefTranslations.messages.error.generic
         addEvents:
             "click .generate-override": "generateOverride"
             "click input[type='submit']:not(.ajax-ignore)": "saveForm"
@@ -50,7 +60,7 @@
             @events = _.extend @events, @addEvents
             SettingsView.__super__.constructor.call(this, opts)
 
-        initialize: (opts) ->
+        initialize: (@opts) ->
             @modelClass = SettingsModel
             SettingsView.__super__.initialize.call(this, opts)
 
@@ -64,13 +74,16 @@
             @overrideButtonContainer = @$el.find '.override-buttons'
             @setOverrideLink()
 
+
             @badgePreviewContainer = @$el.find '.support-settings .ftr-preview'
 
             @listenTo @model, "change", @clearErrors
             @listenTo @model, "error", @error
             window.onbeforeunload = (e) =>
                 if @isSaving()
-                    "Settings are being saved. Still want to navigate away?"
+                    clefTranslations.messages.saving
+
+            @render()
 
         updated: (obj, data) ->
             SettingsView.__super__.updated.call(this, obj, data)
@@ -79,6 +92,8 @@
         render: () ->
             SettingsView.__super__.render.call this
             passwordsDisabled = @model.passwordsDisabled()
+
+            $('#clef-settings-header').show()
 
             @xmlEl.toggle passwordsDisabled
             @toggleOverrideContainer passwordsDisabled
@@ -200,7 +215,7 @@
 
     FormVisualization = Backbone.View.extend
         el: $("#login-form-view")
-        template: _.template($('#form-template').html())
+        template: () -> _.template($('#form-template').html())
 
         initialize: (@opts) ->
             @model = @opts.model
@@ -216,11 +231,7 @@
         toggleForm: (e) ->
             @$el.toggleClass('only-clef', @model.passwordsFullyDisabled())
 
-
     this.AppView = AppView
-
-    $(document).ready () ->
-        app = new AppView options
 
     $.fn.serializeObject = (form) ->
         serialized = {}

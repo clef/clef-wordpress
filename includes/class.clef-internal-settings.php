@@ -111,7 +111,7 @@ class ClefInternalSettings {
             $disabled = true;
         }
 
-        if ($this->get( 'clef_password_settings_disable_passwords' ) && get_user_meta($user->ID, 'clef_id')) {
+        if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::current_user_has_clef()) {
             $disabled = true;
         }
 
@@ -141,6 +141,14 @@ class ClefInternalSettings {
 
     public function multisite_disallow_settings_override() {
         return $this->is_multisite_enabled() && !get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
+    }
+
+    public function network_settings_enabled() {
+        return !!get_site_option($this::MS_ENABLED_OPTION);
+    }
+
+    public function single_site_settings_allowed() {
+        return !!get_site_option($this::MS_ALLOW_OVERRIDE_OPTION);
     }
 
     public static function start() {

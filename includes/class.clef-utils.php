@@ -75,7 +75,7 @@ class ClefUtils {
 
     public static function register_script($name, $dependencies=array('jquery')) {
         $ident = "wpclef-" . $name;
-        if (CLEF_DEBUG)  {
+        if (!CLEF_DEBUG)  {
             $name .= '.min';
         }
         $name .= '.js';
@@ -86,6 +86,7 @@ class ClefUtils {
             CLEF_VERSION, 
             TRUE
         );
+        wp_localize_script($ident, "clefTranslations", ClefTranslation::javascript());
         return $ident;
     }
 
@@ -96,7 +97,7 @@ class ClefUtils {
 
     public static function register_style($name) {
         $ident = "wpclef-" . $name;
-        if (CLEF_DEBUG) {
+        if (!CLEF_DEBUG) {
             $name .= '.min';
         }
         $name .= '.css';
@@ -107,6 +108,10 @@ class ClefUtils {
             CLEF_VERSION
         ); 
         return $ident;
+    }
+
+    public static function current_user_has_clef() {
+        return !!get_user_meta(wp_get_current_user()->ID, "clef_id", true);
     }
 
     public static function associate_clef_id($clef_id, $user_id=false) {
