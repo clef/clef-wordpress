@@ -234,7 +234,7 @@
         return;
       }
       this.iframe = this.$el.find("iframe.setup");
-      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&logout_hook=" + (encodeURIComponent(this.opts.setup.logoutHook)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
       return this.iframe.attr('src', src);
     },
     handleMessages: function(data) {
@@ -386,7 +386,8 @@
     genericErrorMessage: clefTranslations.messages.error.generic,
     addEvents: {
       "click .generate-override": "generateOverride",
-      "click input[type='submit']:not(.ajax-ignore)": "saveForm"
+      "click input[type='submit']:not(.ajax-ignore)": "saveForm",
+      "click a.show-support-html": "showSupportHTML"
     },
     constructor: function(opts) {
       this.events = _.extend(this.events, this.addEvents);
@@ -525,6 +526,10 @@
         })(this),
         error: this.model.saveError.bind(this.model)
       });
+    },
+    showSupportHTML: function(e) {
+      e.preventDefault();
+      return $('.support-html-container').slideDown();
     }
   });
   SettingsModel = AjaxSettingsModel.extend({

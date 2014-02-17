@@ -58,6 +58,7 @@
         addEvents:
             "click .generate-override": "generateOverride"
             "click input[type='submit']:not(.ajax-ignore)": "saveForm"
+            "click a.show-support-html": "showSupportHTML"
 
         constructor: (opts) ->
             @events = _.extend @events, @addEvents
@@ -181,6 +182,10 @@
                     window.scrollTo 0, 0
 
                 error: @model.saveError.bind(@model)
+
+        showSupportHTML: (e) ->
+            e.preventDefault()
+            $('.support-html-container').slideDown()
 
     SettingsModel = AjaxSettingsModel.extend
         cFindInput: (name) ->

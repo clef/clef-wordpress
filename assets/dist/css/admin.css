@@ -441,6 +441,13 @@ body {
     margin-top: 5px; }
     #clef-settings-form .settings-section.support-settings .preview-container .ftr-preview a {
       margin-top: 20px; }
+#clef-settings-form .settings-section.support-settings .support-html-container {
+  display: none;
+  margin-top: 20px; }
+  #clef-settings-form .settings-section.support-settings .support-html-container textarea {
+    width: 400px;
+    padding: 10px;
+    margin-bottom: 10px; }
 #clef-settings-form .settings-section.clef-settings .inputs-container label {
   display: block;
   float: left;

@@ -141,6 +141,7 @@
             src = "#{@opts.clefBase}#{@iframePath}?\
                     source=#{encodeURIComponent(@opts.setup.source)}\
                     &domain=#{encodeURIComponent(@opts.setup.siteDomain)}\
+                    &logout_hook=#{encodeURIComponent(@opts.setup.logoutHook)}\
                     &name=#{encodeURIComponent(@opts.setup.siteName)}"
             @iframe.attr('src', src)
 
