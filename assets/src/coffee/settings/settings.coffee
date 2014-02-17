@@ -8,6 +8,7 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
+            
             @tutorial = new SetupTutorialView _.extend {}, @opts
 
             if @opts.isNetworkSettings
@@ -26,9 +27,11 @@
                 if @settings.isConfigured()
                     @settings.show()
                 else
-                    @tutorial.render()
+                    @tutorial.show()
                     @listenToOnce @tutorial, 'applicationCreated', @configure
                     @listenToOnce @tutorial, 'done', @hideTutorial
+
+            @$el.fadeIn()
 
         configure: (data) ->
             @settings.model.configure(data)

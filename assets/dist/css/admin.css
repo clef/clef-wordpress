@@ -1,8 +1,3 @@
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
 /******************************
 Styles
 *********************************/
@@ -41,10 +36,30 @@ body {
     .clef-badge.pretty:hover {
       opacity: 1; }
 
+.clef-login-form .clef-button-container {
+  width: 188px;
+  height: 35px;
+  margin: auto;
+  margin-bottom: 30px; }
+.clef-login-form.clef-hidden #login form#loginform {
+  padding: 40px 20px; }
+  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
+    display: none; }
+.clef-login-form.clef-hidden .clef-button-container {
+  margin-bottom: 0; }
+.clef-login-form.clef-hidden p#nav {
+  display: none; }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 #clef-settings-container {
   width: 100%;
   height: 100%;
-  position: relative; }
+  position: relative;
+  display: none; }
   #clef-settings-container #clef-settings-header {
     display: none; }
   #clef-settings-container .message {
@@ -103,7 +118,7 @@ body {
           float: left;
           margin-right: 2.5641%;
           width: 48.71795%;
-          float: left; }
+          margin-right: 0 !important; }
           #clef-settings-container .settings-section .inputs-container .input-container label:last-child {
             margin-right: 0; }
           @media screen and (max-width: 768px) {
@@ -117,7 +132,8 @@ body {
         #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
           float: right;
           width: auto;
-          margin: 0; }
+          margin: 0;
+          margin-bottom: 5px; }
           @media screen and (max-width: 768px) {
             #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
               clear: both;
@@ -126,6 +142,12 @@ body {
         @media screen and (max-width: 768px) {
           #clef-settings-container .settings-section .inputs-container .input-container input[type="checkbox"] {
             width: 25px; } }
+      #clef-settings-container .settings-section .inputs-container .ajax-settings-msg {
+        clear: both;
+        margin: 0;
+        margin-bottom: 20px;
+        position: relative;
+        top: 10px; }
     #clef-settings-container .settings-section.multisite .inputs-container {
       display: block;
       float: left;
@@ -152,7 +174,7 @@ body {
 #clef-tutorial {
   width: 100%;
   height: 100%;
-  display: block;
+  display: none;
   margin-top: 40px;
   *zoom: 1;
   max-width: 75em;
@@ -294,8 +316,7 @@ body {
     #clef-tutorial .invite .invite-users .already-disabled {
       display: none; }
   #clef-tutorial .invite .next {
-    margin-top: 10px;
-    float: right; }
+    display: inline-block !important; }
   #clef-tutorial .login {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
@@ -361,6 +382,8 @@ body {
     display: block;
     opacity: 1; }
 
+#clef-settings-form form {
+  display: none; }
 #clef-settings-form .settings-section.override-settings .inputs-container {
   display: block;
   float: left;
@@ -502,18 +525,4 @@ body {
   top: 1px; }
 
 .logout-hook-error {
-  display: none; }
-
-.clef-login-form .clef-button-container {
-  width: 188px;
-  height: 35px;
-  margin: auto;
-  margin-bottom: 30px; }
-.clef-login-form.clef-hidden #login form#loginform {
-  padding: 40px 20px; }
-  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
-    display: none; }
-.clef-login-form.clef-hidden .clef-button-container {
-  margin-bottom: 0; }
-.clef-login-form.clef-hidden p#nav {
   display: none; }

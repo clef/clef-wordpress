@@ -69,9 +69,11 @@ class ClefAdmin {
             ClefUtils::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
+
+        $ident = ClefUtils::register_style('admin');
+        wp_enqueue_style($ident);
         
         if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
-            ClefUtils::register_styles();
             $ident = ClefUtils::register_script(
                 'settings', 
                 array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())

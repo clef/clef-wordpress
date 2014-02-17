@@ -30,7 +30,6 @@ class ClefBadge {
         if (!$this->should_display_prompt()) return;
 
         if (empty($_POST)) {
-            $this->register_styles();  
             $this->register_scripts();      
             $this->hide_prompt();
             add_action('admin_notices', array($this, 'badge_prompt_html'));
@@ -41,9 +40,7 @@ class ClefBadge {
     }
 
     public function hook_display() {
-        if (!$this->is_active()) return;
-
-        $this->register_styles();        
+        if (!$this->is_active()) return;   
         add_action('wp_footer', array($this, 'draw'));
     }
 
@@ -57,10 +54,6 @@ class ClefBadge {
         echo ClefUtils::render_template('admin/badge-prompt.tpl', array(
             "had_clef_before_onboarding" => $had_clef_before_onboarding
         ));
-    }
-
-    public function register_styles() {
-        ClefUtils::register_styles();
     }
 
     public function register_scripts() {

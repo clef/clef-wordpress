@@ -1,4 +1,8 @@
 #clef-settings-form {
+    form {
+        display: none;
+    }
+    
     .settings-section {
         &.override-settings {
             .inputs-container {

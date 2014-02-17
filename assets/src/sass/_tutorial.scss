@@ -1,7 +1,7 @@
 #clef-tutorial {
     width: 100%;
     height: 100%;
-    display: block;
+    display: none;
     margin-top: 40px;
     @include outer-container();
     .clef-tutorial-container {
@@ -37,7 +37,7 @@
             font-weight: 500;
         }
         .button {
-            @include button($blue);
+            @include clef-button($blue);
         }
         .quotes {
             background: #DDD;
@@ -128,8 +128,7 @@
             }
         }
         .next {
-            margin-top: 10px;
-            float: right;
+            display: inline-block !important;
         }
     }
 

@@ -105,16 +105,17 @@
         }));
       }
       this.currentSub = this.subs[0];
-      return $(window).on('message', this.handleMessages.bind(this));
+      $(window).on('message', this.handleMessages.bind(this));
+      return this.render();
     },
     hide: function(cb) {
       return this.$el.slideUp(cb);
     },
+    show: function() {
+      return this.$el.fadeIn();
+    },
     render: function() {
-      if (!this.$el.is(':visible')) {
-        this.currentSub.render();
-        return this.$el.fadeIn();
-      }
+      return this.currentSub.render();
     },
     done: function() {
       return this.trigger("done");
@@ -209,11 +210,11 @@
     iframePath: '/iframes/application/create/v1',
     initialize: function(opts) {
       opts.slideFilterSelector = '.setup';
-      this.constructor.__super__.initialize.call(this, opts);
       this.inviter = new InviteUsersView(_.extend({
         el: this.$el.find('.invite-users-container')
-      }, this.opts));
-      return this.listenTo(this.inviter, "invited", this.usersInvited);
+      }, opts));
+      this.listenTo(this.inviter, "invited", this.usersInvited);
+      return this.constructor.__super__.initialize.call(this, opts);
     },
     render: function() {
       if (this.userIsLoggedIn) {
@@ -223,17 +224,18 @@
           this.$el.addClass('user');
         }
       }
-      if (!this.$el.is(':visible')) {
-        this.loadIFrame();
-        this.inviter.render();
-      }
+      this.loadIFrame();
+      this.inviter.render();
       return this.constructor.__super__.render.call(this);
     },
     loadIFrame: function() {
-      var frame, src;
-      frame = this.$el.find("iframe.setup");
+      var src;
+      if (this.iframe) {
+        return;
+      }
+      this.iframe = this.$el.find("iframe.setup");
       src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
-      return frame.attr('src', src);
+      return this.iframe.attr('src', src);
     },
     handleMessages: function(data) {
       data = this.constructor.__super__.handleMessages.call(this, data);
@@ -246,7 +248,12 @@
         }, (function(_this) {
           return function() {
             _this.trigger('applicationCreated', data);
-            return _this.next();
+            _this.next();
+            return _this.showMessage({
+              message: clefTranslations.messages.success.connect,
+              type: "updated",
+              removeNext: true
+            });
           };
         })(this));
       } else if (data.type === "user") {
@@ -280,13 +287,14 @@
   ConnectTutorialView = TutorialView.extend({
     connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code",
     render: function() {
-      if (!this.$el.is(':visible')) {
-        this.addButton();
-      }
+      this.addButton();
       return this.constructor.__super__.render.call(this);
     },
     addButton: function() {
       var target;
+      if (this.button) {
+        return;
+      }
       target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', this.opts.redirectURL);
       this.button = new ClefButton({
         el: $('#clef-button-target')[0]
@@ -341,13 +349,14 @@
           this.multisiteOptionsView.show();
         }
         if (this.settings.isConfigured()) {
-          return this.settings.show();
+          this.settings.show();
         } else {
-          this.tutorial.render();
+          this.tutorial.show();
           this.listenToOnce(this.tutorial, 'applicationCreated', this.configure);
-          return this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
+          this.listenToOnce(this.tutorial, 'done', this.hideTutorial);
         }
       }
+      return this.$el.fadeIn();
     },
     configure: function(data) {
       return this.settings.model.configure(data);
