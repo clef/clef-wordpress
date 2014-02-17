@@ -90,11 +90,6 @@ class ClefUtils {
         return $ident;
     }
 
-    public static function register_styles() {
-        wp_register_style('wpclef', CLEF_URL . 'assets/dist/css/wpclef.min.css', FALSE, CLEF_VERSION);
-        wp_enqueue_style('wpclef');
-    }
-
     public static function register_style($name) {
         $ident = "wpclef-" . $name;
         if (!CLEF_DEBUG) {

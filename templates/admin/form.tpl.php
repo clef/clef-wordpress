@@ -60,9 +60,12 @@
                     <label for=""><?php _e("Support Clef in your footer", "clef"); ?></label>
                     <?php $form->getSection('support_clef')->getField('badge')->render(); ?>
                 </div>
-                <div class="links-container">
-                    <!-- <a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>
-                    <a href="https://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a> -->
+                <a href="#" class="show-support-html">I want to add the badge or link elsewhere</a>
+                <div class="support-html-container">
+                    <h4>Copy this HTML where you want to add the badge</h4>
+                    <textarea class="ajax-ignore"><?php echo esc_attr('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty" >WordPress Login Protected by Clef</a>'); ?></textarea>
+                    <h4>Copy this HTML where you want to add the link</h4>
+                    <textarea class="ajax-ignore"><?php echo esc_attr('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge" >WordPress Login Protected by Clef</a>'); ?></textarea>
                 </div>
             </div>
             <div class="preview-container">

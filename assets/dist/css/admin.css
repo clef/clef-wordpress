@@ -1,8 +1,3 @@
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
 /******************************
 Styles
 *********************************/
@@ -41,10 +36,30 @@ body {
     .clef-badge.pretty:hover {
       opacity: 1; }
 
+.clef-login-form .clef-button-container {
+  width: 188px;
+  height: 35px;
+  margin: auto;
+  margin-bottom: 30px; }
+.clef-login-form.clef-hidden #login form#loginform {
+  padding: 40px 20px; }
+  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
+    display: none; }
+.clef-login-form.clef-hidden .clef-button-container {
+  margin-bottom: 0; }
+.clef-login-form.clef-hidden p#nav {
+  display: none; }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 #clef-settings-container {
   width: 100%;
   height: 100%;
-  position: relative; }
+  position: relative;
+  display: none; }
   #clef-settings-container #clef-settings-header {
     display: none; }
   #clef-settings-container .message {
@@ -103,7 +118,7 @@ body {
           float: left;
           margin-right: 2.5641%;
           width: 48.71795%;
-          float: left; }
+          margin-right: 0 !important; }
           #clef-settings-container .settings-section .inputs-container .input-container label:last-child {
             margin-right: 0; }
           @media screen and (max-width: 768px) {
@@ -117,7 +132,8 @@ body {
         #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
           float: right;
           width: auto;
-          margin: 0; }
+          margin: 0;
+          margin-bottom: 5px; }
           @media screen and (max-width: 768px) {
             #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
               clear: both;
@@ -126,6 +142,12 @@ body {
         @media screen and (max-width: 768px) {
           #clef-settings-container .settings-section .inputs-container .input-container input[type="checkbox"] {
             width: 25px; } }
+      #clef-settings-container .settings-section .inputs-container .ajax-settings-msg {
+        clear: both;
+        margin: 0;
+        margin-bottom: 20px;
+        position: relative;
+        top: 10px; }
     #clef-settings-container .settings-section.multisite .inputs-container {
       display: block;
       float: left;
@@ -149,38 +171,10 @@ body {
   #clef-settings-container .invite-users .button {
     margin-top: 20px; }
 
-.waltz-notification {
-  *zoom: 1;
-  max-width: 75em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-left: 0px;
-  margin-top: 5px; }
-  .waltz-notification:before, .waltz-notification:after {
-    content: " ";
-    display: table; }
-  .waltz-notification:after {
-    clear: both; }
-  .waltz-notification .waltz {
-    display: block;
-    float: left;
-    margin-right: 2.5641%;
-    width: 100%;
-    margin-top: 5px; }
-    .waltz-notification .waltz:last-child {
-      margin-right: 0; }
-    .waltz-notification .waltz img {
-      display: block;
-      float: left;
-      margin-right: 2.5641%;
-      width: 17.94872%; }
-      .waltz-notification .waltz img:last-child {
-        margin-right: 0; }
-
 #clef-tutorial {
   width: 100%;
   height: 100%;
-  display: block;
+  display: none;
   margin-top: 40px;
   *zoom: 1;
   max-width: 75em;
@@ -322,8 +316,7 @@ body {
     #clef-tutorial .invite .invite-users .already-disabled {
       display: none; }
   #clef-tutorial .invite .next {
-    margin-top: 10px;
-    float: right; }
+    display: inline-block !important; }
   #clef-tutorial .login {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
@@ -369,26 +362,8 @@ body {
     display: block;
     opacity: 1; }
 
-.waltz {
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e5e5e5;
-  background: white;
-  padding: 20px 25px;
-  padding: 40px 25px;
-  margin-top: 80px; }
-  .waltz h1 {
-    margin-top: 0; }
-  .waltz img {
-    display: block;
-    float: left;
-    margin-right: 2.5641%;
-    width: 28.20513%; }
-    .waltz img:last-child {
-      margin-right: 0; }
-  .waltz .button:not(.button-primary) {
-    margin-left: 10px; }
-
+#clef-settings-form form {
+  display: none; }
 #clef-settings-form .settings-section.override-settings .inputs-container {
   display: block;
   float: left;
@@ -446,6 +421,13 @@ body {
     margin-top: 5px; }
     #clef-settings-form .settings-section.support-settings .preview-container .ftr-preview a {
       margin-top: 20px; }
+#clef-settings-form .settings-section.support-settings .support-html-container {
+  display: none;
+  margin-top: 20px; }
+  #clef-settings-form .settings-section.support-settings .support-html-container textarea {
+    width: 400px;
+    padding: 10px;
+    margin-bottom: 10px; }
 #clef-settings-form .settings-section.clef-settings .inputs-container label {
   display: block;
   float: left;
@@ -514,6 +496,54 @@ body {
           margin: auto;
           display: block; }
 
+.waltz-notification {
+  *zoom: 1;
+  max-width: 75em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-left: 0px;
+  margin-top: 5px; }
+  .waltz-notification:before, .waltz-notification:after {
+    content: " ";
+    display: table; }
+  .waltz-notification:after {
+    clear: both; }
+  .waltz-notification .waltz {
+    display: block;
+    float: left;
+    margin-right: 2.5641%;
+    width: 100%;
+    margin-top: 5px; }
+    .waltz-notification .waltz:last-child {
+      margin-right: 0; }
+    .waltz-notification .waltz img {
+      display: block;
+      float: left;
+      margin-right: 2.5641%;
+      width: 17.94872%; }
+      .waltz-notification .waltz img:last-child {
+        margin-right: 0; }
+
+.waltz {
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e5e5;
+  background: white;
+  padding: 20px 25px;
+  padding: 40px 25px;
+  margin-top: 80px; }
+  .waltz h1 {
+    margin-top: 0; }
+  .waltz img {
+    display: block;
+    float: left;
+    margin-right: 2.5641%;
+    width: 28.20513%; }
+    .waltz img:last-child {
+      margin-right: 0; }
+  .waltz .button:not(.button-primary) {
+    margin-left: 10px; }
+
 .bruteprotect-install {
   background: #515953;
   padding: 40px;
@@ -530,18 +560,4 @@ body {
   top: 1px; }
 
 .logout-hook-error {
-  display: none; }
-
-.clef-login-form .clef-button-container {
-  width: 188px;
-  height: 35px;
-  margin: auto;
-  margin-bottom: 30px; }
-.clef-login-form.clef-hidden #login form#loginform {
-  padding: 40px 20px; }
-  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
-    display: none; }
-.clef-login-form.clef-hidden .clef-button-container {
-  margin-bottom: 0; }
-.clef-login-form.clef-hidden p#nav {
   display: none; }

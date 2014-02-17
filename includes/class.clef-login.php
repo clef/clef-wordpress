@@ -27,7 +27,7 @@ class ClefLogin {
         add_action('login_form', array( $this, 'login_form' ) );
 
         add_filter('wp_login_failed', array($this, 'handle_login_failed'));
-        add_action('login_enqueue_scripts', array($this, 'load_scripts'));
+        add_action('login_enqueue_scripts', array($this, 'load_base_styles'));
 
         // Show an error message if there is an invite code but it is invalid
         add_filter('login_message', array($this, 'validate_invite'));
@@ -39,9 +39,10 @@ class ClefLogin {
         // code
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
     }
-
-    public function load_scripts() {
-        ClefUtils::register_styles();
+    
+    public function load_base_styles() {
+        $ident = ClefUtils::register_style('main');
+        wp_enqueue_style($ident);
     }
 
     public function redirect_if_invite_code($redirect_to, $request, $user) {

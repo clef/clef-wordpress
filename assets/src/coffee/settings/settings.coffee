@@ -8,6 +8,7 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
+            
             @tutorial = new SetupTutorialView _.extend {}, @opts
 
             if @opts.isNetworkSettings
@@ -26,9 +27,11 @@
                 if @settings.isConfigured()
                     @settings.show()
                 else
-                    @tutorial.render()
+                    @tutorial.show()
                     @listenToOnce @tutorial, 'applicationCreated', @configure
                     @listenToOnce @tutorial, 'done', @hideTutorial
+
+            @$el.fadeIn()
 
         configure: (data) ->
             @settings.model.configure(data)
@@ -55,6 +58,7 @@
         addEvents:
             "click .generate-override": "generateOverride"
             "click input[type='submit']:not(.ajax-ignore)": "saveForm"
+            "click a.show-support-html": "showSupportHTML"
 
         constructor: (opts) ->
             @events = _.extend @events, @addEvents
@@ -155,7 +159,7 @@
             # no error messages, add a generic error message
             if !data.responseJSON.errors
                 @trigger 'message', message: @genericErrorMessage, type: 'error'
-                window.scrollTo 0, 0
+                $('html, body').animate scrollTop: 0, "show"
                 return
 
             # loop over all error messages and display them
@@ -174,9 +178,13 @@
                     @trigger 'message',
                         message: "Settings saved.",
                         type: 'updated'
-                    window.scrollTo 0, 0
+                    $('html, body').animate scrollTop: 0, "show"
 
                 error: @model.saveError.bind(@model)
+
+        showSupportHTML: (e) ->
+            e.preventDefault()
+            $('.support-html-container').slideDown()
 
     SettingsModel = AjaxSettingsModel.extend
         cFindInput: (name) ->

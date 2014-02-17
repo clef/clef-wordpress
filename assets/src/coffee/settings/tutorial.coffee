@@ -28,13 +28,16 @@
 
             $(window).on 'message', @handleMessages.bind(this)
 
+            @render()
+
         hide: (cb) ->
             @$el.slideUp(cb)
 
+        show: ->
+            @$el.fadeIn()
+
         render: ()->
-            if !@$el.is(':visible')
-                @currentSub.render()
-                @$el.fadeIn()
+            @currentSub.render()
 
         done: () ->
             @trigger "done"
@@ -112,12 +115,13 @@
 
         initialize: (opts) ->
             opts.slideFilterSelector = '.setup'
-            @constructor.__super__.initialize.call this, opts
-
             @inviter = new InviteUsersView _.extend  {
                 el: @$el.find '.invite-users-container'
-            }, @opts
+            }, opts
             @listenTo @inviter, "invited", @usersInvited
+            
+            @constructor.__super__.initialize.call this, opts
+
 
         render: ()->
             if @userIsLoggedIn
@@ -126,19 +130,20 @@
                 else
                     @$el.addClass 'user'
 
-            if !@$el.is(':visible')
-                @loadIFrame()
-                @inviter.render()
+            @loadIFrame()
+            @inviter.render()
 
             @constructor.__super__.render.call this
 
         loadIFrame: () ->
-            frame = @$el.find("iframe.setup")
+            return if @iframe
+            @iframe = @$el.find("iframe.setup")
             src = "#{@opts.clefBase}#{@iframePath}?\
                     source=#{encodeURIComponent(@opts.setup.source)}\
                     &domain=#{encodeURIComponent(@opts.setup.siteDomain)}\
+                    &logout_hook=#{encodeURIComponent(@opts.setup.logoutHook)}\
                     &name=#{encodeURIComponent(@opts.setup.siteName)}"
-            frame.attr('src', src)
+            @iframe.attr('src', src)
 
         handleMessages: (data) ->
             data = @constructor.__super__.handleMessages.call this, data
@@ -149,6 +154,10 @@
                     () =>
                         @trigger 'applicationCreated', data
                         @next()
+                        @showMessage
+                            message: clefTranslations.messages.success.connect
+                            type: "updated"
+                            removeNext: true
             else if data.type == "user"
                 @userIsLoggedIn = true
                 @render()
@@ -177,12 +186,11 @@
     ConnectTutorialView = TutorialView.extend
         connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code"
         render: ->
-            if !@$el.is ':visible'
-                @addButton()
-
+            @addButton()
             @constructor.__super__.render.call this
 
         addButton: ->
+            return if @button
             target = $('#clef-button-target')
                 .attr('data-app-id', @opts.appID)
                 .attr('data-redirect-url', @opts.redirectURL)

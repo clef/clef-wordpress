@@ -1,4 +1,8 @@
 #clef-settings-form {
+    form {
+        display: none;
+    }
+    
     .settings-section {
         &.override-settings {
             .inputs-container {
@@ -59,6 +63,16 @@
                     a {
                         margin-top: 20px;
                     }
+                }
+            }
+
+            .support-html-container {
+                display: none;
+                margin-top: 20px;
+                textarea {
+                    width: 400px;
+                    padding: 10px;
+                    margin-bottom: 10px;
                 }
             }
         }

@@ -114,17 +114,19 @@ class ClefAdmin {
             wp_enqueue_script('wpclef_logout');
         }
 
-            $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
-            wp_enqueue_script($ident);
+        $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
+        wp_enqueue_script($ident);
         
-            ClefUtils::register_styles();
-            if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
-                $ident = ClefUtils::register_script(
-                    'settings', 
-                    array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
-                );
-                wp_enqueue_script($ident);
-            }
+        $ident = ClefUtils::register_style('admin');
+        wp_enqueue_style($ident);
+        
+        if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
+            $ident = ClefUtils::register_script(
+                'settings', 
+                array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
+            );
+            wp_enqueue_script($ident);
+        } 
     }
 
     public function show_user_profile($user) {
@@ -371,6 +373,7 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
+                'logoutHook' => wp_login_url(),
                 'source' => 'wordpress'
             ),
             'nonces' => array(
