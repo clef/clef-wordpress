@@ -74,7 +74,6 @@
             @overrideButtonContainer = @$el.find '.override-buttons'
             @setOverrideLink()
 
-
             @badgePreviewContainer = @$el.find '.support-settings .ftr-preview'
 
             @listenTo @model, "change", @clearErrors

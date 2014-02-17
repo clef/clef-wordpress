@@ -36,6 +36,8 @@ class ClefAdmin {
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
 
         add_action('admin_notices', array($this, 'display_messages') );
+        add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
+        add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
         add_action('show_user_profile', array($this, "show_user_profile"));
         add_action('edit_user_profile', array($this, "show_user_profile"));
@@ -48,8 +50,50 @@ class ClefAdmin {
 
         add_action('wp_ajax_clef_invite_users', array($this, 'ajax_invite_users'));
 
+        add_action('wp_ajax_clef_dismiss_waltz_notification', array($this, 'ajax_dismiss_waltz_notification'));
+
         // Display the badge message, if appropriate
         do_action('clef_hook_onboarding');
+    }
+
+    public function ajax_dismiss_waltz_notification() {
+        $this->settings->set('hide_clef_waltz_prompt', true);
+        wp_send_json(array('success' => true));
+    }
+
+    private function render_waltz_prompt() {
+        echo '<div class="waltz-notification">';
+            echo '<div class="waltz setup">';
+            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
+                'next_href' => '#',
+                'next_text' => __('Hide this message', 'clef')
+            ));
+            echo '</div>';
+        echo '</div>';
+    }
+
+    public function display_dashboard_waltz_prompt() {
+        $onboarding = ClefOnboarding::start($this->settings);
+        $login_count = $onboarding->get_login_count();
+        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
+        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
+        $should_hide |= $this->settings->get('hide_dashboard_waltz_prompt') == true;
+        $should_hide |= $is_settings_page;
+
+        if ($login_count < 15 || $should_hide) return;
+
+        $this->render_waltz_prompt();
+        $this->settings->set('hide_dashboard_waltz_prompt', true);
+    }
+
+    public function display_clef_waltz_prompt() {
+        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
+        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
+        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
+
+        if (!$is_google_chrome || !$is_settings_page || $should_hide) return;
+        
+        $this->render_waltz_prompt();
     }
 
     public function hook_admin_menu() {
@@ -69,15 +113,18 @@ class ClefAdmin {
             ClefUtils::register_script('clef_heartbeat');
             wp_enqueue_script('wpclef_logout');
         }
-        
-        if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
-            ClefUtils::register_styles();
-            $ident = ClefUtils::register_script(
-                'settings', 
-                array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
-            );
+
+            $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
             wp_enqueue_script($ident);
-        } 
+        
+            ClefUtils::register_styles();
+            if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
+                $ident = ClefUtils::register_script(
+                    'settings', 
+                    array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
+                );
+                wp_enqueue_script($ident);
+            }
     }
 
     public function show_user_profile($user) {
@@ -289,6 +336,7 @@ class ClefAdmin {
         
     }
 
+
     /**
      * Determines whether to badge the Clef menu icon.
      *
@@ -299,7 +347,8 @@ class ClefAdmin {
         $login_count = $onboarding->get_login_count();
         $clef_menu_title = __('Clef', 'clef');
         $hide_waltz_badge = $this->settings->get('hide_waltz_badge');
-        if ($login_count > 3 && !$hide_waltz_badge) {
+        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
+        if ($login_count >= 3 && !$hide_waltz_badge && $is_google_chrome) {
             $clef_menu_title .= $this->render_badge(1);
         }
         return $clef_menu_title;

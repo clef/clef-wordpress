@@ -92,3 +92,16 @@
     }
 }
 
+
+.waltz-notification {
+    @include outer-container();
+    margin-left: 0px;
+    margin-top: 5px;
+    .waltz {
+        @include span-columns(10);
+        margin-top: 5px;
+        img {
+            @include span-columns(2);
+        }
+    }
+}
