@@ -33,11 +33,11 @@ class ClefSettings extends Settings_API_Util {
         if (isset($input['clef_password_settings_force']) && $input['clef_password_settings_force'] == "1") {
             if (!ClefUtils::user_has_clef()) {
                 unset($input['clef_password_settings_force']);
-                $url = admin_url('profile.php#clef');
+                $url = admin_url('admin.php?page=connect_clef_account');
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
                     'clef_password_settings_force',
-                    __( "Please link your Clef account before you fully disable passwords. You can do this", "clef") . 
+                    __( "Please link your Clef account before you fully disable passwords. You can do this ", "clef") . 
                     "<a href='" . $url . "'>" . __("here", "clef") . "</a>.",
                     "error"
                 );

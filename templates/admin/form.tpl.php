@@ -1,6 +1,6 @@
 
 <div id="clef-settings-form">
-    <form id="clef-form" action="options.php" method="POST">
+    <form id="clef-form" action="options.php" method="POST" autocomplete="off">
         <h1 id="clef-settings-header"><?php _e("Clef", "clef"); ?></h1>
         <!-- <div id="fb-root"></div>
         <div class="fb-like" data-href="https://www.facebook.com/getclef" data-width="200" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
