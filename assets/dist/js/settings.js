@@ -403,7 +403,6 @@
       });
       this.xmlEl = this.model.cFindInput('clef_password_settings_xml_allowed').parents('.input-container');
       this.overrideContainer = this.$el.find('.override-settings');
-      this.overrideButtonContainer = this.$el.find('.override-buttons');
       this.setOverrideLink();
       this.badgePreviewContainer = this.$el.find('.support-settings .ftr-preview');
       this.listenTo(this.model, "change", this.clearErrors);
@@ -428,7 +427,7 @@
       $('#clef-settings-header').show();
       this.xmlEl.toggle(passwordsDisabled);
       this.toggleOverrideContainer(passwordsDisabled);
-      this.overrideButtonContainer.toggle(this.model.overrideIsSet());
+      this.overrideContainer.toggleClass('set', this.model.overrideIsSet());
       this.inviteUsersView.render();
       return this.renderSupportBadge();
     },
@@ -454,7 +453,7 @@
       if (!this.overrideBase) {
         this.overrideBase = this.overrideContainer.find('label').text();
       }
-      button = this.overrideButtonContainer.find('a');
+      button = this.overrideContainer.find('a.button');
       button.on('click', function(e) {
         return e.preventDefault();
       });

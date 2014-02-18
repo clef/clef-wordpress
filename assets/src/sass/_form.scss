@@ -6,11 +6,11 @@
     .settings-section {
         &.override-settings {
             .inputs-container {
-                @include span-columns(10);
                 .input-container {
                     background: none;
                     padding: 0;
                     margin: 0;
+                    clear: both;
                 }
                 label {
                     width: auto;
@@ -20,7 +20,7 @@
                     padding-left: 10px;
                     background: #DDD;
                     padding: 1px 5px;
-                    font-size: 11px;
+                    font-size: 9px;
                     @include media($tablet) {
                         width: 100%;
                         font-size: 12px;
@@ -34,15 +34,41 @@
                     width: auto;
                     clear: both;
                     cursor: pointer;
+                    color: #BBB;
                     &:hover {
                         text-decoration: underline;
                     }
                 }
-                margin-bottom: 20px;
+
+                .override-buttons {
+                    display: none;
+                    margin-top: 10px;
+                    clear: both;
+                    .button {
+                        display: inline-block;
+                        text-align: center;
+                        margin-top: 30px;
+                    }
+                }
             }
-        }
-        .override-buttons {
-            clear: both;
+            .preview-container {
+                @include span-columns(4);
+                display: none;
+                img {
+                    margin-top: 15px;
+                    width: 100%;
+                }
+            }
+
+            &.set {
+                .preview-container {
+                    display: block;
+                }
+
+                .override-buttons {
+                    display: block;
+                }
+            }
         }
 
         &.support-settings {

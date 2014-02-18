@@ -384,42 +384,57 @@ body {
 
 #clef-settings-form form {
   display: none; }
-#clef-settings-form .settings-section.override-settings .inputs-container {
+#clef-settings-form .settings-section.override-settings .inputs-container .input-container {
+  background: none;
+  padding: 0;
+  margin: 0;
+  clear: both; }
+#clef-settings-form .settings-section.override-settings .inputs-container label {
+  width: auto;
+  margin: 0;
+  line-height: 25px;
+  font-weight: bold;
+  padding-left: 10px;
+  background: #DDD;
+  padding: 1px 5px;
+  font-size: 9px; }
+  @media screen and (max-width: 768px) {
+    #clef-settings-form .settings-section.override-settings .inputs-container label {
+      width: 100%;
+      font-size: 12px; } }
+#clef-settings-form .settings-section.override-settings .inputs-container input {
+  float: left; }
+#clef-settings-form .settings-section.override-settings .inputs-container .generate-override {
+  display: block;
+  width: auto;
+  clear: both;
+  cursor: pointer;
+  color: #BBB; }
+  #clef-settings-form .settings-section.override-settings .inputs-container .generate-override:hover {
+    text-decoration: underline; }
+#clef-settings-form .settings-section.override-settings .inputs-container .override-buttons {
+  display: none;
+  margin-top: 10px;
+  clear: both; }
+  #clef-settings-form .settings-section.override-settings .inputs-container .override-buttons .button {
+    display: inline-block;
+    text-align: center;
+    margin-top: 30px; }
+#clef-settings-form .settings-section.override-settings .preview-container {
   display: block;
   float: left;
   margin-right: 2.5641%;
-  width: 100%;
-  margin-bottom: 20px; }
-  #clef-settings-form .settings-section.override-settings .inputs-container:last-child {
+  width: 38.46154%;
+  display: none; }
+  #clef-settings-form .settings-section.override-settings .preview-container:last-child {
     margin-right: 0; }
-  #clef-settings-form .settings-section.override-settings .inputs-container .input-container {
-    background: none;
-    padding: 0;
-    margin: 0; }
-  #clef-settings-form .settings-section.override-settings .inputs-container label {
-    width: auto;
-    margin: 0;
-    line-height: 25px;
-    font-weight: bold;
-    padding-left: 10px;
-    background: #DDD;
-    padding: 1px 5px;
-    font-size: 11px; }
-    @media screen and (max-width: 768px) {
-      #clef-settings-form .settings-section.override-settings .inputs-container label {
-        width: 100%;
-        font-size: 12px; } }
-  #clef-settings-form .settings-section.override-settings .inputs-container input {
-    float: left; }
-  #clef-settings-form .settings-section.override-settings .inputs-container .generate-override {
-    display: block;
-    width: auto;
-    clear: both;
-    cursor: pointer; }
-    #clef-settings-form .settings-section.override-settings .inputs-container .generate-override:hover {
-      text-decoration: underline; }
-#clef-settings-form .settings-section .override-buttons {
-  clear: both; }
+  #clef-settings-form .settings-section.override-settings .preview-container img {
+    margin-top: 15px;
+    width: 100%; }
+#clef-settings-form .settings-section.override-settings.set .preview-container {
+  display: block; }
+#clef-settings-form .settings-section.override-settings.set .override-buttons {
+  display: block; }
 #clef-settings-form .settings-section.support-settings .preview-container {
   padding-top: 10px;
   display: block;

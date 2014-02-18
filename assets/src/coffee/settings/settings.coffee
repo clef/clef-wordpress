@@ -75,9 +75,7 @@
                 .parents('.input-container')
 
             @overrideContainer = @$el.find '.override-settings'
-            @overrideButtonContainer = @$el.find '.override-buttons'
             @setOverrideLink()
-
 
             @badgePreviewContainer = @$el.find '.support-settings .ftr-preview'
 
@@ -102,7 +100,7 @@
             @xmlEl.toggle passwordsDisabled
             @toggleOverrideContainer passwordsDisabled
 
-            @overrideButtonContainer.toggle @model.overrideIsSet()
+            @overrideContainer.toggleClass 'set', @model.overrideIsSet()
 
             @inviteUsersView.render()
 
@@ -124,7 +122,7 @@
             if !@overrideBase
                 @overrideBase = @overrideContainer.find('label').text()
 
-            button = @overrideButtonContainer.find('a')
+            button = @overrideContainer.find('a.button')
             button.on 'click', (e) -> e.preventDefault()
             button.attr(
                 'href',
