@@ -5,6 +5,6 @@
     jQuery(document).ready(function() {
         var options = <?php echo json_encode($options); ?>;
         var tutorial = new ConnectTutorialView(_.extend(options, { slideFilterSelector: '.connect' }));
-        tutorial.render();
+        tutorial.show();
     });
 </script>

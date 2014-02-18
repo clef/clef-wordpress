@@ -47,10 +47,14 @@
                     <?php $form->getSection('clef_override_settings')->getField('key')->render(array("placeholder" => "Enter override key here")); ?>
                     <a class="generate-override"><?php _e("generate a secure override url for me", "clef"); ?></a>
                 </div>
+               <div class="override-buttons">
+                   <a name="override link" class="button button-primary button-hero" href="#"><?php echo get_option('blogname'); ?> <?php _e("Override URL", "clef"); ?></a>
+                   <p><?php _e("Drag this your bookmarks bar", "clef"); ?></p>
+               </div>
            </div>
-           <div class="override-buttons">
-               <p><?php _e("Drag this your bookmarks bar", "clef"); ?> — <a name="override link" class="button button-primary button-small" href="#"><?php echo get_option('blogname'); ?> <?php _e("Override URL", "clef"); ?></a></p>
-           </div>
+            <div class="preview-container">
+                <img src="<?php echo CLEF_URL ?>assets/dist/img/bookmark.png" alt="add to bookmarks bar">
+            </div>
         </div>
         <div class="support-settings settings-section">
             <div class="inputs-container">
