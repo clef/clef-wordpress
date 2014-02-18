@@ -55,22 +55,22 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-#clef-settings-container {
+#clef-settings-container, #connect-clef-account {
   width: 100%;
   height: 100%;
   position: relative;
   display: none; }
-  #clef-settings-container #clef-settings-header {
+  #clef-settings-container #clef-settings-header, #connect-clef-account #clef-settings-header {
     display: none; }
-  #clef-settings-container .message {
+  #clef-settings-container .message, #connect-clef-account .message {
     margin-top: 20px;
     margin-left: 0;
     display: none; }
-  #clef-settings-container #clef-settings {
+  #clef-settings-container #clef-settings, #connect-clef-account #clef-settings {
     position: aboslute;
     top: 0;
     left: 0; }
-  #clef-settings-container .settings-section {
+  #clef-settings-container .settings-section, #connect-clef-account .settings-section {
     background: white;
     padding: 20px;
     margin: 20px 0;
@@ -79,31 +79,31 @@ body {
     max-width: 75em;
     margin-left: auto;
     margin-right: auto; }
-    #clef-settings-container .settings-section h3, #clef-settings-container .settings-section h4 {
+    #clef-settings-container .settings-section h3, #clef-settings-container .settings-section h4, #connect-clef-account .settings-section h3, #connect-clef-account .settings-section h4 {
       margin: 0; }
-    #clef-settings-container .settings-section:before, #clef-settings-container .settings-section:after {
+    #clef-settings-container .settings-section:before, #clef-settings-container .settings-section:after, #connect-clef-account .settings-section:before, #connect-clef-account .settings-section:after {
       content: " ";
       display: table; }
-    #clef-settings-container .settings-section:after {
+    #clef-settings-container .settings-section:after, #connect-clef-account .settings-section:after {
       clear: both; }
-    #clef-settings-container .settings-section .error.form-error {
+    #clef-settings-container .settings-section .error.form-error, #connect-clef-account .settings-section .error.form-error {
       float: left; }
-    #clef-settings-container .settings-section .inputs-container {
+    #clef-settings-container .settings-section .inputs-container, #connect-clef-account .settings-section .inputs-container {
       display: block;
       float: left;
       margin-right: 2.5641%;
       width: 58.97436%; }
-      #clef-settings-container .settings-section .inputs-container:last-child {
+      #clef-settings-container .settings-section .inputs-container:last-child, #connect-clef-account .settings-section .inputs-container:last-child {
         margin-right: 0; }
       @media screen and (max-width: 768px) {
-        #clef-settings-container .settings-section .inputs-container {
+        #clef-settings-container .settings-section .inputs-container, #connect-clef-account .settings-section .inputs-container {
           display: block;
           float: left;
           margin-right: 2.5641%;
           width: 100%; }
-          #clef-settings-container .settings-section .inputs-container:last-child {
+          #clef-settings-container .settings-section .inputs-container:last-child, #connect-clef-account .settings-section .inputs-container:last-child {
             margin-right: 0; } }
-      #clef-settings-container .settings-section .inputs-container .input-container {
+      #clef-settings-container .settings-section .inputs-container .input-container, #connect-clef-account .settings-section .inputs-container .input-container {
         background: #EEE;
         padding: 10px;
         margin: 10px 0;
@@ -111,64 +111,64 @@ body {
         float: left;
         margin-right: 2.5641%;
         width: 100%; }
-        #clef-settings-container .settings-section .inputs-container .input-container:last-child {
+        #clef-settings-container .settings-section .inputs-container .input-container:last-child, #connect-clef-account .settings-section .inputs-container .input-container:last-child {
           margin-right: 0; }
-        #clef-settings-container .settings-section .inputs-container .input-container label {
+        #clef-settings-container .settings-section .inputs-container .input-container label, #connect-clef-account .settings-section .inputs-container .input-container label {
           display: block;
           float: left;
           margin-right: 2.5641%;
           width: 48.71795%;
           margin-right: 0 !important; }
-          #clef-settings-container .settings-section .inputs-container .input-container label:last-child {
+          #clef-settings-container .settings-section .inputs-container .input-container label:last-child, #connect-clef-account .settings-section .inputs-container .input-container label:last-child {
             margin-right: 0; }
           @media screen and (max-width: 768px) {
-            #clef-settings-container .settings-section .inputs-container .input-container label {
+            #clef-settings-container .settings-section .inputs-container .input-container label, #connect-clef-account .settings-section .inputs-container .input-container label {
               display: block;
               float: left;
               margin-right: 2.5641%;
               width: 100%; }
-              #clef-settings-container .settings-section .inputs-container .input-container label:last-child {
+              #clef-settings-container .settings-section .inputs-container .input-container label:last-child, #connect-clef-account .settings-section .inputs-container .input-container label:last-child {
                 margin-right: 0; } }
-        #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
+        #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select, #connect-clef-account .settings-section .inputs-container .input-container input, #connect-clef-account .settings-section .inputs-container .input-container select {
           float: right;
           width: auto;
           margin: 0;
           margin-bottom: 5px; }
           @media screen and (max-width: 768px) {
-            #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select {
+            #clef-settings-container .settings-section .inputs-container .input-container input, #clef-settings-container .settings-section .inputs-container .input-container select, #connect-clef-account .settings-section .inputs-container .input-container input, #connect-clef-account .settings-section .inputs-container .input-container select {
               clear: both;
               float: none;
               margin: 10px 0; } }
         @media screen and (max-width: 768px) {
-          #clef-settings-container .settings-section .inputs-container .input-container input[type="checkbox"] {
+          #clef-settings-container .settings-section .inputs-container .input-container input[type="checkbox"], #connect-clef-account .settings-section .inputs-container .input-container input[type="checkbox"] {
             width: 25px; } }
-      #clef-settings-container .settings-section .inputs-container .ajax-settings-msg {
+      #clef-settings-container .settings-section .inputs-container .ajax-settings-msg, #connect-clef-account .settings-section .inputs-container .ajax-settings-msg {
         clear: both;
         margin: 0;
         margin-bottom: 20px;
         position: relative;
         top: 10px; }
-    #clef-settings-container .settings-section.multisite .inputs-container {
+    #clef-settings-container .settings-section.multisite .inputs-container, #connect-clef-account .settings-section.multisite .inputs-container {
       display: block;
       float: left;
       margin-right: 2.5641%;
       width: 48.71795%; }
-      #clef-settings-container .settings-section.multisite .inputs-container:last-child {
+      #clef-settings-container .settings-section.multisite .inputs-container:last-child, #connect-clef-account .settings-section.multisite .inputs-container:last-child {
         margin-right: 0; }
-      #clef-settings-container .settings-section.multisite .inputs-container .input-container {
+      #clef-settings-container .settings-section.multisite .inputs-container .input-container, #connect-clef-account .settings-section.multisite .inputs-container .input-container {
         display: block;
         float: left;
         margin-right: 5.26316%;
         width: 100%; }
-        #clef-settings-container .settings-section.multisite .inputs-container .input-container:last-child {
+        #clef-settings-container .settings-section.multisite .inputs-container .input-container:last-child, #connect-clef-account .settings-section.multisite .inputs-container .input-container:last-child {
           margin-right: 0; }
-  #clef-settings-container .invite-users .invite-users-message {
+  #clef-settings-container .invite-users .invite-users-message, #connect-clef-account .invite-users .invite-users-message {
     margin: 10px 0 0 0;
     clear: both; }
-  #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4 {
+  #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4, #connect-clef-account .invite-users .header h3, #connect-clef-account .invite-users .header h4 {
     margin-top: 0;
     margin-bottom: 5px; }
-  #clef-settings-container .invite-users .button {
+  #clef-settings-container .invite-users .button, #connect-clef-account .invite-users .button {
     margin-top: 20px; }
 
 #clef-tutorial {
@@ -601,3 +601,7 @@ body {
       font-size: 11px; }
       .invite-users .preview-container .email p:first-child {
         margin-top: 0; }
+
+#connect-clef-account .connect-clef-message {
+  padding: 10px;
+  margin: 20px 0 10px 0; }

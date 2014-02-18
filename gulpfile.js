@@ -46,10 +46,12 @@ gulp.task('sass', function() {
 gulp.task('coffee', function() {
     build(gulp.src(['assets/src/coffee/**/*.coffee', '!assets/src/coffee/settings/**/*.coffee']));
     build(gulp.src([
+        'assets/src/coffee/settings/utils.coffee',
         'assets/src/coffee/settings/invite.coffee',
         'assets/src/coffee/settings/multisite.coffee',
         'assets/src/coffee/settings/tutorial.coffee',
-        'assets/src/coffee/settings/settings.coffee'
+        'assets/src/coffee/settings/settings.coffee',
+        'assets/src/coffee/settings/connect.coffee'
     ]), 'settings.js');
 
     function build(strm, output) {

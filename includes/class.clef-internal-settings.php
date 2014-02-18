@@ -116,7 +116,7 @@ class ClefInternalSettings {
             $disabled = true;
         }
 
-        if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::current_user_has_clef()) {
+        if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::user_has_clef($user)) {
             $disabled = true;
         }
 

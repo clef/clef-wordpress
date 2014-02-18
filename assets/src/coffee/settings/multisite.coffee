@@ -8,7 +8,7 @@
 
     MultisiteOptionsModel = AjaxSettingsModel.extend
         parse: (data, options)->
-            options.url = ajaxurl + '?action=clef_multisite_options'
+            options.url = ajaxurl + '?action=clef_multisite_settings'
             MultisiteOptionsModel.__super__.parse.call(this, data, options)
 
     this.MultisiteOptionsModel = MultisiteOptionsModel
