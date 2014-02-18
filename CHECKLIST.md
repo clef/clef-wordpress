@@ -1,10 +1,10 @@
 # Full Features Test Checklist
 This file presents a master list of WP Clef’s features to facilitate systematic testing before major releases. It is designed to utilize GitHub’s MarkDown checklists. So, to run a full test, copy-n-paste the raw contents of this file into a [new GitHub Issue](https://github.com/clef/wordpress/issues/new). Then check the boxes as you complete the steps.
 
-Abbreviations:
-- SW = Setup Wizard
-- WP = WordPress
-- WPC = WP Clef (i.e., the Clef plugin for WordPress)
+**General Legend:**
+- SW: Setup Wizard
+- WP: WordPress
+- WPC: WP Clef (i.e., the Clef plugin for WordPress)
 - :boom: = boom = awwww yeeeeah = [cue theme music](http://www.youtube.com/watch?v=X5AfjAXcBXY), RT [this](https://twitter.com/landakram/status/434091346916167680), smile and remember how fresh-n-clean Clef is
 
 ## Uninstall Process
@@ -426,7 +426,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] After 3 successful logins, show dismissible Waltz notification on Clef settings page.
  - [ ] After 15 successful logins, if Clef settings Waltz notification hasn't been dismissed, show a one-time notification on the Dashboard.
 
-1. State 2: Waltz installed.
+1. State 3: Waltz installed.
  - [ ] No Waltz notifications after 3 successful logins.
  - [ ] No Waltz notification on Dashboard after 15 successful logins.
 
@@ -449,5 +449,5 @@ Start the following tests from fresh install state (i.e., all settings except AP
 ## BruteProtect
 - [ ] One-click install & activate successful.
 
-## :boom:
-- [ ] To the precious few who make it this far: [treat yo self](http://www.youtube.com/watch?v=-K4if6QkDbo).
+## The End
+- [ ] To the precious few who make it this far: [treat yo self](http://www.youtube.com/watch?v=-K4if6QkDbo) to a :boom:.
