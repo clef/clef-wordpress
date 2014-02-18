@@ -1,4 +1,4 @@
-<p><?php _e('Hi,', 'clef'); ?></p>
-<p><?php _e('The administrator for this site just set up <a href="https://getclef.com">Clef</a>, which means you can now log in without passwords.', "clef"); ?></p>
-<p><?php _e('Click <a href="<?php echo $invite_link ?>">here</a> and log in with your username and password (for the last time) to get started.', "clef"); ?></p>
+<p><?php _e('Hi there,', 'clef'); ?></p>
+<p><?php _e('The administrator for', 'clef') ?> <a href="<?php echo get_site_url(); ?>"><?php echo get_bloginfo('name') ?></a> <?php _e('just set up <a href="https://getclef.com">Clef</a>, which means you can now log in without passwords.', "clef"); ?></p>
+<p><?php _e('Click', 'clef'); ?> <a href="<?php if(!empty($invite_link)) { echo $invite_link; } else { echo "#"; } ?>"><?php _e('here', 'clef'); ?></a> <?php _e("and log in with your username and password (for the last time) to get started.", "clef"); ?></p>
 <p><?php _e('Thanks!', 'clef'); ?></p>
