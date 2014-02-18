@@ -54,16 +54,318 @@ Abbreviations:
  - [ ] "Go to Clef Settings" loads settings page with graceful slide up.
  
 ### Setup Wizard Multi-Site Iterations
+
 #### State 1: Network-wide WPC install on shared domain name
-- [ ] SW tests (A), (B), and (C) performed on Super Admin site and one sub-site.
+- [ ] Run SW tests (A), (B), and (C) on Super Admin site.
+- [ ] Run SW tests (A), (B), and (C) on one sub-site.
+
 #### State 2: Network-wide WPC install with custom domain names
-- [ ] SW tests (A), (B), and (C) performed on Super Admin site and one sub-site.
+- [ ] Run SW tests (A), (B), and (C) on Super Admin site.
+- [ ] Run SW tests (A), (B), and (C) on one sub-site.
+
 #### State 3: Site-specific install on shared domain name
-- [ ] SW tests (A), (B), and (C) performed on Super Admin site and one sub-site.
+- [ ] Run SW tests (A), (B), and (C) on Super Admin site.
+- [ ] Run SW tests (A), (B), and (C) on one sub-site.
+
 #### State 4: Site-specific install on shared domain name
-- [ ] SW tests (A), (B), and (C) performed on Super Admin site and one sub-site. 
+- [ ] Run SW tests (A), (B), and (C) on Super Admin site.
+- [ ] Run SW tests (A), (B), and (C) on one sub-site.
 
 ## Password Settings
+**WP-Login.php Legend:**
+- CB: Clef button (i.e., “Log in w/ your phone”)
+- LE: "Lost your password?" e-mail
+- LF: "Lost your password?" form (i.e., wp-login.php?action=lostpassword)
+- LL: "Lost your password?" link
+- PF: Password form (i.e., the ordinary user/pass form displayed at wp-login.php)
+
+**Settings Page Legend**
+- P1: Disable passwords for Clef users
+- P2: Disable passwords for all users with roles greater than or equal to
+- P3: Disable passwords for all users and hide the password login form
+- P4: Allow passwords for API
+- O1: Override key
+- O2: Generate secure override url link
+- O3: Override url button
+- O4: Override preview
+- SS: "Setting saved" AJAX notification (appears then fades).
+
+Start the following tests from fresh install state (i.e., all settings except API keys should be null, false, or “disabled”).
+
+### Disable passwords: P1 = true, P2–P4 = null.
+- [ ] SS fades.
+- [ ] P4 appears.
+- [ ] Override settings section appears.
+ - O1 = null.
+ - O4 = hidden.
+- [ ] selecting 02
+ - shows SS,
+ - inserts key in O1,
+ - and shows O4.
+
+1. Non-Clef user log in
+ - [ ] wp-login.php displays PF + CB with LL.
+ - [ ] Log in via PF.
+
+1. Non-Clef user reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+ 
+1. Clef user log in
+ - [ ] wp-login.php displays PF + CB with LL.
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Clef user reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. XML RPC log in
+ - [ ] Disabled. Returns error notification.
+
+### Disable passwords: set P2 = not null, P3–P4 = null.
+- [ ] wp-login.php displays PF + CB with LL.
+
+#### When any non-null P2 option is selected
+- [ ] SS fades.
+- [ ] P4 appears.
+- [ ] Override settings section appears.
+ - O1 = null.
+ - O4 = hidden.
+- [ ] selecting 02
+ - shows SS,
+ - inserts key in O1,
+ - and shows O4.
+
+#### P2 = “Contributor”
+1. Subscriber role log in
+ - [ ] Log in via PF.
+
+1. Subscriber role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Contributor role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Contributor role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Author role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Author role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Editor role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Editor role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Super Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+#### P2 = “Author”
+1. Subscriber role log in
+ - [ ] Log in via PF.
+
+1. Subscriber role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Contributor role log in
+ - [ ] Log in via PF.
+
+1. Contributor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Author role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Author role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Editor role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Editor role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Super Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+#### P2 = “Editor”
+1. Subscriber role log in
+ - [ ] Log in via PF.
+
+1. Subscriber role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Contributor role log in
+ - [ ] Log in via PF.
+
+1. Contributor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Author role log in
+ - [ ] Log in via PF.
+
+1. Author role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Editor role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Editor role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Super Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+#### When “Administrator” is selected.
+1. Subscriber role log in
+ - [ ] Log in via PF.
+
+1. Subscriber role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Contributor role log in
+ - [ ] Log in via PF.
+
+1. Contributor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Author role log in
+ - [ ] Log in via PF.
+
+1. Author role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Editor role log in
+ - [ ] Log in via PF.
+
+1. Editor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. Super Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+#### When “Super Administrator” is selected.
+1. Subscriber role log in
+ - [ ] Log in via PF.
+
+1. Subscriber role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Contributor role log in
+ - [ ] Log in via PF.
+
+1. Contributor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Author role log in
+ - [ ] Log in via PF.
+
+1. Author role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Editor role log in
+ - [ ] Log in via PF.
+
+1. Editor role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Administrator role log in
+ - [ ] Log in via PF.
+
+1. Administrator role reset password
+ - [ ] LF sends password reset e-mail.
+ - [ ] Set new password.
+ - [ ] Receive site admin notification e-mail.
+
+1. Super Administrator role log in
+ - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via CB.
+
+1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
 
 ## Browser Iterations
 
