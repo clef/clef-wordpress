@@ -82,6 +82,8 @@ class AjaxSettings {
             } 
         }
 
+        $to_be_saved = apply_filters('ajax_settings_pre_save', $to_be_saved);
+
         if ($is_network_wide) {
             update_site_option($this->name(), $to_be_saved);
         } else {
