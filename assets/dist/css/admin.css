@@ -350,6 +350,8 @@ body {
       color: #333; }
     #clef-tutorial .using-clef .next {
       margin: 20px 0; }
+  #clef-tutorial .waltz {
+    display: none; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {

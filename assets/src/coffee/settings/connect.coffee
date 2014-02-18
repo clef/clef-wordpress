@@ -12,6 +12,9 @@
         initialize: (@opts) ->
             @tutorial = new ConnectTutorialView _.clone(@opts)
             @disconnect = @$el.find '.disconnect-clef'
+
+            @listenTo @tutorial, 'done', @finishTutorial
+
             @render()
         show: ->
             @$el.fadeIn()
@@ -39,11 +42,12 @@
                         @showMessage
                             message: ClefUtils.getErrorMessage(data)
                             type: "error"
-
         showMessage: (data) ->
             @message.remove() if @message
             @message = $(@messageTemplate data).hide()
             @message.prependTo(@$el).slideDown()
+        finishTutorial: ->
+            window.location = ''
 
     window.ConnectView = ConnectView
 
