@@ -272,7 +272,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-#### When “Administrator” is selected.
+#### P2 = “Administrator”
 1. Subscriber role log in
  - [ ] Log in via PF.
 
@@ -319,7 +319,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-#### When “Super Administrator” is selected.
+#### P2 = “Super Administrator”
 1. Subscriber role log in
  - [ ] Log in via PF.
 
