@@ -55,17 +55,18 @@
         return function(data) {
           if (data.success) {
             _this.trigger("invited");
-            _this.showMessage({
+            return _this.showMessage({
               message: clefTranslations.messages.success.invite,
               type: "updated"
             });
+          } else {
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.invite)({
+                error: ClefUtils.getErrorMessage(data)
+              }),
+              type: "error"
+            });
           }
-          return _this.showMessage({
-            message: _.template(clefTranslations.messages.error.invite)({
-              error: ClefUtils.getErrorMessage(data)
-            }),
-            type: "error"
-          });
         };
       })(this));
     },

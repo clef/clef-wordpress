@@ -108,7 +108,7 @@
         </p>
         <p>
             <label for="user_pass"><?php _e("Password", "clef"); ?><br>
-            <input type="password" id="user_pass" class="ajax-ignore input" value="" size="20"></label>
+            <input type="text" id="user_pass" class="ajax-ignore input" value="" size="20"></label>
         </p>
         <div style="position: relative">
             <div style="border-bottom: 1px solid #EEE; width: 90%; margin: 0 5%; z-index: 1; top: 50%; position: absolute;"></div>
