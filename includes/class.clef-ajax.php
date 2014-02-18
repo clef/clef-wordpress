@@ -33,24 +33,39 @@ class ClefAjax {
     }
 
     public function handle_ajax_request() {
-        $data = json_decode(file_get_contents( "php://input" ), true);
-        if (empty($data)) {
-            $data = $_REQUEST;
-        }
-
         $action = $_REQUEST['action'];
         $hook_info = $this->hook_map[$action];
         $options = $hook_info['options'];
 
+        $data = json_decode(file_get_contents( "php://input" ), true);
+        if (empty($data)) {
+            $data = $_REQUEST;
+            $send_non_200_error = false;
+        } else {
+            # if the request is coming from backbone, we need to non-200 error
+            $send_non_200_error = true;
+        }
+
         if ($options['nonce'] && (!isset($data['_wpnonce']) || !wp_verify_nonce($data['_wpnonce'], $action))) {
-            wp_send_json(array("error" => __("invalid nonce", "clef")));
+            $this->send_json_error(
+                array("error" => __("invalid nonce", "clef")),
+                $send_non_200_error
+            );
         }
 
         if (!current_user_can($options['capability'])) {
-            wp_send_json(array("error" => __("user does not have correct capabilities", "clef")));
+            $this->send_json_error(
+                array("error" => __("user does not have correct capabilities", "clef")),
+                $send_non_200_error
+            );
         }
 
         call_user_func($hook_info['function']);
+    }
+
+    public static function send_json_error($data, $send_non_200) {
+        if ($send_non_200) header('HTTP/1.0 400');
+        wp_send_json_error($data);
     }
 
     public static function start($settings) {

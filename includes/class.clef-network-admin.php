@@ -14,7 +14,7 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         global $clef_ajax;
         $clef_ajax->add_action(
-            'clef_multisite_options', 
+            self::MULTISITE_SETTINGS_ACTION, 
             array($this, 'ajax_multisite_options'),
             array( 'capability' => 'manage_network_options')
         );
@@ -80,13 +80,7 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function ajax_multisite_options() {
-        if (!is_super_admin()) wp_send_json(array("error" => __('Cheatin&#8217; uh?', 'clef')));
-
         $settings = json_decode(file_get_contents( "php://input" ), true);
-
-        if (!wp_verify_nonce($settings['_wpnonce'], $this::MULTISITE_SETTINGS_ACTION)) {
-            wp_send_json(array("error" => __("invalid nonce", "clef")));
-        }
 
         if (isset($settings['allow_override'])) {
             update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $settings['allow_override']);

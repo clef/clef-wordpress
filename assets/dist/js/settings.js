@@ -71,7 +71,7 @@
   });
   MultisiteOptionsModel = AjaxSettingsModel.extend({
     parse: function(data, options) {
-      options.url = ajaxurl + '?action=clef_multisite_options';
+      options.url = ajaxurl + '?action=clef_multisite_settings';
       return MultisiteOptionsModel.__super__.parse.call(this, data, options);
     }
   });
@@ -471,48 +471,6 @@
     isConfigured: function() {
       return this.model.isConfigured();
     },
-    clearErrors: function(model, data) {
-      var inp, inputName, v, _ref, _results;
-      _ref = model.changed;
-      _results = [];
-      for (inputName in _ref) {
-        v = _ref[inputName];
-        inp = this.model.findInput(inputName).parents('.input-container');
-        if (inp.hasClass('error')) {
-          _results.push(inp.removeClass('error').next('.error.form-error').remove());
-        } else {
-          _results.push(void 0);
-        }
-      }
-      return _results;
-    },
-    error: function(model, data) {
-      var inp, inputName, msg, _ref, _results;
-      if (!data.responseJSON.errors) {
-        this.trigger('message', {
-          message: this.genericErrorMessage,
-          type: 'error'
-        });
-        $('html, body').animate({
-          scrollTop: 0
-        }, "show");
-        return;
-      }
-      _ref = data.responseJSON.errors;
-      _results = [];
-      for (inputName in _ref) {
-        msg = _ref[inputName];
-        inp = this.model.cFindInput(inputName).parents('.input-container');
-        if (inp.hasClass('error')) {
-          _results.push(inp.next('.error.form-error').html(msg));
-        } else {
-          _results.push(inp.addClass('error').after(this.errorTemplate({
-            message: msg
-          })));
-        }
-      }
-      return _results;
-    },
     saveForm: function(e) {
       e.preventDefault();
       return this.model.save({}, {
@@ -524,7 +482,7 @@
             });
             return $('html, body').animate({
               scrollTop: 0
-            }, "show");
+            }, "slow");
           };
         })(this),
         error: this.model.saveError.bind(this.model)
