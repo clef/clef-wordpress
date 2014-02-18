@@ -63,7 +63,7 @@ class ClefAdmin {
 
     public function ajax_dismiss_waltz_notification() {
         $this->settings->set('hide_clef_waltz_prompt', true);
-        wp_send_json(array('success' => true));
+        return array('success' => true);
     }
 
     private function render_waltz_prompt() {
@@ -169,48 +169,51 @@ class ClefAdmin {
 
     public function ajax_invite_users() {
         $role = strtolower(ClefUtils::isset_POST('roles'));
+
         if (!$role) {
-            wp_send_json(array( "error" => __("invalid roles", "clef") ));
+            return new WP_Error('invalid_role', __('invalid role', 'clef'));
         }
 
         $other_users = get_users(array('exclude' => array(get_current_user_id())));
         $filtered_users = $this->filter_users_by_role($other_users, $role);
 
         if (empty($filtered_users)) {
-            wp_send_json(array( "error" => __("there are no other users with this role or greater", "clef") ));
+            return new WP_Error('no_users', __("there are no other users with this role or greater", "clef"));
         }
+
         foreach ($filtered_users as &$user) {
             $invite_code = new InviteCode($user);
             update_user_meta($user->ID, 'clef_invite_code', $invite_code);
             $this->send_invite_email($user, $invite_code);
         }
-        wp_send_json(array("success" => true));
+
+        return array("success" => true);
     }
 
      public function ajax_connect_clef_account_with_clef_id() {
         if (!ClefUtils::isset_POST('identifier')) {
-            wp_send_json(array( "error" => __("invalid Clef ID", "clef")));
+            return new WP_Error("invalid_clef_id", __("invalid Clef ID", "clef"));
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
-        wp_send_json(array("success" => true));
+        return array("success" => true);
     }
 
     public function ajax_connect_clef_account_with_oauth_code() {
         if (!ClefUtils::isset_POST('identifier')) {
-            wp_send_json(array( "error" => __("invalid OAuth Code", "clef")));
+            return new WP_Error("invalid_oauth_code", __("invalid OAuth Code", "clef"));
         }
 
         try {
             $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_POST('identifier'), $this->settings);
         } catch (LoginException $e) {
-            wp_send_json(array( "error" => $e->getMessage()));
+            return new WP_Error("bad_oauth_exchange", $e->getMessage());
         }
 
         ClefUtils::associate_clef_id($info->id);
         $_SESSION['logged_in_at'] = time();
 
-        wp_send_json(array("success" => true));
+        return array("success" => true);
     }
 
     public function render_connect_clef_account() {

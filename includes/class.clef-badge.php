@@ -69,7 +69,7 @@ class ClefBadge {
 
         $this->hide_prompt();
 
-        wp_send_json(array( "success" => true ));
+        return array( "success" => true );
     }
 
     public function hide_prompt() {

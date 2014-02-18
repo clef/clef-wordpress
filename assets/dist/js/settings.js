@@ -33,18 +33,18 @@
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
         return function(data) {
-          if (data.error) {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.invite)({
-                error: data.error
-              }),
-              type: "error"
-            });
-          } else if (data.success) {
+          if (data.success) {
             _this.trigger("invited");
             return _this.showMessage({
               message: clefTranslations.messages.success.invite,
               type: "updated"
+            });
+          } else if (data.data && data.data.error) {
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.invite)({
+                error: data.data.error
+              }),
+              type: "error"
             });
           }
         };
@@ -158,17 +158,17 @@
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
         return function(data) {
-          if (data.error) {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.connect)({
-                error: data.error
-              }),
-              type: "error"
-            });
-          } else {
+          if (data.success) {
             if (typeof cb === "function") {
               return cb(data);
             }
+          } else if (data.data && data.data.error) {
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.connect)({
+                error: data.data.error
+              }),
+              type: "error"
+            });
           }
         };
       })(this));

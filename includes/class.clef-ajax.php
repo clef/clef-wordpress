@@ -60,7 +60,15 @@ class ClefAjax {
             );
         }
 
-        call_user_func($hook_info['function']);
+        $response = call_user_func($hook_info['function']);
+        if (is_wp_error($response)) {
+            $this->send_json_error(
+                array("error" => $response->get_error_message()),
+                $send_non_200_error
+            );
+        } else {
+            wp_send_json($response);
+        }
     }
 
     public static function send_json_error($data, $send_non_200) {

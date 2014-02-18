@@ -26,17 +26,17 @@
             $.post @inviteUsersAction,
                 data,
                 (data) =>
-                    if data.error
-                        @showMessage
-                            message: _.template(
-                                clefTranslations.messages.error.invite
-                            )(error: data.error)
-                            type: "error"
-                    else if data.success
+                    if data.success
                         @trigger "invited"
                         @showMessage
                             message: clefTranslations.messages.success.invite
                             type:"updated"
+                    else if data.data && data.data.error
+                        @showMessage
+                            message: _.template(
+                                clefTranslations.messages.error.invite
+                            )(error: data.data.error)
+                            type: "error"
 
         hideButton: () ->
             @$el.find('.button').hide()

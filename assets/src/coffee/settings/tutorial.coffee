@@ -74,14 +74,14 @@
             $.post @connectClefAccountAction,
                 connectData,
                 (data) =>
-                    if data.error
+                    if data.success
+                        cb(data) if typeof(cb) == "function"
+                    else if data.data and data.data.error
                         @showMessage
                             message: _.template(
                                 clefTranslations.messages.error.connect
-                            )(error: data.error), 
+                            )(error: data.data.error), 
                             type: "error"
-                    else
-                        cb(data) if typeof(cb) == "function"
 
         showMessage: (opts) ->
             @$currentMessage.remove() if @$currentMessage

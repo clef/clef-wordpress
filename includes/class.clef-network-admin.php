@@ -86,7 +86,7 @@ class ClefNetworkAdmin extends ClefAdmin {
             update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $settings['allow_override']);
         }
 
-        wp_send_json(array("success" => true));
+        return array("success" => true);
     }
 
     public function multisite_settings_edit() {
