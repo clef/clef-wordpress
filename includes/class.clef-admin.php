@@ -7,6 +7,9 @@ class ClefAdmin {
     const CONNECT_CLEF_NONCE_NAME = "connect_clef_account";
     const INVITE_USERS_NONCE_NAME = "clef_invite_users";
 
+    const CLEF_WALTZ_LOGIN_COUNT = 3;
+    const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
+
     private static $instance = null;
 
     protected $settings;
@@ -80,7 +83,7 @@ class ClefAdmin {
         $should_hide |= $this->settings->get('hide_dashboard_waltz_prompt') == true;
         $should_hide |= $is_settings_page;
 
-        if ($login_count < 15 || $should_hide) return;
+        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || $should_hide) return;
 
         $this->render_waltz_prompt();
         $this->settings->set('hide_dashboard_waltz_prompt', true);
@@ -91,7 +94,9 @@ class ClefAdmin {
         $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
         $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
 
-        if (!$is_google_chrome || !$is_settings_page || $should_hide) return;
+        $login_count = $onboarding->get_login_count();
+
+        if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
         
         $this->render_waltz_prompt();
     }
@@ -350,7 +355,7 @@ class ClefAdmin {
         $clef_menu_title = __('Clef', 'clef');
         $hide_waltz_badge = $this->settings->get('hide_waltz_badge');
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
-        if ($login_count >= 3 && !$hide_waltz_badge && $is_google_chrome) {
+        if ($login_count >= self::CLEF_WALTZ_LOGIN_COUNT && !$hide_waltz_badge && $is_google_chrome) {
             $clef_menu_title .= $this->render_badge(1);
         }
         return $clef_menu_title;
