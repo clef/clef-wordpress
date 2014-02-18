@@ -7,6 +7,7 @@ class ClefCore {
 
     private $settings;
     private $badge;
+    private $onboarding;
 
     private function __construct() {
         // General utility functions
@@ -51,6 +52,7 @@ class ClefCore {
 
         $this->settings = $settings;
         $this->badge = $badge; 
+        $this->onboarding = $onboarding;
 
         // Load translations
         load_plugin_textdomain( 'clef', false, CLEF_PATH . 'languages/' );
@@ -84,6 +86,11 @@ class ClefCore {
         $settings_changes = false;
 
         if ($previous_version) {
+            if (version_compare($previous_version, '2.0', '<')) {
+                $this->onboarding->migrate_global_login_count();
+                $this->badge->hide_prompt();
+            }
+
             if (version_compare($previous_version, "1.9.1.1", '<')) {
                 $this->badge->hide_prompt();
             }
