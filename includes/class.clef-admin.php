@@ -232,7 +232,7 @@ class ClefAdmin {
             'admin/connect.tpl', 
             array( 
                 "options" => array(
-                    "connected" => ClefUtils::current_user_has_clef(),
+                    "connected" => ClefUtils::user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
                     "redirectURL" => add_query_arg(array( 'clef' => 'true'), wp_login_url()),
                     "clefJSURL" => CLEF_JS_URL,
@@ -272,7 +272,7 @@ class ClefAdmin {
             );
         }
 
-        if (ClefUtils::current_user_has_clef()) $name = __('Disconnect Clef account', 'clef');
+        if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'clef');
         else $name = __('Connect Clef account', 'clef');
         add_submenu_page(
             $menu_name,
