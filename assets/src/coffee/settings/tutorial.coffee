@@ -14,7 +14,7 @@
         slideClass: 'sub'
 
         initialize: (@opts) ->
-            if window.chrome
+            if window.chrome and not window.waltzIsInstalled
                 @$el.find('.waltz').addClass @slideClass
 
             @subs = []

@@ -61,19 +61,21 @@
         </div>
 
         <div class="waltz setup">
-            <img src="<?php echo CLEF_URL . "assets/dist/img/waltz.png" ?>" alt="Waltz">
-            <h1<?php _e(">Want to use Clef everywhere?", "clef"); ?></h1>
-            <p><?php _e("<a href='http://getwaltz.com'>Waltz</a> is a chrome extension that lets you log in to sites like Facebook, Gmail, and Twitter using Clef. It takes 5 seconds to install and will give you the full Clef experience.", "clef"); ?></p>
-            <a class="button button-primary button-hero" href="http://getwaltz.com" target="_blank"><?php _e("Try Waltz", "clef"); ?></a>
-            <a href="#" class="button button-hero next"><?php _e("Go to Clef settings", "clef"); ?></a>
+        <?php 
+            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
+                "next_href" => '#',
+                "next_text" => __("Go to Clef settings", "clef")
+            ));
+        ?>
         </div>
-        
+
         <div class="waltz connect">
-            <img src="<?php echo CLEF_URL . "assets/dist/img/waltz.png" ?>" alt="Waltz">
-            <h1><?php _e("Want to use Clef everywhere?", "clef"); ?></h1>
-            <p><?php _e("<a href='http://getwaltz.com'>Waltz</a> is a chrome extension that lets you log in to sites like Facebook, Gmail, and Twitter using Clef. It takes 5 seconds to install and will give you the full Clef experience.", "clef"); ?></p>
-            <a class="button button-primary button-hero" href="http://getwaltz.com" target="_blank"><?php _e("Get Waltz", "clef"); ?></a>
-            <a href="<?php echo admin_url(); ?>" class="button button-hero"><?php _e("Go to dashboard", "clef"); ?></a>
+        <?php 
+            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
+                "next_href" => admin_url(),
+                "next_text" => __("Go to dashboard", "clef")
+            ));
+        ?>
         </div>
 
     </div>

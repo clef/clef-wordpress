@@ -93,7 +93,7 @@
     initialize: function(opts) {
       var potentialSubs, sub, _i, _len;
       this.opts = opts;
-      if (window.chrome) {
+      if (window.chrome && !window.waltzIsInstalled) {
         this.$el.find('.waltz').addClass(this.slideClass);
       }
       this.subs = [];

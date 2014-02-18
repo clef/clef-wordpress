@@ -160,22 +160,6 @@
         }
     }
 
-    .waltz {
-        display: none;
-        @include widget();
-        padding: 40px 25px;
-        margin-top: 80px;
-        h1 {
-            margin-top: 0;
-        }
-        img {
-            @include span-columns(3);
-        }
-        .button:not(.button-primary) {
-            margin-left: 10px;
-        }
-    }
-
     .user, .no-sync {
         h1 {
             text-align: left;
@@ -209,5 +193,4 @@
             opacity: 1;
         }
     }
-
-} 
+}
