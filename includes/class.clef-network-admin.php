@@ -1,89 +1,110 @@
 <?php
+require_once(CLEF_PATH . 'includes/class.clef-settings.php');
 
 class ClefNetworkAdmin extends ClefAdmin {
+    private static $instance = null;
+    const MULTISITE_SETTINGS_ACTION = "clef_multisite_settings";
 
-    const CLASS_NAME = "ClefNetworkAdmin";
+    protected function __construct($settings) {
+        $this->settings = $settings;
 
-    public static function init() {
-        add_action('admin_init', array(__CLASS__, "setup_plugin"));
-        add_action('admin_init', array(__CLASS__, "settings_form"));
-        add_action('admin_enqueue_scripts', array(__CLASS__, "admin_enqueue_scripts"));
-        add_action('admin_enqueue_styles', array(__CLASS__, "admin_enqueue_styles"));
-        add_action('show_user_profile', array(__CLASS__, "show_user_profile"));
-        add_action('edit_user_profile', array(__CLASS__, "show_user_profile"));
-        add_action('edit_user_profile_update', array(__CLASS__, 'edit_user_profile_update'));
-        add_action('personal_options_update', array(__CLASS__, 'edit_user_profile_update'));
-        add_action('admin_notices', array(__CLASS__, 'edit_profile_errors'));
+        if (is_network_admin()) {
+            $this->initialize_hooks();
+        }
+
+        global $clef_ajax;
+        $clef_ajax->add_action(
+            self::MULTISITE_SETTINGS_ACTION, 
+            array($this, 'ajax_multisite_options'),
+            array( 'capability' => 'manage_network_options')
+        );
+        require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
+        $this->ajax_settings = AjaxSettings::start();
+    }
+
+    public function initialize_hooks() {
+        add_action('admin_init', array($this, "setup_plugin"));
+        add_action('admin_init', array($this, "settings_form"));
+        add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
+        add_action('show_user_profile', array($this, "show_user_profile"));
+        add_action('edit_user_profile', array($this, "show_user_profile"));
+        add_action('edit_user_profile_update', array($this, 'edit_user_profile_update'));
+        add_action('personal_options_update', array($this, 'edit_user_profile_update'));
+        add_action('admin_notices', array($this, 'edit_profile_errors'));
+        add_action('clef_hook_admin_menu', array($this, 'hook_admin_menu'));
 
         // MULTISITE
-        if (self::network_active()) {
-            add_action('network_admin_menu', array(__CLASS__, "admin_menu"));
-            add_action('network_admin_edit_clef', array(__CLASS__, "general_settings_edit"), 10, 0);
-            add_action('network_admin_edit_clef_multisite', array(__CLASS__, "multisite_settings_edit"), 10, 0);
+        if ($this->network_active()) {
+            add_action('network_admin_edit_clef_multisite', array($this, "multisite_settings_edit"), 10, 0);
         }
     }
 
-    public static function network_active() {
+    public function admin_enqueue_scripts($hook) {
+        parent::admin_enqueue_scripts($hook);
+    }
+
+    public function hook_admin_menu() {
+        if ($this->network_active()) {
+            add_action('network_admin_menu', array($this, "admin_menu"));
+        }
+    }
+
+    public function network_active() {
         if ( ! function_exists( 'is_plugin_active_for_network' ) )
             require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
         return is_plugin_active_for_network('wpclef/wpclef.php');
     }
 
-    public static function admin_menu() {
-        add_menu_page("Clef", "Clef", "manage_options", 'clef', array(__CLASS__, 'general_settings'));
-        add_submenu_page('clef','Settings','Settings', "manage_options",'clef', array(__CLASS__, 'general_settings'));
-        add_submenu_page("clef", "Multisite Options", "Multisite Options", "manage_options", 'clef_multisite', array(__CLASS__, 'multisite_settings'));
+    public function admin_menu() {
+        add_menu_page(
+            "Clef", 
+            "Clef", 
+            "manage_options", 
+            'clef', 
+            array($this, 'general_settings'));
+        add_submenu_page(
+            'clef',
+            __('Settings', "clef"),
+            __('Settings', "clef"), 
+            "manage_options",
+            'clef', 
+            array($this, 'general_settings'));
     }
 
-    public static function general_settings() {
-        $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
-        $form->renderBasicForm('Clef Settings', Settings_API_Util::ICON_SETTINGS);  
+    public function general_settings($options=array()) {
+        $options['isNetworkSettings'] = true;
+        $options['isUsingIndividualSettings'] = false;
+        $options['network_wide'] = true;
+        parent::general_settings($options);
     }
 
-    public static function general_settings_edit() {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'clef-options')) {
-            die("Security check; nonce failed.");
+    public function ajax_multisite_options() {
+        $settings = json_decode(file_get_contents( "php://input" ), true);
+
+        if (isset($settings['allow_override'])) {
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $settings['allow_override']);
         }
 
-        $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME);
-
-        $input = $form->validate($_POST['wpclef']);
-
-        foreach ($input as $key => $value) {
-            self::setting($key, $value);
-        }
-
-        wp_redirect(add_query_arg(array('page' => 'clef', 'updated' => 'true'), network_admin_url('admin.php')));
-        exit();
+        return array("success" => true);
     }
 
-    public static function multisite_settings() {
-        $form_url = "edit.php?action=clef_multisite";
-        if (get_site_option(self::MS_ENABLED_OPTION)) {
-            $allow_override = get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
-            include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-enabled.tpl.php';
-        } else {
-            include CLEF_TEMPLATE_PATH . 'network_admin/multisite-settings-disabled.tpl.php';
-        }
-    }
+    public function multisite_settings_edit() {
+        if (!is_super_admin()) die(__('Cheatin&#8217; uh?', 'clef'));
 
-    public static function multisite_settings_edit() {
         if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
-            die("Security check; nonce failed.");
+            die(__("Security check; nonce failed.", "clef"));
         }
-
 
         if (isset($_POST['allow_override_form'])) {
             $value = isset($_POST['allow_override']);
-            update_site_option(self::MS_ALLOW_OVERRIDE_OPTION, $value);
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $value);
         }
 
-
-        $enabled = get_site_option(self::MS_ENABLED_OPTION);
+        $enabled = get_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
         
         if (isset($_POST['disable']) || isset($_POST['enable'])) {
-            update_site_option(self::MS_ENABLED_OPTION, !$enabled);
+            update_site_option(ClefInternalSettings::MS_ENABLED_OPTION, !$enabled);
         }
 
         if ($enabled) {
@@ -92,26 +113,29 @@ class ClefNetworkAdmin extends ClefAdmin {
             // TODO: actions for when network wide multiside is enabled
         }
 
-        wp_redirect(add_query_arg(array('page' => 'clef_multisite', 'updated' => 'true'), network_admin_url('admin.php')));
+        wp_redirect(add_query_arg(array('page' => $this->settings->settings_path, 'updated' => 'true'), network_admin_url('admin.php')));
         exit();
     }
 
-    public static function setup_plugin() {
+    public function setup_plugin() {
         if (is_network_admin() && get_site_option("Clef_Activated")) {
             delete_site_option("Clef_Activated");
 
-            if (!add_site_option(self::MS_ENABLED_OPTION, true)) {
-                update_site_option(self::MS_ENABLED_OPTION, true);
+            if (!add_site_option(ClefInternalSettings::MS_ENABLED_OPTION, true)) {
+                update_site_option(ClefInternalSettings::MS_ENABLED_OPTION, true);
             }
 
-            wp_redirect(network_admin_url('admin.php?page=clef'));
+            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), network_admin_url('admin.php')));
 
             exit();
         }
     }
 
-    public static function print_api_descript() {
-        _e('<p>To manage the Clef application that syncs with your plugin, please visit <a href="https://developer.getclef.com">the Clef developer site</a>.</p>', 'clef');
+    public static function start($settings) {
+        if (!isset(self::$instance) || self::$instance === null) {
+            self::$instance = new self($settings);
+        }
+        return self::$instance;
     }
 }
 
