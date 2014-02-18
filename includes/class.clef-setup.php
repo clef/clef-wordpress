@@ -29,7 +29,7 @@ class ClefSetup {
     public static function uninstall_plugin() {
         if (current_user_can( 'delete_plugins' )) { 
             global $wpdb;
-            foreach (self::meta_keys as &$meta_key) {
+            foreach (self::meta_keys as $meta_key) {
                 $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", $meta_key) );
             }
         }
