@@ -10,6 +10,9 @@ class ClefAdmin {
     const CLEF_WALTZ_LOGIN_COUNT = 3;
     const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
 
+    const HIDE_WALTZ_BADGE = 'clef_hide_waltz_badge';
+    const HIDE_WALTZ_PROMPT = 'clef_hide_waltz_prompt';
+
     private static $instance = null;
 
     protected $settings;
@@ -60,7 +63,7 @@ class ClefAdmin {
     }
 
     public function ajax_dismiss_waltz_notification() {
-        $this->settings->set('hide_clef_waltz_prompt', true);
+        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
         wp_send_json(array('success' => true));
     }
 
@@ -77,22 +80,28 @@ class ClefAdmin {
 
     public function display_dashboard_waltz_prompt() {
         $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
-        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
-        $should_hide |= $this->settings->get('hide_dashboard_waltz_prompt') == true;
-        $should_hide |= $is_settings_page;
 
-        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || $should_hide) return;
+        $login_count = $onboarding->get_login_count_for_current_user();
+        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
+
+        $hide_waltz_prompt = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
+
+        // If the user has access to the dashboard and they haven't already 
+        // dismissed the prompt, then display it.
+        $should_display_for_user = !$hide_waltz_prompt && current_user_can('read');
+
+        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || !$should_display_for_user || $is_settings_page) return;
 
         $this->render_waltz_prompt();
-        $this->settings->set('hide_dashboard_waltz_prompt', true);
+
+        // Make sure the notification doesn't ever show again for this user
+        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
     }
 
     public function display_clef_waltz_prompt() {
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
         $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
+        $should_hide = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
 
         $onboarding = ClefOnboarding::start($this->settings);
         $login_count = $onboarding->get_login_count();
@@ -351,14 +360,24 @@ class ClefAdmin {
      * @return string The title of the menu with or without a badge
      */
     public function get_clef_menu_title() {
-        $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
         $clef_menu_title = __('Clef', 'clef');
-        $hide_waltz_badge = $this->settings->get('hide_waltz_badge');
+
+        $onboarding = ClefOnboarding::start($this->settings);
+
+        $user_is_admin = current_user_can('manage_options');
+        $login_count = $onboarding->get_login_count();
+        $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
-        if ($login_count >= self::CLEF_WALTZ_LOGIN_COUNT && !$hide_waltz_badge && $is_google_chrome) {
+
+        $badge_menu_title = $user_is_admin && 
+                            $login_count >= self::CLEF_WALTZ_LOGIN_COUNT && 
+                            !$hide_waltz_badge && 
+                            $is_google_chrome;
+
+        if ($badge_menu_title) {
             $clef_menu_title .= $this->render_badge(1);
         }
+
         return $clef_menu_title;
     }
 
@@ -367,7 +386,9 @@ class ClefAdmin {
     }
 
     public function general_settings($options = false) {
-        $this->settings->set('hide_waltz_badge', true);
+        // Ensure that if the Waltz notification bubble was showing, that it is 
+        // never shown again.
+        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
 
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
