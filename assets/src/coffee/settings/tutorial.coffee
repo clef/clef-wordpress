@@ -68,7 +68,7 @@
 
         connectClefAccount: (data, cb) ->
             connectData =
-                _wp_nonce: @opts.nonces.connectClef
+                _wpnonce: @opts.nonces.connectClef
                 identifier: data.identifier
 
             $.post @connectClefAccountAction,

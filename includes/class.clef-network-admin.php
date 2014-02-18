@@ -3,7 +3,7 @@ require_once(CLEF_PATH . 'includes/class.clef-settings.php');
 
 class ClefNetworkAdmin extends ClefAdmin {
     private static $instance = null;
-    const MULTISITE_SETTINGS_NONCE_NAME = "clef_multisite_settings";
+    const MULTISITE_SETTINGS_ACTION = "clef_multisite_settings";
 
     protected function __construct($settings) {
         $this->settings = $settings;
@@ -12,7 +12,12 @@ class ClefNetworkAdmin extends ClefAdmin {
             $this->initialize_hooks();
         }
 
-        add_action('wp_ajax_clef_multisite_options', array($this, 'ajax_multisite_options'));
+        global $clef_ajax;
+        $clef_ajax->add_action(
+            'clef_multisite_options', 
+            array($this, 'ajax_multisite_options'),
+            array( 'capability' => 'manage_network_options')
+        );
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
         $this->ajax_settings = AjaxSettings::start();
     }
@@ -79,7 +84,7 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         $settings = json_decode(file_get_contents( "php://input" ), true);
 
-        if (!wp_verify_nonce($settings['_wpnonce'], $this::MULTISITE_SETTINGS_NONCE_NAME)) {
+        if (!wp_verify_nonce($settings['_wpnonce'], $this::MULTISITE_SETTINGS_ACTION)) {
             wp_send_json(array("error" => __("invalid nonce", "clef")));
         }
 

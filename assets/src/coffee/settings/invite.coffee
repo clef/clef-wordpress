@@ -21,7 +21,7 @@
         inviteUsers: (e) ->
             e.preventDefault()
             data =
-                _wp_nonce: @opts.nonces.inviteUsers
+                _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
             $.post @inviteUsersAction,
                 data,

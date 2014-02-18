@@ -28,7 +28,7 @@
       var data;
       e.preventDefault();
       data = {
-        _wp_nonce: this.opts.nonces.inviteUsers,
+        _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val()
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
@@ -153,7 +153,7 @@
     connectClefAccount: function(data, cb) {
       var connectData;
       connectData = {
-        _wp_nonce: this.opts.nonces.connectClef,
+        _wpnonce: this.opts.nonces.connectClef,
         identifier: data.identifier
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {

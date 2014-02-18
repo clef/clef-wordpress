@@ -4,8 +4,10 @@ require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
 
 class ClefAdmin {
     const FORM_ID = "clef";
-    const CONNECT_CLEF_NONCE_NAME = "connect_clef_account";
-    const INVITE_USERS_NONCE_NAME = "clef_invite_users";
+    const CONNECT_CLEF_OAUTH_ACTION = "connect_clef_account_oauth_code";
+    const CONNECT_CLEF_ID_ACTION = "connect_clef_account_clef_id";
+    const INVITE_USERS_ACTION = "clef_invite_users";
+    const DISMISS_WALTZ_ACTION = "clef_dismiss_waltz";
 
     const CLEF_WALTZ_LOGIN_COUNT = 3;
     const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
@@ -32,7 +34,6 @@ class ClefAdmin {
         add_action('admin_init', array($this, "setup_plugin"));
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
-        add_action('admin_init', array($this, "connect_clef_account"));
 
         add_action('clef_hook_admin_menu', array($this, "hook_admin_menu"));
 
@@ -42,18 +43,19 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
-        add_action('show_user_profile', array($this, "show_user_profile"));
-        add_action('edit_user_profile', array($this, "show_user_profile"));
-
-        add_action('edit_user_profile_update', array($this, 'edit_user_profile_update'));
-        add_action('personal_options_update', array($this, 'edit_user_profile_update'));
-
-        add_action('wp_ajax_connect_clef_account_clef_id', array($this, 'ajax_connect_clef_account_with_clef_id'));
-        add_action('wp_ajax_connect_clef_account_oauth_code', array($this, 'ajax_connect_clef_account_with_oauth_code'));
-
-        add_action('wp_ajax_clef_invite_users', array($this, 'ajax_invite_users'));
-
-        add_action('wp_ajax_clef_dismiss_waltz_notification', array($this, 'ajax_dismiss_waltz_notification'));
+        global $clef_ajax;
+        $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
+        $clef_ajax->add_action(
+            self::CONNECT_CLEF_OAUTH_ACTION, 
+            array($this, 'ajax_connect_clef_account_with_oauth_code'),
+            array('capability' => 'read')
+        );
+        $clef_ajax->add_action(self::INVITE_USERS_ACTION, array($this, 'ajax_invite_users'));
+        $clef_ajax->add_action(
+            self::DISMISS_WALTZ_ACTION, 
+            array($this, 'ajax_dismiss_waltz_notification'),
+            array('capability' => 'read')
+        );
 
         // Display the badge message, if appropriate
         do_action('clef_hook_onboarding');
@@ -135,29 +137,6 @@ class ClefAdmin {
         } 
     }
 
-    public function show_user_profile($user) {
-        $connected = ClefUtils::current_user_has_clef();
-        $app_id = $this->settings->get( 'clef_settings_app_id' );
-        $redirect_url = add_query_arg(
-            array(
-                'state' => wp_create_nonce("connect_clef"),
-                'clef' => true,
-                'connecting' => true
-            ), get_edit_profile_url(wp_get_current_user()->ID)
-        );
-        echo ClefUtils::render_template('user_profile.tpl', array(
-            "connected" => $connected,
-            "app_id" => $app_id,
-            "redirect_url" => $redirect_url
-        ));
-    }
-
-    public function edit_user_profile_update($user_id) {
-        if (isset($_POST['remove_clef']) && $_POST['remove_clef']) {
-            ClefUtils::dissociate_clef_id($user_id);
-        }
-    }
-
     /**
      * @return array Users filtered by >= $role
      */
@@ -189,10 +168,6 @@ class ClefAdmin {
     }
 
     public function ajax_invite_users() {
-        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::INVITE_USERS_NONCE_NAME)) {
-            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
-        }
-
         $role = strtolower(ClefUtils::isset_POST('roles'));
         if (!$role) {
             wp_send_json(array( "error" => __("invalid roles", "clef") ));
@@ -213,10 +188,6 @@ class ClefAdmin {
     }
 
      public function ajax_connect_clef_account_with_clef_id() {
-        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
-            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
-        }
-
         if (!ClefUtils::isset_POST('identifier')) {
             wp_send_json(array( "error" => __("invalid Clef ID", "clef")));
         }
@@ -226,10 +197,6 @@ class ClefAdmin {
     }
 
     public function ajax_connect_clef_account_with_oauth_code() {
-        if (!wp_verify_nonce(ClefUtils::isset_POST('_wp_nonce'), self::CONNECT_CLEF_NONCE_NAME)) {
-            wp_send_json(array( "error" => __("invalid nonce", "clef") ));
-        }
-
         if (!ClefUtils::isset_POST('identifier')) {
             wp_send_json(array( "error" => __("invalid OAuth Code", "clef")));
         }
@@ -246,40 +213,6 @@ class ClefAdmin {
         wp_send_json(array("success" => true));
     }
 
-    public function connect_clef_account() {
-        if (isset($_REQUEST['clef']) && isset($_REQUEST['connecting']) &&
-        isset($_REQUEST['code'])) {
-
-            // do state CSRF check
-            if (!isset($_GET['state']) || !wp_verify_nonce($_GET['state'], 'connect_clef')) {
-                die();
-            }
-
-            try {
-                $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
-            } catch (LoginException $e) {
-                add_settings_error(
-                    CLEF_OPTIONS_NAME,
-                    esc_attr("settings_updated"),
-                    __("Error while connecting your Clef account: ", "clef") . $e->getMessage(),
-                    "updated"
-                );
-                return;
-            }
-
-            ClefUtils::associate_clef_id($info->id);
-            // Log in the user
-            $_SESSION['logged_in_at'] = time();
-
-            add_settings_error(
-                CLEF_OPTIONS_NAME,
-                esc_attr("settings_updated"),
-                __("Successfully connected your Clef account.", "clef"),
-                "updated"
-            );
-        }
-    }
-
     public function render_connect_clef_account() {
         echo ClefUtils::render_template(
             'admin/connect.tpl', 
@@ -289,7 +222,7 @@ class ClefAdmin {
                     "redirectURL" => add_query_arg(array( 'clef' => 'true'), wp_login_url()),
                     "clefJSURL" => CLEF_JS_URL,
                     "nonces" => array(
-                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME)
+                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION)
                     )
                 )
             )
@@ -383,8 +316,8 @@ class ClefAdmin {
                 'source' => 'wordpress'
             ),
             'nonces' => array(
-                'connectClef' => wp_create_nonce(self::CONNECT_CLEF_NONCE_NAME),
-                'inviteUsers' => wp_create_nonce(self::INVITE_USERS_NONCE_NAME)
+                'connectClef' => wp_create_nonce(self::CONNECT_CLEF_ID_ACTION),
+                'inviteUsers' => wp_create_nonce(self::INVITE_USERS_ACTION)
             ),
             'configured' => $this->settings->is_configured(),
             'clefBase' => CLEF_BASE,
