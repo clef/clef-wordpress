@@ -26,11 +26,6 @@ class ClefNetworkAdmin extends ClefAdmin {
         add_action('admin_init', array($this, "setup_plugin"));
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
-        add_action('show_user_profile', array($this, "show_user_profile"));
-        add_action('edit_user_profile', array($this, "show_user_profile"));
-        add_action('edit_user_profile_update', array($this, 'edit_user_profile_update'));
-        add_action('personal_options_update', array($this, 'edit_user_profile_update'));
-        add_action('admin_notices', array($this, 'edit_profile_errors'));
         add_action('clef_hook_admin_menu', array($this, 'hook_admin_menu'));
 
         // MULTISITE
