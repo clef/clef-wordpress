@@ -1,5 +1,5 @@
-# Features Test Checklist
-This file presents a master list of WP Clef’s features to facilitate systematic testing before new releases.
+# Full Features Test Checklist
+This file presents a master list of WP Clef’s features to facilitate systematic testing before major releases. It is designed to utilize GitHub’s MarkDown checklists. So, to run a full test, copy-n-paste the raw contents of this file into a [new GitHub Issue](https://github.com/clef/wordpress/issues/new). Then check the boxes as you complete the steps.
 
 Abbreviations:
 - SW = Setup Wizard
