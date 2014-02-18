@@ -181,6 +181,9 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
+1. XML RPC log in
+ - [ ] Disabled. Returns error notification.
+
 #### P2 = “Author”
 1. Subscriber role log in
  - [ ] Log in via PF.
@@ -224,6 +227,9 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Log in via CB.
 
 1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. XML RPC log in
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Editor”
@@ -272,6 +278,9 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
+1. XML RPC log in
+ - [ ] Disabled. Returns error notification.
+
 #### P2 = “Administrator”
 1. Subscriber role log in
  - [ ] Log in via PF.
@@ -317,6 +326,9 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Log in via CB.
 
 1. Super Administrator role reset password via LF
+ - [ ] Disabled. Returns error notification.
+
+1. XML RPC log in
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Super Administrator”
@@ -367,6 +379,75 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
+1. XML RPC log in
+ - [ ] Disabled. Returns error notification.
+
+### Disable passwords: set P3 = true, P4 = null.
+- [ ] SS fades.
+- [ ] P4 appears.
+- [ ] Override settings section appears.
+ - O1 = null.
+ - O4 = hidden.
+- [ ] selecting 02
+ - shows SS,
+ - inserts key in O1,
+ - and shows O4.
+
+- [ ] wp-login.php displays CB only (no PF and no LL).
+- [ ] LF disabled for all users. Returns error notification.
+- [ ] Log in via CB.
+
+### Disable passwords: set P4 = true (assumes P1, P2, and/or P3 are not null).
+- [ ] SS fades.
+- [ ] Log in via XML RPC.
+
+## Support Clef settings
+- [ ] Set to “Badge”
+ - flashes SS
+ - and prints `img` and functioning `a` in site footer.
+
+- [ ] Set to “Link”
+ - Flashes SS
+ - Prints functioning `a` in site footer.
+
+- [ ] Set to “Disabled”
+ - Flashes SS
+ - Removes `img` and/or `a` from site footer.
+
+### Support Clef timed pop ups
+1. State 1a: after first login via CB.
+ - [ ] Selecting “Badge” prints `img` and functioning `a` in site footer and saves the setting (verify on setting page).
+
+1. State 1b: after first login via CB.
+ - [ ] Selecting “Link” prints functioning `a` in site footer and saves the setting (verify on setting page).
+
+1. State 2: Waltz not installed.
+ - [ ] After 3 successful logins, show numbered badge in Clef settings menu title.
+ - [ ] After 3 successful logins, show dismissible Waltz notification on Clef settings page.
+ - [ ] After 15 successful logins, if Clef settings Waltz notification hasn't been dismissed, show a one-time notification on the Dashboard.
+
+1. State 2: Waltz installed.
+ - [ ] No Waltz notifications after 3 successful logins.
+ - [ ] No Waltz notification on Dashboard after 15 successful logins.
+
 ## Browser Iterations
+### Setup Wizard
+- [ ] Successful run through in Chrome.
+- [ ] Successful run through in FireFox.
+- [ ] Successful run through in Safari.
+- [ ] Successful run through in IE.
+
+### AJAX-Powered Settings Page
+- [ ] Functioning in Chrome.
+- [ ] Functioning in FireFox.
+- [ ] Functioning in Safari.
+- [ ] Functioning in IE.
 
 ## Translations
+- [ ] All new translatable text blocks placed in appropriate wrapper functions.
+
+## BruteProtect
+- [ ] One-click install & activate successful.
+
+## :boom:
+- [ ] To the precious few who make it this far: [treat yo self](http://www.youtube.com/watch?v=-K4if6QkDbo).
