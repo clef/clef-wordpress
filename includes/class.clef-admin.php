@@ -94,6 +94,7 @@ class ClefAdmin {
         $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
         $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
 
+        $onboarding = ClefOnboarding::start($this->settings);
         $login_count = $onboarding->get_login_count();
 
         if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
