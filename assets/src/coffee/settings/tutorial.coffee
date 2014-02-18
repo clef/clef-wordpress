@@ -76,11 +76,11 @@
                 (data) =>
                     if data.success
                         cb(data) if typeof(cb) == "function"
-                    else if data.data and data.data.error
+                    else
                         @showMessage
                             message: _.template(
                                 clefTranslations.messages.error.connect
-                            )(error: data.data.error), 
+                            )(error: ClefUtils.getErrorMessage data), 
                             type: "error"
 
         showMessage: (opts) ->

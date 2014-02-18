@@ -1,4 +1,4 @@
-(($) ->
+(($, Backbone) ->
     InviteUsersView = Backbone.View.extend
         el: '#invite-users-settings'
         events:
@@ -31,12 +31,12 @@
                         @showMessage
                             message: clefTranslations.messages.success.invite
                             type:"updated"
-                    else if data.data && data.data.error
-                        @showMessage
-                            message: _.template(
-                                clefTranslations.messages.error.invite
-                            )(error: data.data.error)
-                            type: "error"
+
+                    @showMessage
+                        message: _.template(
+                            clefTranslations.messages.error.invite
+                        )(error: ClefUtils.getErrorMessage data)
+                        type: "error"
 
         hideButton: () ->
             @$el.find('.button').hide()
@@ -46,4 +46,4 @@
 
     this.InviteUsersView = InviteUsersView
 
-).call(this, jQuery)
+).call(this, jQuery, Backbone)

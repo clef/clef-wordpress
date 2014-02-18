@@ -8,6 +8,7 @@ class ClefAdmin {
     const CONNECT_CLEF_ID_ACTION = "connect_clef_account_clef_id";
     const INVITE_USERS_ACTION = "clef_invite_users";
     const DISMISS_WALTZ_ACTION = "clef_dismiss_waltz";
+    const DISCONNECT_CLEF_ACTION = "disconnect_clef_account";
 
     const CLEF_WALTZ_LOGIN_COUNT = 3;
     const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
@@ -54,6 +55,11 @@ class ClefAdmin {
         $clef_ajax->add_action(
             self::DISMISS_WALTZ_ACTION, 
             array($this, 'ajax_dismiss_waltz_notification'),
+            array('capability' => 'read')
+        );
+        $clef_ajax->add_action(
+            self::DISCONNECT_CLEF_ACTION,
+            array($this, 'ajax_disconnect_clef_account'),
             array('capability' => 'read')
         );
 
@@ -216,16 +222,23 @@ class ClefAdmin {
         return array("success" => true);
     }
 
+    public function ajax_disconnect_clef_account() {
+        ClefUtils::dissociate_clef_id();
+        return array("success" => true);
+    }
+
     public function render_connect_clef_account() {
         echo ClefUtils::render_template(
             'admin/connect.tpl', 
             array( 
                 "options" => array(
+                    "connected" => ClefUtils::current_user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
                     "redirectURL" => add_query_arg(array( 'clef' => 'true'), wp_login_url()),
                     "clefJSURL" => CLEF_JS_URL,
                     "nonces" => array(
-                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION)
+                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION),
+                        "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
                     )
                 )
             )
@@ -259,10 +272,12 @@ class ClefAdmin {
             );
         }
 
+        if (ClefUtils::current_user_has_clef()) $name = __('Disconnect Clef account', 'clef');
+        else $name = __('Connect Clef account', 'clef');
         add_submenu_page(
-            (ClefUtils::current_user_has_clef() ? null : $menu_name), 
-            __('Connect Clef account', 'clef'), 
-            __('Connect Clef account', 'clef'), 
+            $menu_name,
+            $name, 
+            $name,
             'read', 
             'connect_clef_account', 
             array($this, 'render_connect_clef_account')
@@ -277,7 +292,6 @@ class ClefAdmin {
                 'clef_other_install', 
                 array($this, 'other_install_settings'));
         }
-        
     }
 
 

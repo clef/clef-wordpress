@@ -1,4 +1,24 @@
-(function($) {
+(function($, Backbone) {
+  var Utils;
+  Utils = (function() {
+    function Utils() {}
+
+    Utils.getErrorMessage = function(data) {
+      if (data.error) {
+        return data.error;
+      } else if (data.data && data.data.error) {
+        return data.data.error;
+      }
+      return data;
+    };
+
+    return Utils;
+
+  })();
+  return window.ClefUtils = Utils;
+}).call(this, jQuery, Backbone);
+
+(function($, Backbone) {
   var InviteUsersView;
   InviteUsersView = Backbone.View.extend({
     el: '#invite-users-settings',
@@ -35,18 +55,17 @@
         return function(data) {
           if (data.success) {
             _this.trigger("invited");
-            return _this.showMessage({
+            _this.showMessage({
               message: clefTranslations.messages.success.invite,
               type: "updated"
             });
-          } else if (data.data && data.data.error) {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.invite)({
-                error: data.data.error
-              }),
-              type: "error"
-            });
           }
+          return _this.showMessage({
+            message: _.template(clefTranslations.messages.error.invite)({
+              error: ClefUtils.getErrorMessage(data)
+            }),
+            type: "error"
+          });
         };
       })(this));
     },
@@ -58,7 +77,7 @@
     }
   });
   return this.InviteUsersView = InviteUsersView;
-}).call(this, jQuery);
+}).call(this, jQuery, Backbone);
 
 (function($) {
   var MultisiteOptionsModel, MultisiteOptionsView;
@@ -162,10 +181,10 @@
             if (typeof cb === "function") {
               return cb(data);
             }
-          } else if (data.data && data.data.error) {
+          } else {
             return _this.showMessage({
               message: _.template(clefTranslations.messages.error.connect)({
-                error: data.data.error
+                error: ClefUtils.getErrorMessage(data)
               }),
               type: "error"
             });
@@ -559,3 +578,66 @@
     return serialized;
   };
 }).call(this, jQuery);
+
+(function($, Backbone) {
+  var ConnectView;
+  ConnectView = Backbone.View.extend({
+    el: "#connect-clef-account",
+    events: {
+      "click #disconnect": "disconnectClefAccount"
+    },
+    disconnectURL: ajaxurl + "?action=disconnect_clef_account",
+    messageTemplate: _.template("<div class='<%=type%> connect-clef-message'><%=message%></div>"),
+    initialize: function(opts) {
+      this.opts = opts;
+      this.tutorial = new ConnectTutorialView(_.clone(this.opts));
+      this.disconnect = this.$el.find('.disconnect-clef');
+      return this.render();
+    },
+    show: function() {
+      return this.$el.fadeIn();
+    },
+    render: function() {
+      this.tutorial.render();
+      if (!this.opts.connected) {
+        this.disconnect.hide();
+        return this.tutorial.show();
+      } else {
+        this.tutorial.hide();
+        return this.disconnect.show();
+      }
+    },
+    disconnectClefAccount: function(e) {
+      e.preventDefault();
+      return $.post(this.disconnectURL, {
+        _wpnonce: this.opts.nonces.disconnectClef
+      }, (function(_this) {
+        return function(data) {
+          var msg;
+          if (data.success) {
+            _this.opts.connected = false;
+            _this.render();
+            msg = clefTranslations.messages.success.disconnect;
+            return _this.showMessage({
+              message: msg,
+              type: "updated"
+            });
+          } else {
+            return _this.showMessage({
+              message: ClefUtils.getErrorMessage(data),
+              type: "error"
+            });
+          }
+        };
+      })(this));
+    },
+    showMessage: function(data) {
+      if (this.message) {
+        this.message.remove();
+      }
+      this.message = $(this.messageTemplate(data)).hide();
+      return this.message.prependTo(this.$el).slideDown();
+    }
+  });
+  return window.ConnectView = ConnectView;
+}).call(this, jQuery, Backbone);
