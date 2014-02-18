@@ -315,6 +315,12 @@ body {
       font-size: 16px; }
     #clef-tutorial .invite .invite-users .already-disabled {
       display: none; }
+    #clef-tutorial .invite .invite-users .preview-container {
+      margin-top: 30px;
+      float: none;
+      width: 100%; }
+      #clef-tutorial .invite .invite-users .preview-container h4 {
+        margin-top: 0; }
   #clef-tutorial .invite .next {
     display: inline-block !important; }
   #clef-tutorial .login {
@@ -576,3 +582,22 @@ body {
 
 .logout-hook-error {
   display: none; }
+
+.invite-users .preview-container {
+  display: block;
+  float: left;
+  margin-right: 2.5641%;
+  width: 38.46154%; }
+  .invite-users .preview-container:last-child {
+    margin-right: 0; }
+  .invite-users .preview-container .email {
+    width: 95%;
+    margin: auto;
+    margin-top: 15px;
+    font-style: italic;
+    border: 1px solid #EEE;
+    padding: 10px; }
+    .invite-users .preview-container .email p {
+      font-size: 11px; }
+      .invite-users .preview-container .email p:first-child {
+        margin-top: 0; }

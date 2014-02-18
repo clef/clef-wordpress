@@ -32,3 +32,23 @@
 .logout-hook-error {
     display: none;
 }
+
+.invite-users {
+    .preview-container {
+        @include span-columns(4);
+        .email {
+            width: 95%;
+            margin: auto;
+            margin-top: 15px;
+            font-style: italic;
+            border: 1px solid #EEE;
+            padding: 10px;
+            p {
+                font-size: 11px;
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
