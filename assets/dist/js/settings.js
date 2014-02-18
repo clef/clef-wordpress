@@ -55,17 +55,18 @@
         return function(data) {
           if (data.success) {
             _this.trigger("invited");
-            _this.showMessage({
+            return _this.showMessage({
               message: clefTranslations.messages.success.invite,
               type: "updated"
             });
+          } else {
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.invite)({
+                error: ClefUtils.getErrorMessage(data)
+              }),
+              type: "error"
+            });
           }
-          return _this.showMessage({
-            message: _.template(clefTranslations.messages.error.invite)({
-              error: ClefUtils.getErrorMessage(data)
-            }),
-            type: "error"
-          });
         };
       })(this));
     },
@@ -114,6 +115,7 @@
       this.opts = opts;
       if (window.chrome && !window.waltzIsInstalled) {
         this.$el.find('.waltz').addClass(this.slideClass);
+        this.$el.addClass('.no-waltz');
       }
       this.subs = [];
       potentialSubs = this.$el.find("." + this.slideClass).filter(this.opts.slideFilterSelector);
@@ -592,6 +594,7 @@
       this.opts = opts;
       this.tutorial = new ConnectTutorialView(_.clone(this.opts));
       this.disconnect = this.$el.find('.disconnect-clef');
+      this.listenTo(this.tutorial, 'done', this.finishTutorial);
       return this.render();
     },
     show: function() {
@@ -637,6 +640,9 @@
       }
       this.message = $(this.messageTemplate(data)).hide();
       return this.message.prependTo(this.$el).slideDown();
+    },
+    finishTutorial: function() {
+      return window.location = '';
     }
   });
   return window.ConnectView = ConnectView;

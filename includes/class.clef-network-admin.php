@@ -57,14 +57,9 @@ class ClefNetworkAdmin extends ClefAdmin {
             "Clef", 
             "manage_options", 
             'clef', 
-            array($this, 'general_settings'));
-        add_submenu_page(
-            'clef',
-            __('Settings', "clef"),
-            __('Settings', "clef"), 
-            "manage_options",
-            'clef', 
-            array($this, 'general_settings'));
+            array($this, 'general_settings'),
+            CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
+        );
     }
 
     public function general_settings($options=array()) {

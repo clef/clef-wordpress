@@ -31,12 +31,12 @@
                         @showMessage
                             message: clefTranslations.messages.success.invite
                             type:"updated"
-
-                    @showMessage
-                        message: _.template(
-                            clefTranslations.messages.error.invite
-                        )(error: ClefUtils.getErrorMessage data)
-                        type: "error"
+                    else
+                        @showMessage
+                            message: _.template(
+                                clefTranslations.messages.error.invite
+                            )(error: ClefUtils.getErrorMessage data)
+                            type: "error"
 
         hideButton: () ->
             @$el.find('.button').hide()

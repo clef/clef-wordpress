@@ -1,6 +1,6 @@
 
 <div id="clef-settings-form">
-    <form id="clef-form" action="options.php" method="POST">
+    <form id="clef-form" action="options.php" method="POST" autocomplete="off">
         <h1 id="clef-settings-header"><?php _e("Clef", "clef"); ?></h1>
         <!-- <div id="fb-root"></div>
         <div class="fb-like" data-href="https://www.facebook.com/getclef" data-width="200" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
@@ -108,7 +108,7 @@
         </p>
         <p>
             <label for="user_pass"><?php _e("Password", "clef"); ?><br>
-            <input type="password" id="user_pass" class="ajax-ignore input" value="" size="20"></label>
+            <input type="text" id="user_pass" class="ajax-ignore input" value="" size="20"></label>
         </p>
         <div style="position: relative">
             <div style="border-bottom: 1px solid #EEE; width: 90%; margin: 0 5%; z-index: 1; top: 50%; position: absolute;"></div>

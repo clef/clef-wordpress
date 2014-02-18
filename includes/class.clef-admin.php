@@ -205,7 +205,8 @@ class ClefAdmin {
                 __("Clef", 'clef'),
                 "read",
                 $this->settings->settings_path,
-                array($this, 'render_connect_clef_account')
+                array($this, 'render_connect_clef_account'),
+                CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
             );
             return;
         }
@@ -228,7 +229,8 @@ class ClefAdmin {
                 $clef_menu_title,
                 "manage_options", 
                 $menu_name, 
-                array($this, 'general_settings')
+                array($this, 'general_settings'),
+                CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
             );
         }
 
