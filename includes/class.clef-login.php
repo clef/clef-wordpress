@@ -43,6 +43,8 @@ class ClefLogin {
     public function load_base_styles() {
         $ident = ClefUtils::register_style('main');
         wp_enqueue_style($ident);
+        if (!has_action('login_enqueue_scripts', 'wp_print_styles'))
+            add_action('login_enqueue_scripts', 'wp_print_styles', 11);
     }
 
     public function redirect_if_invite_code($redirect_to, $request, $user) {
