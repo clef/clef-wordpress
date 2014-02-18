@@ -22,8 +22,10 @@ class ClefBadge {
     }
 
     public function should_display_prompt() {
-        return $this->onboarding->get_login_count() > 0 && 
-            !$this->onboarding->get_key(self::PROMPT_HIDDEN);
+        $login_count = $this->onboarding->get_login_count_for_current_user();
+        $prompt_hidden = $this->onboarding->get_key(self::PROMPT_HIDDEN);
+        $has_admin_capability = current_user_can('manage_options');
+        return $login_count > 0 && !$prompt_hidden && $has_admin_capability;
     }
 
     public function hook_onboarding() {
@@ -71,6 +73,9 @@ class ClefBadge {
         wp_send_json(array( "success" => true ));
     }
 
+    /**
+     * Mark settings so that the badge prompt will be hidden on next page load.
+     */
     public function hide_prompt() {
         $this->onboarding->set_key(self::PROMPT_HIDDEN, true);
     }
