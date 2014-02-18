@@ -107,7 +107,7 @@ class ClefAdmin {
         $should_hide = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
 
         $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
+        $login_count = $onboarding->get_login_count_for_current_user();
 
         if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
         
@@ -267,7 +267,7 @@ class ClefAdmin {
         $onboarding = ClefOnboarding::start($this->settings);
 
         $user_is_admin = current_user_can('manage_options');
-        $login_count = $onboarding->get_login_count();
+        $login_count = $onboarding->get_login_count_for_current_user();
         $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
 
