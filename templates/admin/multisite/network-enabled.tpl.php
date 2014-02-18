@@ -18,7 +18,7 @@
     <h3><?php _e('Individual site network settings', 'clef'); ?></h3>
     <div class="inputs-container">
     <p><?php _e('You can let individual sites manage their own Clef configuration if you would like to customize how Clef works on each site.', 'clef') ?></p>
-        <?php wp_nonce_field(ClefNetworkAdmin::MULTISITE_SETTINGS_NONCE_NAME) ?>
+        <?php wp_nonce_field(ClefNetworkAdmin::MULTISITE_SETTINGS_ACTION) ?>
         <div class="input-container">
             <input type="hidden" name="allow_override_form">
             <label for="allow_override"><?php _e('Allow individual sites to manage settings', 'clef'); ?></label>

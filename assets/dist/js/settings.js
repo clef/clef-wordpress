@@ -1,4 +1,24 @@
-(function($) {
+(function($, Backbone) {
+  var Utils;
+  Utils = (function() {
+    function Utils() {}
+
+    Utils.getErrorMessage = function(data) {
+      if (data.error) {
+        return data.error;
+      } else if (data.data && data.data.error) {
+        return data.data.error;
+      }
+      return data;
+    };
+
+    return Utils;
+
+  })();
+  return window.ClefUtils = Utils;
+}).call(this, jQuery, Backbone);
+
+(function($, Backbone) {
   var InviteUsersView;
   InviteUsersView = Backbone.View.extend({
     el: '#invite-users-settings',
@@ -28,25 +48,24 @@
       var data;
       e.preventDefault();
       data = {
-        _wp_nonce: this.opts.nonces.inviteUsers,
+        _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val()
       };
       return $.post(this.inviteUsersAction, data, (function(_this) {
         return function(data) {
-          if (data.error) {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.invite)({
-                error: data.error
-              }),
-              type: "error"
-            });
-          } else if (data.success) {
+          if (data.success) {
             _this.trigger("invited");
-            return _this.showMessage({
+            _this.showMessage({
               message: clefTranslations.messages.success.invite,
               type: "updated"
             });
           }
+          return _this.showMessage({
+            message: _.template(clefTranslations.messages.error.invite)({
+              error: ClefUtils.getErrorMessage(data)
+            }),
+            type: "error"
+          });
         };
       })(this));
     },
@@ -58,7 +77,7 @@
     }
   });
   return this.InviteUsersView = InviteUsersView;
-}).call(this, jQuery);
+}).call(this, jQuery, Backbone);
 
 (function($) {
   var MultisiteOptionsModel, MultisiteOptionsView;
@@ -71,7 +90,7 @@
   });
   MultisiteOptionsModel = AjaxSettingsModel.extend({
     parse: function(data, options) {
-      options.url = ajaxurl + '?action=clef_multisite_options';
+      options.url = ajaxurl + '?action=clef_multisite_settings';
       return MultisiteOptionsModel.__super__.parse.call(this, data, options);
     }
   });
@@ -153,22 +172,22 @@
     connectClefAccount: function(data, cb) {
       var connectData;
       connectData = {
-        _wp_nonce: this.opts.nonces.connectClef,
+        _wpnonce: this.opts.nonces.connectClef,
         identifier: data.identifier
       };
       return $.post(this.connectClefAccountAction, connectData, (function(_this) {
         return function(data) {
-          if (data.error) {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.connect)({
-                error: data.error
-              }),
-              type: "error"
-            });
-          } else {
+          if (data.success) {
             if (typeof cb === "function") {
               return cb(data);
             }
+          } else {
+            return _this.showMessage({
+              message: _.template(clefTranslations.messages.error.connect)({
+                error: ClefUtils.getErrorMessage(data)
+              }),
+              type: "error"
+            });
           }
         };
       })(this));
@@ -471,48 +490,6 @@
     isConfigured: function() {
       return this.model.isConfigured();
     },
-    clearErrors: function(model, data) {
-      var inp, inputName, v, _ref, _results;
-      _ref = model.changed;
-      _results = [];
-      for (inputName in _ref) {
-        v = _ref[inputName];
-        inp = this.model.findInput(inputName).parents('.input-container');
-        if (inp.hasClass('error')) {
-          _results.push(inp.removeClass('error').next('.error.form-error').remove());
-        } else {
-          _results.push(void 0);
-        }
-      }
-      return _results;
-    },
-    error: function(model, data) {
-      var inp, inputName, msg, _ref, _results;
-      if (!data.responseJSON.errors) {
-        this.trigger('message', {
-          message: this.genericErrorMessage,
-          type: 'error'
-        });
-        $('html, body').animate({
-          scrollTop: 0
-        }, "show");
-        return;
-      }
-      _ref = data.responseJSON.errors;
-      _results = [];
-      for (inputName in _ref) {
-        msg = _ref[inputName];
-        inp = this.model.cFindInput(inputName).parents('.input-container');
-        if (inp.hasClass('error')) {
-          _results.push(inp.next('.error.form-error').html(msg));
-        } else {
-          _results.push(inp.addClass('error').after(this.errorTemplate({
-            message: msg
-          })));
-        }
-      }
-      return _results;
-    },
     saveForm: function(e) {
       e.preventDefault();
       return this.model.save({}, {
@@ -524,7 +501,7 @@
             });
             return $('html, body').animate({
               scrollTop: 0
-            }, "show");
+            }, "slow");
           };
         })(this),
         error: this.model.saveError.bind(this.model)
@@ -601,3 +578,66 @@
     return serialized;
   };
 }).call(this, jQuery);
+
+(function($, Backbone) {
+  var ConnectView;
+  ConnectView = Backbone.View.extend({
+    el: "#connect-clef-account",
+    events: {
+      "click #disconnect": "disconnectClefAccount"
+    },
+    disconnectURL: ajaxurl + "?action=disconnect_clef_account",
+    messageTemplate: _.template("<div class='<%=type%> connect-clef-message'><%=message%></div>"),
+    initialize: function(opts) {
+      this.opts = opts;
+      this.tutorial = new ConnectTutorialView(_.clone(this.opts));
+      this.disconnect = this.$el.find('.disconnect-clef');
+      return this.render();
+    },
+    show: function() {
+      return this.$el.fadeIn();
+    },
+    render: function() {
+      this.tutorial.render();
+      if (!this.opts.connected) {
+        this.disconnect.hide();
+        return this.tutorial.show();
+      } else {
+        this.tutorial.hide();
+        return this.disconnect.show();
+      }
+    },
+    disconnectClefAccount: function(e) {
+      e.preventDefault();
+      return $.post(this.disconnectURL, {
+        _wpnonce: this.opts.nonces.disconnectClef
+      }, (function(_this) {
+        return function(data) {
+          var msg;
+          if (data.success) {
+            _this.opts.connected = false;
+            _this.render();
+            msg = clefTranslations.messages.success.disconnect;
+            return _this.showMessage({
+              message: msg,
+              type: "updated"
+            });
+          } else {
+            return _this.showMessage({
+              message: ClefUtils.getErrorMessage(data),
+              type: "error"
+            });
+          }
+        };
+      })(this));
+    },
+    showMessage: function(data) {
+      if (this.message) {
+        this.message.remove();
+      }
+      this.message = $(this.messageTemplate(data)).hide();
+      return this.message.prependTo(this.$el).slideDown();
+    }
+  });
+  return window.ConnectView = ConnectView;
+}).call(this, jQuery, Backbone);

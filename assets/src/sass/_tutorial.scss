@@ -126,6 +126,15 @@
             .already-disabled {
                 display: none;
             }
+
+            .preview-container {
+                margin-top: 30px;
+                float: none;
+                width: 100%;
+                h4 {
+                    margin-top: 0;
+                }
+            }
         }
         .next {
             display: inline-block !important;

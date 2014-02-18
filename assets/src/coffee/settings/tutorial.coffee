@@ -68,20 +68,20 @@
 
         connectClefAccount: (data, cb) ->
             connectData =
-                _wp_nonce: @opts.nonces.connectClef
+                _wpnonce: @opts.nonces.connectClef
                 identifier: data.identifier
 
             $.post @connectClefAccountAction,
                 connectData,
                 (data) =>
-                    if data.error
+                    if data.success
+                        cb(data) if typeof(cb) == "function"
+                    else
                         @showMessage
                             message: _.template(
                                 clefTranslations.messages.error.connect
-                            )(error: data.error), 
+                            )(error: ClefUtils.getErrorMessage data), 
                             type: "error"
-                    else
-                        cb(data) if typeof(cb) == "function"
 
         showMessage: (opts) ->
             @$currentMessage.remove() if @$currentMessage

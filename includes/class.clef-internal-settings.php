@@ -16,6 +16,11 @@ class ClefInternalSettings {
         $this->settings = $this->get_site_option();
         $this->settings_path = 'clef';
         add_action('admin_menu', array($this, 'apply_settings_path_filter'), 11);
+        add_filter('ajax_settings_pre_save', array($this, 'merge_settings'));
+    }
+
+    public function merge_settings($to_be_saved) {
+        return array_merge($this->settings, $to_be_saved);
     }
 
     public function apply_settings_path_filter() {
@@ -111,7 +116,7 @@ class ClefInternalSettings {
             $disabled = true;
         }
 
-        if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::current_user_has_clef()) {
+        if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::user_has_clef($user)) {
             $disabled = true;
         }
 

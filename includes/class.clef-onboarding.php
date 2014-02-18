@@ -65,7 +65,7 @@ class ClefOnboarding {
     }
 
     public function get_login_count() {
-        return $this->get_key(self::LOGINS, 0);
+        return (int) $this->get_key(self::LOGINS, 0);
     }
 
     public function had_clef_before_onboarding() {

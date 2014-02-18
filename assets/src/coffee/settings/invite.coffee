@@ -1,4 +1,4 @@
-(($) ->
+(($, Backbone) ->
     InviteUsersView = Backbone.View.extend
         el: '#invite-users-settings'
         events:
@@ -21,22 +21,22 @@
         inviteUsers: (e) ->
             e.preventDefault()
             data =
-                _wp_nonce: @opts.nonces.inviteUsers
+                _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
             $.post @inviteUsersAction,
                 data,
                 (data) =>
-                    if data.error
-                        @showMessage
-                            message: _.template(
-                                clefTranslations.messages.error.invite
-                            )(error: data.error)
-                            type: "error"
-                    else if data.success
+                    if data.success
                         @trigger "invited"
                         @showMessage
                             message: clefTranslations.messages.success.invite
                             type:"updated"
+
+                    @showMessage
+                        message: _.template(
+                            clefTranslations.messages.error.invite
+                        )(error: ClefUtils.getErrorMessage data)
+                        type: "error"
 
         hideButton: () ->
             @$el.find('.button').hide()
@@ -46,4 +46,4 @@
 
     this.InviteUsersView = InviteUsersView
 
-).call(this, jQuery)
+).call(this, jQuery, Backbone)

@@ -146,29 +146,6 @@
         isConfigured: () ->
             @model.isConfigured()
 
-        clearErrors: (model, data) ->
-            # when a model changes, if it previously was error'd, clear them
-            # so we can reshow them (or do away with them) on model save
-            for inputName, v of model.changed
-                inp = @model.findInput(inputName).parents '.input-container'
-                if inp.hasClass 'error'
-                    inp.removeClass('error').next('.error.form-error').remove()
-
-        error: (model, data) ->
-            # no error messages, add a generic error message
-            if !data.responseJSON.errors
-                @trigger 'message', message: @genericErrorMessage, type: 'error'
-                $('html, body').animate scrollTop: 0, "show"
-                return
-
-            # loop over all error messages and display them
-            for inputName, msg of data.responseJSON.errors
-                inp = @model.cFindInput(inputName).parents '.input-container'
-                if inp.hasClass 'error'
-                    inp.next('.error.form-error').html msg
-                else
-                    inp.addClass('error').after(@errorTemplate(message: msg))
-
         saveForm: (e) ->
             e.preventDefault()
 
@@ -177,7 +154,7 @@
                     @trigger 'message',
                         message: "Settings saved.",
                         type: 'updated'
-                    $('html, body').animate scrollTop: 0, "show"
+                    $('html, body').animate scrollTop: 0, "slow"
 
                 error: @model.saveError.bind(@model)
 

@@ -18,6 +18,10 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');
         $settings = ClefInternalSettings::start();
 
+        global $clef_ajax;
+        require_once(CLEF_PATH . 'includes/class.clef-ajax.php');
+        $clef_ajax = ClefAjax::start($settings);
+
         // Onboarding settings
         require_once(CLEF_PATH . 'includes/class.clef-onboarding.php');
         $onboarding = ClefOnboarding::start($settings);

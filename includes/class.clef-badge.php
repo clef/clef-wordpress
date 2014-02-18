@@ -36,7 +36,8 @@ class ClefBadge {
             $this->hide_prompt();
             add_action('admin_notices', array($this, 'badge_prompt_html'));
         } else {
-            add_action('wp_ajax_clef_badge_prompt', array($this, 'handle_badge_prompt_ajax'));
+            global $clef_ajax;
+            $clef_ajax->add_action('clef_badge_prompt', array($this, 'handle_badge_prompt_ajax'));
         }
 
     }
@@ -70,7 +71,7 @@ class ClefBadge {
 
         $this->hide_prompt();
 
-        wp_send_json(array( "success" => true ));
+        return array( "success" => true );
     }
 
     /**

@@ -82,6 +82,8 @@ class AjaxSettings {
             } 
         }
 
+        $to_be_saved = apply_filters('ajax_settings_pre_save', $to_be_saved);
+
         if ($is_network_wide) {
             update_site_option($this->name(), $to_be_saved);
         } else {
@@ -98,11 +100,11 @@ class AjaxSettings {
             }
             $response['errors'] = $error_messages;
             header('HTTP/1.0 400');
+            wp_send_json_error($response);
         } else {
             $response['success'] = true;
+            wp_send_json($response);
         }
-
-        wp_send_json($response);
     }
 
     function identifier() {
