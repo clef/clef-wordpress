@@ -72,15 +72,12 @@ class ClefAdmin {
         do_action('clef_hook_onboarding');
     }
 
-    private function render_waltz_prompt() {
-        echo '<div class="waltz-notification">';
-            echo '<div class="waltz setup">';
-            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
-                'next_href' => '#',
-                'next_text' => __('Hide this message', 'clef')
-            ));
-            echo '</div>';
-        echo '</div>';
+    private function render_waltz_prompt($class="") {
+        echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
+            'next_href' => '#',
+            'next_text' => __('Hide this message', 'clef'),
+            'class' => $class
+        ));
     }
 
     public function display_dashboard_waltz_prompt() {
@@ -97,7 +94,7 @@ class ClefAdmin {
 
         if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || !$should_display_for_user || $is_settings_page) return;
 
-        $this->render_waltz_prompt();
+        $this->render_waltz_prompt("settings waltz-notification");
 
         // Make sure the notification doesn't ever show again for this user
         update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
@@ -113,7 +110,7 @@ class ClefAdmin {
 
         if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
         
-        $this->render_waltz_prompt();
+        $this->render_waltz_prompt("settings waltz-notification");
     }
 
     public function hook_admin_menu() {

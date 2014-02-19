@@ -12,7 +12,7 @@ class ClefTranslation {
             "messages" => array(
                 "error" => array( 
                     "connect" => __("There was a problem automatically connecting your Clef account: <%= error %>. Please refresh and try again.", "clef"),
-                    "create" => __("There was a problem creating a new Clef application for your WordPress site: <%= error %>. Please refresh and try again. If the issue, persists, email support@getclef.com.", "clef"),
+                    "create" => __("There was a problem creating a new Clef application for your WordPress site: <%= error %>. Please refresh and try again. If the issue, persists, email <a href='mailto:support@getclef.com'>support@getclef.com</a>.", "clef"),
                     "invite" => __("There was a problem sending invites: <%= error %>.", "clef"),
                     "generic" => __("Something wrong, please refresh and try again.", "clef"),
                     "disconncet" => __("There was a problem disconnecting your Clef account: <%= error %>. Please refresh and try again.", "clef")

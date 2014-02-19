@@ -91,15 +91,15 @@ body {
     #clef-settings-container .settings-section .inputs-container, #connect-clef-account .settings-section .inputs-container {
       display: block;
       float: left;
-      margin-right: 2.5641%;
-      width: 58.97436%; }
+      margin-right: 1.85185%;
+      width: 59.25926%; }
       #clef-settings-container .settings-section .inputs-container:last-child, #connect-clef-account .settings-section .inputs-container:last-child {
         margin-right: 0; }
       @media screen and (max-width: 768px) {
         #clef-settings-container .settings-section .inputs-container, #connect-clef-account .settings-section .inputs-container {
           display: block;
           float: left;
-          margin-right: 2.5641%;
+          margin-right: 1.85185%;
           width: 100%; }
           #clef-settings-container .settings-section .inputs-container:last-child, #connect-clef-account .settings-section .inputs-container:last-child {
             margin-right: 0; } }
@@ -109,15 +109,15 @@ body {
         margin: 10px 0;
         display: block;
         float: left;
-        margin-right: 2.5641%;
+        margin-right: 1.85185%;
         width: 100%; }
         #clef-settings-container .settings-section .inputs-container .input-container:last-child, #connect-clef-account .settings-section .inputs-container .input-container:last-child {
           margin-right: 0; }
         #clef-settings-container .settings-section .inputs-container .input-container label, #connect-clef-account .settings-section .inputs-container .input-container label {
           display: block;
           float: left;
-          margin-right: 2.5641%;
-          width: 48.71795%;
+          margin-right: 1.85185%;
+          width: 49.07407%;
           margin-right: 0 !important; }
           #clef-settings-container .settings-section .inputs-container .input-container label:last-child, #connect-clef-account .settings-section .inputs-container .input-container label:last-child {
             margin-right: 0; }
@@ -125,7 +125,7 @@ body {
             #clef-settings-container .settings-section .inputs-container .input-container label, #connect-clef-account .settings-section .inputs-container .input-container label {
               display: block;
               float: left;
-              margin-right: 2.5641%;
+              margin-right: 1.85185%;
               width: 100%; }
               #clef-settings-container .settings-section .inputs-container .input-container label:last-child, #connect-clef-account .settings-section .inputs-container .input-container label:last-child {
                 margin-right: 0; } }
@@ -151,14 +151,14 @@ body {
     #clef-settings-container .settings-section.multisite .inputs-container, #connect-clef-account .settings-section.multisite .inputs-container {
       display: block;
       float: left;
-      margin-right: 2.5641%;
-      width: 48.71795%; }
+      margin-right: 1.85185%;
+      width: 49.07407%; }
       #clef-settings-container .settings-section.multisite .inputs-container:last-child, #connect-clef-account .settings-section.multisite .inputs-container:last-child {
         margin-right: 0; }
       #clef-settings-container .settings-section.multisite .inputs-container .input-container, #connect-clef-account .settings-section.multisite .inputs-container .input-container {
         display: block;
         float: left;
-        margin-right: 5.26316%;
+        margin-right: 3.77358%;
         width: 100%; }
         #clef-settings-container .settings-section.multisite .inputs-container .input-container:last-child, #connect-clef-account .settings-section.multisite .inputs-container .input-container:last-child {
           margin-right: 0; }
@@ -188,17 +188,17 @@ body {
   #clef-tutorial .clef-tutorial-container {
     display: block;
     float: left;
-    margin-right: 2.5641%;
-    width: 58.97436%;
-    margin-left: 20.51282%; }
+    margin-right: 1.85185%;
+    width: 59.25926%;
+    margin-left: 20.37037%; }
     #clef-tutorial .clef-tutorial-container:last-child {
       margin-right: 0; }
   #clef-tutorial .tutorial-message {
     display: block;
     float: left;
-    margin-right: 2.5641%;
-    width: 58.97436%;
-    margin-left: 20.51282%;
+    margin-right: 1.85185%;
+    width: 59.25926%;
+    margin-left: 20.37037%;
     padding: 10px;
     margin-top: 20px;
     margin-bottom: 20px; }
@@ -351,7 +351,40 @@ body {
     #clef-tutorial .using-clef .next {
       margin: 20px 0; }
   #clef-tutorial .waltz {
-    display: none; }
+    display: none;
+    margin-top: 80px;
+    padding: 10px; }
+    #clef-tutorial .waltz img {
+      display: block;
+      float: left;
+      margin-right: 1.85185%;
+      width: 18.51852%;
+      margin-top: 20px; }
+      #clef-tutorial .waltz img:last-child {
+        margin-right: 0; }
+    #clef-tutorial .waltz .text {
+      display: block;
+      float: left;
+      margin-right: 1.85185%;
+      width: 79.62963%;
+      margin-right: 0; }
+      #clef-tutorial .waltz .text:last-child {
+        margin-right: 0; }
+      #clef-tutorial .waltz .text h1, #clef-tutorial .waltz .text p {
+        margin: 5px;
+        border: 0; }
+    #clef-tutorial .waltz .buttons {
+      clear: both;
+      margin-bottom: 40px;
+      position: relative;
+      top: 30px; }
+      #clef-tutorial .waltz .buttons .button {
+        width: 44%;
+        text-align: center;
+        margin: 0; }
+        #clef-tutorial .waltz .buttons .button:first-child {
+          margin-right: 3%;
+          margin-left: 4%; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {
@@ -414,8 +447,8 @@ body {
 #clef-settings-form .settings-section.override-settings .preview-container {
   display: block;
   float: left;
-  margin-right: 2.5641%;
-  width: 38.46154%;
+  margin-right: 1.85185%;
+  width: 38.88889%;
   display: none; }
   #clef-settings-form .settings-section.override-settings .preview-container:last-child {
     margin-right: 0; }
@@ -430,8 +463,8 @@ body {
   padding-top: 10px;
   display: block;
   float: left;
-  margin-right: 2.5641%;
-  width: 38.46154%; }
+  margin-right: 1.85185%;
+  width: 38.88889%; }
   #clef-settings-form .settings-section.support-settings .preview-container:last-child {
     margin-right: 0; }
   @media screen and (max-width: 768px) {
@@ -457,22 +490,22 @@ body {
 #clef-settings-form .settings-section.clef-settings .inputs-container label {
   display: block;
   float: left;
-  margin-right: 2.5641%;
-  width: 28.20513%; }
+  margin-right: 1.85185%;
+  width: 28.7037%; }
   #clef-settings-form .settings-section.clef-settings .inputs-container label:last-child {
     margin-right: 0; }
 #clef-settings-form .settings-section.clef-settings .inputs-container input {
   display: block;
   float: left;
-  margin-right: 2.5641%;
-  width: 69.23077%; }
+  margin-right: 1.85185%;
+  width: 69.44444%; }
   #clef-settings-form .settings-section.clef-settings .inputs-container input:last-child {
     margin-right: 0; }
   @media screen and (max-width: 768px) {
     #clef-settings-form .settings-section.clef-settings .inputs-container input {
       display: block;
       float: left;
-      margin-right: 2.5641%;
+      margin-right: 1.85185%;
       width: 100%; }
       #clef-settings-form .settings-section.clef-settings .inputs-container input:last-child {
         margin-right: 0; } }
@@ -481,8 +514,8 @@ body {
   #clef-settings-form .password-settings #login-form-view {
     display: block;
     float: left;
-    margin-right: 2.5641%;
-    width: 38.46154%; }
+    margin-right: 1.85185%;
+    width: 38.88889%; }
     #clef-settings-form .password-settings #login-form-view:last-child {
       margin-right: 0; }
     @media screen and (max-width: 768px) {
@@ -522,53 +555,86 @@ body {
           margin: auto;
           display: block; }
 
-.waltz-notification {
+.waltz {
   *zoom: 1;
   max-width: 75em;
   margin-left: auto;
   margin-right: auto;
-  margin-left: 0px;
-  margin-top: 5px; }
-  .waltz-notification:before, .waltz-notification:after {
-    content: " ";
-    display: table; }
-  .waltz-notification:after {
-    clear: both; }
-  .waltz-notification .waltz {
-    display: block;
-    float: left;
-    margin-right: 2.5641%;
-    width: 100%;
-    margin-top: 5px; }
-    .waltz-notification .waltz:last-child {
-      margin-right: 0; }
-    .waltz-notification .waltz img {
-      display: block;
-      float: left;
-      margin-right: 2.5641%;
-      width: 17.94872%; }
-      .waltz-notification .waltz img:last-child {
-        margin-right: 0; }
-
-.waltz {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   border: 1px solid #e5e5e5;
   background: white;
   padding: 20px 25px;
-  padding: 40px 25px;
-  margin-top: 80px; }
-  .waltz h1 {
-    margin-top: 0; }
-  .waltz img {
-    display: block;
-    float: left;
-    margin-right: 2.5641%;
-    width: 28.20513%; }
-    .waltz img:last-child {
-      margin-right: 0; }
-  .waltz .button:not(.button-primary) {
-    margin-left: 10px; }
+  margin: 10px 20px 10px 0; }
+  .waltz:before, .waltz:after {
+    content: " ";
+    display: table; }
+  .waltz:after {
+    clear: both; }
+  .waltz.settings {
+    padding: 10px;
+    margin-top: 40px; }
+    .waltz.settings img {
+      display: block;
+      float: left;
+      margin-right: 1.85185%;
+      width: 8.33333%;
+      margin-top: 7px; }
+      .waltz.settings img:last-child {
+        margin-right: 0; }
+      @media screen and (max-width: 768px) {
+        .waltz.settings img {
+          display: block;
+          float: left;
+          margin-right: 1.85185%;
+          width: 8.33333%; }
+          .waltz.settings img:last-child {
+            margin-right: 0; } }
+    .waltz.settings .text {
+      display: block;
+      float: left;
+      margin-right: 1.85185%;
+      width: 49.07407%; }
+      .waltz.settings .text:last-child {
+        margin-right: 0; }
+      @media screen and (max-width: 768px) {
+        .waltz.settings .text {
+          display: block;
+          float: left;
+          margin-right: 1.85185%;
+          width: 79.62963%; }
+          .waltz.settings .text:last-child {
+            margin-right: 0; } }
+      .waltz.settings .text h1 {
+        font-size: 12px;
+        margin: 0; }
+      .waltz.settings .text p {
+        margin: 0;
+        font-size: 12px; }
+    .waltz.settings .buttons {
+      display: block;
+      float: left;
+      margin-right: 1.85185%;
+      width: 38.88889%;
+      margin-right: 0;
+      margin-top: 15px; }
+      .waltz.settings .buttons:last-child {
+        margin-right: 0; }
+      @media screen and (max-width: 768px) {
+        .waltz.settings .buttons {
+          display: block;
+          float: left;
+          margin-right: 1.85185%;
+          width: 100%; }
+          .waltz.settings .buttons:last-child {
+            margin-right: 0; } }
+      .waltz.settings .buttons .button {
+        float: none;
+        margin: 0;
+        text-align: center;
+        font-size: 12px;
+        width: 45%;
+        padding: 0; }
 
 .bruteprotect-install {
   background: #515953;
@@ -591,8 +657,8 @@ body {
 .invite-users .preview-container {
   display: block;
   float: left;
-  margin-right: 2.5641%;
-  width: 38.46154%; }
+  margin-right: 1.85185%;
+  width: 38.88889%; }
   .invite-users .preview-container:last-child {
     margin-right: 0; }
   .invite-users .preview-container .email {
