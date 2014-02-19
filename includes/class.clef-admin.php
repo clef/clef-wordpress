@@ -10,6 +10,8 @@ class ClefAdmin {
     const DISMISS_WALTZ_ACTION = "clef_dismiss_waltz";
     const DISCONNECT_CLEF_ACTION = "disconnect_clef_account";
 
+    const CONNECT_CLEF_PAGE = "connect_clef_account";
+
     const CLEF_WALTZ_LOGIN_COUNT = 3;
     const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
 
@@ -169,16 +171,22 @@ class ClefAdmin {
     }
 
     public function render_connect_clef_account() {
+        $connect_nonce = wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION);
+        $redirect_url = add_query_arg( 
+            array('_wpnonce' => $connect_nonce, 'connect' => true),
+            admin_url("/admin.php?page=" . self::CONNECT_CLEF_PAGE)
+        );
+        
         echo ClefUtils::render_template(
             'admin/connect.tpl', 
             array( 
                 "options" => array(
                     "connected" => ClefUtils::user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
-                    "redirectURL" => add_query_arg(array( 'clef' => 'true'), wp_login_url()),
+                    "redirectURL" => $redirect_url,
                     "clefJSURL" => CLEF_JS_URL,
                     "nonces" => array(
-                        "connectClef" => wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION),
+                        "connectClef" => $connect_nonce,
                         "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
                     )
                 )
@@ -232,7 +240,7 @@ class ClefAdmin {
             $name, 
             $name,
             'read', 
-            'connect_clef_account', 
+            self::CONNECT_CLEF_PAGE, 
             array($this, 'render_connect_clef_account')
         );
 

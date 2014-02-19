@@ -186,6 +186,17 @@
 
     ConnectTutorialView = TutorialView.extend
         connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code"
+        initialize: (opts) ->
+            @constructor.__super__.initialize.call this, opts
+
+            params = ClefUtils.getURLParams()
+            if params.code
+                opts.nonces.connectClef = params._wpnonce
+                @$el.find('.sub:not(.using-clef)').remove()
+                @connectClefAccount { identifier: params.code },
+                    () =>
+                        window.location = @opts.redirectURL
+
         render: ->
             @addButton()
             @constructor.__super__.render.call this

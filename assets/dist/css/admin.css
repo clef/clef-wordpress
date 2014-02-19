@@ -370,6 +370,9 @@ body {
     display: block;
     opacity: 1; }
 
+#connect-clef-account .skip {
+  display: none; }
+
 #clef-settings-form form {
   display: none; }
 #clef-settings-form .settings-section.override-settings .inputs-container .input-container {

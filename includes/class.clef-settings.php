@@ -33,7 +33,7 @@ class ClefSettings extends Settings_API_Util {
         if (isset($input['clef_password_settings_force']) && $input['clef_password_settings_force'] == "1") {
             if (!ClefUtils::user_has_clef()) {
                 unset($input['clef_password_settings_force']);
-                $url = admin_url('admin.php?page=connect_clef_account');
+                $url = admin_url('admin.php?page=' . ClefAdmin::CONNECT_CLEF_PAGE);
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
                     'clef_password_settings_force',

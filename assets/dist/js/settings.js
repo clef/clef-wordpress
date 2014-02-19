@@ -12,6 +12,19 @@
       return data;
     };
 
+    Utils.getURLParams = function() {
+      var key, params, query, raw_vars, v, val, _i, _len, _ref;
+      query = window.location.search.substring(1);
+      raw_vars = query.split("&");
+      params = {};
+      for (_i = 0, _len = raw_vars.length; _i < _len; _i++) {
+        v = raw_vars[_i];
+        _ref = v.split("="), key = _ref[0], val = _ref[1];
+        params[key] = decodeURIComponent(val);
+      }
+      return params;
+    };
+
     return Utils;
 
   })();
@@ -307,6 +320,22 @@
   });
   ConnectTutorialView = TutorialView.extend({
     connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code",
+    initialize: function(opts) {
+      var params;
+      this.constructor.__super__.initialize.call(this, opts);
+      params = ClefUtils.getURLParams();
+      if (params.code) {
+        opts.nonces.connectClef = params._wpnonce;
+        this.$el.find('.sub:not(.using-clef)').remove();
+        return this.connectClefAccount({
+          identifier: params.code
+        }, (function(_this) {
+          return function() {
+            return window.location = _this.opts.redirectURL;
+          };
+        })(this));
+      }
+    },
     render: function() {
       this.addButton();
       return this.constructor.__super__.render.call(this);
