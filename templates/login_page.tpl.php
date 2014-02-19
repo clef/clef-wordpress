@@ -12,7 +12,5 @@
     </div>
 <?php } ?>
 <div class="clef-button-container">
-    <?php
-    include dirname( __FILE__ )."/button.tpl.php";
-    ?>
+    <?php do_action('clef_render_login_button', $redirect_url, $app_id) ?>
 </div>
