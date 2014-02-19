@@ -39,6 +39,7 @@ class ClefLogin {
         // code
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
 
+        // Allow the Clef button to be rendered anywhere
         add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
     }
     
@@ -111,7 +112,7 @@ class ClefLogin {
         }
     }
 
-    public function render_login_button($app_id=false, $redirect_url=false) {
+    public function render_login_button($redirect_url=false, $app_id=false) {
         if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
         if (!$redirect_url) {
             $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());

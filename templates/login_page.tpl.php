@@ -12,5 +12,5 @@
     </div>
 <?php } ?>
 <div class="clef-button-container">
-    <?php do_action('clef_render_login_button', $app_id, $redirect_url) ?>
+    <?php do_action('clef_render_login_button', $redirect_url, $app_id) ?>
 </div>
