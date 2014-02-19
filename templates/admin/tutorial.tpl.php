@@ -64,7 +64,7 @@
             echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
                 "next_href" => '#',
                 "next_text" => __("Go to Clef settings", "clef"),
-                "class" => "connect"
+                "class" => "setup"
             ));
         ?>
 
@@ -72,7 +72,7 @@
             echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
                 "next_href" => admin_url(),
                 "next_text" => __("Go to dashboard", "clef"),
-                "class" => "setup"
+                "class" => "connect"
             ));
         ?>
 
