@@ -38,6 +38,8 @@ class ClefLogin {
         // Redirect to an Clef onboarding page if a user logs in with an invite 
         // code
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
+
+        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
     }
     
     public function load_base_styles() {
@@ -75,7 +77,7 @@ class ClefLogin {
             # add redirect to if it exists
             if (isset($_REQUEST['redirect_to'])) {
                 $redirect_url = add_query_arg(
-                    array('redirect_to' => $_REQUEST['redirect_to']), 
+                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
                     $redirect_url
                 );
             }
@@ -97,6 +99,7 @@ class ClefLogin {
             }
 
             $app_id = $this->settings->get( 'clef_settings_app_id' );
+
             echo ClefUtils::render_template('login_page.tpl', array(
                 "passwords_disabled" => $passwords_disabled,
                 "override_key" => $override_key,
@@ -106,6 +109,26 @@ class ClefLogin {
                 "app_id" => $app_id
             ));
         }
+    }
+
+    public function render_login_button($app_id=false, $redirect_url=false) {
+        if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
+        if (!$redirect_url) {
+            $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
+
+            # add redirect to if it exists
+            if (isset($_REQUEST['redirect_to'])) {
+                $redirect_url = add_query_arg(
+                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
+                    $redirect_url
+                );
+            }
+        }
+
+        echo ClefUtils::render_template('button.tpl', array(
+            "app_id" => $app_id,
+            "redirect_url" => $redirect_url
+        ));
     }
 
     public function handle_login_failed($errors) {
