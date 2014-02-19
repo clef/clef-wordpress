@@ -33,7 +33,7 @@ class ClefLogin {
         add_filter('login_message', array($this, 'validate_invite'));
 
         // Disable password reset, according to settings
-        add_filter('allow_password_reset', array($this, 'disable_password_reset'));
+        add_filter('allow_password_reset', array($this, 'disable_password_reset'), 10, 2);
 
         // Redirect to an Clef onboarding page if a user logs in with an invite 
         // code
@@ -282,7 +282,7 @@ class ClefLogin {
         }
     }
 
-    public function disable_password_reset($user_id) {
+    public function disable_password_reset($allow, $user_id) {
         $user = get_user_by('id', (int) $user_id);
         return !$this->settings->passwords_are_disabled_for_user($user);
     }
