@@ -510,6 +510,8 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
+        $_SESSION['logged_in_at'] = time();
+        
         return array("success" => true);
     }
 
