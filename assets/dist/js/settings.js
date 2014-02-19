@@ -402,7 +402,7 @@
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
-      if (!this.settings.isConfigured) {
+      if (!this.settings.isConfigured()) {
         this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
         this.listenTo(this.tutorial, 'message', this.displayMessage);
       }

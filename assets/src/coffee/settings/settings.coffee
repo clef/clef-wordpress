@@ -9,7 +9,7 @@
                 _.extend { options_name: "wpclef" }, @opts
             )
 
-            if !@settings.isConfigured
+            if !@settings.isConfigured()
                 @tutorial = new SetupTutorialView _.extend {}, @opts
                 @listenTo @tutorial, 'message', @displayMessage
 
