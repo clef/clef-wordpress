@@ -119,14 +119,12 @@ class ClefInternalSettings {
     public function passwords_are_disabled_for_user($user) {
         if (!$this->is_configured()) return false;
 
-        $disabled = false;
-
         if ($this->get('clef_password_settings_force')) {
-            $disabled = true;
+            return true;
         }
 
         if ($this->get( 'clef_password_settings_disable_passwords' ) && ClefUtils::user_has_clef($user)) {
-            $disabled = true;
+            return true;
         }
 
         $disable_certain_passwords = 
@@ -134,10 +132,10 @@ class ClefInternalSettings {
 
         if ($disable_certain_passwords && $disable_certain_passwords != "") {
             $max_role = strtolower($disable_certain_passwords);
-            $disabled = ClefUtils::user_fulfills_role($user, $max_role);
+            return ClefUtils::user_fulfills_role($user, $max_role);
         }
 
-        return $disabled;
+        return false;
     }
 
     public function xml_passwords_enabled() {
