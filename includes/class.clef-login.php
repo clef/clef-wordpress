@@ -251,7 +251,7 @@ class ClefLogin {
                 ClefUtils::associate_clef_id($clef_id, $user->ID);
             }
 
-            do_action('clef_login');
+            do_action('clef_login', $user->ID);
 
             // Log in the user
             $_SESSION['logged_in_at'] = time();

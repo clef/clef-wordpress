@@ -13,9 +13,12 @@
         return;
       }
       sending = true;
-      data = $.extend({
-        enable: "badge"
-      }, ajaxData);
+      data = {};
+      $prompt.find('input').each(function() {
+        return data[$(this).attr('name')] = $(this).val();
+      });
+      data.enable = 'badge';
+      $.extend(data, ajaxData);
       $prompt.slideUp();
       return $.post(ajaxurl, data, (function() {}), "json");
     });
@@ -26,9 +29,12 @@
         return;
       }
       sending = true;
-      data = $.extend({
-        disable: true
-      }, ajaxData);
+      data = {};
+      $prompt.find('input').each(function() {
+        return data[$(this).attr('name')] = $(this).val();
+      });
+      data.disable = true;
+      $.extend(data, ajaxData);
       $.post(ajaxurl, data, (function() {}), "json");
       return $prompt.slideUp();
     });

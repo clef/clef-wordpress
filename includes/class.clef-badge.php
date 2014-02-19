@@ -29,11 +29,8 @@ class ClefBadge {
     }
 
     public function hook_onboarding() {
-        if (!$this->should_display_prompt()) return;
-
         if (empty($_POST)) {
             $this->register_scripts();      
-            $this->hide_prompt();
             add_action('admin_notices', array($this, 'badge_prompt_html'));
         } else {
             global $clef_ajax;
@@ -53,10 +50,15 @@ class ClefBadge {
     }
 
     public function badge_prompt_html() {
+        if (!$this->should_display_prompt()) return;
+
         $had_clef_before_onboarding = $this->onboarding->had_clef_before_onboarding();
         echo ClefUtils::render_template('admin/badge-prompt.tpl', array(
             "had_clef_before_onboarding" => $had_clef_before_onboarding
         ));
+
+        // Ensure the prompt is hidden on next load
+        $this->hide_prompt();
     }
 
     public function register_scripts() {

@@ -10,7 +10,7 @@ class ClefOnboarding {
 
     private function __construct($settings) {
         $this->settings = $settings;
-        add_action('clef_login', array($this, 'mark_login_for_current_user'));
+        add_action('clef_login', array($this, 'mark_login_for_user_id'));
     }
 
     public function get_data() {
@@ -42,8 +42,7 @@ class ClefOnboarding {
         return $this->set_data($data);
     }
 
-    public function mark_login_for_current_user() {
-        $user_id = get_current_user_id();
+    public function mark_login_for_user_id($user_id) {
         $this->increment_logins_for_user_id($user_id, 1);
     }
 

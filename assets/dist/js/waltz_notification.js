@@ -1,9 +1,15 @@
 (function($) {
   var dismissWaltzNotification;
   dismissWaltzNotification = function(e) {
+    var $el, data;
     e.preventDefault();
-    $('.waltz-notification').remove();
-    return $.post(ajaxurl + '?action=clef_dismiss_waltz_notification');
+    $el = $('.waltz-notification');
+    data = {};
+    $el.find('input').each(function() {
+      return data[$(this).attr('name')] = $(this).val();
+    });
+    $el.remove();
+    return $.post(ajaxurl + '?action=clef_dismiss_waltz', data);
   };
   return $(document).ready(function() {
     if (window.waltzIsInstalled) {
