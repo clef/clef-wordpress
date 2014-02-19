@@ -473,11 +473,18 @@ class ClefAdmin {
             return new WP_Error('invalid_role', __('invalid role', 'clef'));
         }
 
-        $other_users = get_users(array('exclude' => array(get_current_user_id())));
+        $other_users = get_users(array(
+            'exclude' => array(get_current_user_id()),
+            'meta_query' => array(array(
+                'key' => 'clef_id',
+                'value' => '',
+                'compare' => 'NOT EXISTS'
+            ))
+        ));
         $filtered_users = $this->filter_users_by_role($other_users, $role);
 
         if (empty($filtered_users)) {
-            return new WP_Error('no_users', __("there are no other users with this role or greater", "clef"));
+            return new WP_Error('no_users', __("there are no other users without Clef with this role or greater", "clef"));
         }
 
         // Get the site domain and get rid of www.
@@ -498,7 +505,11 @@ class ClefAdmin {
         }
 
         if ($failed) {
-            return new WP_Error('clef_mail_error', __("unable to send emails"));
+            $connect_clef_url = admin_url('admin.php?page=' . ClefAdmin::CONNECT_CLEF_PAGE);
+            $message = __("unable to send emails. Send your users", 'clef') . 
+                " <a href='$connect_clef_url'>" . __("this link", 'clef') .  "</a> " . 
+                __("and they'll be walked through a tutorial to connect with Clef", 'clef');
+            return new WP_Error('clef_mail_error', $message);
         }
 
         return array("success" => true);
