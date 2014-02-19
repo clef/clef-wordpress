@@ -18,7 +18,11 @@ class ClefSetup {
     );
 
     public static function activate_plugin($network) {
-        add_site_option("Clef_Activated", true);
+        if (is_network_admin()) {
+            add_site_option("Clef_Activated", true);
+        } else {
+            add_option("Clef_Activated", true);
+        }
     }
 
     public static function deactivate_plugin($network) { }
