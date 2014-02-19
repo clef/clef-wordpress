@@ -8,8 +8,21 @@
  * @since 2.0
  */
 class ClefSetup {
+    public static $meta_keys = array(
+        'clef_id', 
+        'clef_invite_code',
+        'logged_out_at',
+        'clef_logins',
+        'clef_hide_waltz_badge',
+        'clef_hide_waltz_prompt'
+    );
+
     public static function activate_plugin($network) {
-        add_site_option("Clef_Activated", true);
+        if (is_network_admin()) {
+            add_site_option("Clef_Activated", true);
+        } else {
+            add_option("Clef_Activated", true);
+        }
     }
 
     public static function deactivate_plugin($network) { }
@@ -20,7 +33,9 @@ class ClefSetup {
     public static function uninstall_plugin() {
         if (current_user_can( 'delete_plugins' )) { 
             global $wpdb;
-            $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", 'clef_id' ) );
+            foreach (self::$meta_keys as $meta_key) {
+                $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE meta_key = %s", $meta_key) );
+            }
         }
 
         if (is_multisite() && is_network_admin()) {

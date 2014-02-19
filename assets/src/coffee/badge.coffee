@@ -10,7 +10,12 @@
             return  if sending
             sending = true
 
-            data = $.extend { enable: "badge" }, ajaxData
+            data = {}
+            $prompt.find('input').each ->
+                data[$(this).attr('name')] = $(this).val()
+
+            data.enable = 'badge'
+            $.extend data, ajaxData
             $prompt.slideUp()
             $.post ajaxurl, data, (() ->), "json"
 
@@ -20,7 +25,12 @@
             return  if sending
             sending = true
 
-            data = $.extend { disable: true }, ajaxData
+            data = {}
+            $prompt.find('input').each ->
+                data[$(this).attr('name')] = $(this).val()
+
+            data.disable = true
+            $.extend data, ajaxData
             $.post ajaxurl, data, (() ->), "json"
             $prompt.slideUp()
 

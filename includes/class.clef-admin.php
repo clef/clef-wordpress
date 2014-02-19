@@ -15,6 +15,9 @@ class ClefAdmin {
     const CLEF_WALTZ_LOGIN_COUNT = 3;
     const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
 
+    const HIDE_WALTZ_BADGE = 'clef_hide_waltz_badge';
+    const HIDE_WALTZ_PROMPT = 'clef_hide_waltz_prompt';
+
     private static $instance = null;
 
     protected $settings;
@@ -82,25 +85,31 @@ class ClefAdmin {
 
     public function display_dashboard_waltz_prompt() {
         $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
-        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
-        $should_hide |= $this->settings->get('hide_dashboard_waltz_prompt') == true;
-        $should_hide |= $is_settings_page;
 
-        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || $should_hide) return;
+        $login_count = $onboarding->get_login_count_for_current_user();
+        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
+
+        $hide_waltz_prompt = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
+
+        // If the user has access to the dashboard and they haven't already 
+        // dismissed the prompt, then display it.
+        $should_display_for_user = !$hide_waltz_prompt && current_user_can('read');
+
+        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || !$should_display_for_user || $is_settings_page) return;
 
         $this->render_waltz_prompt();
-        $this->settings->set('hide_dashboard_waltz_prompt', true);
+
+        // Make sure the notification doesn't ever show again for this user
+        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
     }
 
     public function display_clef_waltz_prompt() {
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
         $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-        $should_hide = $this->settings->get('hide_clef_waltz_prompt') == true;
+        $should_hide = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
 
         $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
+        $login_count = $onboarding->get_login_count_for_current_user();
 
         if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
         
@@ -165,7 +174,6 @@ class ClefAdmin {
         $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
 
         add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-        error_log($to . '\n' . $subject . '\n' . $message . '\n');
         wp_mail($to, $subject, $message);
         remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
     }
@@ -195,6 +203,13 @@ class ClefAdmin {
     }
 
     public function admin_menu() {
+        // Ensure that if the Waltz notification bubble was showing, that it is 
+        // never shown again.
+        if (ClefUtils::isset_REQUEST('page') === $this->settings->settings_path && 
+          $this->should_display_badged_menu_title()) {
+            update_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
+        }
+
         if ($this->settings->multisite_disallow_settings_override()) {
             // if the single site override of settings is not allowed
             // let's add a menu page that only lets a user connect
@@ -263,15 +278,27 @@ class ClefAdmin {
      * @return string The title of the menu with or without a badge
      */
     public function get_clef_menu_title() {
-        $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count();
         $clef_menu_title = __('Clef', 'clef');
-        $hide_waltz_badge = $this->settings->get('hide_waltz_badge');
-        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
-        if ($login_count >= self::CLEF_WALTZ_LOGIN_COUNT && !$hide_waltz_badge && $is_google_chrome) {
+
+        if ($this->should_display_badged_menu_title()) {
             $clef_menu_title .= $this->render_badge(1);
         }
+
         return $clef_menu_title;
+    }
+
+    public function should_display_badged_menu_title() {
+        $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
+        $user_is_admin = current_user_can('manage_options');
+        $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
+        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
+
+        $badge_menu_title = $user_is_admin && 
+                            $login_count >= self::CLEF_WALTZ_LOGIN_COUNT && 
+                            !$hide_waltz_badge && 
+                            $is_google_chrome;
+
+        return $badge_menu_title;
     }
 
     public function render_badge($count) {
@@ -279,8 +306,6 @@ class ClefAdmin {
     }
 
     public function general_settings($options = false) {
-        $this->settings->set('hide_waltz_badge', true);
-
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
         if (!$options) {
@@ -439,7 +464,7 @@ class ClefAdmin {
     /**** BEGIN AJAX HANDLERS ******/
 
     public function ajax_dismiss_waltz_notification() {
-        $this->settings->set('hide_clef_waltz_prompt', true);
+        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
         return array('success' => true);
     }
 

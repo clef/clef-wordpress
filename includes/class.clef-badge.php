@@ -22,16 +22,15 @@ class ClefBadge {
     }
 
     public function should_display_prompt() {
-        return $this->onboarding->get_login_count() > 0 && 
-            !$this->onboarding->get_key(self::PROMPT_HIDDEN);
+        $login_count = $this->onboarding->get_login_count_for_current_user();
+        $prompt_hidden = $this->onboarding->get_key(self::PROMPT_HIDDEN);
+        $has_admin_capability = current_user_can('manage_options');
+        return $login_count > 0 && !$prompt_hidden && $has_admin_capability;
     }
 
     public function hook_onboarding() {
-        if (!$this->should_display_prompt()) return;
-
         if (empty($_POST)) {
             $this->register_scripts();      
-            $this->hide_prompt();
             add_action('admin_notices', array($this, 'badge_prompt_html'));
         } else {
             global $clef_ajax;
@@ -51,10 +50,15 @@ class ClefBadge {
     }
 
     public function badge_prompt_html() {
+        if (!$this->should_display_prompt()) return;
+
         $had_clef_before_onboarding = $this->onboarding->had_clef_before_onboarding();
         echo ClefUtils::render_template('admin/badge-prompt.tpl', array(
             "had_clef_before_onboarding" => $had_clef_before_onboarding
         ));
+
+        // Ensure the prompt is hidden on next load
+        $this->hide_prompt();
     }
 
     public function register_scripts() {
@@ -72,6 +76,9 @@ class ClefBadge {
         return array( "success" => true );
     }
 
+    /**
+     * Mark settings so that the badge prompt will be hidden on next page load.
+     */
     public function hide_prompt() {
         $this->onboarding->set_key(self::PROMPT_HIDDEN, true);
     }
