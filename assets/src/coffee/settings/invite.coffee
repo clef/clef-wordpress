@@ -23,20 +23,25 @@
             data =
                 _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
-            $.post @inviteUsersAction,
-                data,
-                (data) =>
+
+            failure = (msg) =>
+                @showMessage
+                    message: _.template(
+                        clefTranslations.messages.error.invite
+                    )(error: msg)
+                    type: "error"
+
+            $.post @inviteUsersAction, data
+                .success (data) =>
                     if data.success
                         @trigger "invited"
                         @showMessage
                             message: clefTranslations.messages.success.invite
                             type:"updated"
                     else
-                        @showMessage
-                            message: _.template(
-                                clefTranslations.messages.error.invite
-                            )(error: ClefUtils.getErrorMessage data)
-                            type: "error"
+                        failure ClefUtils.getErrorMessage data
+                .fail (res) =>
+                    failure res.responseText
 
         hideButton: () ->
             @$el.find('.button').hide()

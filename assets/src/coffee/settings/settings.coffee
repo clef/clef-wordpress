@@ -8,15 +8,16 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
-            
-            @tutorial = new SetupTutorialView _.extend {}, @opts
+
+            if !@settings.isConfigured
+                @tutorial = new SetupTutorialView _.extend {}, @opts
+                @listenTo @tutorial, 'message', @displayMessage
 
             if @opts.isNetworkSettings
                 delete @opts['formSelector']
                 @multisiteOptionsView = new MultisiteOptionsView(@opts)
 
             @listenTo @settings, 'message', @displayMessage
-            @listenTo @tutorial, 'message', @displayMessage
 
             @render()
 

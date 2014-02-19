@@ -15,7 +15,7 @@ class ClefTranslation {
                     "create" => __("There was a problem creating a new Clef application for your WordPress site: <%= error %>. Please refresh and try again. If the issue, persists, email <a href='mailto:support@getclef.com'>support@getclef.com</a>.", "clef"),
                     "invite" => __("There was a problem sending invites: <%= error %>.", "clef"),
                     "generic" => __("Something wrong, please refresh and try again.", "clef"),
-                    "disconncet" => __("There was a problem disconnecting your Clef account: <%= error %>. Please refresh and try again.", "clef")
+                    "disconnect" => __("There was a problem disconnecting your Clef account: <%= error %>. Please refresh and try again.", "clef")
                 ),
                 "success" => array(
                     "connect" => __("You've successfully connected your account with Clef", "clef"),
