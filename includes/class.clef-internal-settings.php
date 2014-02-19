@@ -61,7 +61,7 @@ class ClefInternalSettings {
     }
 
     public function maybe_sanitize($str) {
-        $sanitized_value = $value
+        $sanitized_value = $value;
         if (is_string($value)) {
             $sanitized_value = sanitize_text_field($value);
         }
