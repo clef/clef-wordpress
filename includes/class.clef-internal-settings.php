@@ -53,10 +53,19 @@ class ClefInternalSettings {
     }
 
     public function set($name, $value) {
-        if ($value && $this->get($name) !== $value) {
-            $this->settings[$name] = $value;
+        $sanitized_value = $this->maybe_sanitize($value);
+        if ($sanitized_value && $this->get($name) !== $sanitized_value) {
+            $this->settings[$name] = $sanitized_value;
             $this->update_site_option();
         }
+    }
+
+    public function maybe_sanitize($str) {
+        $sanitized_value = $value;
+        if (is_string($value)) {
+            $sanitized_value = sanitize_text_field($value);
+        }
+        return $sanitized_value;
     }
 
     public function remove($name) {
