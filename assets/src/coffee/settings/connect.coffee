@@ -29,8 +29,16 @@
                 @disconnect.show()
         disconnectClefAccount: (e) ->
             e.preventDefault()
-            $.post @disconnectURL, { _wpnonce: @opts.nonces.disconnectClef },
-                (data) =>
+
+            failure = (msg) =>
+                @showMessage
+                    message: _.template(
+                        clefTranslations.messages.error.disconnect
+                    )(error: msg)
+                    type: "error"
+
+            $.post @disconnectURL, { _wpnonce: @opts.nonces.disconnectClef }
+                .success (data) =>
                     if data.success
                         @opts.connected = false
                         @render()
@@ -39,9 +47,10 @@
                             message: msg
                             type: "updated"
                     else
-                        @showMessage
-                            message: ClefUtils.getErrorMessage(data)
-                            type: "error"
+                        failure ClefUtils.getErrorMessage(data)
+                .fail (res) =>
+                    failure res.responseText
+                       
         showMessage: (data) ->
             @message.remove() if @message
             @message = $(@messageTemplate data).hide()

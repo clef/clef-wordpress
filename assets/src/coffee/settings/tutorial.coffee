@@ -72,17 +72,21 @@
                 _wpnonce: @opts.nonces.connectClef
                 identifier: data.identifier
 
-            $.post @connectClefAccountAction,
-                connectData,
-                (data) =>
+            failure = (msg) =>
+                @showMessage
+                    message: _.template(
+                        clefTranslations.messages.error.connect
+                    )(error: msg), 
+                    type: "error"
+
+            $.post @connectClefAccountAction, connectData
+                .success (data) =>
                     if data.success
                         cb(data) if typeof(cb) == "function"
                     else
-                        @showMessage
-                            message: _.template(
-                                clefTranslations.messages.error.connect
-                            )(error: ClefUtils.getErrorMessage data), 
-                            type: "error"
+                        failure ClefUtils.getErrorMessage(data)
+                .fail (res) =>
+                    failure res.responseText
 
         showMessage: (opts) ->
             @$currentMessage.remove() if @$currentMessage

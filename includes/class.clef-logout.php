@@ -8,7 +8,6 @@ class ClefLogout {
     private function __construct($settings) {
         $this->settings = $settings;
         $this->logged_out_check();
-        
         $this->initialize_hooks();
     }
 

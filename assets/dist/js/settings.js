@@ -58,13 +58,23 @@
     },
     inviteUsersAction: ajaxurl + "?action=clef_invite_users",
     inviteUsers: function(e) {
-      var data;
+      var data, failure;
       e.preventDefault();
       data = {
         _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val()
       };
-      return $.post(this.inviteUsersAction, data, (function(_this) {
+      failure = (function(_this) {
+        return function(msg) {
+          return _this.showMessage({
+            message: _.template(clefTranslations.messages.error.invite)({
+              error: msg
+            }),
+            type: "error"
+          });
+        };
+      })(this);
+      return $.post(this.inviteUsersAction, data).success((function(_this) {
         return function(data) {
           if (data.success) {
             _this.trigger("invited");
@@ -73,13 +83,12 @@
               type: "updated"
             });
           } else {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.invite)({
-                error: ClefUtils.getErrorMessage(data)
-              }),
-              type: "error"
-            });
+            return failure(ClefUtils.getErrorMessage(data));
           }
+        };
+      })(this)).fail((function(_this) {
+        return function(res) {
+          return failure(res.responseText);
         };
       })(this));
     },
@@ -185,25 +194,34 @@
       return e.originalEvent.data;
     },
     connectClefAccount: function(data, cb) {
-      var connectData;
+      var connectData, failure;
       connectData = {
         _wpnonce: this.opts.nonces.connectClef,
         identifier: data.identifier
       };
-      return $.post(this.connectClefAccountAction, connectData, (function(_this) {
+      failure = (function(_this) {
+        return function(msg) {
+          return _this.showMessage({
+            message: _.template(clefTranslations.messages.error.connect)({
+              error: msg
+            }),
+            type: "error"
+          });
+        };
+      })(this);
+      return $.post(this.connectClefAccountAction, connectData).success((function(_this) {
         return function(data) {
           if (data.success) {
             if (typeof cb === "function") {
               return cb(data);
             }
           } else {
-            return _this.showMessage({
-              message: _.template(clefTranslations.messages.error.connect)({
-                error: ClefUtils.getErrorMessage(data)
-              }),
-              type: "error"
-            });
+            return failure(ClefUtils.getErrorMessage(data));
           }
+        };
+      })(this)).fail((function(_this) {
+        return function(res) {
+          return failure(res.responseText);
         };
       })(this));
     },
@@ -384,13 +402,15 @@
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
-      this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
+      if (!this.settings.isConfigured) {
+        this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
+        this.listenTo(this.tutorial, 'message', this.displayMessage);
+      }
       if (this.opts.isNetworkSettings) {
         delete this.opts['formSelector'];
         this.multisiteOptionsView = new MultisiteOptionsView(this.opts);
       }
       this.listenTo(this.settings, 'message', this.displayMessage);
-      this.listenTo(this.tutorial, 'message', this.displayMessage);
       return this.render();
     },
     render: function() {
@@ -640,10 +660,21 @@
       }
     },
     disconnectClefAccount: function(e) {
+      var failure;
       e.preventDefault();
+      failure = (function(_this) {
+        return function(msg) {
+          return _this.showMessage({
+            message: _.template(clefTranslations.messages.error.disconnect)({
+              error: msg
+            }),
+            type: "error"
+          });
+        };
+      })(this);
       return $.post(this.disconnectURL, {
         _wpnonce: this.opts.nonces.disconnectClef
-      }, (function(_this) {
+      }).success((function(_this) {
         return function(data) {
           var msg;
           if (data.success) {
@@ -655,11 +686,12 @@
               type: "updated"
             });
           } else {
-            return _this.showMessage({
-              message: ClefUtils.getErrorMessage(data),
-              type: "error"
-            });
+            return failure(ClefUtils.getErrorMessage(data));
           }
+        };
+      })(this)).fail((function(_this) {
+        return function(res) {
+          return failure(res.responseText);
         };
       })(this));
     },
