@@ -167,12 +167,10 @@ class ClefAdmin {
     protected function send_invite_email($from_email, $user, $invite_code) {
         $invite_link = $invite_code->get_link();
         $to = $user->user_email;
-        $subject = __('Set up Clef for your account', "clef");
+        $subject = '['. get_bloginfo('name') . '] ' . __('Set up Clef for your account', "clef");
         $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
-        $headers = 'From: WordPress <'.$from_email.'> \r\n';
-        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+        $headers = "From: WordPress <".$from_email."> \r\n";
         $sent = wp_mail($to, $subject, $message, $headers);
-        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
         return $sent;
     }
 
