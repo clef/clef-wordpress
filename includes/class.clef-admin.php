@@ -164,15 +164,16 @@ class ClefAdmin {
         return $filtered_users;
     }
 
-    protected function send_invite_email($user, $invite_code) {
+    protected function send_invite_email($from_email, $user, $invite_code) {
         $invite_link = $invite_code->get_link();
         $to = $user->user_email;
         $subject = __('Set up Clef for your account', "clef");
         $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
-
+        $headers = 'From: WordPress <'.$from_email.'> \r\n';
         add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-        wp_mail($to, $subject, $message);
+        $sent = wp_mail($to, $subject, $message, $headers);
         remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+        return $sent;
     }
 
     public function render_connect_clef_account() {
@@ -479,10 +480,25 @@ class ClefAdmin {
             return new WP_Error('no_users', __("there are no other users with this role or greater", "clef"));
         }
 
+        // Get the site domain and get rid of www.
+        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+                $sitename = substr( $sitename, 4 );
+        }
+        $from_email = 'wordpress@' . $sitename;
+
+        $failed = false;
         foreach ($filtered_users as &$user) {
             $invite_code = new InviteCode($user);
             update_user_meta($user->ID, 'clef_invite_code', $invite_code);
-            $this->send_invite_email($user, $invite_code);
+            $success = $this->send_invite_email($from_email, $user, $invite_code);
+            if (!$success) {
+                $failed = true;
+            }
+        }
+
+        if ($failed) {
+            return new WP_Error('clef_mail_error', __("unable to send emails"));
         }
 
         return array("success" => true);
