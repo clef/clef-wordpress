@@ -71,8 +71,9 @@ This file presents a master list of WP Clef’s features to facilitate systemati
 - [ ] Run SW tests (A), (B), and (C) on Super Admin site.
 - [ ] Run SW tests (A), (B), and (C) on one sub-site.
 
-## Password Settings
+## Password Settings (and log in and log out actions)
 **WP-Login.php Legend:**
+- CA: Clef App
 - CB: Clef button (i.e., “Log in w/ your phone”)
 - LE: "Lost your password?" e-mail
 - LF: "Lost your password?" form (i.e., wp-login.php?action=lostpassword)
@@ -103,24 +104,26 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - inserts key in O1,
  - and shows O4.
 
-1. Non-Clef user log in
+1. Non-Clef user login
  - [ ] wp-login.php displays PF + CB with LL.
  - [ ] Log in via PF.
+ - [ ] Log out via CA.
 
 1. Non-Clef user reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
  
-1. Clef user log in
+1. Clef user login
  - [ ] wp-login.php displays PF + CB with LL.
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Clef user reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 ### Disable passwords: set P2 = not null, P3–P4 = null.
@@ -138,7 +141,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - and shows O4.
 
 #### P2 = “Contributor”
-1. Subscriber role log in
+1. Subscriber role login
  - [ ] Log in via PF.
 
 1. Subscriber role reset password
@@ -146,46 +149,51 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Contributor role log in
+1. Contributor role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Contributor role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Author role log in
+1. Author role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Author role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Editor role log in
+1. Editor role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Editor role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Administrator role log in
+1. Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Super Administrator role log in
+1. Super Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Author”
-1. Subscriber role log in
+1. Subscriber role login
  - [ ] Log in via PF.
 
 1. Subscriber role reset password
@@ -193,7 +201,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Contributor role log in
+1. Contributor role login
  - [ ] Log in via PF.
 
 1. Contributor role reset password
@@ -201,39 +209,43 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Author role log in
+1. Author role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Author role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Editor role log in
+1. Editor role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Editor role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Administrator role log in
+1. Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Super Administrator role log in
+1. Super Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Editor”
-1. Subscriber role log in
+1. Subscriber role login
  - [ ] Log in via PF.
 
 1. Subscriber role reset password
@@ -241,7 +253,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Contributor role log in
+1. Contributor role login
  - [ ] Log in via PF.
 
 1. Contributor role reset password
@@ -249,7 +261,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Author role log in
+1. Author role login
  - [ ] Log in via PF.
 
 1. Author role reset password
@@ -257,32 +269,35 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Editor role log in
+1. Editor role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Editor role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Administrator role log in
+1. Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Super Administrator role log in
+1. Super Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Administrator”
-1. Subscriber role log in
+1. Subscriber role login
  - [ ] Log in via PF.
 
 1. Subscriber role reset password
@@ -290,7 +305,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Contributor role log in
+1. Contributor role login
  - [ ] Log in via PF.
 
 1. Contributor role reset password
@@ -298,7 +313,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Author role log in
+1. Author role login
  - [ ] Log in via PF.
 
 1. Author role reset password
@@ -306,7 +321,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Editor role log in
+1. Editor role login
  - [ ] Log in via PF.
 
 1. Editor role reset password
@@ -314,25 +329,27 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Administrator role log in
+1. Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. Super Administrator role log in
+1. Super Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 #### P2 = “Super Administrator”
-1. Subscriber role log in
+1. Subscriber role login
  - [ ] Log in via PF.
 
 1. Subscriber role reset password
@@ -340,7 +357,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Contributor role log in
+1. Contributor role login
  - [ ] Log in via PF.
 
 1. Contributor role reset password
@@ -348,7 +365,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Author role log in
+1. Author role login
  - [ ] Log in via PF.
 
 1. Author role reset password
@@ -356,7 +373,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Editor role log in
+1. Editor role login
  - [ ] Log in via PF.
 
 1. Editor role reset password
@@ -364,7 +381,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Administrator role log in
+1. Administrator role login
  - [ ] Log in via PF.
 
 1. Administrator role reset password
@@ -372,14 +389,15 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Set new password.
  - [ ] Receive site admin notification e-mail.
 
-1. Super Administrator role log in
+1. Super Administrator role login
  - [ ] Log in via PF disabled. Returns error notification.
  - [ ] Log in via CB.
+ - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
  - [ ] Disabled. Returns error notification.
 
-1. XML RPC log in
+1. XML-RPC login
  - [ ] Disabled. Returns error notification.
 
 ### Disable passwords: set P3 = true, P4 = null.
@@ -396,10 +414,11 @@ Start the following tests from fresh install state (i.e., all settings except AP
 - [ ] wp-login.php displays CB only (no PF and no LL).
 - [ ] LF disabled for all users. Returns error notification.
 - [ ] Log in via CB.
+- [ ] Log out via CA.
 
 ### Disable passwords: set P4 = true (assumes P1, P2, and/or P3 are not null).
 - [ ] SS fades.
-- [ ] Log in via XML RPC.
+- [ ] Log in via XML-RPC.
 
 ## Support Clef settings
 - [ ] Set to “Badge”
