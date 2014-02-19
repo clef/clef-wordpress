@@ -212,17 +212,19 @@ class ClefAdmin {
         }
 
         if ($this->settings->multisite_disallow_settings_override()) {
-            // if the single site override of settings is not allowed
-            // let's add a menu page that only lets a user connect
-            // their clef account
-            add_menu_page(
-                __("Clef", 'clef'),
-                __("Clef", 'clef'),
-                "read",
-                $this->settings->settings_path,
-                array($this, 'render_connect_clef_account'),
-                CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
-            );
+            if ($this->settings->is_configured()) {
+                // if the single site override of settings is not allowed
+                // let's add a menu page that only lets a user connect
+                // their clef account
+                add_menu_page(
+                    __("Clef", 'clef'),
+                    __("Clef", 'clef'),
+                    "read",
+                    $this->settings->settings_path,
+                    array($this, 'render_connect_clef_account'),
+                    CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
+                );
+            }
             return;
         }
 
@@ -541,6 +543,11 @@ class ClefAdmin {
     }
 
     public function ajax_disconnect_clef_account() {
+        $user = wp_get_current_user();
+        $passwords_disabled = $this->settings->passwords_are_disabled_for_user($user);
+        if (current_user_can('manage_options') && $passwords_disabled) {
+            return new WP_Error('passwords_disabled', __("your passwords are currently disabled. <br/> If you disconnect your Clef account, you won't be able to log in. Please enable passwords for yourself before disconnecting your Clef account", 'clef'));
+        }
         ClefUtils::dissociate_clef_id();
         return array("success" => true);
     }
