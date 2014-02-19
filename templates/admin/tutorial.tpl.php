@@ -1,7 +1,7 @@
 <div id="clef-tutorial" style="display:none;">
     <div class="clef-tutorial-container">
 
-       <!--  <div class="sub intro connect setup">
+        <div class="sub intro connect setup">
             <h1><?php _e("Clef makes logging into your site safer and easier. <br> It's <b>free</b>, and getting set up takes <b>30 seconds</b>.", "clef"); ?></h1>
             <div class="next button button-hero button-primary center"><?php _e("Get Started", "clef"); ?></div>
             <div class="quotes">
@@ -47,7 +47,7 @@
             </div>
             <h3><?php _e("Don't have the app? Let us text you the download link.", "clef"); ?></h3>
             <iframe src="<?php echo CLEF_BASE ?>/iframes/text" frameborder="0"></iframe>
-        </div> -->
+        </div>
 
         <div class="sub using-clef setup connect">
             <h1><?php _e("3 tips for using Clef", "clef"); ?></h1>
