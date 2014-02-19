@@ -7,13 +7,14 @@ class ClefLogout {
 
     private function __construct($settings) {
         $this->settings = $settings;
+        $this->logged_out_check();
+        
         $this->initialize_hooks();
     }
 
     public function initialize_hooks() {
         add_filter( 'heartbeat_received',  array($this, "hook_heartbeat"), 10, 3);
         $this->register_logout_hook_handler();
-        $this->logged_out_check();
     }
 
     /**
