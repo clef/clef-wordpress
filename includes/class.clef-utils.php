@@ -29,9 +29,12 @@ class ClefUtils {
      *   template.
      * @return string
      */
-    public static function render_template($name, $variables=false) {
+    public static function render_template($name, $variables=false, $sanitize=true) {
         if ($variables) {
-            $escaped_variables = array_map(array(__CLASS__, 'escape_string'), $variables);
+            $escaped_variables = $variables;
+            if ($sanitize) {
+                $escaped_variables = array_map(array(__CLASS__, 'escape_string'), $variables);
+            }
             extract($escaped_variables, EXTR_SKIP);
         }
         ob_start();

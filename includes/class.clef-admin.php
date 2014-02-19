@@ -168,7 +168,7 @@ class ClefAdmin {
         $invite_link = $invite_code->get_link();
         $to = $user->user_email;
         $subject = '['. get_bloginfo('name') . '] ' . __('Set up Clef for your account', "clef");
-        $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link));
+        $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link), false);
         $headers = "From: WordPress <".$from_email."> \r\n";
         $sent = wp_mail($to, $subject, $message, $headers);
         return $sent;
