@@ -22,6 +22,11 @@ class ClefSettings extends Settings_API_Util {
     public static function validate(array $input) {
         $input =  parent::validate($input);
 
+        // sanitize inputs as text fields
+        foreach ($input as $key => &$value) {
+            $input[$key] = sanitize_text_field($value);
+        }
+
         if (isset($input['clef_settings_app_id'])) {
             $input['clef_settings_app_id'] = esc_attr($input['clef_settings_app_id']);
         }

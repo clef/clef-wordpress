@@ -73,7 +73,7 @@ class ClefNetworkAdmin extends ClefAdmin {
         $settings = json_decode(file_get_contents( "php://input" ), true);
 
         if (isset($settings['allow_override'])) {
-            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $settings['allow_override']);
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, (bool) $settings['allow_override']);
         }
 
         return array("success" => true);
@@ -87,8 +87,7 @@ class ClefNetworkAdmin extends ClefAdmin {
         }
 
         if (isset($_POST['allow_override_form'])) {
-            $value = isset($_POST['allow_override']);
-            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, $value);
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, isset($_POST['allow_override']));
         }
 
         $enabled = get_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
