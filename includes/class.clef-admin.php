@@ -453,12 +453,6 @@ class ClefAdmin {
         return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
     }
 
-    public static function print_invite_users_descript() {
-        $url = add_query_arg(array('page' => 'clef', 'invite_users' => 'true'), admin_url('admin.php'));
-        _e('<p>Invite users of your site here.</p>', 'clef');
-        _e("<a href='$url'>Invite all users</a>", 'clef');
-    }
-
     /**** BEGIN AJAX HANDLERS ******/
 
     public function ajax_dismiss_waltz_notification() {
