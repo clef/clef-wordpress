@@ -15,6 +15,8 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-utils.php');
         require_once(CLEF_PATH . 'includes/class.clef-translation.php');
 
+        if( !session_id() ) session_start();
+
         // Site options
         require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');
         $settings = ClefInternalSettings::start();

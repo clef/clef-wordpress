@@ -152,7 +152,6 @@ class ClefUtils {
         }
 
         $access_token = $body->access_token;
-        $_SESSION['wpclef_access_token'] = $access_token;
 
         // Get info
         $response = wp_remote_get( CLEF_API_BASE . "info?access_token={$access_token}" );
