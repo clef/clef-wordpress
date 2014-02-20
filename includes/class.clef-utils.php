@@ -182,8 +182,8 @@ class ClefUtils {
             "super administrator"
         );
 
-        foreach ($user->roles as &$role) {
-            $rank = array_search($role, $role_map);
+        foreach ($user->roles as &$user_role) {
+            $rank = array_search($user_role, $role_map);
             if ($rank != 0 && $rank >= array_search($role, $role_map)) {
                 $fulfills_role = true;
                 break;
