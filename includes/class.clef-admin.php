@@ -334,7 +334,8 @@ class ClefAdmin {
             'isNetworkSettings' => false,
             'isNetworkSettingsEnabled' => $this->settings->network_settings_enabled(),
             'isSingleSiteSettingsAllowed' => $this->settings->single_site_settings_allowed(),
-            'isUsingIndividualSettings' => $this->settings->use_individual_settings
+            'isUsingIndividualSettings' => $this->settings->use_individual_settings,
+            'connectClefUrl' => admin_url('admin.php?page=' . ClefAdmin::CONNECT_CLEF_PAGE)
         ), $options);
 
         if (get_site_option("bruteprotect_installed_clef")) {
@@ -504,10 +505,7 @@ class ClefAdmin {
         }
 
         if ($failed) {
-            $connect_clef_url = admin_url('admin.php?page=' . ClefAdmin::CONNECT_CLEF_PAGE);
-            $message = __("unable to send emails. Send your users", 'clef') . 
-                " <a href='$connect_clef_url'>" . __("this link", 'clef') .  "</a> " . 
-                __("and they'll be walked through a tutorial to connect with Clef", 'clef');
+            $message = __("unable to send emails. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
             return new WP_Error('clef_mail_error', $message);
         }
 
