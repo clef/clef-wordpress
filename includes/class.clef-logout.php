@@ -67,6 +67,9 @@ class ClefLogout {
             wp_logout();
             return true;
         }
+        else if (!is_user_logged_in()) {
+            return true;
+        }
         return false;
     }
 
