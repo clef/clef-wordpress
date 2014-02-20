@@ -4,6 +4,7 @@
     <div class="settings-section disconnect-clef" style="display:none;">
         <h3><?php _e("Disconnect your Clef account", "clef"); ?></h3>
         <p><?php _e("You currently have a Clef account connected to this WordPress user. To disconnect this Clef account, click the button below.", "clef"); ?></p>
+        <p class='bold'><?php _e("Note: if passwords are disabled for all users and you disconnect your Clef account, you won't be able to log in.", "clef"); ?></p>
         <a href="#" id="disconnect" class="button button-primary button-hero"><?php _e("Disconnect your Clef account", "clef"); ?></a>
     </div>
 </div>
