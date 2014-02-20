@@ -25,7 +25,11 @@ class ClefSetup {
         }
     }
 
-    public static function deactivate_plugin($network) { }
+    public static function deactivate_plugin($network) {
+        if (CLEF_DEBUG) {
+            self::uninstall_plugin();
+        }
+    }
     
     /**
      * Clean up Clef metadata and site options.

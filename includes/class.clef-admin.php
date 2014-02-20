@@ -126,9 +126,9 @@ class ClefAdmin {
         $settings_page_name = array_shift($exploded_path);
 
         // only register clef logout if user is a clef user
-        if (get_user_meta(wp_get_current_user()->ID, 'clef_id')) {
-            ClefUtils::register_script('clef_heartbeat');
-            wp_enqueue_script('wpclef_logout');
+        if (ClefUtils::user_has_clef()) {
+            $ident = ClefUtils::register_script('clef_heartbeat');
+            wp_enqueue_script($ident);
         }
 
         $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
