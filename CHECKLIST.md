@@ -161,6 +161,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Contributor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -169,6 +170,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Author role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -177,6 +179,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Editor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override. 
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -185,6 +188,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -193,6 +197,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -219,6 +224,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Author role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -227,6 +233,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Editor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -235,6 +242,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -243,6 +251,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -276,6 +285,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Editor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -284,6 +294,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -292,6 +303,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -332,6 +344,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -340,6 +353,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -387,6 +401,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -409,6 +424,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 - [ ] wp-login.php displays CB only (no PF and no LL).
 - [ ] LF disabled for all users. Returns error notification.
+- [ ] Log in via override.
 - [ ] Log in via CB.
 - [ ] Log out via CA.
 
