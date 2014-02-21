@@ -123,11 +123,11 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Non-Clef user reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
  
 1. Clef user login
  - [ ] wp-login.php displays PF + CB with LL.
  - [ ] Log in via PF returns “passwords have been disabled....”
+ - [ ] Log in via override.
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -158,7 +158,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Subscriber role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
@@ -210,7 +209,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Subscriber role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
  - [ ] Log in via PF.
@@ -218,7 +216,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Contributor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Author role login
  - [ ] Log in via PF returns “passwords have been disabled....”
@@ -262,7 +259,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Subscriber role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
  - [ ] Log in via PF.
@@ -270,7 +266,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Contributor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Author role login
  - [ ] Log in via PF.
@@ -278,7 +273,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Author role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Editor role login
  - [ ] Log in via PF returns “passwords have been disabled....”
@@ -314,7 +308,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Subscriber role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
  - [ ] Log in via PF.
@@ -322,7 +315,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Contributor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Author role login
  - [ ] Log in via PF.
@@ -330,7 +322,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Author role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Editor role login
  - [ ] Log in via PF.
@@ -338,7 +329,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Editor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
@@ -366,7 +356,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Subscriber role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
  - [ ] Log in via PF.
@@ -374,7 +363,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Contributor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Author role login
  - [ ] Log in via PF.
@@ -382,7 +370,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Author role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Editor role login
  - [ ] Log in via PF.
@@ -390,7 +377,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Editor role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Administrator role login
  - [ ] Log in via PF.
@@ -398,7 +384,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Administrator role reset password
  - [ ] LF sends password reset e-mail.
  - [ ] Set new password.
- - [ ] Receive site admin notification e-mail.
 
 1. Super Administrator role login
  - [ ] Log in via PF returns “passwords have been disabled....”
