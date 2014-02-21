@@ -251,16 +251,19 @@ class ClefAdmin {
             );
         }
 
-        if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'clef');
-        else $name = __('Connect Clef account', 'clef');
-        add_submenu_page(
-            $menu_name,
-            $name, 
-            $name,
-            'read', 
-            self::CONNECT_CLEF_PAGE, 
-            array($this, 'render_connect_clef_account')
-        );
+        if ($this->settings->is_configured()) {
+            if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'clef');
+            else $name = __('Connect Clef account', 'clef');
+            add_submenu_page(
+                $menu_name,
+                $name, 
+                $name,
+                'read', 
+                self::CONNECT_CLEF_PAGE, 
+                array($this, 'render_connect_clef_account')
+            );
+        }
+      
 
         if (!$this->bruteprotect_active() && !is_multisite())  {
             add_submenu_page(
