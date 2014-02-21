@@ -1,16 +1,13 @@
-***add override tests
-***add connect your Clef account tests
-
-
 # Full Features Test Checklist
 This file presents a master list of WP Clef’s features to facilitate systematic testing before major releases. It is designed to utilize GitHub’s MarkDown checklists. So, to run a full test, copy-n-paste the raw contents of this file into a [new GitHub Issue](https://github.com/clef/wordpress/issues/new). Then check the boxes as you complete the steps.
 
 **Prerequisites**
+
 1. Love.
 1. Time.
- 1. Basic testing (~5 min. run time): requires a WordPress single-site install with at least one user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
- 1. Whole-hog, full-boom testing (~∞ min. run time): requires bastic testing prereqs plus two WordPress multi-site installs, one for shared domain setups and one for custom domain setups. All super admin and sub-sites should have at least one active user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
-1. Cue theme music [track 1](http://www.youtube.com/watch?v=X5AfjAXcBXY), [track 2](http://www.youtube.com/watch?v=Gl83mI69nX4), [track 3](http://www.youtube.com/watch?v=Csy2XRlWMWE), and smile while pondering how fresh-n-clean Clef is. Awwww yeeeeah.)
+ 1. Basic testing (~ 5-min. run time): requires a WordPress single-site install with at least one user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
+ 1. Whole-hog, full-boom testing (~ ∞-min. run time): requires bastic testing prereqs plus two WordPress multi-site installs, one for shared domain setups and one for custom domain setups. All super admin and sub-sites should have at least one active user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
+1. Cue theme music [track 1](http://www.youtube.com/watch?v=X5AfjAXcBXY), [track 2](http://www.youtube.com/watch?v=Gl83mI69nX4), [track 3](http://www.youtube.com/watch?v=Csy2XRlWMWE), and smile while pondering how fresh-n-clean Clef is. Awwww yeeeeah.
 
 **General Legend:**
 - SW: Setup Wizard
@@ -81,6 +78,15 @@ This file presents a master list of WP Clef’s features to facilitate systemati
 #### State 4: Site-specific install on shared domain name
 - [ ] Run SW tests (A), (B), and (C) on Super Admin site.
 - [ ] Run SW tests (A), (B), and (C) on one sub-site.
+
+## Connect Clef Account Actions
+- [ ] Selecting “Disconnect Clef account”
+ - returns success notification
+ - loads SW automatically
+- [ ] Selecting “Get Started” loads “Connect your Clef account” screen
+- [ ] Text the download link to your phone.
+- [ ] CB loads Clef Wave and syncs WP user account.
+- [ ] Completing the SW sends you to the Dashboard.
 
 ## Password Settings and Login Actions
 **WP-Login.php Legend**
