@@ -1,11 +1,22 @@
+***add override tests
+***add connect your Clef account tests
+
+
 # Full Features Test Checklist
 This file presents a master list of WP Clef’s features to facilitate systematic testing before major releases. It is designed to utilize GitHub’s MarkDown checklists. So, to run a full test, copy-n-paste the raw contents of this file into a [new GitHub Issue](https://github.com/clef/wordpress/issues/new). Then check the boxes as you complete the steps.
+
+**Prerequisites**
+1. Love.
+1. Time.
+ 1. Basic testing (~5 min. run time): requires a WordPress single-site install with at least one user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
+ 1. Whole-hog, full-boom testing (~∞ min. run time): requires bastic testing prereqs plus two WordPress multi-site installs, one for shared domain setups and one for custom domain setups. All super admin and sub-sites should have at least one active user account for [each role](http://codex.wordpress.org/Roles_and_Capabilities).
+1. Cue theme music [track 1](http://www.youtube.com/watch?v=X5AfjAXcBXY), [track 2](http://www.youtube.com/watch?v=Gl83mI69nX4), [track 3](http://www.youtube.com/watch?v=Csy2XRlWMWE), and smile while pondering how fresh-n-clean Clef is. Awwww yeeeeah.)
 
 **General Legend:**
 - SW: Setup Wizard
 - WP: WordPress
 - WPC: WP Clef (i.e., the Clef plugin for WordPress)
-- :boom: = boom = awwww yeeeeah = [cue theme music](http://www.youtube.com/watch?v=X5AfjAXcBXY), RT [this](https://twitter.com/landakram/status/434091346916167680), smile and remember how fresh-n-clean Clef is
+
 
 ## Uninstall Process
 1. Deactivate plugin.
@@ -71,8 +82,8 @@ This file presents a master list of WP Clef’s features to facilitate systemati
 - [ ] Run SW tests (A), (B), and (C) on Super Admin site.
 - [ ] Run SW tests (A), (B), and (C) on one sub-site.
 
-## Password Settings (and log in and log out actions)
-**WP-Login.php Legend:**
+## Password Settings and Login Actions
+**WP-Login.php Legend**
 - CA: Clef App
 - CB: Clef button (i.e., “Log in w/ your phone”)
 - LE: "Lost your password?" e-mail
@@ -90,6 +101,7 @@ This file presents a master list of WP Clef’s features to facilitate systemati
 - O3: Override url button
 - O4: Override preview
 - SS: "Setting saved" AJAX notification (appears then fades).
+- XT: XML-RPC Test. Run this from command line (HT: Jesse): `curl --data '<?xml version="1.0"?><methodCall><methodName>wp.getOptions</methodName><params><param><value><i4>1</i4></value></param><param><value><string>USERNAME</string></value></param><param><value><string>PASSWORD</string></value></param></params></methodCall>' http://YOURWORDPRESSITE/xmlrpc.php`
 
 Start the following tests from fresh install state (i.e., all settings except API keys should be null, false, or “disabled”).
 
@@ -107,7 +119,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 1. Non-Clef user login
  - [ ] wp-login.php displays PF + CB with LL.
  - [ ] Log in via PF.
- - [ ] Log out via CA.
 
 1. Non-Clef user reset password
  - [ ] LF sends password reset e-mail.
@@ -116,15 +127,15 @@ Start the following tests from fresh install state (i.e., all settings except AP
  
 1. Clef user login
  - [ ] wp-login.php displays PF + CB with LL.
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Clef user reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 ### Disable passwords: set P2 = not null, P3–P4 = null.
 - [ ] wp-login.php displays PF + CB with LL.
@@ -150,47 +161,47 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Receive site admin notification e-mail.
 
 1. Contributor role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Contributor role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Author role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Author role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Editor role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Editor role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Super Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 #### P2 = “Author”
 1. Subscriber role login
@@ -210,39 +221,39 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Receive site admin notification e-mail.
 
 1. Author role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Author role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Editor role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Editor role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Administrator role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. Super Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
 1. Super Administrator role reset password via LF
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. Returns “password resets have been disabled....”
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 #### P2 = “Editor”
 1. Subscriber role login
@@ -270,7 +281,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Receive site admin notification e-mail.
 
 1. Editor role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -278,7 +289,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -286,7 +297,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. Super Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -294,7 +305,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 #### P2 = “Administrator”
 1. Subscriber role login
@@ -330,7 +341,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Receive site admin notification e-mail.
 
 1. Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -338,7 +349,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. Super Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -346,7 +357,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 #### P2 = “Super Administrator”
 1. Subscriber role login
@@ -390,7 +401,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Receive site admin notification e-mail.
 
 1. Super Administrator role login
- - [ ] Log in via PF disabled. Returns error notification.
+ - [ ] Log in via PF returns “passwords have been disabled....”
  - [ ] Log in via CB.
  - [ ] Log out via CA.
 
@@ -398,7 +409,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
  - [ ] Disabled. Returns error notification.
 
 1. XML-RPC login
- - [ ] Disabled. Returns error notification.
+ - [ ] Disabled. XT returns “passwords have been disabled....”
 
 ### Disable passwords: set P3 = true, P4 = null.
 - [ ] SS fades.
@@ -418,7 +429,7 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 ### Disable passwords: set P4 = true (assumes P1, P2, and/or P3 are not null).
 - [ ] SS fades.
-- [ ] Log in via XML-RPC.
+- [ ] Log in via XML-RPC. XT returns success notification.
 
 ## Support Clef settings
 - [ ] Set to “Badge”
