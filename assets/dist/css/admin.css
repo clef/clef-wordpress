@@ -406,6 +406,9 @@ body {
 #connect-clef-account .skip {
   display: none; }
 
+#clef-settings-form .twitter-follow-button {
+  position: relative;
+  top: 4px; }
 #clef-settings-form form {
   display: none; }
 #clef-settings-form .settings-section.override-settings .inputs-container .input-container {
