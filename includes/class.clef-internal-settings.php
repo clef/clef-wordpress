@@ -106,7 +106,7 @@ class ClefInternalSettings {
     public function passwords_disabled() {
         return $this->get('clef_password_settings_disable_passwords') 
             || $this->get('clef_password_settings_force') 
-            || $this->get('clef_password_settings_disable_certain_passwords') != "Disabled";
+            || $this->get('clef_password_settings_disable_certain_passwords') != "";
     }
 
     /**
@@ -131,7 +131,7 @@ class ClefInternalSettings {
             $this->get( 'clef_password_settings_disable_certain_passwords');
 
         error_log($disable_certain_passwords);
-        if ($disable_certain_passwords && $disable_certain_passwords != "Disabled" && $disable_certain_passwords != "") {
+        if ($disable_certain_passwords && $disable_certain_passwords != "") {
             $max_role = strtolower($disable_certain_passwords);
             return ClefUtils::user_fulfills_role($user, $max_role);
         }

@@ -91,6 +91,9 @@ class ClefCore {
             if (version_compare($previous_version, '2.0', '<')) {
                 $this->onboarding->migrate_global_login_count();
                 $this->badge->hide_prompt();
+                if ($this->settings->get('clef_password_settings_disable_certain_passwords') == "Disabled") {
+                    $this->settings->set('clef_password_settings_disable_certain_passwords', '');
+                }
             }
 
             if (version_compare($previous_version, "1.9.1.1", '<')) {
