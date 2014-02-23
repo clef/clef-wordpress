@@ -54,7 +54,7 @@ class ClefInternalSettings {
 
     public function set($name, $value) {
         $sanitized_value = $this->maybe_sanitize($value);
-        if ($sanitized_value && $this->get($name) !== $sanitized_value) {
+        if ($this->get($name) !== $sanitized_value) {
             $this->settings[$name] = $sanitized_value;
             $this->update_site_option();
         }
@@ -130,7 +130,6 @@ class ClefInternalSettings {
         $disable_certain_passwords = 
             $this->get( 'clef_password_settings_disable_certain_passwords');
 
-        error_log($disable_certain_passwords);
         if ($disable_certain_passwords && $disable_certain_passwords != "") {
             $max_role = strtolower($disable_certain_passwords);
             return ClefUtils::user_fulfills_role($user, $max_role);
