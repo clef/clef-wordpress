@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[wpclef.wpclef]
+file_filter = languages/clef-<lang>.po
+source_file = languages/wpclef.pot
+source_lang = en

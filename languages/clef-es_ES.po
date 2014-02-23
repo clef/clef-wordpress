@@ -28,7 +28,7 @@ msgstr ""
 #: ../includes/class.clef-admin.php:245 ../includes/class.clef-admin.php:287
 #: ../templates/admin/form.tpl.php:4
 msgid "Clef"
-msgstr ""
+msgstr "Clef"
 
 #: ../includes/class.clef-admin.php:255
 msgid "Disconnect Clef account"
