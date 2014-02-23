@@ -112,7 +112,7 @@
                 label {
                     @include span-columns(3);
                 }
-                input {
+                input[type="text"] {
                     @include span-columns(7);
                     @include media($tablet) {
                         @include span-columns(10 of 10);

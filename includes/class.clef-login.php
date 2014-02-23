@@ -41,6 +41,21 @@ class ClefLogin {
 
         // Allow the Clef button to be rendered anywhere
         add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
+
+        if (defined('WDFB_MEMBERSHIP_INSTALLED') && WDFB_MEMBERSHIP_INSTALLED) {            
+            add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
+            add_action('bp_before_account_details_fields', array($this, 'add_clef_login_button_to_wpmu'));
+            add_action('membership_popover_extend_registration_form', array($this, 'add_clef_login_button_to_wpmu'));
+            add_action('signup_extra_fields', array($this, 'add_clef_login_button_to_wpmu'));
+            add_action('membership_popover_extend_login_form', array($this, 'add_clef_login_button_to_wpmu'));
+        } 
+    }
+
+    public function add_clef_login_button_to_wpmu() {
+        if ($this->settings->is_configured()) {
+            $_REQUEST['redirect_to'] = $redirect_url = apply_filters('wdfb_registration_redirect_url', '');
+            do_action('clef_render_login_button');
+        }
     }
     
     public function load_base_styles() {
@@ -243,25 +258,15 @@ class ClefLogin {
                 $user = WP_User::get_data_by( 'email', $email );
 
                 if (!$user) {
-                    $users_can_register = get_site_option('users_can_register', 0);
-                    if(!$users_can_register) {
+                    if(!$this->settings->registration_with_clef_is_allowed()) {
                         return new WP_Error(
                             'clef', 
-                            __("There's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef')
+                            __("Registration is not allowed and there's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef')
                         );
                     }
 
                     // Users can register, so create a new user
-                    // and attach the clef_id to them
-                    $userdata = new WP_User();
-                    $userdata->first_name = $first_name;
-                    $userdata->last_name = $last_name;
-                    $userdata->user_email = $email;
-                    $userdata->user_login = $email;
-                    $password = wp_generate_password(16, FALSE);
-                    $userdata->user_pass = $password;
-
-                    $id = wp_insert_user($userdata);
+                    $id = wp_create_user($email, wp_generate_password(16, FALSE), $email);
                     if(is_wp_error($id)) {
                         return new WP_Error(
                             'clef',

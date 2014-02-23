@@ -92,6 +92,10 @@
                     <label for=""><?php _e("Application Secret", "clef"); ?></label>
                     <?php $form->getSection('clef_settings')->getField('app_secret')->render(); ?>
                 </div>
+                <div class="input-container">
+                    <label for=""><?php _e("Allow visitors to your site to register with Clef"); ?></label>
+                    <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
+                </div>
             </div>
         </div>
         <input type="submit" name="submit" class="button button-primary" value="<?php _e('Save'); ?>">
