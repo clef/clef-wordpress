@@ -299,7 +299,7 @@ class ClefLogin {
     }
 
     public static function start($settings) {
-        if (!isset(self::$instance) || self::$instance === null) {
+        if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self($settings);
         }
         return self::$instance;

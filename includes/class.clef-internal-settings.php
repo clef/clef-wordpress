@@ -139,9 +139,7 @@ class ClefInternalSettings {
     }
 
     public function xml_passwords_enabled() {
-        return !$this->passwords_disabled() || 
-            ($this->passwords_disabled() && 
-             $this->get('clef_password_settings_xml_allowed'));
+        return !$this->passwords_disabled() || $this->get('clef_password_settings_xml_allowed');
     }
 
     public function is_configured() {
