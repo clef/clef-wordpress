@@ -49,6 +49,10 @@ class ClefLogin {
             add_action('signup_extra_fields', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('membership_popover_extend_login_form', array($this, 'add_clef_login_button_to_wpmu'));
         } 
+
+        if ($this->settings->registration_with_clef_is_allowed()) {
+            add_action('register_form', array($this, 'login_form'));
+        }
     }
 
     public function add_clef_login_button_to_wpmu() {
