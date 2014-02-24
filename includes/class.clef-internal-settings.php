@@ -164,7 +164,7 @@ class ClefInternalSettings {
     }
 
     public static function start() {
-        if (!isset(self::$instance) || self::$instance === null) {
+        if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;
         }
         return self::$instance;

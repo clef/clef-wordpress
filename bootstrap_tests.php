@@ -14,6 +14,9 @@ $GLOBALS['wp_tests_options'] = array(
     'active_plugins' => array( "wpclef/wpclef.php" ),
 );
 
+define('CLEF_TESTING', true);
+define('BASE_TEST_DIR', dirname(__FILE__));
+
 // If the wordpress-tests repo location has been customized (and specified
 // with WP_TESTS_DIR), use that location. This will most commonly be the case
 // when configured for use with Travis CI.
