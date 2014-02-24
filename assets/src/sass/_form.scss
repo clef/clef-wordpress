@@ -1,0 +1,186 @@
+#clef-settings-form {
+    .twitter-follow-button {
+        position: relative;
+        top: 4px;
+    }
+    form {
+        display: none;
+    }
+    
+    .settings-section {
+        &.override-settings {
+            .inputs-container {
+                .input-container {
+                    background: none;
+                    padding: 0;
+                    margin: 0;
+                    clear: both;
+                }
+                label {
+                    width: auto;
+                    margin: 0;
+                    line-height: 25px;
+                    font-weight: bold;
+                    padding-left: 10px;
+                    background: #DDD;
+                    padding: 1px 5px;
+                    font-size: 9px;
+                    @include media($tablet) {
+                        width: 100%;
+                        font-size: 12px;
+                    }
+                }
+                input {
+                    float: left;
+                }
+                .generate-override {
+                    display: block;
+                    width: auto;
+                    clear: both;
+                    cursor: pointer;
+                    color: #BBB;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                .override-buttons {
+                    display: none;
+                    margin-top: 10px;
+                    clear: both;
+                    .button {
+                        display: inline-block;
+                        text-align: center;
+                        margin-top: 30px;
+                    }
+                }
+            }
+            .preview-container {
+                @include span-columns(4);
+                display: none;
+                img {
+                    margin-top: 15px;
+                    width: 100%;
+                }
+            }
+
+            &.set {
+                .preview-container {
+                    display: block;
+                }
+
+                .override-buttons {
+                    display: block;
+                }
+            }
+        }
+
+        &.support-settings {
+            .preview-container {
+                padding-top: 10px;
+                @include span-columns(4);
+                @include media($tablet) {
+                    display: none;
+                }
+
+                .ftr-preview {
+                    background: #fff;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+                    padding: 20px;
+                    font-weight: 400;
+                    overflow: hidden;
+                    margin-top: 5px;
+                    a {
+                        margin-top: 20px;
+                    }
+                }
+            }
+
+            .support-html-container {
+                display: none;
+                margin-top: 20px;
+                textarea {
+                    width: 400px;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        &.clef-settings {
+            .inputs-container {
+                label {
+                    @include span-columns(3);
+                }
+                input[type="text"] {
+                    @include span-columns(7);
+                    @include media($tablet) {
+                        @include span-columns(10 of 10);
+                    }
+                }
+            }
+        }
+    }
+
+    .password-settings {
+        min-height: 400px;
+        
+        #login-form-view {
+            @include span-columns(4);
+            @include media($tablet) {
+                display: none;
+            }
+
+            &.only-clef {
+                #loginform {
+                    padding: 40px;
+                    & > *:not(.clef-button) {
+                        display: none;
+                    }
+                    .clef-button {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            #loginform {
+                background: #fff;
+                box-shadow: 0 1px 3px rgba(0,0,0,.13);
+                padding: 26px 24px 46px;
+                font-weight: 400;
+                overflow: hidden;
+                margin-top: 5px;
+
+                label {
+                    color: #777;
+                    font-size: 14px;
+                }
+
+                .input {
+                    font-size: 24px;
+                    line-height: 1;
+                    width: 100%;
+                    padding: 3px;
+                    margin: 2px 6px 16px 0;
+                }
+
+                .forgetmenot {
+                    font-weight: 400;
+                    float: left;
+                    margin-bottom: 0;
+                }
+
+                .clef-button {
+                    margin-bottom: 27px;
+                    img {
+                        width: 187px;
+                        margin: auto;
+                        display: block;
+                    }
+                }
+            }
+        } 
+    }
+
+
+}

@@ -1,0 +1,27 @@
+@import "_settings";
+@import "_mixins";
+@import "_badge";
+
+.clef-login-form {
+    .clef-button-container {
+        width: 188px;
+        height: 35px;
+        margin: auto;
+        margin-bottom: 30px;
+    }
+
+    &.clef-hidden {
+        #login form#loginform {
+            padding: 40px 20px;
+            input, label {
+                display: none;
+            }        
+        }
+        .clef-button-container {
+            margin-bottom: 0;
+        }
+        p#nav {
+            display: none;
+        }
+    }
+}
