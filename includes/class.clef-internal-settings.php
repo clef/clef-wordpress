@@ -161,6 +161,10 @@ class ClefInternalSettings {
         return !!get_site_option($this::MS_ALLOW_OVERRIDE_OPTION);
     }
 
+    public function registration_with_clef_is_allowed() {
+        return !!$this->get('clef_settings_register');
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;
