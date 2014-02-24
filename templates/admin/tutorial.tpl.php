@@ -1,4 +1,4 @@
-<div id="clef-tutorial" style="display:none;">
+<div id="clef-tutorial">
     <div class="clef-tutorial-container">
 
         <div class="sub intro connect setup">

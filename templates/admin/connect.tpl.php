@@ -1,7 +1,7 @@
-<div id="connect-clef-account" style="display:none;">
+<div id="connect-clef-account">
     <?php include CLEF_TEMPLATE_PATH . 'admin/tutorial.tpl.php'; ?>
 
-    <div class="settings-section disconnect-clef" style="display:none;">
+    <div class="settings-section disconnect-clef">
         <h3><?php _e("Disconnect your Clef account", "clef"); ?></h3>
         <p><?php _e("You currently have a Clef account connected to this WordPress user. To disconnect this Clef account, click the button below.", "clef"); ?></p>
         <p class='bold'><?php _e("Note: if passwords are disabled for all users and you disconnect your Clef account, you won't be able to log in.", "clef"); ?></p>
