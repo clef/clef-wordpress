@@ -154,11 +154,11 @@ class ClefInternalSettings {
     }
 
     public function network_settings_enabled() {
-        return !!get_site_option($this::MS_ENABLED_OPTION);
+        return !!get_site_option(self::MS_ENABLED_OPTION);
     }
 
     public function single_site_settings_allowed() {
-        return !!get_site_option($this::MS_ALLOW_OVERRIDE_OPTION);
+        return !!get_site_option(self::MS_ALLOW_OVERRIDE_OPTION);
     }
 
     public function registration_with_clef_is_allowed() {
