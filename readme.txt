@@ -85,6 +85,14 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Changelog ==
 
+= 2.0 =
+
+* Feature: new and improved single-page responsive settings page
+* Feature: easy user invitations
+* Feature: beautiful introduction and tutorial to Clef
+* Feature: finer grained password controls
+* Feature: restructured code base for easier integrations
+
 = 1.9.1.2 -
 
 * Bug fix: fix override URL issue
