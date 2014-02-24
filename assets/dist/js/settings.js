@@ -402,8 +402,10 @@
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
+      this.settings.hide();
       if (!this.settings.isConfigured()) {
         this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
+        this.tutorial.hide();
         this.listenTo(this.tutorial, 'message', this.displayMessage);
       }
       if (this.opts.isNetworkSettings) {
