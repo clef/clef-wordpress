@@ -16,7 +16,6 @@
   return $(document).ready(function() {
     setTimeout(function() {
       if (window.waltzIsInstalled) {
-        console.log('dismiss');
         return dismissWaltzNotification();
       }
     }, 1000);

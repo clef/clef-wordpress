@@ -15,7 +15,6 @@
     $(document).ready ->
         setTimeout () ->
             if window.waltzIsInstalled
-                console.log 'dismiss'
                 dismissWaltzNotification()
         , 1000
         
