@@ -497,20 +497,20 @@ body {
   width: 28.7037%; }
   #clef-settings-form .settings-section.clef-settings .inputs-container label:last-child {
     margin-right: 0; }
-#clef-settings-form .settings-section.clef-settings .inputs-container input {
+#clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"] {
   display: block;
   float: left;
   margin-right: 1.85185%;
   width: 69.44444%; }
-  #clef-settings-form .settings-section.clef-settings .inputs-container input:last-child {
+  #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child {
     margin-right: 0; }
   @media screen and (max-width: 768px) {
-    #clef-settings-form .settings-section.clef-settings .inputs-container input {
+    #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"] {
       display: block;
       float: left;
       margin-right: 1.85185%;
       width: 100%; }
-      #clef-settings-form .settings-section.clef-settings .inputs-container input:last-child {
+      #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child {
         margin-right: 0; } }
 #clef-settings-form .password-settings {
   min-height: 400px; }
