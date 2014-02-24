@@ -9,7 +9,7 @@ class AjaxSettings {
     private static $instance = null;
 
     private function __construct( $opts ) {
-        $this->options = array_merge($this::$DEFAULTS, $opts);
+        $this->options = array_merge(self::$DEFAULTS, $opts);
 
 
         add_action('admin_enqueue_scripts', array($this, "enqueue_scripts"));
@@ -27,7 +27,7 @@ class AjaxSettings {
             $ident,
             $this->options['base_url']  . "js/ajax-settings.min.js",
             array('backbone'),
-            $this::VERSION,
+            self::VERSION,
             TRUE
         );
         wp_localize_script($ident, 'ajaxSetOpt', $this->options);
@@ -40,7 +40,7 @@ class AjaxSettings {
             $ident,
             $this->options['base_url'] . 'css/ajax-settings.min.css',
             false,
-            $this::VERSION
+            self::VERSION
         );
         wp_enqueue_style($ident);
     }
