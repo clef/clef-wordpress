@@ -1,6 +1,6 @@
 (($) ->
     dismissWaltzNotification = (e) ->
-        e.preventDefault()
+        e.preventDefault() if e
         $el = $('.waltz-notification')
 
         data = {}
@@ -13,9 +13,13 @@
 
 
     $(document).ready ->
-        if window.waltzIsInstalled
-            dismissWaltzNotification()
-        else
-            $('.waltz-notification .next').click(dismissWaltzNotification)
+        setTimeout () ->
+            if window.waltzIsInstalled
+                console.log 'dismiss'
+                dismissWaltzNotification()
+        , 1000
+        
+
+        $('.waltz-notification .next').click(dismissWaltzNotification)
 
 ).call(this, jQuery)

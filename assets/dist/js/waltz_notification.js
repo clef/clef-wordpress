@@ -2,7 +2,9 @@
   var dismissWaltzNotification;
   dismissWaltzNotification = function(e) {
     var $el, data;
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     $el = $('.waltz-notification');
     data = {};
     $el.find('input').each(function() {
@@ -12,10 +14,12 @@
     return $.post(ajaxurl + '?action=clef_dismiss_waltz', data);
   };
   return $(document).ready(function() {
-    if (window.waltzIsInstalled) {
-      return dismissWaltzNotification();
-    } else {
-      return $('.waltz-notification .next').click(dismissWaltzNotification);
-    }
+    setTimeout(function() {
+      if (window.waltzIsInstalled) {
+        console.log('dismiss');
+        return dismissWaltzNotification();
+      }
+    }, 1000);
+    return $('.waltz-notification .next').click(dismissWaltzNotification);
   });
 }).call(this, jQuery);
