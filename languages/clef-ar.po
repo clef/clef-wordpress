@@ -1,17 +1,21 @@
+#
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Clef\n"
+"Project-Id-Version: WPClef\n"
 "POT-Creation-Date: 2014-02-23 21:33-0800\n"
 "PO-Revision-Date: 2014-02-23 21:33-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: Clef <support@getclef.com>\n"
-"Language: es\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/wpclef/language/"
+"ar/)\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
@@ -28,7 +32,7 @@ msgstr ""
 #: ../includes/class.clef-admin.php:245 ../includes/class.clef-admin.php:287
 #: ../templates/admin/form.tpl.php:4
 msgid "Clef"
-msgstr "Clef"
+msgstr ""
 
 #: ../includes/class.clef-admin.php:255
 msgid "Disconnect Clef account"

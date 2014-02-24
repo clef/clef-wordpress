@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-02-22 20:43-0800\n"
-"PO-Revision-Date: 2014-02-22 20:43-0800\n"
+"POT-Creation-Date: 2014-02-23 21:33-0800\n"
+"PO-Revision-Date: 2014-02-23 21:33-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Clef <support@getclef.com>\n"
 "Language: en\n"
@@ -61,90 +61,94 @@ msgstr ""
 msgid "Application Secret"
 msgstr "Clé privée"
 
-#: ../includes/class.clef-admin.php:394
+#: ../includes/class.clef-admin.php:393
+msgid "Register with Clef"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:395
 msgid "Password Settings"
 msgstr "Paramètres du mot de passe"
 
-#: ../includes/class.clef-admin.php:395 ../templates/admin/form.tpl.php:22
+#: ../includes/class.clef-admin.php:396 ../templates/admin/form.tpl.php:22
 #, fuzzy
 msgid "Disable passwords for Clef users"
 msgstr "Désactiver les mots de passe pour les utilisateurs de Clef."
 
-#: ../includes/class.clef-admin.php:398
+#: ../includes/class.clef-admin.php:399
 msgid "Disable certain passwords"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:403
+#: ../includes/class.clef-admin.php:404
 #, fuzzy
 msgid "Disable all passwords"
 msgstr "Désactiver les mots de passe pour les utilisateurs de Clef."
 
-#: ../includes/class.clef-admin.php:407
+#: ../includes/class.clef-admin.php:408
 msgid "Allow XML"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:411
+#: ../includes/class.clef-admin.php:412
 msgid "Override Settings"
 msgstr "Ecraser les paramètres"
 
-#: ../includes/class.clef-admin.php:412
+#: ../includes/class.clef-admin.php:413
 #, fuzzy
 msgid "Override key"
 msgstr "Installer une clé de superadministrateur"
 
-#: ../includes/class.clef-admin.php:414 ../templates/admin/form.tpl.php:61
+#: ../includes/class.clef-admin.php:415 ../templates/admin/form.tpl.php:61
 msgid "Support Clef"
 msgstr "Support de Clef"
 
-#: ../includes/class.clef-admin.php:417
+#: ../includes/class.clef-admin.php:418
 msgid "Support Clef by automatically adding a link!"
 msgstr "Soutenir Clef en ajoutant automatiquement un lien !"
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:421
 msgid "Badge"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:421
 msgid "Link"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:421
 msgid "Disabled"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:423
+#: ../includes/class.clef-admin.php:424
 #: ../templates/js-templates/invite.tpl.php:21
 msgid "Invite Users"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:434
+#: ../includes/class.clef-admin.php:435
 #: ../includes/class.clef-network-admin.php:86
 msgid "Security check; nonce failed."
 msgstr ""
 
-#: ../includes/class.clef-admin.php:476
+#: ../includes/class.clef-admin.php:477
 msgid "invalid role"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:490
+#: ../includes/class.clef-admin.php:491
 msgid "there are no other users without Clef with this role or greater"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:511
+#: ../includes/class.clef-admin.php:512
 msgid ""
 "unable to send emails. Copy and paste the preview email to your users and "
 "they'll be walked through a tutorial to connect with Clef"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:520
+#: ../includes/class.clef-admin.php:521
 msgid "invalid Clef ID"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:531
+#: ../includes/class.clef-admin.php:532
 msgid "invalid OAuth Code"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:550
+#: ../includes/class.clef-admin.php:551
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
@@ -159,32 +163,33 @@ msgstr ""
 msgid "user does not have correct capabilities"
 msgstr ""
 
-#: ../includes/class.clef-login.php:155
+#: ../includes/class.clef-login.php:174
 msgid "Sorry, that isn't a valid invite code."
 msgstr ""
 
-#: ../includes/class.clef-login.php:172
+#: ../includes/class.clef-login.php:191
 msgid ""
 "Sorry, this invite link has expired. Please contact your administrator for a "
 "new one."
 msgstr ""
 
-#: ../includes/class.clef-login.php:216 ../includes/class.clef-login.php:298
+#: ../includes/class.clef-login.php:235 ../includes/class.clef-login.php:307
 #, fuzzy
 msgid "Passwords have been disabled for this user."
 msgstr "La connexion avec mot de passe a été désactivée."
 
-#: ../includes/class.clef-login.php:250
+#: ../includes/class.clef-login.php:268
+#, fuzzy
 msgid ""
-"There's no user whose email address matches your phone's Clef account. You "
-"must either connect your Clef account on your WordPress profile page or use "
-"the same email for both WordPress and Clef."
+"Registration is not allowed and there's no user whose email address matches "
+"your phone's Clef account. You must either connect your Clef account on your "
+"WordPress profile page or use the same email for both WordPress and Clef."
 msgstr ""
 "Aucun utilisateur avec cette adresse mail ne correspond à un compte Clef. "
 "Vous devez soit vous connecter à votre compte Clef sur la page Profil de "
 "WordPress soit utiliser la même adresse mail pour WordPress et Clef. "
 
-#: ../includes/class.clef-login.php:268
+#: ../includes/class.clef-login.php:277
 msgid "An error occurred when creating your new account: "
 msgstr "Une erreur est survenue en créant votre nouveau compte :"
 
@@ -387,32 +392,36 @@ msgid ""
 "developer'>Clef developer site</a>."
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:97
+#: ../templates/admin/form.tpl.php:96
+msgid "Allow visitors to your site to register with Clef"
+msgstr ""
+
+#: ../templates/admin/form.tpl.php:101
 msgid "Save"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:103
+#: ../templates/admin/form.tpl.php:107
 msgid "Preview of your login form"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:106
+#: ../templates/admin/form.tpl.php:110
 msgid "Username"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:110
+#: ../templates/admin/form.tpl.php:114
 #, fuzzy
 msgid "Password"
 msgstr "Paramètres du mot de passe"
 
-#: ../templates/admin/form.tpl.php:115
+#: ../templates/admin/form.tpl.php:119
 msgid "or"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:120
+#: ../templates/admin/form.tpl.php:124
 msgid "Remember Me"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:122
+#: ../templates/admin/form.tpl.php:126
 msgid "Log In"
 msgstr "Connectez-vous"
 
