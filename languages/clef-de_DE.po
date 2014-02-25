@@ -1,17 +1,20 @@
+# 
+# Translators:
+# thobu <burg@socialware.at>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-02-24 14:50-0800\n"
-"PO-Revision-Date: 2014-02-24 14:50-0800\n"
-"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: \n"
-"Language: de\n"
+"Project-Id-Version: WPClef\n"
+"POT-Creation-Date: 2014-02-22 20:40-0800\n"
+"PO-Revision-Date: 2014-02-24 23:11+0000\n"
+"Last-Translator: thobu <burg@socialware.at>\n"
+"Language-Team: German (Germany) (http://www.transifex.com/projects/p/wpclef/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
@@ -28,7 +31,7 @@ msgstr "Clef für Ihr Konto aufsetzen"
 #: ../includes/class.clef-admin.php:245 ../includes/class.clef-admin.php:287
 #: ../templates/admin/form.tpl.php:4
 msgid "Clef"
-msgstr ""
+msgstr "Clef"
 
 #: ../includes/class.clef-admin.php:255
 msgid "Disconnect Clef account"
@@ -58,96 +61,92 @@ msgstr "Anwendungs ID"
 msgid "Application Secret"
 msgstr "Geheimschlüssel der Anwendung"
 
-#: ../includes/class.clef-admin.php:393
-msgid "Register with Clef"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:395
+#: ../includes/class.clef-admin.php:394
 msgid "Password Settings"
 msgstr "Passworteinstellungen"
 
-#: ../includes/class.clef-admin.php:396 ../templates/admin/form.tpl.php:22
+#: ../includes/class.clef-admin.php:395 ../templates/admin/form.tpl.php:22
 msgid "Disable passwords for Clef users"
 msgstr "Passworte für Clef Nutzer deaktivieren"
 
-#: ../includes/class.clef-admin.php:399
+#: ../includes/class.clef-admin.php:398
 msgid "Disable certain passwords"
 msgstr "Bestimmte Passoworte deaktivieren"
 
-#: ../includes/class.clef-admin.php:404
+#: ../includes/class.clef-admin.php:403
 msgid "Disable all passwords"
 msgstr "Alle Passworte deaktiveren"
 
-#: ../includes/class.clef-admin.php:408
+#: ../includes/class.clef-admin.php:407
 msgid "Allow XML"
 msgstr "XMl erlauben"
 
-#: ../includes/class.clef-admin.php:412
+#: ../includes/class.clef-admin.php:411
 msgid "Override Settings"
 msgstr "Einstellungen für Überschreibung"
 
-#: ../includes/class.clef-admin.php:413
+#: ../includes/class.clef-admin.php:412
 msgid "Override key"
 msgstr "Schlüssel für Überschreibung"
 
-#: ../includes/class.clef-admin.php:415 ../templates/admin/form.tpl.php:61
+#: ../includes/class.clef-admin.php:414 ../templates/admin/form.tpl.php:61
 msgid "Support Clef"
 msgstr "Clef unterstützen"
 
-#: ../includes/class.clef-admin.php:418
+#: ../includes/class.clef-admin.php:417
 msgid "Support Clef by automatically adding a link!"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:421
+#: ../includes/class.clef-admin.php:420
 msgid "Badge"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:421
+#: ../includes/class.clef-admin.php:420
 msgid "Link"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:421
+#: ../includes/class.clef-admin.php:420
 msgid "Disabled"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:424
+#: ../includes/class.clef-admin.php:423
 #: ../templates/js-templates/invite.tpl.php:21
 msgid "Invite Users"
 msgstr "Nutzer einladen"
 
-#: ../includes/class.clef-admin.php:435
+#: ../includes/class.clef-admin.php:434
 #: ../includes/class.clef-network-admin.php:86
 msgid "Security check; nonce failed."
 msgstr "Sicherheitscheck; Fehler bei nonce"
 
-#: ../includes/class.clef-admin.php:477
+#: ../includes/class.clef-admin.php:476
 msgid "invalid role"
 msgstr "ungültige Rolle"
 
-#: ../includes/class.clef-admin.php:491
+#: ../includes/class.clef-admin.php:490
 msgid "there are no other users without Clef with this role or greater"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:512
+#: ../includes/class.clef-admin.php:511
 msgid ""
 "unable to send emails. Copy and paste the preview email to your users and "
 "they'll be walked through a tutorial to connect with Clef"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:521
+#: ../includes/class.clef-admin.php:520
 msgid "invalid Clef ID"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:532
+#: ../includes/class.clef-admin.php:531
 msgid "invalid OAuth Code"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:551
+#: ../includes/class.clef-admin.php:550
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
 "before disconnecting your Clef account"
-msgstr ""
+msgstr "Passworte sind derzeit deaktiviert.<br/>Wenn Clef deaktiviert wird, kann man sich nicht mehr einloggen. Bitte daher Passworte wieder aktivieren bevor die Verbindung mit Clef gekappt wird."
 
 #: ../includes/class.clef-ajax.php:51
 msgid "invalid nonce"
@@ -157,28 +156,28 @@ msgstr "ungültoge nonce"
 msgid "user does not have correct capabilities"
 msgstr ""
 
-#: ../includes/class.clef-login.php:174
+#: ../includes/class.clef-login.php:155
 msgid "Sorry, that isn't a valid invite code."
 msgstr ""
 
-#: ../includes/class.clef-login.php:191
+#: ../includes/class.clef-login.php:172
 msgid ""
-"Sorry, this invite link has expired. Please contact your administrator for a "
-"new one."
+"Sorry, this invite link has expired. Please contact your administrator for a"
+" new one."
 msgstr ""
 
-#: ../includes/class.clef-login.php:235 ../includes/class.clef-login.php:307
+#: ../includes/class.clef-login.php:216 ../includes/class.clef-login.php:298
 msgid "Passwords have been disabled for this user."
 msgstr ""
 
-#: ../includes/class.clef-login.php:268
+#: ../includes/class.clef-login.php:250
 msgid ""
-"Registration is not allowed and there's no user whose email address matches "
-"your phone's Clef account. You must either connect your Clef account on your "
-"WordPress profile page or use the same email for both WordPress and Clef."
+"There's no user whose email address matches your phone's Clef account. You "
+"must either connect your Clef account on your WordPress profile page or use "
+"the same email for both WordPress and Clef."
 msgstr ""
 
-#: ../includes/class.clef-login.php:277
+#: ../includes/class.clef-login.php:268
 msgid "An error occurred when creating your new account: "
 msgstr ""
 
@@ -192,8 +191,8 @@ msgstr "Ihnen fehlen die nötigen Rechte um diese Seite anzuzeigen"
 #: ../includes/class.clef-settings.php:45
 #, php-format
 msgid ""
-"Please link your Clef account before you fully disable passwords. You can do "
-"this <a href='%s'>here</a>"
+"Please link your Clef account before you fully disable passwords. You can do"
+" this <a href='%s'>here</a>"
 msgstr ""
 
 #: ../includes/class.clef-translation.php:14
@@ -204,9 +203,9 @@ msgstr ""
 
 #: ../includes/class.clef-translation.php:15
 msgid ""
-"There was a problem creating a new Clef application for your WordPress site: "
-"<%= error %>. Please refresh and try again. If the issue, persists, email <a "
-"href='mailto:support@getclef.com'>support@getclef.com</a>."
+"There was a problem creating a new Clef application for your WordPress site:"
+" <%= error %>. Please refresh and try again. If the issue, persists, email "
+"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
 msgstr ""
 
 #: ../includes/class.clef-translation.php:16
@@ -223,7 +222,7 @@ msgstr ""
 
 #: ../includes/class.clef-translation.php:21
 msgid "You've successfully connected your account with Clef"
-msgstr ""
+msgstr "Das Benutzerkonto auf WP wurde erfolgreich mit Clef verbunden"
 
 #: ../includes/class.clef-translation.php:22
 msgid "You're all set up!"
@@ -235,7 +234,7 @@ msgstr ""
 
 #: ../includes/class.clef-translation.php:24
 msgid "Successfully disconnected Clef account."
-msgstr ""
+msgstr "Clef Verbindung erfolgreich gekappt."
 
 #: ../includes/class.clef-translation.php:26
 msgid "Settings are being saved. Are you sure you want to navigate away?"
@@ -264,8 +263,8 @@ msgstr ""
 #: ../templates/admin/badge-prompt.tpl.php:8
 msgid ""
 "Let your visitors know that you are protected with the Clef login by adding "
-"a Clef badge to the footer of your page. </br> This helps your visitors know "
-"they are browsing a secure site and helps us spread the word about Clef."
+"a Clef badge to the footer of your page. </br> This helps your visitors know"
+" they are browsing a secure site and helps us spread the word about Clef."
 msgstr ""
 
 #: ../templates/admin/badge-prompt.tpl.php:10
@@ -278,7 +277,7 @@ msgstr ""
 
 #: ../templates/admin/connect.tpl.php:5 ../templates/admin/connect.tpl.php:8
 msgid "Disconnect your Clef account"
-msgstr ""
+msgstr "Verbindung zu Clef-Konto kappen"
 
 #: ../templates/admin/connect.tpl.php:6
 msgid ""
@@ -355,39 +354,35 @@ msgstr ""
 #: ../templates/admin/form.tpl.php:86
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
-"to. For more advanced settings, visit the <a href='http://getclef.com/"
-"developer'>Clef developer site</a>."
+"to. For more advanced settings, visit the <a "
+"href='http://getclef.com/developer'>Clef developer site</a>."
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:96
-msgid "Allow visitors to your site to register with Clef"
-msgstr ""
-
-#: ../templates/admin/form.tpl.php:101
+#: ../templates/admin/form.tpl.php:97
 msgid "Save"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:107
+#: ../templates/admin/form.tpl.php:103
 msgid "Preview of your login form"
 msgstr "Vorschau des Anmeldeformulars"
 
-#: ../templates/admin/form.tpl.php:110
+#: ../templates/admin/form.tpl.php:106
 msgid "Username"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:114
+#: ../templates/admin/form.tpl.php:110
 msgid "Password"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:119
+#: ../templates/admin/form.tpl.php:115
 msgid "or"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:124
+#: ../templates/admin/form.tpl.php:120
 msgid "Remember Me"
 msgstr "Für länger angemeldet bleiben"
 
-#: ../templates/admin/form.tpl.php:126
+#: ../templates/admin/form.tpl.php:122
 msgid "Log In"
 msgstr "Anmelden"
 
@@ -413,8 +408,8 @@ msgstr ""
 #: ../templates/admin/multisite/network-enabled.tpl.php:5
 msgid ""
 "Currently, you control Clef settings for all the sites in your network. If "
-"you disable network-wide settings, individual sites in the network will need "
-"to manage their own Clef settings."
+"you disable network-wide settings, individual sites in the network will need"
+" to manage their own Clef settings."
 msgstr ""
 
 #: ../templates/admin/multisite/network-enabled.tpl.php:18
@@ -483,9 +478,7 @@ msgstr ""
 msgid ""
 "Clef makes logging into your site safer and easier. <br> It's <b>free</b>, "
 "and getting set up takes <b>30 seconds</b>."
-msgstr ""
-"Mit Clef machen Sie Ihre Website sicherer und zugänglicher. Es ist gratis "
-"und das Setup dauert nur 30 Sekunden."
+msgstr "Mit Clef machen Sie Ihre Website sicherer und zugänglicher. Es ist gratis und das Setup dauert nur 30 Sekunden."
 
 #: ../templates/admin/tutorial.tpl.php:6
 msgid "Get Started"
@@ -505,8 +498,8 @@ msgstr ""
 
 #: ../templates/admin/tutorial.tpl.php:28
 msgid ""
-"We've automatically configured Clef for your site. Click the button below to "
-"complete setup!"
+"We've automatically configured Clef for your site. Click the button below to"
+" complete setup!"
 msgstr ""
 
 #: ../templates/admin/tutorial.tpl.php:31
@@ -529,8 +522,9 @@ msgstr "Mit Ihrem Clef Konto verbinden"
 
 #: ../templates/admin/tutorial.tpl.php:44
 msgid ""
-"To connect, click the button below and sync the Wave. Once you're connected, "
-"you'll be able to log in and out of your WordPress site with just your phone."
+"To connect, click the button below and sync the Wave. Once you're connected,"
+" you'll be able to log in and out of your WordPress site with just your "
+"phone."
 msgstr ""
 
 #: ../templates/admin/tutorial.tpl.php:48
@@ -564,13 +558,13 @@ msgstr ""
 
 #: ../templates/admin/tutorial.tpl.php:58
 msgid "Lose your device?"
-msgstr ""
+msgstr "Smartphone verloren?"
 
 #: ../templates/admin/tutorial.tpl.php:59
 msgid ""
-"If you lose your device, don't fret! Just visit <a href='https://getclef.com/"
-"lost'>getclef.com/lost</a>, deactivate with your PIN, and reactivate on a "
-"new device."
+"If you lose your device, don't fret! Just visit <a "
+"href='https://getclef.com/lost'>getclef.com/lost</a>, deactivate with your "
+"PIN, and reactivate on a new device."
 msgstr ""
 
 #: ../templates/admin/tutorial.tpl.php:60
@@ -608,8 +602,9 @@ msgstr ""
 #: ../templates/invite_email.tpl.php:2
 #, php-format
 msgid ""
-"The administrator for %s just set up <a href=\"https://getclef.com\">Clef</"
-"a>, which means you can now log in without passwords."
+"The administrator for %s just set up <a "
+"href=\"https://getclef.com\">Clef</a>, which means you can now log in "
+"without passwords."
 msgstr ""
 
 #: ../templates/invite_email.tpl.php:12
@@ -641,8 +636,8 @@ msgstr ""
 msgid ""
 "We've made it really easy to get all of your site's users up and running "
 "with Clef. Click the button below and we'll send an email inviting your "
-"users to set up their Clef account on your site. The invite email has "
-"<b>step-by-step instructions</b> and a video walkthrough."
+"users to set up their Clef account on your site. The invite email has <b"
+">step-by-step instructions</b> and a video walkthrough."
 msgstr ""
 
 #: ../templates/js-templates/invite.tpl.php:11
