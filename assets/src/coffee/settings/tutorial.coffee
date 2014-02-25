@@ -29,10 +29,14 @@
 
             $(window).on 'message', @handleMessages.bind(this)
 
+            @hide()
             @render()
 
-        hide: (cb) ->
+        slideUp: (cb) ->
             @$el.slideUp(cb)
+            
+        hide: (cb) ->
+            @$el.hide(cb)
 
         show: ->
             @$el.fadeIn()

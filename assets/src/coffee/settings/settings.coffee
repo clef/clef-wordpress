@@ -51,7 +51,7 @@
                 @displayMessage clefTranslations.messages.success.configured
                 type: "updated"
 
-            @tutorial.hide()
+            @tutorial.slideUp()
             @settings.show()
 
     SettingsView =  AjaxSettingsView.extend

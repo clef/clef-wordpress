@@ -149,10 +149,14 @@
       }
       this.currentSub = this.subs[0];
       $(window).on('message', this.handleMessages.bind(this));
+      this.hide();
       return this.render();
     },
-    hide: function(cb) {
+    slideUp: function(cb) {
       return this.$el.slideUp(cb);
+    },
+    hide: function(cb) {
+      return this.$el.hide(cb);
     },
     show: function() {
       return this.$el.fadeIn();
@@ -449,7 +453,7 @@
           type: "updated"
         });
       }
-      this.tutorial.hide();
+      this.tutorial.slideUp();
       return this.settings.show();
     }
   });
@@ -657,7 +661,7 @@
         this.disconnect.hide();
         return this.tutorial.show();
       } else {
-        this.tutorial.hide();
+        this.tutorial.slideUp();
         return this.disconnect.show();
       }
     },

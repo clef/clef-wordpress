@@ -25,7 +25,7 @@
                 @disconnect.hide()
                 @tutorial.show()
             else
-                @tutorial.hide()
+                @tutorial.slideUp()
                 @disconnect.show()
         disconnectClefAccount: (e) ->
             e.preventDefault()
