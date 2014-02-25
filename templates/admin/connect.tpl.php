@@ -17,3 +17,13 @@
         connect.show()
     });
 </script>
+<noscript>
+    <style>
+        #connect-clef-account {
+            display: block;
+        }
+        .clef-badge-prompt {
+            display: none;
+        }
+    </style>
+</noscript>

@@ -23,3 +23,13 @@
         app = new AppView(_.extend(ajaxSetOpt, clefOptions));
     });
 </script>
+<noscript>
+    <style>
+        #clef-settings-container {
+            display: block;
+        }
+        .clef-badge-prompt {
+            display: none;
+        }
+    </style>
+</noscript>

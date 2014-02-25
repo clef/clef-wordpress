@@ -58,7 +58,8 @@ body {
 #clef-settings-container, #connect-clef-account {
   width: 100%;
   height: 100%;
-  position: relative; }
+  position: relative;
+  display: none; }
   #clef-settings-container #clef-settings-header, #connect-clef-account #clef-settings-header {
     display: none; }
   #clef-settings-container .message, #connect-clef-account .message {
