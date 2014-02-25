@@ -80,17 +80,16 @@
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.connect
-                    )(error: msg), 
+                    )(error: msg),
                     type: "error"
 
-            $.post @connectClefAccountAction, connectData
-                .success (data) =>
+            $.post @connectClefAction, connectData
+                .success (data) ->
                     if data.success
                         cb(data) if typeof(cb) == "function"
                     else
                         failure ClefUtils.getErrorMessage(data)
-                .fail (res) =>
-                    failure res.responseText
+                .fail (res) -> failure res.responseText
 
         showMessage: (opts) ->
             @$currentMessage.remove() if @$currentMessage
@@ -101,7 +100,7 @@
             if opts.removeNext
                 @listenToOnce this, "next", -> @$currentMessage.slideUp()
 
-    , 
+    ,
         extend: Backbone.View.extend
 
 
@@ -119,7 +118,7 @@
 
 
     SetupTutorialView = TutorialView.extend
-        connectClefAccountAction: ajaxurl + "?action=connect_clef_account_clef_id"
+        connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id"
         iframePath: '/iframes/application/create/v1'
 
         initialize: (opts) ->
@@ -171,7 +170,7 @@
                 @userIsLoggedIn = true
                 @render()
             else if data.type == "error"
-                @showMessage 
+                @showMessage
                     message: _.template(
                         clefTranslations.messages.error.create
                     )(error: data.message)
@@ -193,7 +192,7 @@
 
 
     ConnectTutorialView = TutorialView.extend
-        connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code"
+        connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code"
         initialize: (opts) ->
             @constructor.__super__.initialize.call this, opts
 
@@ -222,8 +221,8 @@
                 @connectClefAccount identifier: data.code,
                     (result) =>
                         @next()
-                        @showMessage 
-                            message: clefTranslations.messages.success.connect, 
+                        @showMessage
+                            message: clefTranslations.messages.success.connect,
                             type: "updated"
                             removeNext: true
 

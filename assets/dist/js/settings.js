@@ -86,11 +86,9 @@
             return failure(ClefUtils.getErrorMessage(data));
           }
         };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+      })(this)).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     hideButton: function() {
       return this.$el.find('.button').hide();
@@ -213,21 +211,17 @@
           });
         };
       })(this);
-      return $.post(this.connectClefAccountAction, connectData).success((function(_this) {
-        return function(data) {
-          if (data.success) {
-            if (typeof cb === "function") {
-              return cb(data);
-            }
-          } else {
-            return failure(ClefUtils.getErrorMessage(data));
+      return $.post(this.connectClefAction, connectData).success(function(data) {
+        if (data.success) {
+          if (typeof cb === "function") {
+            return cb(data);
           }
-        };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+        } else {
+          return failure(ClefUtils.getErrorMessage(data));
+        }
+      }).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     showMessage: function(opts) {
       if (this.$currentMessage) {
@@ -262,7 +256,7 @@
     }
   });
   SetupTutorialView = TutorialView.extend({
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_clef_id",
+    connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id",
     iframePath: '/iframes/application/create/v1',
     initialize: function(opts) {
       opts.slideFilterSelector = '.setup';
@@ -341,7 +335,7 @@
     }
   });
   ConnectTutorialView = TutorialView.extend({
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code",
+    connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code",
     initialize: function(opts) {
       var params;
       this.constructor.__super__.initialize.call(this, opts);
@@ -695,11 +689,9 @@
             return failure(ClefUtils.getErrorMessage(data));
           }
         };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+      })(this)).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     showMessage: function(data) {
       if (this.message) {
