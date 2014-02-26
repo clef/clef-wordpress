@@ -49,6 +49,7 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
+        add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
         $clef_ajax->add_action(
@@ -277,6 +278,13 @@ class ClefAdmin {
         }
     }
 
+
+	public function clef_settings_action_links( $links ) {
+	    
+	    array_unshift( $links, '<a href="' . add_query_arg( array( 'page' => $this->settings->settings_path ), admin_url( 'admin.php' ) ) . '">' . __( 'Settings' ) . '</a>' );
+
+	    return $links;
+	}
 
     /**
      * Determines whether to badge the Clef menu icon.
