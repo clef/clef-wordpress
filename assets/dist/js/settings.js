@@ -86,11 +86,9 @@
             return failure(ClefUtils.getErrorMessage(data));
           }
         };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+      })(this)).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     hideButton: function() {
       return this.$el.find('.button').hide();
@@ -149,10 +147,14 @@
       }
       this.currentSub = this.subs[0];
       $(window).on('message', this.handleMessages.bind(this));
+      this.hide();
       return this.render();
     },
-    hide: function(cb) {
+    slideUp: function(cb) {
       return this.$el.slideUp(cb);
+    },
+    hide: function(cb) {
+      return this.$el.hide(cb);
     },
     show: function() {
       return this.$el.fadeIn();
@@ -209,21 +211,17 @@
           });
         };
       })(this);
-      return $.post(this.connectClefAccountAction, connectData).success((function(_this) {
-        return function(data) {
-          if (data.success) {
-            if (typeof cb === "function") {
-              return cb(data);
-            }
-          } else {
-            return failure(ClefUtils.getErrorMessage(data));
+      return $.post(this.connectClefAction, connectData).success(function(data) {
+        if (data.success) {
+          if (typeof cb === "function") {
+            return cb(data);
           }
-        };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+        } else {
+          return failure(ClefUtils.getErrorMessage(data));
+        }
+      }).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     showMessage: function(opts) {
       if (this.$currentMessage) {
@@ -258,7 +256,7 @@
     }
   });
   SetupTutorialView = TutorialView.extend({
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_clef_id",
+    connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id",
     iframePath: '/iframes/application/create/v1',
     initialize: function(opts) {
       opts.slideFilterSelector = '.setup';
@@ -337,7 +335,7 @@
     }
   });
   ConnectTutorialView = TutorialView.extend({
-    connectClefAccountAction: ajaxurl + "?action=connect_clef_account_oauth_code",
+    connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code",
     initialize: function(opts) {
       var params;
       this.constructor.__super__.initialize.call(this, opts);
@@ -402,8 +400,10 @@
       this.settings = new SettingsView(_.extend({
         options_name: "wpclef"
       }, this.opts));
+      this.settings.hide();
       if (!this.settings.isConfigured()) {
         this.tutorial = new SetupTutorialView(_.extend({}, this.opts));
+        this.tutorial.hide();
         this.listenTo(this.tutorial, 'message', this.displayMessage);
       }
       if (this.opts.isNetworkSettings) {
@@ -447,7 +447,7 @@
           type: "updated"
         });
       }
-      this.tutorial.hide();
+      this.tutorial.slideUp();
       return this.settings.show();
     }
   });
@@ -655,7 +655,7 @@
         this.disconnect.hide();
         return this.tutorial.show();
       } else {
-        this.tutorial.hide();
+        this.tutorial.slideUp();
         return this.disconnect.show();
       }
     },
@@ -689,11 +689,9 @@
             return failure(ClefUtils.getErrorMessage(data));
           }
         };
-      })(this)).fail((function(_this) {
-        return function(res) {
-          return failure(res.responseText);
-        };
-      })(this));
+      })(this)).fail(function(res) {
+        return failure(res.responseText);
+      });
     },
     showMessage: function(data) {
       if (this.message) {

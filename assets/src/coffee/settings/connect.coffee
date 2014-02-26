@@ -25,7 +25,7 @@
                 @disconnect.hide()
                 @tutorial.show()
             else
-                @tutorial.hide()
+                @tutorial.slideUp()
                 @disconnect.show()
         disconnectClefAccount: (e) ->
             e.preventDefault()
@@ -48,9 +48,8 @@
                             type: "updated"
                     else
                         failure ClefUtils.getErrorMessage(data)
-                .fail (res) =>
-                    failure res.responseText
-                       
+                .fail (res) -> failure res.responseText
+
         showMessage: (data) ->
             @message.remove() if @message
             @message = $(@messageTemplate data).hide()

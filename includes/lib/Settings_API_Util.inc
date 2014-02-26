@@ -290,9 +290,9 @@ class Settings_API_Util_Field {
     ob_start();
     do_action('settings_api_util_pre_checkbox');
     if($options['value']) {
-      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\" checked>";
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"1\" checked>";
     } else {
-      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"{$options['value']}\">";
+      echo "<input type=\"checkbox\" name=\"{$options['name']}\" value=\"1\">";
     }
     do_action('settings_api_util_after_checkbox');
     $html = ob_get_contents();

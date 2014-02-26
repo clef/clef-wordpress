@@ -56,9 +56,6 @@ class ClefCore {
         $this->badge = $badge; 
         $this->onboarding = $onboarding;
 
-        // Load translations
-        load_plugin_textdomain( 'clef', false, CLEF_PATH . 'languages/' );
-
         // Register public hooks
         if ($admin) {
             add_action('clef_render_settings', array($admin, 'general_settings'));

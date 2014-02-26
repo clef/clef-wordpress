@@ -8,10 +8,13 @@
             @settings = new SettingsView (
                 _.extend { options_name: "wpclef" }, @opts
             )
+            @settings.hide()
 
             if !@settings.isConfigured()
                 @tutorial = new SetupTutorialView _.extend {}, @opts
+                @tutorial.hide()
                 @listenTo @tutorial, 'message', @displayMessage
+
 
             if @opts.isNetworkSettings
                 delete @opts['formSelector']
@@ -48,7 +51,7 @@
                 @displayMessage clefTranslations.messages.success.configured
                 type: "updated"
 
-            @tutorial.hide()
+            @tutorial.slideUp()
             @settings.show()
 
     SettingsView =  AjaxSettingsView.extend
