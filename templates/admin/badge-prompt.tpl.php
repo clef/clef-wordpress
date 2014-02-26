@@ -1,4 +1,4 @@
-<div class="updated clef-badge-prompt">
+<div class="updated clef-badge-prompt hide-if-no-js">
     <div class="badge-fade">
         <?php if ($had_clef_before_onboarding) { ?>
             <h3><?php _e("You just logged in securely with Clef!", "clef"); ?></h3>
