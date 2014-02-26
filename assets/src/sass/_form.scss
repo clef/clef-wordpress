@@ -31,7 +31,7 @@
                     float: left;
                 }
                 .generate-override {
-                    display: block;
+                    float: left;
                     width: auto;
                     clear: both;
                     cursor: pointer;
@@ -42,7 +42,6 @@
                 }
 
                 .override-buttons {
-                    display: none;
                     margin-top: 10px;
                     clear: both;
                     .button {
@@ -94,7 +93,6 @@
             }
 
             .support-html-container {
-                display: none;
                 margin-top: 20px;
                 textarea {
                     width: 400px;
