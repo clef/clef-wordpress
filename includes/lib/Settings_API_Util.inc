@@ -225,9 +225,8 @@ class Settings_API_Util_Field {
       'name' => $section->settings->optionName.'['.$this->optionID.']',
     );
 
-    @$currentValue = $this->section->settings->values[$this->optionID];
-    if(!empty($currentValue)) {
-      $values['value'] = $currentValue;
+    if (isset($this->section->settings->values[$this->optionID])) {
+      $values['value'] = $this->section->settings->values[$this->optionID];
     }
     else {
       $values['value'] = $defaultValue;
