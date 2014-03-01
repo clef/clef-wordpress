@@ -37,13 +37,13 @@ class ClefAjax {
         $hook_info = $this->hook_map[$action];
         $options = $hook_info['options'];
 
-        $data = json_decode(file_get_contents( "php://input" ), true);
-        if (empty($data)) {
+        if(0 == strpos($_SERVER["CONTENT_TYPE"], 'application/json')) {
+            # if the request is coming from backbone, we need to non-200 error
+            $data = json_decode(file_get_contents( "php://input" ), true);
+            $send_non_200_error = true;
+        } else {
             $data = $_REQUEST;
             $send_non_200_error = false;
-        } else {
-            # if the request is coming from backbone, we need to non-200 error
-            $send_non_200_error = true;
         }
 
         if ($options['nonce'] && (!isset($data['_wpnonce']) || !wp_verify_nonce($data['_wpnonce'], $action))) {
