@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-02-22 20:40-0800\n"
-"PO-Revision-Date: 2014-02-22 20:40-0800\n"
+"POT-Creation-Date: 2014-02-28 19:43-0700\n"
+"PO-Revision-Date: 2014-02-28 19:43-0700\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Clef <support@getclef.com>\n"
 "Language: en\n"
@@ -15,130 +15,138 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../includes/class.clef-admin.php:78
+#: ../includes/class.clef-admin.php:79
 msgid "Hide this message"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:171
+#: ../includes/class.clef-admin.php:172
 msgid "Set up Clef for your account"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:220 ../includes/class.clef-admin.php:221
-#: ../includes/class.clef-admin.php:235 ../includes/class.clef-admin.php:236
-#: ../includes/class.clef-admin.php:245 ../includes/class.clef-admin.php:287
+#: ../includes/class.clef-admin.php:221 ../includes/class.clef-admin.php:222
+#: ../includes/class.clef-admin.php:236 ../includes/class.clef-admin.php:237
+#: ../includes/class.clef-admin.php:246 ../includes/class.clef-admin.php:295
 #: ../templates/admin/form.tpl.php:4
 msgid "Clef"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:255
+#: ../includes/class.clef-admin.php:256
 msgid "Disconnect Clef account"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:256
+#: ../includes/class.clef-admin.php:257
 msgid "Connect Clef account"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:271
+#: ../includes/class.clef-admin.php:272
 msgid "Add Additional Security"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:272
+#: ../includes/class.clef-admin.php:273
 msgid "Additional Security"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:390
-msgid "API Settings"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:391 ../templates/admin/form.tpl.php:88
-msgid "Application ID"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:392 ../templates/admin/form.tpl.php:92
-msgid "Application Secret"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:394
-msgid "Password Settings"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:395 ../templates/admin/form.tpl.php:22
-msgid "Disable passwords for Clef users"
+#: ../includes/class.clef-admin.php:284
+msgid "Settings"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:398
-msgid "Disable certain passwords"
+msgid "API Settings"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:399 ../templates/admin/form.tpl.php:99
+msgid "Application ID"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:400 ../templates/admin/form.tpl.php:103
+msgid "Application Secret"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:401
+msgid "Register with Clef"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:403
-msgid "Disable all passwords"
+msgid "Password Settings"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:404 ../templates/admin/form.tpl.php:22
+msgid "Disable passwords for Clef users"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:407
-msgid "Allow XML"
-msgstr ""
-
-#: ../includes/class.clef-admin.php:411
-msgid "Override Settings"
+msgid "Disable certain passwords"
 msgstr ""
 
 #: ../includes/class.clef-admin.php:412
+msgid "Disable all passwords"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:416
+msgid "Allow XML"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:420
+msgid "Override Settings"
+msgstr ""
+
+#: ../includes/class.clef-admin.php:421
 msgid "Override key"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:414 ../templates/admin/form.tpl.php:61
+#: ../includes/class.clef-admin.php:423 ../templates/admin/form.tpl.php:67
 msgid "Support Clef"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:417
+#: ../includes/class.clef-admin.php:426
 msgid "Support Clef by automatically adding a link!"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:429
 msgid "Badge"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:429
 msgid "Link"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:420
+#: ../includes/class.clef-admin.php:429
 msgid "Disabled"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:423
+#: ../includes/class.clef-admin.php:432
 #: ../templates/js-templates/invite.tpl.php:21
 msgid "Invite Users"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:434
+#: ../includes/class.clef-admin.php:443
 #: ../includes/class.clef-network-admin.php:86
 msgid "Security check; nonce failed."
 msgstr ""
 
-#: ../includes/class.clef-admin.php:476
+#: ../includes/class.clef-admin.php:485
 msgid "invalid role"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:490
+#: ../includes/class.clef-admin.php:499
 msgid "there are no other users without Clef with this role or greater"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:511
+#: ../includes/class.clef-admin.php:520
 msgid ""
 "unable to send emails. Copy and paste the preview email to your users and "
 "they'll be walked through a tutorial to connect with Clef"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:520
+#: ../includes/class.clef-admin.php:529
 msgid "invalid Clef ID"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:531
+#: ../includes/class.clef-admin.php:540
 msgid "invalid OAuth Code"
 msgstr ""
 
-#: ../includes/class.clef-admin.php:550
+#: ../includes/class.clef-admin.php:559
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
@@ -153,28 +161,28 @@ msgstr ""
 msgid "user does not have correct capabilities"
 msgstr ""
 
-#: ../includes/class.clef-login.php:155
+#: ../includes/class.clef-login.php:174
 msgid "Sorry, that isn't a valid invite code."
 msgstr ""
 
-#: ../includes/class.clef-login.php:172
+#: ../includes/class.clef-login.php:191
 msgid ""
 "Sorry, this invite link has expired. Please contact your administrator for a "
 "new one."
 msgstr ""
 
-#: ../includes/class.clef-login.php:216 ../includes/class.clef-login.php:298
+#: ../includes/class.clef-login.php:235 ../includes/class.clef-login.php:307
 msgid "Passwords have been disabled for this user."
 msgstr ""
 
-#: ../includes/class.clef-login.php:250
+#: ../includes/class.clef-login.php:268
 msgid ""
-"There's no user whose email address matches your phone's Clef account. You "
-"must either connect your Clef account on your WordPress profile page or use "
-"the same email for both WordPress and Clef."
+"Registration is not allowed and there's no user whose email address matches "
+"your phone's Clef account. You must either connect your Clef account on your "
+"WordPress profile page or use the same email for both WordPress and Clef."
 msgstr ""
 
-#: ../includes/class.clef-login.php:268
+#: ../includes/class.clef-login.php:277
 msgid "An error occurred when creating your new account: "
 msgstr ""
 
@@ -288,6 +296,11 @@ msgid ""
 "account, you won't be able to log in."
 msgstr ""
 
+#: ../templates/admin/form.tpl.php:7
+#, php-format
+msgid "Follow %s"
+msgstr ""
+
 #: ../templates/admin/form.tpl.php:26
 msgid ""
 "Disable passwords for all users with privileges greater than or equal to "
@@ -313,73 +326,91 @@ msgid ""
 "good safety precaution."
 msgstr ""
 
+#: ../templates/admin/form.tpl.php:47
+msgid "Enter override key here"
+msgstr ""
+
 #: ../templates/admin/form.tpl.php:48
 msgid "generate a secure override url for me"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:51
+#: ../templates/admin/form.tpl.php:56
 msgid "Override URL"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:52
+#: ../templates/admin/form.tpl.php:57
 msgid "Drag this your bookmarks bar"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:62
+#: ../templates/admin/form.tpl.php:68
 msgid ""
 "Clef is, and will always be, free for you and your users. We'd really "
 "appreciate it if you'd support us (and show visitors they are browsing a "
 "secure site) by adding a link to Clef in your site footer!"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:64
+#: ../templates/admin/form.tpl.php:70
 msgid "Support Clef in your footer"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:77
-msgid "Preview of your support"
+#: ../templates/admin/form.tpl.php:73 ../templates/admin/form.tpl.php:74
+msgid "I want to add the badge or link elsewhere"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:78 ../templates/badge.tpl.php:1
+#: ../templates/admin/form.tpl.php:76
+msgid "Copy this HTML where you want to add the badge"
+msgstr ""
+
+#: ../templates/admin/form.tpl.php:77 ../templates/admin/form.tpl.php:79
+#: ../templates/admin/form.tpl.php:85 ../templates/admin/form.tpl.php:88
+#: ../templates/badge.tpl.php:1
 msgid "WordPress Login Protected by Clef"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:85
+#: ../templates/admin/form.tpl.php:78
+msgid "Copy this HTML where you want to add the link"
+msgstr ""
+
+#: ../templates/admin/form.tpl.php:84
+msgid "Preview of your support"
+msgstr ""
+
+#: ../templates/admin/form.tpl.php:87 ../templates/admin/form.tpl.php:130
+msgid "or"
+msgstr ""
+
+#: ../templates/admin/form.tpl.php:96
 msgid "Clef API Settings"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:86
+#: ../templates/admin/form.tpl.php:97
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
 "to. For more advanced settings, visit the <a href='http://getclef.com/"
 "developer'>Clef developer site</a>."
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:97
-msgid "Save"
+#: ../templates/admin/form.tpl.php:107
+msgid "Allow visitors to your site to register with Clef"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:103
+#: ../templates/admin/form.tpl.php:118
 msgid "Preview of your login form"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:106
+#: ../templates/admin/form.tpl.php:121
 msgid "Username"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:110
+#: ../templates/admin/form.tpl.php:125
 msgid "Password"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:115
-msgid "or"
-msgstr ""
-
-#: ../templates/admin/form.tpl.php:120
+#: ../templates/admin/form.tpl.php:135
 msgid "Remember Me"
 msgstr ""
 
-#: ../templates/admin/form.tpl.php:122
+#: ../templates/admin/form.tpl.php:137
 msgid "Log In"
 msgstr ""
 
