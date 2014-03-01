@@ -80,7 +80,7 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function multisite_settings_edit() {
-        if (!is_super_admin()) die(__('Cheatin&#8217; uh?', 'clef'));
+        if (!is_super_admin()) die(__('Cheatin&#8217; uh?'));
 
         if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
             die(__("Security check; nonce failed.", "clef"));
