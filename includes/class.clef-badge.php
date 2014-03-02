@@ -30,8 +30,10 @@ class ClefBadge {
 
     public function hook_onboarding() {
         if (empty($_POST)) {
-            $this->register_scripts();      
-            add_action('admin_notices', array($this, 'badge_prompt_html'));
+            if ($this->should_display_prompt()) {
+                $this->register_scripts();      
+                add_action('admin_notices', array($this, 'badge_prompt_html'));
+            }
         } else {
             global $clef_ajax;
             $clef_ajax->add_action('clef_badge_prompt', array($this, 'handle_badge_prompt_ajax'));
