@@ -37,7 +37,7 @@ class ClefAjax {
         $hook_info = $this->hook_map[$action];
         $options = $hook_info['options'];
 
-        if(0 == strpos($_SERVER["CONTENT_TYPE"], 'application/json')) {
+        if(0 === strpos($_SERVER["CONTENT_TYPE"], 'application/json')) {
             # if the request is coming from backbone, we need to non-200 error
             $data = json_decode(file_get_contents( "php://input" ), true);
             $send_non_200_error = true;
