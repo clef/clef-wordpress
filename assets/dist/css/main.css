@@ -1,9 +1,6 @@
 /******************************
 Styles
 *********************************/
-body {
-  position: relative; }
-
 .clef-badge-prompt {
   position: relative;
   min-height: 170px; }

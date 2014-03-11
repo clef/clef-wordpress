@@ -127,7 +127,7 @@ class ClefCore {
     }
 
     public static function initialize_session() {
-        if( !session_id() ) session_start();
+        if( !session_id() ) @session_start();
     }
 
     public static function start() {
