@@ -130,6 +130,12 @@ class ClefCore {
         if( !session_id() ) @session_start();
     }
 
+    public static function manage_wp_fix() {
+        if (isset($_REQUEST['action']) && preg_match('/ajax_settings/', $_REQUEST['action']) && function_exists('mmb_authenticate')) {
+            remove_action('plugins_loaded', 'mmb_authenticate', 1);
+        }
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null) {
             self::$instance = new self;
