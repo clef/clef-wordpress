@@ -4,6 +4,10 @@ Styles
 .clef-badge-prompt {
   position: relative;
   min-height: 170px; }
+  .clef-badge-prompt * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge-prompt .link-fade {
     display: none; }
   .clef-badge-prompt .dismiss {
@@ -21,6 +25,10 @@ Styles
   text-align: center;
   display: inline-block;
   margin: 10px auto; }
+  .clef-badge * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge.pretty {
     display: block;
     overflow: hidden;

@@ -7,6 +7,10 @@ $width: 140px;
 $height: 50px;
 
 .clef-badge-prompt {
+    * {
+        box-sizing: border-box;
+    }
+
     position: relative;
     min-height: 170px;
    .link-fade {
@@ -27,6 +31,10 @@ $height: 50px;
 }
 
 .clef-badge {
+    * {
+        box-sizing: border-box;
+    }
+
     width: 100%;
     text-align: center;
     display: inline-block;

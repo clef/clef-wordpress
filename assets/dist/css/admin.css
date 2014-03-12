@@ -4,6 +4,10 @@ Styles
 .clef-badge-prompt {
   position: relative;
   min-height: 170px; }
+  .clef-badge-prompt * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge-prompt .link-fade {
     display: none; }
   .clef-badge-prompt .dismiss {
@@ -21,6 +25,10 @@ Styles
   text-align: center;
   display: inline-block;
   margin: 10px auto; }
+  .clef-badge * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge.pretty {
     display: block;
     overflow: hidden;
@@ -47,15 +55,14 @@ Styles
 .clef-login-form.clef-hidden p#nav {
   display: none; }
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
 #clef-settings-container, #connect-clef-account {
   width: 100%;
   height: 100%;
   position: relative; }
+  #clef-settings-container *, #connect-clef-account * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   #clef-settings-container .message, #connect-clef-account .message {
     margin-top: 20px;
     margin-left: 0;
@@ -179,6 +186,10 @@ Styles
     display: table; }
   #clef-tutorial:after {
     clear: both; }
+  #clef-tutorial * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   #clef-tutorial .clef-tutorial-container {
     display: block;
     float: left;
@@ -400,6 +411,10 @@ Styles
 #connect-clef-account .skip {
   display: none; }
 
+#clef-settings-form * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 #clef-settings-form .twitter-follow-button {
   position: relative;
   top: 4px; }
@@ -564,6 +579,10 @@ Styles
     display: table; }
   .waltz:after {
     clear: both; }
+  .waltz * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .waltz.settings {
     padding: 10px;
     margin-top: 40px; }
