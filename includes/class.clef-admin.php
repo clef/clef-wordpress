@@ -49,6 +49,8 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
+        add_filter("__wps__menu_settings_filter", array($this, 'render_clef_profile'), 10, 3);
+
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
@@ -180,28 +182,42 @@ class ClefAdmin {
         return $sent;
     }
 
-    public function render_connect_clef_account() {
+    private function connect_clef_options() {
         $connect_nonce = wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION);
         $redirect_url = add_query_arg( 
             array('_wpnonce' => $connect_nonce, 'connect' => true),
             admin_url("/admin.php?page=" . self::CONNECT_CLEF_PAGE)
         );
-        
-        echo ClefUtils::render_template(
-            'admin/connect.tpl', 
-            array( 
-                "options" => array(
-                    "connected" => ClefUtils::user_has_clef(),
-                    "appID" => $this->settings->get( 'clef_settings_app_id' ),
-                    "redirectURL" => $redirect_url,
-                    "clefJSURL" => CLEF_JS_URL,
-                    "nonces" => array(
-                        "connectClef" => $connect_nonce,
-                        "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
-                    )
-                )
+
+        return array(
+            "connected" => ClefUtils::user_has_clef(),
+            "appID" => $this->settings->get( 'clef_settings_app_id' ),
+            "redirectURL" => $redirect_url,
+            "clefJSURL" => CLEF_JS_URL,
+            "nonces" => array(
+                "connectClef" => $connect_nonce,
+                "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
             )
         );
+    }
+
+    public function render_connect_clef_account_tutorial() {
+        echo ClefUtils::render_template(
+            'admin/connect_tutorial.tpl', 
+            array( 
+                "options" => $this->connect_clef_options()
+            )
+        );
+    }
+
+    public function render_clef_profile($html) {
+        $html .= ClefUtils::render_template(
+            'admin/profile.tpl',
+            array(
+                "options" => $this->connect_clef_options()
+            )
+        );
+        return $html;
     }
 
     public function admin_menu() {
@@ -222,7 +238,7 @@ class ClefAdmin {
                     __("Clef", 'clef'),
                     "read",
                     $this->settings->settings_path,
-                    array($this, 'render_connect_clef_account'),
+                    array($this, 'render_connect_clef_account_tutorial'),
                     CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
                 );
             }

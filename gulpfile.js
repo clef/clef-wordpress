@@ -51,7 +51,7 @@ gulp.task('coffee', function() {
         'assets/src/coffee/settings/multisite.coffee',
         'assets/src/coffee/settings/tutorial.coffee',
         'assets/src/coffee/settings/settings.coffee',
-        'assets/src/coffee/settings/connect.coffee'
+        'assets/src/coffee/settings/connect.coffee',
     ]), 'settings.js');
 
     function build(strm, output) {

@@ -1,0 +1,16 @@
+#clef-profile {
+    .connect-clef {
+        display: block;
+    }
+    .disconnect-clef {
+        display: none;
+    }
+    &.has-clef {
+        .connect-clef {
+            display: none;
+        }
+        .disconnect-clef {
+            display: block;
+        }
+    }
+}

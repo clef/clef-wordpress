@@ -24,6 +24,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 if (!defined('ABSPATH')) exit();
 
+// define('CLEF_BASE', 'http://arya.dev:5000');
+// define('CLEF_JS_URL', CLEF_BASE . '/static/dist/js/v3/clef.js');
+// define('CLEF_DEBUG', true);
+
 if (!defined('CLEF_DEBUG')) define('CLEF_DEBUG', false);
 if (CLEF_DEBUG) require_once('includes/lib/symlink-fix.php');
 
