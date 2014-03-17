@@ -92,10 +92,12 @@ gulp.task('images', function() {
 gulp.task('watch', function() {
     server.listen(35729, function(err) {
         if (err) {
-            return gutil.log(err);
+            gutil.log(err);
         }
-        gulp.watch('assets/src/**/*.scss', ['sass']);
-        gulp.watch('assets/src/**/*.coffee', ['coffee']);
-        gulp.watch('assets/src/img/**/*', ['images']);
     });
+
+    
+    gulp.watch('assets/src/**/*.scss', ['sass']);
+    gulp.watch('assets/src/**/*.coffee', ['coffee']);
+    gulp.watch('assets/src/img/**/*', ['images']);
 });
