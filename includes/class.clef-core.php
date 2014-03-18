@@ -88,6 +88,14 @@ class ClefCore {
         $settings_changes = false;
 
         if ($previous_version) {
+
+            if (version_compare($previous_version, '2.1', '<')) {
+                if (!session_id()) @session_start();
+                if (isset($_SESSION['logged_in_at'])) {
+                    $this->session->set('logged_in_at', $_SESSION['logged_in_at']);
+                }
+            }
+
             if (version_compare($previous_version, '2.0', '<')) {
                 $this->onboarding->migrate_global_login_count();
                 $this->badge->hide_prompt();
@@ -129,8 +137,10 @@ class ClefCore {
         $this->settings->set("version", $version);
     }
 
-    public static function initialize_session() {
-        if( !session_id() ) @session_start();
+    public function initialize_session() {
+        // Clef logout hook functions
+        require_once(CLEF_PATH . 'includes/class.clef-session.php');
+        $this->session = ClefSession::start();
     }
 
     public static function manage_wp_fix() {
