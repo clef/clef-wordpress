@@ -1,7 +1,7 @@
 (($, Backbone) ->
 
     ProView = Backbone.View.extend
-        el: '#clef-pro-section' 
+        el: '#clef-pro-section'
         getServicesURL: ajaxurl + '?action=clef_get_pro_services'
         subViews: []
         initialize: (@opts, @model) ->
@@ -12,8 +12,7 @@
                         @customizer = new CustomizationView(@opts, @model)
                         @subViews.push @customizer
                     @render()
-                .fail (res) ->
-                    console.log res.responseText
+                .fail (res) -> console.log res.responseText
         render: ->
             for view in @subViews
                 view.render()
@@ -22,7 +21,7 @@
 
     CustomizationView = Backbone.View.extend
         el: '#clef-pro-customization'
-        events: 
+        events:
             'click #clef-custom-logo-upload': 'openMediaUploader'
             'click #clef-custom-logo-clear': 'clearLogo'
             'change input, change textarea': 'render'
@@ -38,19 +37,19 @@
             @$el.find('#clef-custom-logo-clear').toggle !!@image()
             @$el.show()
         openMediaUploader: ->
-            if @uploader 
+            if @uploader
                 @uploader.open()
                 return
 
             @uploader = wp.media.frames.file_frame =  wp.media
                 title: 'Choose an image'
-                button: 
+                button:
                     text: 'Choose an image'
                 multiple: false
 
             @uploader.on 'select', =>
                 attachment = @uploader.state().get('selection').first().toJSON()
-                @model.save 
+                @model.save
                     'wpclef[customization_logo]': attachment.url
                 @render()
 
