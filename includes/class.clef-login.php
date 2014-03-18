@@ -147,7 +147,11 @@ class ClefLogin {
 
         echo ClefUtils::render_template('button.tpl', array(
             "app_id" => $app_id,
-            "redirect_url" => $redirect_url
+            "redirect_url" => $redirect_url,
+            "custom" => array(
+                "logo" => $this->settings->get('customization_logo'),
+                "message" => $this->settings->get('customization_message')
+            )
         ));
     }
 

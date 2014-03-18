@@ -49,6 +49,9 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-network-admin.php');
         $network_admin = ClefNetworkAdmin::start($settings);
 
+        require_once(CLEF_PATH . 'includes/pro/class.clef-pro.php');
+        $pro = ClefPro::start($settings);
+
         // Plugin setup hooks
         require_once(CLEF_PATH . 'includes/class.clef-setup.php');
 
