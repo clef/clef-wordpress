@@ -63,10 +63,6 @@
         message: ->
             @$el.find('textarea').val()
 
-
-             
-
-
     window.ClefProView = ProView
 
 ).call(this, jQuery, Backbone)
