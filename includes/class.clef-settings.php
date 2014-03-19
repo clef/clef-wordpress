@@ -27,12 +27,17 @@ class ClefSettings extends Settings_API_Util {
             $input[$key] = sanitize_text_field($value);
         }
 
-        if (isset($input['clef_settings_app_id'])) {
-            $input['clef_settings_app_id'] = esc_attr($input['clef_settings_app_id']);
-        }
+        $attrs_to_escape = array(
+            'clef_settings_app_id', 
+            'clef_settings_app_secret', 
+            'customization_message', 
+            'customization_logo'
+        );
 
-        if (isset($input['clef_settings_app_secret'])) {
-            $input['clef_settings_app_secret'] = esc_attr($input['clef_settings_app_secret']);
+        foreach ($attrs_to_escape as $attr) {
+            if (isset($input[$attr])) {
+                $input[$attr] = esc_attr($input[$attr]);
+            }
         }
 
         if (isset($input['clef_password_settings_force']) && $input['clef_password_settings_force'] == "1") {

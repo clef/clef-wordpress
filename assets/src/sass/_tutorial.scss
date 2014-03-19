@@ -4,6 +4,11 @@
     display: none;
     margin-top: 40px;
     @include outer-container();
+
+    * {
+        box-sizing: border-box;
+    }
+
     .clef-tutorial-container {
         @include span-columns(6);
         @include shift(2);

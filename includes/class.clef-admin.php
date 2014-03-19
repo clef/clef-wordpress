@@ -24,6 +24,7 @@ class ClefAdmin {
 
     protected function __construct($settings) {
         $this->settings = $settings;
+        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
@@ -139,6 +140,7 @@ class ClefAdmin {
         wp_enqueue_style($ident);
         
         if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
+            wp_enqueue_media();
             $ident = ClefUtils::register_script(
                 'settings', 
                 array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
@@ -330,12 +332,13 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
-                'logoutHook' => wp_login_url(),
+                'logoutHook' => home_url('/'),
                 'source' => 'wordpress'
             ),
             'nonces' => array(
                 'connectClef' => wp_create_nonce(self::CONNECT_CLEF_ID_ACTION),
-                'inviteUsers' => wp_create_nonce(self::INVITE_USERS_ACTION)
+                'inviteUsers' => wp_create_nonce(self::INVITE_USERS_ACTION),
+                'getProServices' => wp_create_nonce(ClefPro::GET_PRO_SERVICES_ACTION)
             ),
             'configured' => $this->settings->is_configured(),
             'clefBase' => CLEF_BASE,
@@ -395,7 +398,7 @@ class ClefAdmin {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
 
-        $settings = $form->addSection('clef_settings', __('API Settings'));
+        $settings = $form->addSection('clef_settings', __('API Settings', 'clef'));
         $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('register', __('Register with Clef', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
@@ -430,6 +433,10 @@ class ClefAdmin {
         );
 
         $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"));
+
+        $pro = ClefPro::start();
+        $pro->add_settings($form);
+
         return $form;
     }
 
@@ -530,7 +537,7 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
-        $_SESSION['logged_in_at'] = time();
+        $this->session->set('logged_in_at', time());
         
         return array("success" => true);
     }
@@ -547,7 +554,7 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($info->id);
-        $_SESSION['logged_in_at'] = time();
+        $this->session->set('logged_in_at', time());
 
         return array("success" => true);
     }

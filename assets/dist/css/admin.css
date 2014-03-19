@@ -4,6 +4,10 @@ Styles
 .clef-badge-prompt {
   position: relative;
   min-height: 170px; }
+  .clef-badge-prompt * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge-prompt .link-fade {
     display: none; }
   .clef-badge-prompt .dismiss {
@@ -21,6 +25,10 @@ Styles
   text-align: center;
   display: inline-block;
   margin: 10px auto; }
+  .clef-badge * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .clef-badge.pretty {
     display: block;
     overflow: hidden;
@@ -47,15 +55,14 @@ Styles
 .clef-login-form.clef-hidden p#nav {
   display: none; }
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
 #clef-settings-container, #connect-clef-account {
   width: 100%;
   height: 100%;
   position: relative; }
+  #clef-settings-container *, #connect-clef-account * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   #clef-settings-container .message, #connect-clef-account .message {
     margin-top: 20px;
     margin-left: 0;
@@ -179,6 +186,10 @@ Styles
     display: table; }
   #clef-tutorial:after {
     clear: both; }
+  #clef-tutorial * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   #clef-tutorial .clef-tutorial-container {
     display: block;
     float: left;
@@ -400,9 +411,30 @@ Styles
 #connect-clef-account .skip {
   display: none; }
 
+#clef-settings-form * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 #clef-settings-form .twitter-follow-button {
   position: relative;
   top: 4px; }
+#clef-settings-form .settings-section.pro-section {
+  position: relative;
+  display: none; }
+  #clef-settings-form .settings-section.pro-section:before {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background: #00BA6E;
+    display: block;
+    content: "PRO";
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0.7; }
 #clef-settings-form .settings-section.override-settings .inputs-container .input-container {
   background: none;
   padding: 0;
@@ -487,20 +519,20 @@ Styles
   width: 28.7037%; }
   #clef-settings-form .settings-section.clef-settings .inputs-container label:last-child {
     margin-right: 0; }
-#clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"] {
+#clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"], #clef-settings-form .settings-section.clef-settings .inputs-container textarea {
   display: block;
   float: left;
   margin-right: 1.85185%;
   width: 69.44444%; }
-  #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child {
+  #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child, #clef-settings-form .settings-section.clef-settings .inputs-container textarea:last-child {
     margin-right: 0; }
   @media screen and (max-width: 768px) {
-    #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"] {
+    #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"], #clef-settings-form .settings-section.clef-settings .inputs-container textarea {
       display: block;
       float: left;
       margin-right: 1.85185%;
       width: 100%; }
-      #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child {
+      #clef-settings-form .settings-section.clef-settings .inputs-container input[type="text"]:last-child, #clef-settings-form .settings-section.clef-settings .inputs-container textarea:last-child {
         margin-right: 0; } }
 #clef-settings-form .password-settings {
   min-height: 400px; }
@@ -547,6 +579,27 @@ Styles
           width: 187px;
           margin: auto;
           display: block; }
+#clef-settings-form #clef-pro-section {
+  display: none; }
+  #clef-settings-form #clef-pro-section #clef-pro-customization .preview-container {
+    display: block;
+    float: left;
+    margin-right: 1.85185%;
+    width: 38.88889%; }
+    #clef-settings-form #clef-pro-section #clef-pro-customization .preview-container:last-child {
+      margin-right: 0; }
+  #clef-settings-form #clef-pro-section #clef-pro-customization .button {
+    float: right;
+    margin-left: 10px; }
+  #clef-settings-form #clef-pro-section #clef-pro-customization #custom-login-view img {
+    max-height: 50px;
+    margin: auto;
+    margin-top: 20px;
+    display: block; }
+  #clef-settings-form #clef-pro-section #clef-pro-customization #custom-login-view p {
+    border: 1px solid #eee;
+    margin: 20px;
+    padding: 10px; }
 
 .waltz {
   *zoom: 1;
@@ -564,6 +617,10 @@ Styles
     display: table; }
   .waltz:after {
     clear: both; }
+  .waltz * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
   .waltz.settings {
     padding: 10px;
     margin-top: 40px; }

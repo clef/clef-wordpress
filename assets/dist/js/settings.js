@@ -429,7 +429,8 @@
       return this.$el.fadeIn();
     },
     configure: function(data) {
-      return this.settings.model.configure(data);
+      this.settings.model.configure(data);
+      return this.settings.render();
     },
     displayMessage: function(opts) {
       this.$msgContainer.find('p').text(opts.message);
@@ -467,6 +468,7 @@
       this.opts = opts;
       this.modelClass = SettingsModel;
       SettingsView.__super__.initialize.call(this, opts);
+      this.pro = new ClefProView(opts, this.model);
       this.inviteUsersView = new InviteUsersView(opts);
       this.formView = new FormVisualization({
         model: this.model
@@ -589,10 +591,19 @@
       return !!(this.cget('clef_settings_app_id') && this.cget('clef_settings_app_secret'));
     },
     configure: function(data) {
-      return this.save({
+      var k, toSave, v, _ref;
+      toSave = {
         'wpclef[clef_settings_app_id]': data.appID,
         'wpclef[clef_settings_app_secret]': data.appSecret
-      });
+      };
+      if (data.configuration) {
+        _ref = data.configuration;
+        for (k in _ref) {
+          v = _ref[k];
+          toSave["wpclef[" + k + "]"] = v;
+        }
+      }
+      return this.save(toSave);
     }
   });
   FormVisualization = Backbone.View.extend({
@@ -705,4 +716,101 @@
     }
   });
   return window.ConnectView = ConnectView;
+}).call(this, jQuery, Backbone);
+
+var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+(function($, Backbone) {
+  var CustomizationView, ProView;
+  ProView = Backbone.View.extend({
+    el: '#clef-pro-section',
+    getServicesURL: ajaxurl + '?action=clef_get_pro_services',
+    subViews: [],
+    initialize: function(opts, model) {
+      this.opts = opts;
+      this.model = model;
+      return $.getJSON(this.getServicesURL, {
+        _wpnonce: this.opts.nonces.getProServices
+      }).success((function(_this) {
+        return function(data) {
+          _this.servicesAvailable = data;
+          if (__indexOf.call(_this.servicesAvailable, 'customize') >= 0) {
+            _this.customizer = new CustomizationView(_this.opts, _this.model);
+            _this.subViews.push(_this.customizer);
+          }
+          return _this.render();
+        };
+      })(this)).fail(function(res) {
+        return console.log(res.responseText);
+      });
+    },
+    render: function() {
+      var view, _i, _len, _ref;
+      _ref = this.subViews;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        view = _ref[_i];
+        view.render();
+      }
+      return this.$el.show();
+    }
+  });
+  CustomizationView = Backbone.View.extend({
+    el: '#clef-pro-customization',
+    events: {
+      'click #clef-custom-logo-upload': 'openMediaUploader',
+      'click #clef-custom-logo-clear': 'clearLogo',
+      'change input, change textarea': 'render',
+      'keyup textarea': 'render'
+    },
+    preview: _.template($('#clef-customization-template').html()),
+    initialize: function(opts, model) {
+      this.opts = opts;
+      this.model = model;
+    },
+    render: function() {
+      this.$el.find('#custom-login-view').html(this.preview({
+        image: this.image(),
+        message: this.message()
+      }));
+      this.$el.find('#clef-custom-logo-clear').toggle(!!this.image());
+      return this.$el.show();
+    },
+    openMediaUploader: function() {
+      if (this.uploader) {
+        this.uploader.open();
+        return;
+      }
+      this.uploader = wp.media.frames.file_frame = wp.media({
+        title: 'Choose an image',
+        button: {
+          text: 'Choose an image'
+        },
+        multiple: false
+      });
+      this.uploader.on('select', (function(_this) {
+        return function() {
+          var attachment;
+          attachment = _this.uploader.state().get('selection').first().toJSON();
+          _this.model.save({
+            'wpclef[customization_logo]': attachment.url
+          });
+          return _this.render();
+        };
+      })(this));
+      return this.uploader.open();
+    },
+    clearLogo: function() {
+      this.model.save({
+        'wpclef[customization_logo]': ''
+      });
+      return this.render();
+    },
+    image: function() {
+      return this.model.cget('customization_logo');
+    },
+    message: function() {
+      return this.$el.find('textarea').val();
+    }
+  });
+  return window.ClefProView = ProView;
 }).call(this, jQuery, Backbone);

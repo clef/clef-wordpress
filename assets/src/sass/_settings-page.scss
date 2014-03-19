@@ -3,6 +3,10 @@
     height: 100%;
     position: relative;
     
+    * {
+        box-sizing: border-box;
+    }
+    
     .message {
         margin-top: 20px;
         margin-left: 0;

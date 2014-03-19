@@ -39,6 +39,7 @@
 
         configure: (data) ->
             @settings.model.configure(data)
+            @settings.render()
 
         displayMessage: (opts) ->
             @$msgContainer.find('p').text(opts.message)
@@ -72,6 +73,7 @@
             @modelClass = SettingsModel
             SettingsView.__super__.initialize.call(this, opts)
 
+            @pro = new ClefProView(opts, @model)
             @inviteUsersView = new InviteUsersView(opts)
             @formView = new FormVisualization( model: @model )
             @xmlEl = @model
@@ -194,10 +196,18 @@
             !!(@cget('clef_settings_app_id') &&
                 @cget('clef_settings_app_secret'))
 
-        configure: (data) ->
-            @save
+        configure: (data) ->   
+            toSave = {
                 'wpclef[clef_settings_app_id]': data.appID
                 'wpclef[clef_settings_app_secret]': data.appSecret
+            }
+            
+            if data.configuration
+                for k, v of data.configuration
+                    toSave["wpclef[#{k}]"] = v
+
+            @save toSave
+                
 
 
     FormVisualization = Backbone.View.extend

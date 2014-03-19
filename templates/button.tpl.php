@@ -6,7 +6,10 @@ if (!$clef_js_included) {
 }
 ?>
 <div data-app-id='<?php echo $app_id; ?>' 
-    data-redirect-url='<?php echo $redirect_url; ?>'>
+    data-redirect-url='<?php echo $redirect_url; ?>'
+    <?php if (isset($custom['logo'])) { ?>data-custom-logo="<?php echo $custom['logo'] ?>"<?php } ?>
+    <?php if (isset($custom['message'])) { ?>data-custom-message="<?php echo $custom['message'] ?>"<?php } ?>
+>
 </div>
 <script data-cfasync="false" type='text/javascript'>
     var scripts = document.getElementsByTagName('script'),

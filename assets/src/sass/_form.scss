@@ -1,10 +1,35 @@
 #clef-settings-form {
+    
+    * {
+        box-sizing: border-box;
+    }
+
     .twitter-follow-button {
         position: relative;
         top: 4px;
     }
     
     .settings-section {
+        &.pro-section {
+            position: relative;
+            display: none;
+            &:before {
+                $height: 30px;
+                width: 80px;
+                height: $height;
+                line-height: $height;
+                background: $green;
+                display: block;
+                content: "PRO";
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+                opacity: .7;
+            }
+        }
         &.override-settings {
             .inputs-container {
                 .input-container {
@@ -107,7 +132,8 @@
                 label {
                     @include span-columns(3);
                 }
-                input[type="text"] {
+                input[type="text"],
+                textarea {
                     @include span-columns(7);
                     @include media($tablet) {
                         @include span-columns(10 of 10);
@@ -177,5 +203,31 @@
         } 
     }
 
+    #clef-pro-section {
+        display: none;
+        #clef-pro-customization {
+            .preview-container {
+                @include span-columns(4);
+            }
 
+            .button {
+                float: right;
+                margin-left: 10px;
+            }
+
+            #custom-login-view {
+                img {
+                    max-height: 50px;
+                    margin: auto;
+                    margin-top: 20px;
+                    display: block;
+                }
+                p {
+                    border: 1px solid #eee;
+                    margin: 20px;
+                    padding: 10px;
+                }
+            }
+        }
+    }
 }
