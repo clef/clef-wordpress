@@ -7,6 +7,7 @@ class ClefLogout {
 
     private function __construct($settings) {
         $this->settings = $settings;
+        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         if (!defined('DOING_AJAX') || !DOING_AJAX) {
@@ -66,8 +67,8 @@ class ClefLogout {
         $logged_out = false;
         // if the user is logged into WP but logged out with Clef, sign them out of Wordpress
         if (is_user_logged_in() && 
-            isset($_SESSION['logged_in_at']) && 
-            $_SESSION['logged_in_at'] < get_user_meta(wp_get_current_user()->ID, "logged_out_at", true)) {
+            $this->session->get('logged_in_at') && 
+            $this->session->get('logged_in_at') < get_user_meta(wp_get_current_user()->ID, "logged_out_at", true)) {
             wp_logout();
             $logged_out = true;
         }
