@@ -2,7 +2,7 @@
 /**
  * Clef Session
  *
- * This is a wrapper class for WP_Session / PHP $_SESSION and handles the storage of cart items, purchase sessions, etc
+ * This is a wrapper class for WP_Session / PHP $_SESSION.
  *
  */
 
@@ -26,7 +26,7 @@ class ClefSession {
     /**
      * Whether to use PHP $_SESSION or WP_Session
      *
-     * PHP $_SESSION is opt-in only by defining the EDD_USE_PHP_SESSIONS constant
+     * PHP $_SESSION is opt-in only by defining the CLEF_USE_PHP_SESSIONS constant
      *
      * @var bool
      * @access private
