@@ -429,7 +429,8 @@
       return this.$el.fadeIn();
     },
     configure: function(data) {
-      return this.settings.model.configure(data);
+      this.settings.model.configure(data);
+      return this.settings.render();
     },
     displayMessage: function(opts) {
       this.$msgContainer.find('p').text(opts.message);
