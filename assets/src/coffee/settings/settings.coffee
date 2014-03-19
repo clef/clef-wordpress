@@ -39,6 +39,7 @@
 
         configure: (data) ->
             @settings.model.configure(data)
+            @settings.render()
 
         displayMessage: (opts) ->
             @$msgContainer.find('p').text(opts.message)

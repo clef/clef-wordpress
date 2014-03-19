@@ -45,7 +45,12 @@ class ClefPro  {
         if ( is_wp_error($response) ) {
             return $response;
         } else {
-            return json_decode($response['body'])->services;
+            $body = json_decode($response['body']);
+            if (isset($body->success)) {
+                return $body->services;
+            } else {
+                return new WP_Error($body->error);
+            }
         }
     }
 
