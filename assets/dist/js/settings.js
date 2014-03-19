@@ -589,10 +589,19 @@
       return !!(this.cget('clef_settings_app_id') && this.cget('clef_settings_app_secret'));
     },
     configure: function(data) {
-      return this.save({
+      var k, toSave, v, _ref;
+      toSave = {
         'wpclef[clef_settings_app_id]': data.appID,
         'wpclef[clef_settings_app_secret]': data.appSecret
-      });
+      };
+      if (data.configuration) {
+        _ref = data.configuration;
+        for (k in _ref) {
+          v = _ref[k];
+          toSave["wpclef[" + k + "]"] = v;
+        }
+      }
+      return this.save(toSave);
     }
   });
   FormVisualization = Backbone.View.extend({
