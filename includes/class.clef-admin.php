@@ -24,6 +24,7 @@ class ClefAdmin {
 
     protected function __construct($settings) {
         $this->settings = $settings;
+        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
@@ -536,7 +537,7 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
-        $_SESSION['logged_in_at'] = time();
+        $this->session->set('logged_in_at', time());
         
         return array("success" => true);
     }
@@ -553,7 +554,7 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($info->id);
-        $_SESSION['logged_in_at'] = time();
+        $this->session->set('logged_in_at', time());
 
         return array("success" => true);
     }
