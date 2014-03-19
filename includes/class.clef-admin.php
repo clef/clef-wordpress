@@ -332,7 +332,7 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
-                'logoutHook' => get_bloginfo('url'),
+                'logoutHook' => home_url('/'),
                 'source' => 'wordpress'
             ),
             'nonces' => array(
