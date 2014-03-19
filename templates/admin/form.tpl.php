@@ -91,6 +91,7 @@
             </div>
         </div>
         <div id="invite-users-settings" class="settings-section"></div>
+        <?php include CLEF_TEMPLATE_PATH . 'pro/form.tpl.php'; ?>
         <div class="clef-settings settings-section">
             <div class="inputs-container">
                 <h3><?php _e("Clef API Settings", "clef"); ?></h3>

@@ -51,7 +51,8 @@ gulp.task('coffee', function() {
         'assets/src/coffee/settings/multisite.coffee',
         'assets/src/coffee/settings/tutorial.coffee',
         'assets/src/coffee/settings/settings.coffee',
-        'assets/src/coffee/settings/connect.coffee'
+        'assets/src/coffee/settings/connect.coffee',
+        'assets/src/coffee/settings/pro.coffee'
     ]), 'settings.js');
 
     function build(strm, output) {
@@ -95,7 +96,6 @@ gulp.task('watch', function() {
             gutil.log(err);
         }
     });
-
     
     gulp.watch('assets/src/**/*.scss', ['sass']);
     gulp.watch('assets/src/**/*.coffee', ['coffee']);

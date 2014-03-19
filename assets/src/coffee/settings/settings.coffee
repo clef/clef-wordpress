@@ -72,6 +72,7 @@
             @modelClass = SettingsModel
             SettingsView.__super__.initialize.call(this, opts)
 
+            @pro = new ClefProView(opts, @model)
             @inviteUsersView = new InviteUsersView(opts)
             @formView = new FormVisualization( model: @model )
             @xmlEl = @model
