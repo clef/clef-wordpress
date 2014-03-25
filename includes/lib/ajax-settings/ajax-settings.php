@@ -46,7 +46,11 @@ class AjaxSettings {
     }
 
     function handle_settings_save() {
-        $settings = json_decode(file_get_contents( "php://input" ), true);
+        global $HTTP_RAW_POST_DATA;
+        if (!isset($HTTP_RAW_POST_DATA)) {
+            $HTTP_RAW_POST_DATA = file_get_contents( "php://input" );
+        }
+        $settings = json_decode($HTTP_RAW_POST_DATA, true);
         $option_page = $settings['option_page'];
         $is_network_wide = isset($_REQUEST['network_wide']) && $_REQUEST['network_wide'];
 

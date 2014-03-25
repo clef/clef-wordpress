@@ -70,7 +70,10 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function ajax_multisite_options() {
-        $settings = json_decode(file_get_contents( "php://input" ), true);
+        if (!isset($HTTP_RAW_POST_DATA)) {
+            $HTTP_RAW_POST_DATA = file_get_contents( "php://input" );
+        }
+        $settings = json_decode($HTTP_RAW_POST_DATA, true);
 
         if (isset($settings['allow_override'])) {
             update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, (bool) $settings['allow_override']);
