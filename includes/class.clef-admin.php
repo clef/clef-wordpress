@@ -4,11 +4,9 @@ require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
 
 class ClefAdmin {
     const FORM_ID = "clef";
-    const CONNECT_CLEF_OAUTH_ACTION = "connect_clef_account_oauth_code";
     const CONNECT_CLEF_ID_ACTION = "connect_clef_account_clef_id";
     const INVITE_USERS_ACTION = "clef_invite_users";
     const DISMISS_WALTZ_ACTION = "clef_dismiss_waltz";
-    const DISCONNECT_CLEF_ACTION = "disconnect_clef_account";
 
     const CONNECT_CLEF_PAGE = "connect_clef_account";
 
@@ -53,20 +51,10 @@ class ClefAdmin {
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
-        $clef_ajax->add_action(
-            self::CONNECT_CLEF_OAUTH_ACTION, 
-            array($this, 'ajax_connect_clef_account_with_oauth_code'),
-            array('capability' => 'read')
-        );
         $clef_ajax->add_action(self::INVITE_USERS_ACTION, array($this, 'ajax_invite_users'));
         $clef_ajax->add_action(
             self::DISMISS_WALTZ_ACTION, 
             array($this, 'ajax_dismiss_waltz_notification'),
-            array('capability' => 'read')
-        );
-        $clef_ajax->add_action(
-            self::DISCONNECT_CLEF_ACTION,
-            array($this, 'ajax_disconnect_clef_account'),
             array('capability' => 'read')
         );
 
@@ -182,30 +170,6 @@ class ClefAdmin {
         return $sent;
     }
 
-    public function render_connect_clef_account() {
-        $connect_nonce = wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION);
-        $redirect_url = add_query_arg( 
-            array('_wpnonce' => $connect_nonce, 'connect' => true),
-            admin_url("/admin.php?page=" . self::CONNECT_CLEF_PAGE)
-        );
-        
-        echo ClefUtils::render_template(
-            'admin/connect.tpl', 
-            array( 
-                "options" => array(
-                    "connected" => ClefUtils::user_has_clef(),
-                    "appID" => $this->settings->get( 'clef_settings_app_id' ),
-                    "redirectURL" => $redirect_url,
-                    "clefJSURL" => CLEF_JS_URL,
-                    "nonces" => array(
-                        "connectClef" => $connect_nonce,
-                        "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
-                    )
-                )
-            )
-        );
-    }
-
     public function admin_menu() {
         // Ensure that if the Waltz notification bubble was showing, that it is 
         // never shown again.
@@ -224,7 +188,7 @@ class ClefAdmin {
                     __("Clef", 'clef'),
                     "read",
                     $this->settings->settings_path,
-                    array($this, 'render_connect_clef_account'),
+                    array($this, 'render_clef_user_settings'),
                     CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
                 );
             }
@@ -263,7 +227,7 @@ class ClefAdmin {
                 $name,
                 'read', 
                 self::CONNECT_CLEF_PAGE, 
-                array($this, 'render_connect_clef_account')
+                array($this, 'render_clef_user_settings')
             );
         }
       
@@ -315,6 +279,10 @@ class ClefAdmin {
                             $is_google_chrome;
 
         return $badge_menu_title;
+    }
+
+    public function render_clef_user_settings() {
+        do_action('clef_render_user_settings');
     }
 
     public function render_badge($count) {
@@ -531,7 +499,7 @@ class ClefAdmin {
         return array("success" => true);
     }
 
-     public function ajax_connect_clef_account_with_clef_id() {
+    public function ajax_connect_clef_account_with_clef_id() {
         if (!ClefUtils::isset_POST('identifier')) {
             return new WP_Error("invalid_clef_id", __("invalid Clef ID", "clef"));
         }
@@ -539,33 +507,6 @@ class ClefAdmin {
         ClefUtils::associate_clef_id($_POST["identifier"]);
         $this->session->set('logged_in_at', time());
         
-        return array("success" => true);
-    }
-
-    public function ajax_connect_clef_account_with_oauth_code() {
-        if (!ClefUtils::isset_POST('identifier')) {
-            return new WP_Error("invalid_oauth_code", __("invalid OAuth Code", "clef"));
-        }
-
-        try {
-            $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_POST('identifier'), $this->settings);
-        } catch (LoginException $e) {
-            return new WP_Error("bad_oauth_exchange", $e->getMessage());
-        }
-
-        ClefUtils::associate_clef_id($info->id);
-        $this->session->set('logged_in_at', time());
-
-        return array("success" => true);
-    }
-
-    public function ajax_disconnect_clef_account() {
-        $user = wp_get_current_user();
-        $passwords_disabled = $this->settings->passwords_are_disabled_for_user($user);
-        if (current_user_can('manage_options') && $passwords_disabled) {
-            return new WP_Error('passwords_disabled', __("your passwords are currently disabled. <br/> If you disconnect your Clef account, you won't be able to log in. Please enable passwords for yourself before disconnecting your Clef account", 'clef'));
-        }
-        ClefUtils::dissociate_clef_id();
         return array("success" => true);
     }
 

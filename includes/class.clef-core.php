@@ -29,6 +29,9 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-onboarding.php');
         $onboarding = ClefOnboarding::start($settings);
 
+        require_once(CLEF_PATH. 'includes/class.clef-user-settings.php');
+        $user_settings = ClefUserSettings::start($settings);
+
         // Clef login functions
         require_once(CLEF_PATH . 'includes/class.clef-login.php');
         $login = ClefLogin::start($settings);

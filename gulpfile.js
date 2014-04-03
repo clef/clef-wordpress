@@ -54,6 +54,12 @@ gulp.task('coffee', function() {
         'assets/src/coffee/settings/connect.coffee',
         'assets/src/coffee/settings/pro.coffee'
     ]), 'settings.js');
+    build(gulp.src([
+        'assets/src/coffee/settings/utils.coffee',
+        'assets/src/coffee/settings/tutorial.coffee',
+        'assets/src/coffee/settings/connect.coffee'
+        ]), 'connect.js'
+    )
 
     function build(strm, output) {
         strm = strm

@@ -1,5 +1,4 @@
 (($, Backbone) ->
-
     ConnectView = Backbone.View.extend
         el: "#connect-clef-account"
         events:
