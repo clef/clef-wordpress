@@ -245,6 +245,11 @@ class ClefLogin {
 
     public function authenticate_clef($user, $username, $password) {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
+            // remove login filters that cause problems — not necessary if we're
+            // logging in with Clef
+            remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
+            remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+            
             // Authenticate
             try {
                 $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
