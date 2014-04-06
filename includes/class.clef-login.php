@@ -257,9 +257,7 @@ class ClefLogin {
             $first_name = isset($info->first_name) ? $info->first_name : "";
             $last_name = isset($info->last_name) ? $info->last_name : "";
 
-            $current_user = wp_get_current_user();
-
-            $users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id));
+            $users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id, 'blog_id' => false));
             if ($users) {
                 // already have a user with this clef_id
                 $user = $users[0];
