@@ -246,7 +246,8 @@ class ClefLogin {
     public function authenticate_clef($user, $username, $password) {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
             // remove login filters that cause problems — not necessary if we're
-            // logging in with Clef
+            // logging in with Clef. These filters suppress errors that
+            // this login function throws.
             remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
             remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
             
