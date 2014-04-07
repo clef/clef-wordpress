@@ -18,6 +18,8 @@ var gulp = require('gulp'),
     lr = require('tiny-lr'),
     filter = require('gulp-filter'),
     plumber = require('gulp-plumber'),
+    runSequence = require('run-sequence'),
+    zip = require('gulp-zip'),
     server = lr();
 
 var pkg = require('./package.json');
@@ -95,6 +97,29 @@ gulp.task('images', function() {
         .pipe(livereload(server))
         .pipe(notify({message: "Images minified."}));
 });
+
+gulp.task
+
+gulp.task('build', function() {
+    runSequence(
+        ['images', 'sass', 'coffee'],
+        function() {
+            gulp.src(
+                [
+                    'templates/**',
+                    'languages/**',
+                    'includes/**',
+                    'assets/**',
+                    'clef-require.php',
+                    'wpclef.php'
+                ],
+                { base: './' }
+            ).pipe(gulp.dest('build/wpclef/'))
+            .pipe(zip('wpclef.zip'))
+            .pipe(gulp.dest('build/'));
+        }
+    );
+})
 
 gulp.task('watch', function() {
     server.listen(35729, function(err) {
