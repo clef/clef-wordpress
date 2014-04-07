@@ -108,6 +108,20 @@ class ClefUtils {
         return $ident;
     }
 
+    public static function style_has_been_added($name) {
+        $ident = "wpclef-" . $name;
+        return wp_style_is($ident, 'enqueued') 
+            || wp_style_is($ident, 'done')
+            || wp_style_is($ident, 'to_do');
+    }
+
+    public static function script_has_been_added($name) {
+        $ident = "wpclef-" . $name;
+        return wp_script_is($ident, 'enqueued') 
+            || wp_script_is($ident, 'done')
+            || wp_script_is($ident, 'to_do');
+    }
+
     public static function user_has_clef($user=false) {
         # if no user is provided, defaults to current user
         if (!$user) $user = wp_get_current_user();
