@@ -50,6 +50,7 @@ class ClefSetup {
 
     private static function multisite_uninstall() {
         delete_site_option(CLEF_OPTIONS_NAME);
+        require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');
         delete_site_option(ClefInternalSettings::MS_OVERRIDE_OPTION);
         delete_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
     }
