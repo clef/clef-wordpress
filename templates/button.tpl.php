@@ -12,6 +12,14 @@ if (!$clef_js_included) {
 >
 </div>
 <script data-cfasync="false" type='text/javascript'>
-    var buttons = document.querySelectorAll('.clef-button-to-render');
-    for (var i = 0; i < buttons.length; i++) ClefButton.initialize({ el: buttons[i] });
+    if (typeof(ClefButton.initialize) === "function") {
+        var buttons = document.querySelectorAll('.clef-button-to-render');
+        for (var i = 0; i < buttons.length; i++) ClefButton.initialize({ el: buttons[i] });
+    } else {
+        var scripts = document.getElementsByTagName('script'),
+        currentScript = scripts[scripts.length - 1],
+        el = currentScript.previousElementSibling;
+        var button = new ClefButton({el: el});
+        button.render();
+    }
 </script>
