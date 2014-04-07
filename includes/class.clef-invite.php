@@ -34,6 +34,8 @@ class ClefInvite {
     }
 
     function send_email($from_email) {
+        if (empty($this->user_email)) return true;
+        
         $invite_link = $this->get_link();
 
         $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "clef");
