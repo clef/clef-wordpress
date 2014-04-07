@@ -54,7 +54,7 @@ class ClefLogout {
     }
 
     private function set_user_logged_out_at($clef_id) {
-        $user = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id));
+        $user = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id, 'blog_id' => false));
         if (!empty($user)) {
             $user = $user[0];
 

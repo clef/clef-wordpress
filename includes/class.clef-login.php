@@ -245,6 +245,12 @@ class ClefLogin {
 
     public function authenticate_clef($user, $username, $password) {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
+            // remove login filters that cause problems — not necessary if we're
+            // logging in with Clef. These filters suppress errors that
+            // this login function throws.
+            remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
+            remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+            
             // Authenticate
             try {
                 $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
@@ -257,9 +263,7 @@ class ClefLogin {
             $first_name = isset($info->first_name) ? $info->first_name : "";
             $last_name = isset($info->last_name) ? $info->last_name : "";
 
-            $current_user = wp_get_current_user();
-
-            $users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id));
+            $users = get_users(array('meta_key' => 'clef_id', 'meta_value' => $clef_id, 'blog_id' => false));
             if ($users) {
                 // already have a user with this clef_id
                 $user = $users[0];
