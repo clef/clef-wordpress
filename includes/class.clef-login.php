@@ -96,7 +96,7 @@ class ClefLogin {
             $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
 
             # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to'])) {
+            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
                 $redirect_url = add_query_arg(
                     array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
                     $redirect_url
@@ -138,7 +138,7 @@ class ClefLogin {
             $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
 
             # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to'])) {
+            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
                 $redirect_url = add_query_arg(
                     array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
                     $redirect_url
