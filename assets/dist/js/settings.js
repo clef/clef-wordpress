@@ -62,7 +62,8 @@
       e.preventDefault();
       data = {
         _wpnonce: this.opts.nonces.inviteUsers,
-        roles: $("select[name='invite-users-role']").val()
+        roles: $("select[name='invite-users-role']").val(),
+        networkAdmin: this.opts.isNetworkSettings
       };
       failure = (function(_this) {
         return function(msg) {

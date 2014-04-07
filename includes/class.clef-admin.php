@@ -1,6 +1,6 @@
 <?php
 require_once(CLEF_PATH . 'includes/class.clef-settings.php');
-require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
+require_once(CLEF_PATH . 'includes/class.clef-invite.php');
 
 class ClefAdmin {
     const FORM_ID = "clef";
@@ -153,21 +153,6 @@ class ClefAdmin {
             }
         }
         return $filtered_users;
-    }
-
-    protected function send_invite_email($from_email, $user, $invite_code) {
-        $invite_link = $invite_code->get_link();
-        $to = $user->user_email;
-
-        $subject = '['. get_bloginfo('name') . '] ' . __('Set up Clef for your account', "clef");
-        $message = ClefUtils::render_template('invite_email.tpl', array("invite_link" =>  $invite_link), false);
-        $headers = "From: WordPress <".$from_email."> \r\n";
-        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-
-        $sent = wp_mail($to, $subject, $message, $headers);
-
-        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-        return $sent;
     }
 
     public function admin_menu() {
@@ -455,19 +440,26 @@ class ClefAdmin {
 
     public function ajax_invite_users() {
         $role = strtolower(ClefUtils::isset_POST('roles'));
+        $is_network_admin = filter_var(ClefUtils::isset_POST('networkAdmin'), FILTER_VALIDATE_BOOLEAN);
+        error_log($is_network_admin);
 
         if (!$role) {
             return new WP_Error('invalid_role', __('invalid role', 'clef'));
         }
 
-        $other_users = get_users(array(
+        $opts = array(
             'exclude' => array(get_current_user_id()),
             'meta_query' => array(array(
                 'key' => 'clef_id',
                 'value' => '',
                 'compare' => 'NOT EXISTS'
             ))
-        ));
+        );
+        # if we are on the network admin page, don't filter users by
+        # blog ID.
+        if ($is_network_admin) $opts['blog_id'] = false;
+
+        $other_users = get_users($opts);
         $filtered_users = $this->filter_users_by_role($other_users, $role);
 
         if (empty($filtered_users)) {
@@ -481,22 +473,28 @@ class ClefAdmin {
         }
         $from_email = 'wordpress@' . $sitename;
 
-        $failed = false;
+        $errors = array();
         foreach ($filtered_users as &$user) {
-            $invite_code = new InviteCode($user);
-            update_user_meta($user->ID, 'clef_invite_code', $invite_code);
-            $success = $this->send_invite_email($from_email, $user, $invite_code);
+            $invite = new ClefInvite($user, $is_network_admin);
+            $invite->persist();
+            $success = $invite->send_email($from_email);
             if (!$success) {
-                $failed = true;
+                $errors[] = $user->user_email;
             }
         }
 
-        if ($failed) {
-            $message = __("unable to send emails. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
+        if (count($errors) > 0) {
+            if (count($errors) == count($filtered_users)) {
+                $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
+            } else {
+                $message = __("unable to send emails to the following users: ");
+                $message .= join(", ", $errors);
+                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef");
+            }
             return new WP_Error('clef_mail_error', $message);
+        } else {
+            return array("success" => true);
         }
-
-        return array("success" => true);
     }
 
     public function ajax_connect_clef_account_with_clef_id() {

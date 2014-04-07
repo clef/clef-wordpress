@@ -1,5 +1,5 @@
 <?php
-require_once(CLEF_PATH . 'includes/class.clef-invite-code.php');
+require_once(CLEF_PATH . 'includes/class.clef-invite.php');
 
 class ClefLogin {
     private static $instance = null;
@@ -190,7 +190,7 @@ class ClefLogin {
     private function validate_invite_code_for_user($incoming_invite_code, $user) {
         $invite_code = get_user_meta($user->ID, 'clef_invite_code', true);
         $three_days_ago = time() - 3 * 24 * 60 * 60;
-        if ((empty($invite_code)) ||
+        if (empty($invite_code) ||
             ($invite_code->created_at < $three_days_ago) ||
             ($invite_code->code !== $incoming_invite_code)) {
                 return __("Sorry, this invite link has expired. Please contact your administrator for a new one.", "clef");
