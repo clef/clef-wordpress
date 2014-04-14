@@ -41,6 +41,7 @@ class ClefAdmin {
         add_action('admin_init', array($this, "multisite_settings_edit"));
 
         add_action('clef_hook_admin_menu', array($this, "hook_admin_menu"));
+        add_filter('clef_add_affiliate', array($this, "add_affiliates"));
 
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
 
@@ -286,7 +287,8 @@ class ClefAdmin {
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
                 'logoutHook' => home_url('/'),
-                'source' => 'wordpress'
+                'source' => 'wordpress',
+                'affiliates' => apply_filters('clef_add_affiliate', array())
             ),
             'nonces' => array(
                 'connectClef' => wp_create_nonce(self::CONNECT_CLEF_ID_ACTION),
@@ -305,17 +307,24 @@ class ClefAdmin {
             'connectClefUrl' => admin_url('admin.php?page=' . ClefAdmin::CONNECT_CLEF_PAGE)
         ), $options);
 
-        if (get_site_option("bruteprotect_installed_clef")) {
-            $options['source'] = "bruteprotect";
-        }
-
         echo ClefUtils::render_template('admin/settings.tpl', array(
             "form" => $form,
             "options" => $options
         ));
     }
 
+    public function add_affiliates($affiliates) {
+        if (get_site_option("bruteprotect_installed_clef")) {
+            array_push($affiliates, "bruteprotect");
+        }
 
+        $theme = wp_get_theme();
+        if ($theme && strtolower($theme->name) == "responsive") {
+            array_push($affiliates, "responsive");
+        }
+
+        return $affiliates;
+    }
 
     public function multisite_settings() {
         echo ClefUtils::render_template('admin/multisite-disabled.tpl');

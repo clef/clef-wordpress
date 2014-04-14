@@ -280,12 +280,13 @@
       return this.constructor.__super__.render.call(this);
     },
     loadIFrame: function() {
-      var src;
+      var affiliates, src;
       if (this.iframe) {
         return;
       }
       this.iframe = this.$el.find("iframe.setup");
-      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&logout_hook=" + (encodeURIComponent(this.opts.setup.logoutHook)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName));
+      affiliates = encodeURIComponent(this.opts.setup.affiliates.join(','));
+      src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&logout_hook=" + (encodeURIComponent(this.opts.setup.logoutHook)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName)) + "&affiliates=" + affiliates;
       return this.iframe.attr('src', src);
     },
     handleMessages: function(data) {
