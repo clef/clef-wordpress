@@ -2,6 +2,7 @@
 
 class ClefUserSettings {
     private static $instance = null;
+    private $rendered = false;
 
     const CONNECT_CLEF_OAUTH_ACTION = "connect_clef_account_oauth_code";
     const DISCONNECT_CLEF_ACTION = "disconnect_clef_account";
