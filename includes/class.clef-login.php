@@ -298,6 +298,8 @@ class ClefLogin {
             
             $this->session->set('logged_in_at', time());
             return $user;
+        } else {
+            return $user;
         }
     }
 
