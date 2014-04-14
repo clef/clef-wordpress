@@ -196,7 +196,7 @@
             !!(@cget('clef_settings_app_id') &&
                 @cget('clef_settings_app_secret'))
 
-        configure: (data) ->   
+        configure: (data) ->
             toSave = {
                 'wpclef[clef_settings_app_id]': data.appID
                 'wpclef[clef_settings_app_secret]': data.appSecret

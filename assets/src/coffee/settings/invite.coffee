@@ -23,6 +23,7 @@
             data =
                 _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
+                networkAdmin: @opts.isNetworkSettings
 
             failure = (msg) =>
                 @showMessage
