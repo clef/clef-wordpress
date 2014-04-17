@@ -146,11 +146,13 @@
         loadIFrame: () ->
             return if @iframe
             @iframe = @$el.find("iframe.setup")
+            affiliates = encodeURIComponent(@opts.setup.affiliates.join(','))
             src = "#{@opts.clefBase}#{@iframePath}?\
                     source=#{encodeURIComponent(@opts.setup.source)}\
                     &domain=#{encodeURIComponent(@opts.setup.siteDomain)}\
                     &logout_hook=#{encodeURIComponent(@opts.setup.logoutHook)}\
-                    &name=#{encodeURIComponent(@opts.setup.siteName)}"
+                    &name=#{encodeURIComponent(@opts.setup.siteName)}\
+                    &affiliates=#{affiliates}"
             @iframe.attr('src', src)
 
         handleMessages: (data) ->

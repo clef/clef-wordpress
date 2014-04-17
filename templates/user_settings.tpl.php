@@ -1,4 +1,4 @@
-<div id="connect-clef-account">
+<div id="connect-clef-account" class="wp-core-ui">
     <?php include CLEF_TEMPLATE_PATH . 'admin/tutorial.tpl.php'; ?>
 
     <div class="settings-section disconnect-clef">

@@ -60,6 +60,7 @@
             <div class="button button-primary button-hero next"><?php _e("Got it!", "clef"); ?></div>
         </div>
 
+        <?php if (is_admin()) { ?>
         <?php 
             echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
                 "next_href" => '#',
@@ -75,6 +76,8 @@
                 "class" => "connect"
             ));
         ?>
+
+        <?php } ?>
 
     </div>
 </div>

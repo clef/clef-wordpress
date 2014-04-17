@@ -29,6 +29,9 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-onboarding.php');
         $onboarding = ClefOnboarding::start($settings);
 
+        require_once(CLEF_PATH. 'includes/class.clef-user-settings.php');
+        $user_settings = ClefUserSettings::start($settings);
+
         // Clef login functions
         require_once(CLEF_PATH . 'includes/class.clef-login.php');
         $login = ClefLogin::start($settings);
@@ -148,7 +151,7 @@ class ClefCore {
             remove_action('plugins_loaded', 'mmb_authenticate', 1);
         }
     }
-    
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null) {
             self::$instance = new self;
