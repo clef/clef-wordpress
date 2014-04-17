@@ -3,7 +3,7 @@ Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
-Tested up to: 3.8.1
+Tested up to: 3.9
 Stable tag: 2.1.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
@@ -13,17 +13,29 @@ The easiest and most secure way to log in to WordPress: no passwords, no tempora
 == Description ==
 
 = What is Clef? =
-[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, two-factor authentication using your smartphone. [Discover more](https://getclef.com) about how Clef works.
+[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, two-factor authentication using your smartphone.
 
 = How do I log in to WordPress using Clef? =
+
 http://vimeo.com/77091221
 
-1. Simply click the "Log in with your phone" button,
-2. then scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are logged in!
+1. Click the "Log in with your phone" button
+2. Sync the Clef Wave with your [Clef app](https://getclef.com/apps)
+3. You're securely logged in without ever typing a password
 
-= How does Clef's single sign-on/off work? =
+Watch the [30 second video](http://getclef.wistia.com/medias/8mnrh6og39) and see for yourself.
 
-Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites.
+= How secure is Clef? =
+
+[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
+
+= How does single sign on with Clef work? =
+
+Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click — no more typing and retyping passwords. When you're done managing your site, just hit the "log out" button on your phone and you are automatically signed out of all your WordPress sites.
+
+= What happens if I lose my phone? =
+
+Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
 
 == Installation ==
 
@@ -49,7 +61,7 @@ If you have any questions or problems, don't hesitate to contact Clef support at
 
 = How secure is Clef? =
 
-[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide military-grade protection for your WordPress logins in a beautifully simple and easy-to-use package.
+[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
 
 Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks. 
 
@@ -59,7 +71,7 @@ Clef's architecture is fully distributed so it stores no user credentials on its
 
 = What if I lose my phone? =
 
-Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone and disconnect it from your Clef account.
+Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
 
 = How much does Clef cost? =
 
