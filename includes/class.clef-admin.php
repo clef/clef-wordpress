@@ -450,7 +450,6 @@ class ClefAdmin {
     public function ajax_invite_users() {
         $role = strtolower(ClefUtils::isset_POST('roles'));
         $is_network_admin = filter_var(ClefUtils::isset_POST('networkAdmin'), FILTER_VALIDATE_BOOLEAN);
-        error_log($is_network_admin);
 
         if (!$role) {
             return new WP_Error('invalid_role', __('invalid role', 'clef'));
