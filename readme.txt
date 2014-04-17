@@ -109,7 +109,7 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * Feature: finer grained password controls
 * Feature: restructured code base for easier integrations
 
-= 1.9.1.2 -
+= 1.9.1.2 =
 
 * Bug fix: fix override URL issue
 
@@ -215,5 +215,6 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Roadmap ==
 
-* Multisite compabibility
-* Translation into other languages
+* Better international support (if you want to help, you can get started here: http://transifex.com/projects/p/wpclef/)
+* Improved invite system for adding new Clef users
+* Support for Clef team member login and account creation
