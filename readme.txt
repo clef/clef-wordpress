@@ -227,6 +227,6 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Roadmap ==
 
-* Better international support (if you want to help, you can [get started here](http://transifex.com/projects/p/wpclef/))
+* Better international support (if you want to help, you can get started [here](http://transifex.com/projects/p/wpclef/))
 * Improved invite system for adding new Clef users
 * Support for Clef team member login and account creation
