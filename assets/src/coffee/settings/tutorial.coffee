@@ -144,9 +144,9 @@
 
         shouldLoadIFrame: ->
             if @currentSub.isSync()
-                    @loadIFrame =>
-                        @currentSub.find('.spinner-container').hide()
-                        @iframe.fadeIn()
+                @loadIFrame =>
+                    @currentSub.find('.spinner-container').hide()
+                    @iframe.fadeIn()
 
         loadIFrame: (cb) ->
             return if @iframe
