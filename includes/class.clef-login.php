@@ -5,13 +5,13 @@ class ClefLogin {
     private static $instance = null;
 
     private $settings;
-    
+
     private function __construct($settings) {
         $this->settings = $settings;
         $this->session = ClefSession::start();
         $this->initialize_hooks();
     }
-    
+
     public function initialize_hooks() {
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
@@ -36,24 +36,26 @@ class ClefLogin {
         // Disable password reset, according to settings
         add_filter('allow_password_reset', array($this, 'disable_password_reset'), 10, 2);
 
-        // Redirect to an Clef onboarding page if a user logs in with an invite 
+        // Redirect to an Clef onboarding page if a user logs in with an invite
         // code
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
 
         // Allow the Clef button to be rendered anywhere
         add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
 
-        if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {            
+        if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
             add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('bp_before_account_details_fields', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('membership_popover_extend_registration_form', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('signup_extra_fields', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('membership_popover_extend_login_form', array($this, 'add_clef_login_button_to_wpmu'));
-        } 
+        }
 
         if ($this->settings->registration_with_clef_is_allowed()) {
             add_action('register_form', array($this, 'login_form'));
         }
+
+        $this->apply_filter_and_action_fixes('init');
     }
 
     public function add_clef_login_button_to_wpmu() {
@@ -62,7 +64,7 @@ class ClefLogin {
             do_action('clef_render_login_button');
         }
     }
-    
+
     public function load_base_styles() {
         $ident = ClefUtils::register_style('main');
         wp_enqueue_style($ident);
@@ -98,7 +100,7 @@ class ClefLogin {
             # add redirect to if it exists
             if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
                 $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
+                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
                     $redirect_url
                 );
             }
@@ -140,7 +142,7 @@ class ClefLogin {
             # add redirect to if it exists
             if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
                 $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])), 
+                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
                     $redirect_url
                 );
             }
@@ -158,7 +160,7 @@ class ClefLogin {
 
     public function handle_login_failed($errors) {
         if (isset($_POST['override'])) {
-            // if the person submitted an override before, automatically 
+            // if the person submitted an override before, automatically
             // submit it for them the next time
             $_GET['override'] = $_POST['override'];
         }
@@ -166,9 +168,9 @@ class ClefLogin {
 
     private function is_valid_override_key($override_key) {
         $valid_key = $this->settings->get( 'clef_override_settings_key' );
-        $is_valid_override_key = 
-            (!empty($valid_key) && 
-            !empty($override_key) && 
+        $is_valid_override_key =
+            (!empty($valid_key) &&
+            !empty($override_key) &&
             $valid_key != '' &&
             $override_key != '' &&
             $override_key === $valid_key);
@@ -196,7 +198,7 @@ class ClefLogin {
                 return __("Sorry, this invite link has expired. Please contact your administrator for a new one.", "clef");
         }
     }
-        
+
     public function add_login_form_classes($classes) {
         array_push($classes, 'clef-login-form');
          $override_key = ClefUtils::isset_GET('override');
@@ -245,12 +247,8 @@ class ClefLogin {
 
     public function authenticate_clef($user, $username, $password) {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
-            // remove login filters that cause problems — not necessary if we're
-            // logging in with Clef. These filters suppress errors that
-            // this login function throws.
-            remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
-            remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
-            
+            $this->apply_filter_and_action_fixes("authenticate");
+
             // Authenticate
             try {
                 $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
@@ -273,7 +271,7 @@ class ClefLogin {
                 if (!$user) {
                     if(!$this->settings->registration_with_clef_is_allowed()) {
                         return new WP_Error(
-                            'clef', 
+                            'clef',
                             __("Registration is not allowed and there's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef')
                         );
                     }
@@ -295,7 +293,7 @@ class ClefLogin {
             do_action('clef_login', $user->ID);
 
             // Log in the user
-            
+
             $this->session->set('logged_in_at', time());
             return $user;
         } else {
@@ -317,6 +315,30 @@ class ClefLogin {
 
     public function return_xml_error_message() {
         return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
+    }
+
+    public function apply_filter_and_action_fixes($hook) {
+        if ($hook === "init") {
+            // Hack to make Clef work with theme my login. This works
+            // because Theme My Login only runs the login commands on their custom
+            // login page if the request is a POST. Could potentially cause
+            // other issues, so should be conscious of this.
+            if (isset($_REQUEST['clef']) && isset($_REQUEST['code']) && function_exists('is_plugin_active') && is_plugin_active('theme-my-login/theme-my-login.php')) {
+                $_SERVER['REQUEST_METHOD'] = 'POST';
+                $_POST['log'] = true;
+            }
+        }
+
+        if ($hook === "authenticate") {
+            // remove login filters that cause problems — not necessary if we're
+            // logging in with Clef. These filters suppress errors that
+            // this login function throws.
+            remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
+            remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+
+            // remove google captcha filter that prevents redirect
+            remove_filter('login_redirect', 'gglcptch_login_check');
+        }
     }
 
     public static function start($settings) {

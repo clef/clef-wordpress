@@ -163,34 +163,43 @@
     remove: function() {
       return this.$el.remove();
     },
+    find: function(query) {
+      return this.$el.find(query);
+    },
     isLogin: function() {
       return this.$el.find('iframe.setup').length;
+    },
+    isSync: function() {
+      return this.$el.hasClass('sync') && this.$el.find('iframe').length;
     }
   });
   SetupTutorialView = TutorialView.extend({
     connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id",
-    iframePath: '/iframes/application/create/v1',
+    iframePath: '/iframes/application/create/v2',
     initialize: function(opts) {
       opts.slideFilterSelector = '.setup';
       this.inviter = new InviteUsersView(_.extend({
         el: this.$el.find('.invite-users-container')
       }, opts));
       this.listenTo(this.inviter, "invited", this.usersInvited);
-      return this.constructor.__super__.initialize.call(this, opts);
+      this.constructor.__super__.initialize.call(this, opts);
+      return this.on('next', this.shouldLoadIFrame);
     },
     render: function() {
-      if (this.userIsLoggedIn) {
-        if (!this.currentSub.$el.hasClass('sync')) {
-          this.$el.addClass('no-sync');
-        } else {
-          this.$el.addClass('user');
-        }
-      }
-      this.loadIFrame();
       this.inviter.render();
       return this.constructor.__super__.render.call(this);
     },
-    loadIFrame: function() {
+    shouldLoadIFrame: function() {
+      if (this.currentSub.isSync()) {
+        return this.loadIFrame((function(_this) {
+          return function() {
+            _this.currentSub.find('.spinner-container').hide();
+            return _this.iframe.fadeIn();
+          };
+        })(this));
+      }
+    },
+    loadIFrame: function(cb) {
       var affiliates, src;
       if (this.iframe) {
         return;
@@ -198,7 +207,8 @@
       this.iframe = this.$el.find("iframe.setup");
       affiliates = encodeURIComponent(this.opts.setup.affiliates.join(','));
       src = "" + this.opts.clefBase + this.iframePath + "?source=" + (encodeURIComponent(this.opts.setup.source)) + "&domain=" + (encodeURIComponent(this.opts.setup.siteDomain)) + "&logout_hook=" + (encodeURIComponent(this.opts.setup.logoutHook)) + "&name=" + (encodeURIComponent(this.opts.setup.siteName)) + "&affiliates=" + affiliates;
-      return this.iframe.attr('src', src);
+      this.iframe.attr('src', src);
+      return this.iframe.on('load', cb);
     },
     handleMessages: function(data) {
       data = this.constructor.__super__.handleMessages.call(this, data);
@@ -219,9 +229,6 @@
             });
           };
         })(this));
-      } else if (data.type === "user") {
-        this.userIsLoggedIn = true;
-        return this.render();
       } else if (data.type === "error") {
         return this.showMessage({
           message: _.template(clefTranslations.messages.error.create)({

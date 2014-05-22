@@ -34,7 +34,7 @@
 
         slideUp: (cb) ->
             @$el.slideUp(cb)
-            
+
         hide: (cb) ->
             @$el.hide(cb)
 
@@ -52,7 +52,7 @@
             if newSub
                 if newSub.isLogin() && @loggedIn
                     newSub = @subs[_.indexOf(@subs, @newSub) + 1]
-                    
+
                 @currentSub.hide()
                 newSub.render()
                 @currentSub = newSub
@@ -113,13 +113,17 @@
             @$el.hide()
         remove: () ->
             @$el.remove()
+        find: (query) ->
+            @$el.find(query)
         isLogin: () ->
             @$el.find('iframe.setup').length
+        isSync: ->
+            @$el.hasClass('sync') && @$el.find('iframe').length
 
 
     SetupTutorialView = TutorialView.extend
         connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id"
-        iframePath: '/iframes/application/create/v1'
+        iframePath: '/iframes/application/create/v2'
 
         initialize: (opts) ->
             opts.slideFilterSelector = '.setup'
@@ -127,23 +131,24 @@
                 el: @$el.find '.invite-users-container'
             }, opts
             @listenTo @inviter, "invited", @usersInvited
-            
+
             @constructor.__super__.initialize.call this, opts
+
+            @on 'next', @shouldLoadIFrame
 
 
         render: ()->
-            if @userIsLoggedIn
-                if !@currentSub.$el.hasClass 'sync'
-                    @$el.addClass 'no-sync'
-                else
-                    @$el.addClass 'user'
-
-            @loadIFrame()
             @inviter.render()
 
             @constructor.__super__.render.call this
 
-        loadIFrame: () ->
+        shouldLoadIFrame: ->
+            if @currentSub.isSync()
+                @loadIFrame =>
+                    @currentSub.find('.spinner-container').hide()
+                    @iframe.fadeIn()
+
+        loadIFrame: (cb) ->
             return if @iframe
             @iframe = @$el.find("iframe.setup")
             affiliates = encodeURIComponent(@opts.setup.affiliates.join(','))
@@ -154,6 +159,7 @@
                     &name=#{encodeURIComponent(@opts.setup.siteName)}\
                     &affiliates=#{affiliates}"
             @iframe.attr('src', src)
+            @iframe.on 'load', cb
 
         handleMessages: (data) ->
             data = @constructor.__super__.handleMessages.call this, data
@@ -168,9 +174,6 @@
                             message: clefTranslations.messages.success.connect
                             type: "updated"
                             removeNext: true
-            else if data.type == "user"
-                @userIsLoggedIn = true
-                @render()
             else if data.type == "error"
                 @showMessage
                     message: _.template(

@@ -19,17 +19,12 @@
                 </blockquote>
             </div>
             <a href="#" class='skip done'><?php _e("Skip setup, I already have Clef API keys", "clef"); ?></a>
-        </div>        
+        </div>
 
         <div class="sub sync setup">
-            <h1 class='no-user'><?php _e("Sync with the Wave to set up your site", "clef"); ?></h1>
-            <div class="user">
-                <h1><?php _e("One more click!", "clef"); ?></h1>
-                <p><?php _e("We've automatically configured Clef for your site. Click the button below to complete setup!", "clef"); ?></p>
-            </div>
-            <div class="no-sync">
-                <h1><?php _e("One-click setup!", "clef"); ?></h1>
-                <p><?php _e("You're already logged in to Clef, so setting up this site is extra easy. Just click the button below and you'll be configured.", "clef"); ?></p>
+            <div class="spinner-container">
+                <span class="spinner"></span>
+                <h2>loading</h2>
             </div>
             <iframe class="setup" src="" frameborder="0"></iframe>
         </div>
@@ -61,7 +56,7 @@
         </div>
 
         <?php if (is_admin()) { ?>
-        <?php 
+        <?php
             echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
                 "next_href" => '#',
                 "next_text" => __("Go to Clef settings", "clef"),
@@ -69,7 +64,7 @@
             ));
         ?>
 
-        <?php 
+        <?php
             echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
                 "next_href" => admin_url(),
                 "next_text" => __("Go to dashboard", "clef"),

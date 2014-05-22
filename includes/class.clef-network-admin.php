@@ -10,6 +10,9 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         if (is_network_admin()) {
             $this->initialize_hooks();
+
+            require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
+            $this->ajax_settings = AjaxSettings::start();
         }
 
         global $clef_ajax;
@@ -18,8 +21,6 @@ class ClefNetworkAdmin extends ClefAdmin {
             array($this, 'ajax_multisite_options'),
             array( 'capability' => 'manage_network_options')
         );
-        require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
-        $this->ajax_settings = AjaxSettings::start();
     }
 
     public function initialize_hooks() {

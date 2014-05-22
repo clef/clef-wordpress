@@ -2,11 +2,11 @@
     width: 100%;
     height: 100%;
     position: relative;
-    
+
     * {
         box-sizing: border-box;
     }
-    
+
     .message {
         margin-top: 20px;
         margin-left: 0;
@@ -19,7 +19,7 @@
     }
 
     .settings-section {
-        background: white; 
+        background: white;
         padding: 20px;
         margin: 20px 0;
         h3, h4 {
@@ -83,7 +83,26 @@
             }
         }
     }
-    
+
+    .sync {
+        .spinner-container {
+            text-align: center;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            .spinner {
+                display: inline-block;
+                float: none;
+            }
+        }
+
+        iframe {
+            display: none;
+        }
+    }
+
     .invite-users {
         .invite-users-message {
             margin: 10px 0 0 0;
@@ -94,7 +113,7 @@
                 margin-top: 0;
                 margin-bottom: 5px;
             }
-        } 
+        }
         .button {
             margin-top: 20px;
         }
