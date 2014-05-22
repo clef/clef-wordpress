@@ -25,13 +25,15 @@ class ClefAdmin {
         $this->session = ClefSession::start();
         $this->initialize_hooks();
 
-        require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
-        $this->ajax_settings = AjaxSettings::start(array( 
-            "options_name" => CLEF_OPTIONS_NAME, 
-            "initialize" => false, 
-            "base_url" => CLEF_URL . "includes/lib/ajax-settings/",
-            "formSelector" => "#clef-form"
-        ));
+        if (is_admin()) {
+            require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
+            $this->ajax_settings = AjaxSettings::start(array( 
+                "options_name" => CLEF_OPTIONS_NAME, 
+                "initialize" => false, 
+                "base_url" => CLEF_URL . "includes/lib/ajax-settings/",
+                "formSelector" => "#clef-form"
+            ));
+        }
     }
 
     public function initialize_hooks() {
