@@ -163,6 +163,18 @@ Styles
         width: 100%; }
         #clef-settings-container .settings-section.multisite .inputs-container .input-container:last-child, #connect-clef-account .settings-section.multisite .inputs-container .input-container:last-child {
           margin-right: 0; }
+  #clef-settings-container .sync .spinner-container, #connect-clef-account .sync .spinner-container {
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+    #clef-settings-container .sync .spinner-container .spinner, #connect-clef-account .sync .spinner-container .spinner {
+      display: inline-block;
+      float: none; }
+  #clef-settings-container .sync iframe, #connect-clef-account .sync iframe {
+    display: none; }
   #clef-settings-container .invite-users .invite-users-message, #connect-clef-account .invite-users .invite-users-message {
     margin: 10px 0 0 0;
     clear: both; }
@@ -195,7 +207,8 @@ Styles
     float: left;
     margin-right: 1.85185%;
     width: 59.25926%;
-    margin-left: 20.37037%; }
+    margin-left: 20.37037%;
+    min-width: 460px; }
     #clef-tutorial .clef-tutorial-container:last-child {
       margin-right: 0; }
   #clef-tutorial .tutorial-message {
@@ -297,15 +310,10 @@ Styles
     background: white;
     padding: 20px 25px; }
     #clef-tutorial .sync iframe {
-      width: 225px;
-      height: 415px;
+      margin: auto;
       display: block;
-      margin: 30px auto; }
-    #clef-tutorial .sync .user, #clef-tutorial .sync .no-sync {
-      opacity: 0;
-      display: none; }
-      #clef-tutorial .sync .user iframe, #clef-tutorial .sync .no-sync iframe {
-        height: 250px; }
+      width: 400px;
+      height: 500px; }
   #clef-tutorial .invite h1 {
     margin-bottom: 10px; }
   #clef-tutorial .invite .invite-users {
@@ -396,11 +404,6 @@ Styles
       text-align: left; }
   #clef-tutorial.user .no-user, #clef-tutorial.no-sync .no-user {
     display: none; }
-  #clef-tutorial.user iframe, #clef-tutorial.no-sync iframe {
-    height: 250px;
-    -webkit-transition: 1s 1s;
-    transition: 1s 1s;
-    margin-bottom: -40px; }
   #clef-tutorial.user .user {
     display: block;
     opacity: 1; }

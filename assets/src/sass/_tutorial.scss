@@ -12,6 +12,7 @@
     .clef-tutorial-container {
         @include span-columns(6);
         @include shift(2);
+        min-width: 460px;
     }
 
     .tutorial-message {
@@ -99,18 +100,10 @@
     .sync {
         @include widget();
         iframe {
-            width: 225px;
-            height: 415px;
+            margin: auto;
             display: block;
-            margin: 30px auto;
-        }
-
-        .user, .no-sync {
-            opacity: 0;
-            display: none;
-            iframe {
-                height: 250px;
-            }
+            width: 400px;
+            height: 500px;
         }
     }
 
@@ -127,7 +120,7 @@
                 h4 {
                     font-size: 16px;
                 }
-            } 
+            }
             .already-disabled {
                 display: none;
             }
@@ -185,7 +178,7 @@
         .text {
             @include span-columns(8);
             margin-right: 0;
-        
+
             h1, p {
                 margin: 5px;
                 border: 0;
@@ -219,12 +212,6 @@
     &.user, &.no-sync {
         .no-user {
             display: none;
-        }
-
-        iframe {
-            height: 250px;
-            transition: 1s 1s;
-            margin-bottom: -40px;
         }
     }
 
