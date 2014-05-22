@@ -123,7 +123,7 @@
 
     SetupTutorialView = TutorialView.extend
         connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id"
-        iframePath: '/iframes/application/create/v1'
+        iframePath: '/iframes/application/create/v2'
 
         initialize: (opts) ->
             opts.slideFilterSelector = '.setup'
