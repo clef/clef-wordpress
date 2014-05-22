@@ -54,6 +54,8 @@ class ClefLogin {
         if ($this->settings->registration_with_clef_is_allowed()) {
             add_action('register_form', array($this, 'login_form'));
         }
+
+        $this->apply_filter_and_action_fixes('init');
     }
 
     public function add_clef_login_button_to_wpmu() {
@@ -245,7 +247,7 @@ class ClefLogin {
 
     public function authenticate_clef($user, $username, $password) {
         if ( isset( $_REQUEST['clef'] ) && isset( $_REQUEST['code'] ) ) {
-            $this->remove_bad_filters_and_actions();
+            $this->apply_filter_and_action_fixes("authenticate");
 
             // Authenticate
             try {
@@ -315,15 +317,28 @@ class ClefLogin {
         return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
     }
 
-    public function remove_bad_filters_and_actions() {
-        // remove login filters that cause problems — not necessary if we're
-        // logging in with Clef. These filters suppress errors that
-        // this login function throws.
-        remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
-        remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+    public function apply_filter_and_action_fixes($hook) {
+        if ($hook === "init") {
+            // Hack to make Clef work with theme my login. This works
+            // because Theme My Login only runs the login commands on their custom
+            // login page if the request is a POST. Could potentially cause
+            // other issues, so should be conscious of this.
+            if (isset($_REQUEST['clef']) && isset($_REQUEST['code']) && function_exists('is_plugin_active') && is_plugin_active('theme-my-login/theme-my-login.php')) {
+                $_SERVER['REQUEST_METHOD'] = 'POST';
+                $_POST['log'] = true;
+            }
+        }
 
-        // remove google captcha filter that prevents redirect
-        remove_filter('login_redirect', 'gglcptch_login_check');
+        if ($hook === "authenticate") {
+            // remove login filters that cause problems — not necessary if we're
+            // logging in with Clef. These filters suppress errors that
+            // this login function throws.
+            remove_filter('authenticate', 'dr_email_login_authenticate', 20, 3);
+            remove_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
+
+            // remove google captcha filter that prevents redirect
+            remove_filter('login_redirect', 'gglcptch_login_check');
+        }
     }
 
     public static function start($settings) {
