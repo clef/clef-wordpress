@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -63,7 +63,7 @@ If you have any questions or problems, don't hesitate to contact Clef support at
 
 [Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
 
-Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks. 
+Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks.
 
 = How secure is my data on Clef's servers? =
 
@@ -97,6 +97,13 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Changelog ==
 
+= 2.1.2 =
+
+* Feature: improved onboarding experience for new users
+* Bug fix: login now now works with Theme My Login (github/clef/wordpress#125)
+* Bug fix: login now works with Google Captcha (github/clef/wordpress#127)
+* Bug fix: removes unnecessary CSS files on frontend
+
 = 2.1.1 =
 
 * Feature: add framework for Clef affiliate referrals
@@ -129,7 +136,7 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 * Bug fix: fix issue where upgrades are detected incorrectly
 
-= 1.9.1 = 
+= 1.9.1 =
 
 * New feature: Clef account is automatically connected when you set up a new account
 * New feature: clarifies settings language so it's a little bit clearer
@@ -161,7 +168,7 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * New developer feature: adds testing framework
 
 = 1.7.1 =
- 
+
 * Bug fix: fixes issue caused by Clef applications that did not request last name from users
 * Bug fix: adds state parameter to OAuth flow for connecting a Clef account to a WordPress account
 
