@@ -15,13 +15,13 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
     public function setUp() {
         parent::setUp();
         $this->setUpMocks();
-        
+
         $this->settings = ClefInternalSettings::start();
         $this->settings->set('clef_settings_app_id', 'test_app_id');
         $this->settings->set('clef_settings_app_secret', 'test_app_secret');
         $this->user = get_user_by('id', $this->factory->user->create());
 
-        
+
         $this->login = ClefLogin::start($this->settings);
 
 
@@ -38,12 +38,12 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
             '',
             false
         );
- 
+
         // Replace protected self reference with mock object
         $ref = new ReflectionProperty('ClefSession', 'instance');
         $ref->setAccessible(true);
         $ref->setValue(null, $mock);
- 
+
         // Set expectations and return values
         $mock
             ->expects(new PHPUnit_Framework_MockObject_Matcher_InvokedCount(1))
@@ -53,13 +53,6 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
             )
             ->will(new PHPUnit_Framework_MockObject_Stub_Return($replace));
 
-    }
-
-    function test_empty_post() {
-        global $_POST;
-        $_POST = array();
-
-        $this->assertEquals($this->user, $this->login->disable_passwords($this->user));
     }
 
     function test_valid_override() {
@@ -74,7 +67,7 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
 
     function test_invalid_override() {
         global $_POST;
-        
+
         $override = 'test';
         $this->settings->set('clef_override_settings_key', $override);
         $_POST = array( 'override' => 'bad');
@@ -83,6 +76,13 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
     }
 
     function test_disabled() {
+        $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
+    }
+
+     function test_empty_post() {
+        global $_POST;
+        $_POST = array();
+
         $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
     }
 

@@ -16,7 +16,7 @@ class ClefLogin {
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
 
-        // Disable password authentication with POST according to settings
+        // Disable password authentication according to settings
         add_action('wp_authenticate_user', array($this, 'disable_passwords'));
         // Clear logout hook if the user is logging in again
         add_filter('wp_authenticate_user', array($this, 'clear_logout_hook'));
@@ -225,11 +225,10 @@ class ClefLogin {
     }
 
     public function disable_passwords($user) {
-        if (empty($_POST)) return $user;
-
         if (isset($_POST['override']) && $this->is_valid_override_key($_POST['override'])) {
             return $user;
         }
+
         if ($this->has_valid_invite_code()) {
             return $user;
         }
@@ -238,7 +237,7 @@ class ClefLogin {
         $disabled_for_xml_rpc = !(defined('XMLRPC_REQUEST') && XMLRPC_REQUEST && $this->settings->xml_passwords_enabled());
 
         if ($disabled_for_user && $disabled_for_xml_rpc) {
-            add_filter('xmlrpc_login_error', array(__CLASS__, "return_xml_error_message"));
+            add_filter('xmlrpc_login_error', array($this, "return_xml_error_message"));
             return new WP_Error('passwords_disabled', __("Passwords have been disabled for this user.", "clef"));
         } else {
             return $user;
