@@ -771,10 +771,10 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
       'change input, change textarea': 'render',
       'keyup textarea': 'render'
     },
-    preview: _.template($('#clef-customization-template').html()),
     initialize: function(opts, model) {
       this.opts = opts;
       this.model = model;
+      return this.preview = _.template($('#clef-customization-template').html());
     },
     render: function() {
       this.$el.find('#custom-login-view').html(this.preview({

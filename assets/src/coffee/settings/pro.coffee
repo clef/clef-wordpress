@@ -26,8 +26,8 @@
             'click #clef-custom-logo-clear': 'clearLogo'
             'change input, change textarea': 'render'
             'keyup textarea': 'render'
-        preview: _.template($('#clef-customization-template').html())
         initialize: (@opts, @model) ->
+            @preview = _.template($('#clef-customization-template').html())
         render: ->
             @$el.find('#custom-login-view')
                 .html @preview
