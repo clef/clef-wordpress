@@ -729,3 +729,10 @@ Styles
 #connect-clef-account .connect-clef-message {
   padding: 10px;
   margin: 20px 0 10px 0; }
+
+body #wp-auth-check-wrap #wp-auth-check {
+  width: 90%;
+  margin-left: 0;
+  left: 5%;
+  max-height: none !important;
+  height: 90%; }
