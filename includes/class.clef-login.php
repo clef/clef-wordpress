@@ -42,6 +42,7 @@ class ClefLogin {
 
         // Allow the Clef button to be rendered anywhere
         add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
+        add_shortcode('clef_render_login_button', array($this, 'render_login_button'));
 
         if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
             add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
