@@ -200,15 +200,17 @@ class ClefLogin {
     }
 
     public function add_login_form_classes($classes) {
-        array_push($classes, 'clef-login-form');
-         $override_key = ClefUtils::isset_GET('override');
+        if ($this->settings->is_configured()) {
+            array_push($classes, 'clef-login-form');
+             $override_key = ClefUtils::isset_GET('override');
 
-        if ($this->settings->get( 'clef_password_settings_force' )) {
-            if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
-                array_push($classes, 'clef-hidden');
+            if ($this->settings->get( 'clef_password_settings_force' )) {
+                if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
+                    array_push($classes, 'clef-hidden');
+                }
             }
+            return $classes;
         }
-        return $classes;
     }
 
     private function has_valid_invite_code() {
