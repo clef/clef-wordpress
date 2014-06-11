@@ -260,6 +260,8 @@ class ClefAdmin {
         $needs_setup_badge = ($user_is_admin && !$this->settings->is_configured());
         if ($needs_setup_badge) return _('needs setup');
 
+        $needs_connect_badge = $this->settings->is_configured() && !ClefUtils::user_has_clef();
+        if ($needs_connect_badge) return _('add security');
 
         $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
         $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
