@@ -513,8 +513,9 @@ class ClefAdmin {
         }
 
         ClefUtils::associate_clef_id($_POST["identifier"]);
-        $this->session->set('logged_in_at', time());
-        
+        $session = ClefSession::start();
+        $session->set('logged_in_at', time());
+
         return array("success" => true);
     }
 

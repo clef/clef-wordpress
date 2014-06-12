@@ -8,7 +8,6 @@ class ClefLogin {
 
     private function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
     }
 
@@ -293,7 +292,8 @@ class ClefLogin {
 
             // Log in the user
 
-            $this->session->set('logged_in_at', time());
+            $session = ClefSession::start();
+            $session->set('logged_in_at', time());
             return $user;
         } else {
             return $user;
@@ -306,8 +306,9 @@ class ClefLogin {
     }
 
     public function clear_logout_hook($user) {
-        if ($this->session->get('logged_in_at')) {
-            $this->session->set('logged_in_at', null);
+        $session = ClefSession::start();
+        if ($session->get('logged_in_at')) {
+            $session->set('logged_in_at', null);
         }
         return $user;
     }

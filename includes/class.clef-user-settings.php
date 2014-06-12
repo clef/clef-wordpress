@@ -9,7 +9,6 @@ class ClefUserSettings {
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
         $this->register_assets();
     }
@@ -87,7 +86,8 @@ class ClefUserSettings {
         }
 
         ClefUtils::associate_clef_id($info->id);
-        $this->session->set('logged_in_at', time());
+        $session = ClefSession::start();
+        $session->set('logged_in_at', time());
 
         return array("success" => true);
     }
