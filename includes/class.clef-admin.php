@@ -22,7 +22,6 @@ class ClefAdmin {
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         if (is_admin()) {
