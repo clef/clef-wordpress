@@ -73,7 +73,7 @@ class ClefLogout {
             } else {
                 $logged_out = false;
             }
-        } else if (!is_user_logged_in()) {
+        } else {
             $logged_out = true;
         }
 
