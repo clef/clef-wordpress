@@ -1,5 +1,5 @@
 #clef-settings-form {
-    
+
     * {
         box-sizing: border-box;
     }
@@ -8,7 +8,7 @@
         position: relative;
         top: 4px;
     }
-    
+
     .settings-section {
         &.pro-section {
             position: relative;
@@ -145,8 +145,10 @@
 
     .password-settings {
         min-height: 400px;
-        
+
         #login-form-view {
+            $button-height: 34px;
+            $button-width: 187px;
             @include span-columns(4);
             @include media($tablet) {
                 display: none;
@@ -164,7 +166,35 @@
                 }
             }
 
+            &.overlay-clef:not(.only-clef) {
+                #loginform {
+                    position: relative;
+                    .clef-button {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 100%;
+                        width: 100%;
+                        background: rgba(255, 255, 255, 0.85);
+                        img {
+                            position: absolute;
+                            top: 50%;
+                            margin-top: -$button-height;
+                            left: 50%;
+                            margin-left: -$button-width / 2;
+                        }
+                        div {
+                            display: block;
+                        }
+                    }
+                    .or-container {
+                        display: none;
+                    }
+                }
+            }
+
             #loginform {
+
                 background: #fff;
                 box-shadow: 0 1px 3px rgba(0,0,0,.13);
                 padding: 26px 24px 46px;
@@ -185,6 +215,11 @@
                     margin: 2px 6px 16px 0;
                 }
 
+                .submit {
+                    float: right;
+                    margin-top: 0;
+                }
+
                 .forgetmenot {
                     font-weight: 400;
                     float: left;
@@ -194,13 +229,32 @@
                 .clef-button {
                     margin-bottom: 27px;
                     img {
-                        width: 187px;
+                        height: $button-height;
+                        width: $button-width;
                         margin: auto;
                         display: block;
                     }
+
+                    div {
+                        position: absolute;
+                        width: 100%;
+                        top: 50%;
+                        margin-top: 5px;
+                        text-align: center;
+                        display: block;
+                        color: #aaa;
+                        cursor: pointer;
+                        display: none;
+
+                        &:hover {
+                            color: #999;
+                        }
+                    }
                 }
+
+
             }
-        } 
+        }
     }
 
     #clef-pro-section {

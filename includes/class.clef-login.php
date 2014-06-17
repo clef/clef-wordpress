@@ -68,6 +68,8 @@ class ClefLogin {
     public function load_base_styles() {
         $ident = ClefUtils::register_style('main');
         wp_enqueue_style($ident);
+        $ident = ClefUtils::register_script('login');
+        wp_enqueue_script($ident);
         if (!has_action('login_enqueue_scripts', 'wp_print_styles'))
             add_action('login_enqueue_scripts', 'wp_print_styles', 11);
     }
@@ -200,14 +202,21 @@ class ClefLogin {
     }
 
     public function add_login_form_classes($classes) {
+        if (!$this->settings->is_configured()) return $classes;
+
         array_push($classes, 'clef-login-form');
-         $override_key = ClefUtils::isset_GET('override');
+        $override_key = ClefUtils::isset_GET('override');
 
         if ($this->settings->get( 'clef_password_settings_force' )) {
             if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
                 array_push($classes, 'clef-hidden');
             }
         }
+
+        if ($this->settings->should_overlay_login_button()) {
+            array_push($classes, 'clef-overlay');
+        }
+
         return $classes;
     }
 

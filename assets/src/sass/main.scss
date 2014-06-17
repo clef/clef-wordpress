@@ -3,11 +3,140 @@
 @import "_badge";
 
 .clef-login-form {
-    .clef-button-container {
-        width: 188px;
-        height: 35px;
-        margin: auto;
-        margin-bottom: 30px;
+    $button-width: 188px;
+    $button-height: 35px;
+
+    form {
+        position: relative;
+    }
+
+    .clef-login-container {
+        .clef-button-container {
+            width: $button-width;
+            height: $button-height;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+
+        .close-overlay, .overlay-info, .open-overlay {
+            display: none;
+        }
+    }
+
+    &.clef-overlay:not(.clef-hidden) {
+
+        .clef-login-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            overflow: visible;
+        }
+
+        &.closed {
+            .clef-login-container {
+                height: 25px;
+                top: auto;
+                bottom: 0;
+            }
+
+            .clef-button-container {
+                display: none;
+            }
+            .overlay-info, .close-overlay {
+                display: none;
+            }
+            .open-overlay {
+                display: block;
+                margin: 0;
+                top: 0;
+            }
+        }
+
+
+        .clef-button-container {
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -$button-width / 2;
+            margin-top: -$button-height;
+        }
+
+        .overlay-text {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            margin-top: 5px;
+            text-align: center;
+            display: block;
+            color: #aaa;
+            cursor: pointer;
+
+            &:hover {
+                color: #999;
+            }
+        }
+
+        .or-container, .open-overlay {
+            display: none;
+        }
+
+        .overlay-info {
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            .info {
+                box-sizing: border-box;
+                width: 90%;
+                margin: auto;
+                border: 1px solid #eee;
+                padding: 10px;
+                background: white;
+                color: #999;
+                p {
+                    font-size: 11px;
+                    line-height: 15px;
+                    a {
+                        color: #999;
+                    }
+                    &:not(:last-child) {
+                        margin-bottom: 5px !important;
+                    }
+                }
+            }
+            .open {
+                $size: 15px;
+                $color: #ccc;
+                height: $size;
+                width: $size;
+                font-size: 10px;
+                text-align: center;
+                line-height: $size;
+                border-radius: $size;
+                color: $color;
+                border: 1px solid $color;
+                cursor: pointer;
+                margin-left: 10px;
+                display: none;
+                &:hover {
+                    color: darken($color, 10%);
+                    border-color: darken($color, 10%);
+                }
+            }
+
+            &.closed {
+                .info {
+                    display: none;
+                }
+                .open {
+                    display: block;
+                }
+            }
+        }
     }
 
     &.clef-hidden {
@@ -15,7 +144,7 @@
             padding: 40px 20px;
             input, label {
                 display: none;
-            }        
+            }
         }
         .clef-button-container {
             margin-bottom: 0;

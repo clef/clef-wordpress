@@ -59,7 +59,7 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-setup.php');
 
         $this->settings = $settings;
-        $this->badge = $badge; 
+        $this->badge = $badge;
         $this->onboarding = $onboarding;
 
         // Register public hooks
@@ -125,6 +125,7 @@ class ClefCore {
             }
         } else {
             $this->settings->set('installed_at', $version);
+            $this->settings->set('clef_form_settings_overlay_button', 1);
         }
 
         if ($settings_changes) {

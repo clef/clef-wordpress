@@ -1,6 +1,6 @@
 <?php
 
-class ClefInternalSettings { 
+class ClefInternalSettings {
     const MS_ENABLED_OPTION = "clef_multisite_enabled";
     const MS_ALLOW_OVERRIDE_OPTION = 'clef_multsite_allow_override';
     const MS_OVERRIDE_OPTION = 'clef_multisite_override';
@@ -36,7 +36,7 @@ class ClefInternalSettings {
             $override = get_option(self::MS_OVERRIDE_OPTION, 'undefined');
 
             // check to see whether the override is set (it would not be set
-            // if the blog had previously been used without multisite 
+            // if the blog had previously been used without multisite
             // enabled). sets it if it is null.
             if ($override == "undefined") {
                 $override = !!get_option(CLEF_OPTIONS_NAME);
@@ -88,13 +88,13 @@ class ClefInternalSettings {
     }
 
     /**
-     * Returns whether Clef is activated network-wide and whether it has 
-     * been enabled on the whole network. 
+     * Returns whether Clef is activated network-wide and whether it has
+     * been enabled on the whole network.
      *
      * @return bool
      */
     public function is_multisite_enabled() {
-        return is_plugin_active_for_network('wpclef/wpclef.php') && 
+        return is_plugin_active_for_network('wpclef/wpclef.php') &&
             get_site_option(self::MS_ENABLED_OPTION);
     }
 
@@ -104,13 +104,13 @@ class ClefInternalSettings {
         * @return bool
         */
     public function passwords_disabled() {
-        return $this->get('clef_password_settings_disable_passwords') 
-            || $this->get('clef_password_settings_force') 
+        return $this->get('clef_password_settings_disable_passwords')
+            || $this->get('clef_password_settings_force')
             || $this->get('clef_password_settings_disable_certain_passwords') != "";
     }
 
     /**
-        * Returns whether passwords are disabled for a specific user based on 
+        * Returns whether passwords are disabled for a specific user based on
         * user roles.
         *
         * @param WP_User $user
@@ -127,7 +127,7 @@ class ClefInternalSettings {
             return true;
         }
 
-        $disable_certain_passwords = 
+        $disable_certain_passwords =
             $this->get( 'clef_password_settings_disable_certain_passwords');
 
         if ($disable_certain_passwords && $disable_certain_passwords != "") {
@@ -163,6 +163,10 @@ class ClefInternalSettings {
 
     public function registration_with_clef_is_allowed() {
         return !!$this->get('clef_settings_register');
+    }
+
+    public function should_overlay_login_button() {
+        return $this->get('clef_form_settings_overlay_button');
     }
 
     public static function start() {

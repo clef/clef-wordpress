@@ -41,11 +41,96 @@ Styles
     .clef-badge.pretty:hover {
       opacity: 1; }
 
-.clef-login-form .clef-button-container {
+.clef-login-form form {
+  position: relative; }
+.clef-login-form .clef-login-container .clef-button-container {
   width: 188px;
   height: 35px;
   margin: auto;
   margin-bottom: 30px; }
+.clef-login-form .clef-login-container .close-overlay, .clef-login-form .clef-login-container .overlay-info, .clef-login-form .clef-login-container .open-overlay {
+  display: none; }
+.clef-login-form.clef-overlay:not(.clef-hidden) .clef-login-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  overflow: visible; }
+.clef-login-form.clef-overlay:not(.clef-hidden).closed .clef-login-container {
+  height: 25px;
+  top: auto;
+  bottom: 0; }
+.clef-login-form.clef-overlay:not(.clef-hidden).closed .clef-button-container {
+  display: none; }
+.clef-login-form.clef-overlay:not(.clef-hidden).closed .overlay-info, .clef-login-form.clef-overlay:not(.clef-hidden).closed .close-overlay {
+  display: none; }
+.clef-login-form.clef-overlay:not(.clef-hidden).closed .open-overlay {
+  display: block;
+  margin: 0;
+  top: 0; }
+.clef-login-form.clef-overlay:not(.clef-hidden) .clef-button-container {
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -94px;
+  margin-top: -35px; }
+.clef-login-form.clef-overlay:not(.clef-hidden) .overlay-text {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  margin-top: 5px;
+  text-align: center;
+  display: block;
+  color: #aaa;
+  cursor: pointer; }
+  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-text:hover {
+    color: #999; }
+.clef-login-form.clef-overlay:not(.clef-hidden) .or-container, .clef-login-form.clef-overlay:not(.clef-hidden) .open-overlay {
+  display: none; }
+.clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  left: 0; }
+  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 90%;
+    margin: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    background: white;
+    color: #999; }
+    .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p {
+      font-size: 11px;
+      line-height: 15px; }
+      .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p a {
+        color: #999; }
+      .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p:not(:last-child) {
+        margin-bottom: 5px !important; }
+  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .open {
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    color: #ccc;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 10px;
+    display: none; }
+    .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .open:hover {
+      color: #b3b3b3;
+      border-color: #b3b3b3; }
+  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info.closed .info {
+    display: none; }
+  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info.closed .open {
+    display: block; }
 .clef-login-form.clef-hidden #login form#loginform {
   padding: 40px 20px; }
   .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
@@ -555,6 +640,25 @@ Styles
         display: none; }
       #clef-settings-form .password-settings #login-form-view.only-clef #loginform .clef-button {
         margin-bottom: 0; }
+    #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform {
+      position: relative; }
+      #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85); }
+        #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button img {
+          position: absolute;
+          top: 50%;
+          margin-top: -34px;
+          left: 50%;
+          margin-left: -93.5px; }
+        #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button div {
+          display: block; }
+      #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .or-container {
+        display: none; }
     #clef-settings-form .password-settings #login-form-view #loginform {
       background: #fff;
       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
@@ -572,6 +676,9 @@ Styles
         width: 100%;
         padding: 3px;
         margin: 2px 6px 16px 0; }
+      #clef-settings-form .password-settings #login-form-view #loginform .submit {
+        float: right;
+        margin-top: 0; }
       #clef-settings-form .password-settings #login-form-view #loginform .forgetmenot {
         font-weight: 400;
         float: left;
@@ -579,9 +686,22 @@ Styles
       #clef-settings-form .password-settings #login-form-view #loginform .clef-button {
         margin-bottom: 27px; }
         #clef-settings-form .password-settings #login-form-view #loginform .clef-button img {
+          height: 34px;
           width: 187px;
           margin: auto;
           display: block; }
+        #clef-settings-form .password-settings #login-form-view #loginform .clef-button div {
+          position: absolute;
+          width: 100%;
+          top: 50%;
+          margin-top: 5px;
+          text-align: center;
+          display: block;
+          color: #aaa;
+          cursor: pointer;
+          display: none; }
+          #clef-settings-form .password-settings #login-form-view #loginform .clef-button div:hover {
+            color: #999; }
 #clef-settings-form #clef-pro-section {
   display: none; }
   #clef-settings-form #clef-pro-section #clef-pro-customization .preview-container {
