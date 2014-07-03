@@ -23,7 +23,7 @@
     </div>
 
     <?php if (!$passwords_disabled) { ?>
-    <div class="close-overlay overlay-text"><?php _e('close and log in with a password'); ?></div>
+    <div class="close-overlay overlay-text"><?php _e('log in with a password'); ?></div>
     <div class="open-overlay overlay-text"><?php _e('show clef login'); ?></div>
     <?php } ?>
 

@@ -26,9 +26,7 @@
 
 // Styles for when login is clef only (both embed and button)
 .clef-login-form.clef-hidden {
-    p#nav {
-        display: none;
-    }
+
 }
 
 // Styles for when login is clef only and it's the button
@@ -60,6 +58,9 @@
 
         .clef-embed-wrapper {
             margin: auto !important;
+            iframe {
+                overflow: hidden;
+            }
         }
     }
 
@@ -77,9 +78,18 @@
         }
     }
 
+    &:not(.clef-closed) {
+        p#nav {
+            display: none;
+        }
+    }
+
     &.clef-closed {
-        #login form {
-            height: auto;
+        #login {
+            width: 320px;
+            form {
+                height: auto;
+            }
         }
 
         .clef-login-container {
@@ -181,6 +191,15 @@
             .open {
                 display: block;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) {
+        #login {
+            width: 320px;
+            padding: 0;
         }
     }
 }

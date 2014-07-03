@@ -49,8 +49,6 @@ Styles
 .clef-login-form .clef-login-container .close-overlay, .clef-login-form .clef-login-container .overlay-info, .clef-login-form .clef-login-container .open-overlay {
   display: none; }
 
-.clef-login-form.clef-hidden p#nav {
-  display: none; }
 
 .clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform {
   padding: 40px 20px; }
@@ -72,6 +70,8 @@ Styles
     position: relative; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login .clef-embed-wrapper {
     margin: auto !important; }
+    .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login .clef-embed-wrapper iframe {
+      overflow: hidden; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-login-container {
   position: absolute;
   top: 0;
@@ -82,8 +82,12 @@ Styles
   overflow: visible; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-login-container .clef-button-container {
     padding-top: 5px; }
-.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed #login form {
-  height: auto; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-closed) p#nav {
+  display: none; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed #login {
+  width: 320px; }
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed #login form {
+    height: auto; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .clef-login-container {
   height: 25px;
   top: auto;
@@ -156,3 +160,8 @@ Styles
     display: none; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info.closed .open {
     display: block; }
+
+@media screen and (max-width: 400px) {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login {
+    width: 320px;
+    padding: 0; } }
