@@ -1,10 +1,10 @@
 (function($) {
   var closeOverlay, openOverlay;
   closeOverlay = function() {
-    return $('.clef-login-form.clef-overlay').addClass('closed');
+    return $('.clef-login-form.clef-login-form-embed').addClass('clef-closed');
   };
   openOverlay = function() {
-    return $('.clef-login-form.clef-overlay').removeClass('closed');
+    return $('.clef-login-form.clef-login-form-embed').removeClass('clef-closed');
   };
   return $(function() {
     $('.close-overlay').click(closeOverlay);

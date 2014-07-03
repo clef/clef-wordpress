@@ -587,8 +587,8 @@
     passwordsFullyDisabled: function() {
       return !!parseInt(this.cget('clef_password_settings_force'));
     },
-    loginButtonIsOverlayed: function() {
-      return !!parseInt(this.cget('clef_form_settings_overlay_button'));
+    loginIsEmbedded: function() {
+      return !!parseInt(this.cget('clef_form_settings_embed_clef'));
     },
     overrideIsSet: function() {
       return !!this.overrideKey();
@@ -638,7 +638,7 @@
     },
     toggleForm: function(e) {
       this.$el.toggleClass('only-clef', this.model.passwordsFullyDisabled());
-      return this.$el.toggleClass('overlay-clef', this.model.loginButtonIsOverlayed());
+      return this.$el.toggleClass('embed-clef', this.model.loginIsEmbedded());
     }
   });
   this.AppView = AppView;

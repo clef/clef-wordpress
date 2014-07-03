@@ -154,7 +154,7 @@
                 display: none;
             }
 
-            &.only-clef {
+            &.only-clef:not(.embed-clef) {
                 #loginform {
                     padding: 40px;
                     & > *:not(.clef-button) {
@@ -166,22 +166,27 @@
                 }
             }
 
-            &.overlay-clef:not(.only-clef) {
+            &.embed-clef {
                 #loginform {
                     position: relative;
+                    height: 425px;
                     .clef-button {
+                        display: none;
+                    }
+                    .clef-overlay {
+                        display: block;
                         position: absolute;
                         top: 0;
                         left: 0;
                         height: 100%;
                         width: 100%;
-                        background: rgba(255, 255, 255, 0.85);
+                        background: white;
                         img {
                             position: absolute;
-                            top: 50%;
-                            margin-top: -$button-height;
-                            left: 50%;
-                            margin-left: -$button-width / 2;
+                            top: 10px;
+                            left: 10%;
+                            width: 80%;
+                            display: block;
                         }
                         div {
                             display: block;
@@ -190,6 +195,19 @@
                     .or-container {
                         display: none;
                     }
+
+                    .overlay-text {
+                        position: absolute;
+                        width: 100%;
+                        bottom: 10px;
+                        left: 0;
+                        color: #aaa;
+                        text-align: center;
+                    }
+                }
+
+                &.only-clef {
+                    #loginform .overlay-text { display: none; }
                 }
             }
 
@@ -252,7 +270,9 @@
                     }
                 }
 
-
+                .clef-overlay {
+                    display: none;
+                }
             }
         }
     }

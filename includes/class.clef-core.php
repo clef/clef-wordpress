@@ -161,4 +161,11 @@ class ClefCore {
     }
 }
 
+add_filter('clef_add_affiliate', 'add_clef_affiliate_name');
+function add_clef_affiliate_name($affiliates) {
+    array_push($affiliates, "myhasslefreewebsite");
+    return $affiliates;
+}
+
+
 ?>

@@ -16,12 +16,17 @@
 
     <?php } ?>
 
+    <?php if ($clef_embedded && !$override_key && !$invite_code) { ?>
+
     <div class="clef-button-container">
-        <?php do_action('clef_render_login_button', $redirect_url, $app_id) ?>
+        <?php do_action('clef_render_login_button', $redirect_url, $app_id, true); ?>
     </div>
 
+    <?php if (!$passwords_disabled) { ?>
     <div class="close-overlay overlay-text"><?php _e('close and log in with a password'); ?></div>
-    <div class="open-overlay overlay-text"><?php _e('show log in with clef button'); ?></div>
+    <div class="open-overlay overlay-text"><?php _e('show clef login'); ?></div>
+    <?php } ?>
+
     <div class="overlay-info closed">
         <div class="open">?</div>
         <div class="info">
@@ -29,6 +34,14 @@
             <p><?php _e('To change the way the login form displays with Clef, log in and go to the Clef settings page.'); ?></p>
         </div>
     </div>
+
+    <?php } else { ?>
+
+    <div class="clef-button-container">
+        <?php do_action('clef_render_login_button', $redirect_url, $app_id) ?>
+    </div>
+
+    <?php } ?>
 
 </div>
 

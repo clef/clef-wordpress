@@ -384,7 +384,7 @@ class ClefAdmin {
         );
 
         $form_settings = $form->addSection('clef_form_settings', __('Form settings', 'clef'), '');
-        $form_settings->addField('overlay_button', __('Overlay login form with Clef button', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $form_settings->addField('embed_clef', __('Embed Clef wave in the login form', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
         $override_settings = $form->addSection('clef_override_settings', __('Override Settings'));
         $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);

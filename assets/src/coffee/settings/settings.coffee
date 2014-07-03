@@ -183,8 +183,8 @@
         passwordsFullyDisabled: () ->
             !!parseInt @cget('clef_password_settings_force')
 
-        loginButtonIsOverlayed: ->
-            !!parseInt @cget('clef_form_settings_overlay_button')
+        loginIsEmbedded: ->
+            !!parseInt @cget('clef_form_settings_embed_clef')
 
         overrideIsSet: () ->
             !!@overrideKey()
@@ -230,7 +230,7 @@
 
         toggleForm: (e) ->
             @$el.toggleClass('only-clef', @model.passwordsFullyDisabled())
-            @$el.toggleClass('overlay-clef', @model.loginButtonIsOverlayed())
+            @$el.toggleClass('embed-clef', @model.loginIsEmbedded())
 
     this.AppView = AppView
 

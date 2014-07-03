@@ -41,7 +41,7 @@ class ClefLogin {
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
 
         // Allow the Clef button to be rendered anywhere
-        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
+        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 3);
 
         if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
             add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
@@ -127,6 +127,7 @@ class ClefLogin {
 
             echo ClefUtils::render_template('login_page.tpl', array(
                 "passwords_disabled" => $passwords_disabled,
+                "clef_embedded" => $this->settings->should_embed_clef_login(),
                 "override_key" => $override_key,
                 "redirect_url" => $redirect_url,
                 "invite_code" => $invite_code,
@@ -136,7 +137,7 @@ class ClefLogin {
         }
     }
 
-    public function render_login_button($redirect_url=false, $app_id=false) {
+    public function render_login_button($redirect_url=false, $app_id=false, $embed=false) {
         if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
         if (!$redirect_url) {
             $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
@@ -153,6 +154,7 @@ class ClefLogin {
         echo ClefUtils::render_template('button.tpl', array(
             "app_id" => $app_id,
             "redirect_url" => $redirect_url,
+            "embed" => $embed,
             "custom" => array(
                 "logo" => $this->settings->get('customization_logo'),
                 "message" => $this->settings->get('customization_message')
@@ -207,14 +209,17 @@ class ClefLogin {
         array_push($classes, 'clef-login-form');
         $override_key = ClefUtils::isset_GET('override');
 
-        if ($this->settings->get( 'clef_password_settings_force' )) {
-            if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
-                array_push($classes, 'clef-hidden');
-            }
+        $valid_override_or_invite = $this->is_valid_override_key($override_key) || $this->has_valid_invite_code();
+        if ($valid_override_or_invite) {
+            array_push($classes, 'clef-override-or-invite');
         }
 
-        if ($this->settings->should_overlay_login_button()) {
-            array_push($classes, 'clef-overlay');
+        if ($this->settings->get( 'clef_password_settings_force' )) {
+            array_push($classes, 'clef-hidden');
+        }
+
+        if ($this->settings->should_embed_clef_login()) {
+            array_push($classes, 'clef-login-form-embed');
         }
 
         return $classes;

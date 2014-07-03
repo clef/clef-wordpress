@@ -165,8 +165,8 @@ class ClefInternalSettings {
         return !!$this->get('clef_settings_register');
     }
 
-    public function should_overlay_login_button() {
-        return $this->get('clef_form_settings_overlay_button');
+    public function should_embed_clef_login() {
+        return $this->get('clef_form_settings_embed_clef');
     }
 
     public static function start() {

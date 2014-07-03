@@ -41,8 +41,6 @@ Styles
     .clef-badge.pretty:hover {
       opacity: 1; }
 
-.clef-login-form form {
-  position: relative; }
 .clef-login-form .clef-login-container .clef-button-container {
   width: 188px;
   height: 35px;
@@ -50,52 +48,79 @@ Styles
   margin-bottom: 30px; }
 .clef-login-form .clef-login-container .close-overlay, .clef-login-form .clef-login-container .overlay-info, .clef-login-form .clef-login-container .open-overlay {
   display: none; }
-.clef-login-form.clef-overlay:not(.clef-hidden) .clef-login-container {
+
+.clef-login-form.clef-hidden p#nav {
+  display: none; }
+
+.clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform {
+  padding: 40px 20px; }
+  .clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform input, .clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform label {
+    display: none; }
+.clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) .clef-button-container {
+  margin-bottom: 0; }
+
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login {
+  padding-top: 50px;
+  width: 400px;
+  margin: auto; }
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login form {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 520px;
+    position: relative; }
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login .clef-embed-wrapper {
+    margin: auto !important; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-login-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.85);
+  background: white;
   overflow: visible; }
-.clef-login-form.clef-overlay:not(.clef-hidden).closed .clef-login-container {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-login-container .clef-button-container {
+    padding-top: 5px; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed #login form {
+  height: auto; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .clef-login-container {
   height: 25px;
   top: auto;
   bottom: 0; }
-.clef-login-form.clef-overlay:not(.clef-hidden).closed .clef-button-container {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .clef-button-container {
   display: none; }
-.clef-login-form.clef-overlay:not(.clef-hidden).closed .overlay-info, .clef-login-form.clef-overlay:not(.clef-hidden).closed .close-overlay {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .overlay-info, .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .close-overlay {
   display: none; }
-.clef-login-form.clef-overlay:not(.clef-hidden).closed .open-overlay {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite).clef-closed .open-overlay {
   display: block;
-  margin: 0;
-  top: 0; }
-.clef-login-form.clef-overlay:not(.clef-hidden) .clef-button-container {
+  margin: 0; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-button-container {
   margin: 0 auto;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -94px;
-  margin-top: -35px; }
-.clef-login-form.clef-overlay:not(.clef-hidden) .overlay-text {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-text {
   position: absolute;
   width: 100%;
-  top: 50%;
+  bottom: 12px;
   margin-top: 5px;
   text-align: center;
   display: block;
   color: #aaa;
   cursor: pointer; }
-  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-text:hover {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-text:hover {
     color: #999; }
-.clef-login-form.clef-overlay:not(.clef-hidden) .or-container, .clef-login-form.clef-overlay:not(.clef-hidden) .open-overlay {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .or-container, .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .open-overlay {
   display: none; }
-.clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info {
   display: block;
   position: absolute;
   bottom: 10px;
   left: 0; }
-  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .info {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -105,14 +130,14 @@ Styles
     padding: 10px;
     background: white;
     color: #999; }
-    .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p {
+    .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .info p {
       font-size: 11px;
       line-height: 15px; }
-      .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p a {
+      .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .info p a {
         color: #999; }
-      .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .info p:not(:last-child) {
+      .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .info p:not(:last-child) {
         margin-bottom: 5px !important; }
-  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .open {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .open {
     height: 15px;
     width: 15px;
     font-size: 10px;
@@ -124,21 +149,13 @@ Styles
     cursor: pointer;
     margin-left: 10px;
     display: none; }
-    .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info .open:hover {
+    .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info .open:hover {
       color: #b3b3b3;
       border-color: #b3b3b3; }
-  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info.closed .info {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info.closed .info {
     display: none; }
-  .clef-login-form.clef-overlay:not(.clef-hidden) .overlay-info.closed .open {
+  .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .overlay-info.closed .open {
     display: block; }
-.clef-login-form.clef-hidden #login form#loginform {
-  padding: 40px 20px; }
-  .clef-login-form.clef-hidden #login form#loginform input, .clef-login-form.clef-hidden #login form#loginform label {
-    display: none; }
-.clef-login-form.clef-hidden .clef-button-container {
-  margin-bottom: 0; }
-.clef-login-form.clef-hidden p#nav {
-  display: none; }
 
 #clef-settings-container, #connect-clef-account {
   width: 100%;
@@ -634,31 +651,44 @@ Styles
     @media screen and (max-width: 768px) {
       #clef-settings-form .password-settings #login-form-view {
         display: none; } }
-    #clef-settings-form .password-settings #login-form-view.only-clef #loginform {
+    #clef-settings-form .password-settings #login-form-view.only-clef:not(.embed-clef) #loginform {
       padding: 40px; }
-      #clef-settings-form .password-settings #login-form-view.only-clef #loginform > *:not(.clef-button) {
+      #clef-settings-form .password-settings #login-form-view.only-clef:not(.embed-clef) #loginform > *:not(.clef-button) {
         display: none; }
-      #clef-settings-form .password-settings #login-form-view.only-clef #loginform .clef-button {
+      #clef-settings-form .password-settings #login-form-view.only-clef:not(.embed-clef) #loginform .clef-button {
         margin-bottom: 0; }
-    #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform {
-      position: relative; }
-      #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button {
+    #clef-settings-form .password-settings #login-form-view.embed-clef #loginform {
+      position: relative;
+      height: 425px; }
+      #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .clef-button {
+        display: none; }
+      #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .clef-overlay {
+        display: block;
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(255, 255, 255, 0.85); }
-        #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button img {
+        background: white; }
+        #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .clef-overlay img {
           position: absolute;
-          top: 50%;
-          margin-top: -34px;
-          left: 50%;
-          margin-left: -93.5px; }
-        #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .clef-button div {
+          top: 10px;
+          left: 10%;
+          width: 80%;
           display: block; }
-      #clef-settings-form .password-settings #login-form-view.overlay-clef:not(.only-clef) #loginform .or-container {
+        #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .clef-overlay div {
+          display: block; }
+      #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .or-container {
         display: none; }
+      #clef-settings-form .password-settings #login-form-view.embed-clef #loginform .overlay-text {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        left: 0;
+        color: #aaa;
+        text-align: center; }
+    #clef-settings-form .password-settings #login-form-view.embed-clef.only-clef #loginform .overlay-text {
+      display: none; }
     #clef-settings-form .password-settings #login-form-view #loginform {
       background: #fff;
       -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
@@ -702,6 +732,8 @@ Styles
           display: none; }
           #clef-settings-form .password-settings #login-form-view #loginform .clef-button div:hover {
             color: #999; }
+      #clef-settings-form .password-settings #login-form-view #loginform .clef-overlay {
+        display: none; }
 #clef-settings-form #clef-pro-section {
   display: none; }
   #clef-settings-form #clef-pro-section #clef-pro-customization .preview-container {

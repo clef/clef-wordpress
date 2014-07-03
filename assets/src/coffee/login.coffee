@@ -1,8 +1,8 @@
 (($) ->
     closeOverlay = ->
-        $('.clef-login-form.clef-overlay').addClass 'closed'
+        $('.clef-login-form.clef-login-form-embed').addClass 'clef-closed'
     openOverlay = ->
-        $('.clef-login-form.clef-overlay').removeClass 'closed'
+        $('.clef-login-form.clef-login-form-embed').removeClass 'clef-closed'
 
     $ ->
         $('.close-overlay').click closeOverlay
