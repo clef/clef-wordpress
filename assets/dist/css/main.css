@@ -70,8 +70,6 @@ Styles
     position: relative; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login .clef-embed-wrapper {
     margin: auto !important; }
-    .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login .clef-embed-wrapper iframe {
-      overflow: hidden; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) .clef-login-container {
   position: absolute;
   top: 0;
