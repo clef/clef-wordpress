@@ -21,6 +21,11 @@ class ClefLogin {
         // Clear logout hook if the user is logging in again
         add_filter('wp_authenticate_user', array($this, 'clear_logout_hook'));
 
+        // Connect Clef account if logging in with a clef ID
+        add_filter('wp_authenticate_user', array($this, 'connect_clef_account_on_login'));
+        // Check if account was connected on login and if so flash a success message
+        add_action('admin_notices', array($this, 'display_connect_clef_account_success'));
+
         // adds classes which hide login form if appropriate
         add_action('login_body_class', array($this, 'add_login_form_classes' ));
 
@@ -129,6 +134,7 @@ class ClefLogin {
                 "redirect_url" => $redirect_url,
                 "invite_code" => $invite_code,
                 "invite_email" => $invite_email_encoded,
+                "clef_id" => (isset($this->clef_id_to_connect) ? $this->clef_id_to_connect : false),
                 "app_id" => $app_id
             ));
         }
@@ -269,9 +275,10 @@ class ClefLogin {
 
                 if (!$user) {
                     if(!$this->settings->registration_with_clef_is_allowed()) {
+                        $this->clef_id_to_connect = $clef_id;
                         return new WP_Error(
                             'clef',
-                            __("Registration is not allowed and there's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef')
+                            __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'clef')
                         );
                     }
 
@@ -311,6 +318,27 @@ class ClefLogin {
         }
         return $user;
     }
+
+    public function connect_clef_account_on_login($user) {
+        if (ClefUtils::isset_POST('clef_id')) {
+            ClefUtils::associate_clef_id(ClefUtils::isset_POST('clef_id'), $user->ID);
+            $this->session->set('clef_account_connected_on_login', true);
+        }
+        return $user;
+    }
+
+    public function display_connect_clef_account_success() {
+        if ($this->session->get('clef_account_connected_on_login')) {
+            $this->session->set('clef_account_connected_on_login', null);
+
+            ?>
+            <div class="updated clef-flash connect-clef-account-on-login-message">
+                <img src="<?php echo CLEF_URL . 'assets/dist/img/gradient_icon_32.png'?>" alt="Clef">
+                <p><?php _e('Success. <b>Your Clef account has been connected!</b>', 'clef'); ?></p>
+            </div>
+            <?php
+        }
+   }
 
     public function return_xml_error_message() {
         return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
