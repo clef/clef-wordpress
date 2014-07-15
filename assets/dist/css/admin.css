@@ -889,6 +889,7 @@ Styles
   padding: 10px;
   margin: 20px 0 10px 0; }
 
+<<<<<<< HEAD
 .clef-flash.updated {
   padding: 10px; }
   .clef-flash.updated img {
@@ -922,3 +923,11 @@ Styles
     -webkit-transform: rotateY(360deg);
     -ms-transform: rotateY(360deg);
     transform: rotateY(360deg); } }
+=======
+body #wp-auth-check-wrap #wp-auth-check {
+  width: 90%;
+  margin-left: 0;
+  left: 5%;
+  max-height: none !important;
+  height: 90%; }
+>>>>>>> use-interim-login

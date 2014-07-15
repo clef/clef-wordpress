@@ -102,15 +102,7 @@ class ClefLogin {
 
     public function login_form() {
         if($this->settings->is_configured()) {
-            $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
-
-            # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
-                $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
-                    $redirect_url
-                );
-            }
+            $redirect_url = $this->get_callback_url();
 
             $passwords_disabled = $this->settings->get('clef_password_settings_force');
 
@@ -145,17 +137,7 @@ class ClefLogin {
 
     public function render_login_button($redirect_url=false, $app_id=false, $embed=false) {
         if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
-        if (!$redirect_url) {
-            $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
-
-            # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
-                $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
-                    $redirect_url
-                );
-            }
-        }
+        if (!$redirect_url) $redirect_url = $this->get_callback_url();
 
         echo ClefUtils::render_template('button.tpl', array(
             "app_id" => $app_id,
@@ -386,6 +368,24 @@ class ClefLogin {
             // remove google captcha filter that prevents redirect
             remove_filter('login_redirect', 'gglcptch_login_check');
         }
+    }
+
+    public function get_callback_url() {
+        $url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
+
+        # add redirect to if it exists
+        if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
+            $url = add_query_arg(
+                array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
+                $url
+            );
+        }
+
+        if (isset($_REQUEST['interim-login'])) {
+            $url = add_query_arg(array('interim-login' => 1), $url);
+        }
+
+        return $url;
     }
 
     public static function start($settings) {
