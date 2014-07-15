@@ -87,10 +87,15 @@ class ClefUserSettings {
             return new WP_Error("bad_oauth_exchange", $e->getMessage());
         }
 
-        ClefUtils::associate_clef_id($info->id);
-        $this->session->set('logged_in_at', time());
+        $result = ClefUtils::associate_clef_id($info->id);
 
-        return array("success" => true);
+        if (is_wp_error($result)) {
+            return $result;
+        } else {
+            $this->session->set('logged_in_at', time());
+
+            return array("success" => true);
+        }
     }
 
     public function ajax_disconnect_clef_account() {

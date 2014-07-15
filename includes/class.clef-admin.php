@@ -514,10 +514,15 @@ class ClefAdmin {
             return new WP_Error("invalid_clef_id", __("invalid Clef ID", "clef"));
         }
 
-        ClefUtils::associate_clef_id($_POST["identifier"]);
-        $this->session->set('logged_in_at', time());
+        $result = ClefUtils::associate_clef_id($_POST["identifier"]);
 
-        return array("success" => true);
+        if (is_wp_error($result)) {
+            return $result;
+        } else {
+            $this->session->set('logged_in_at', time());
+
+            return array("success" => true);
+        }
     }
 
     /**** END AJAX HANDLERS ******/
