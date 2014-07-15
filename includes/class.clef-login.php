@@ -279,7 +279,7 @@ class ClefLogin {
                 // already have a user with this clef_id
                 $user = $users[0];
             } else {
-                $user = WP_User::get_data_by( 'email', $email );
+                $user = get_user_by('email', $email);
 
                 if (!$user) {
                     if(!$this->settings->registration_with_clef_is_allowed()) {
