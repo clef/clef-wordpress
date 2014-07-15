@@ -95,7 +95,8 @@ class ClefCore {
             if (version_compare($previous_version, '2.1', '<')) {
                 if (!session_id()) @session_start();
                 if (isset($_SESSION['logged_in_at'])) {
-                    $this->session->set('logged_in_at', $_SESSION['logged_in_at']);
+                    $session = ClefSession::start();
+                    $session->set('logged_in_at', $_SESSION['logged_in_at']);
                 }
             }
 
