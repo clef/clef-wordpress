@@ -22,6 +22,7 @@ class ClefBadge {
     }
 
     public function should_display_prompt() {
+        if ($this->is_active()) return false;
         $login_count = $this->onboarding->get_login_count_for_current_user();
         $prompt_hidden = $this->onboarding->get_key(self::PROMPT_HIDDEN);
         $has_admin_capability = current_user_can('manage_options');
