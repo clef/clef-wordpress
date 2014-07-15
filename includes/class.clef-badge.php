@@ -31,7 +31,7 @@ class ClefBadge {
     public function hook_onboarding() {
         if (empty($_POST)) {
             if ($this->should_display_prompt()) {
-                $this->register_scripts();      
+                add_action('wp_enqueue_script', array($this, 'register_scripts'));
                 add_action('admin_notices', array($this, 'badge_prompt_html'));
             }
         } else {
@@ -42,7 +42,7 @@ class ClefBadge {
     }
 
     public function hook_display() {
-        if (!$this->is_active()) return;   
+        if (!$this->is_active()) return;
         add_action('wp_footer', array($this, 'draw'));
     }
 
@@ -71,7 +71,7 @@ class ClefBadge {
     public function handle_badge_prompt_ajax() {
         if (isset($_POST['enable'])) {
             $this->settings->set(self::SETTING_NAME, $_POST['enable']);
-        } 
+        }
 
         $this->hide_prompt();
 

@@ -11,7 +11,8 @@ class ClefUserSettings {
         $this->settings = $settings;
         $this->session = ClefSession::start();
         $this->initialize_hooks();
-        $this->register_assets();
+
+        add_action('wp_enqueue_scripts', array($this, 'register_assets'));
     }
 
     public function initialize_hooks() {
@@ -22,7 +23,7 @@ class ClefUserSettings {
 
         global $clef_ajax;
         $clef_ajax->add_action(
-            self::CONNECT_CLEF_OAUTH_ACTION, 
+            self::CONNECT_CLEF_OAUTH_ACTION,
             array($this, 'ajax_connect_clef_account_with_oauth_code'),
             array('capability' => 'read')
         );
@@ -32,17 +33,17 @@ class ClefUserSettings {
             array('capability' => 'read')
         );
     }
-   
+
     public function render() {
         $connect_nonce = wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION);
-        $redirect_url = add_query_arg( 
+        $redirect_url = add_query_arg(
             array('_wpnonce' => $connect_nonce, 'connect' => true),
             admin_url("/admin.php?page=" . $this->settings->settings_path)
         );
 
         echo ClefUtils::render_template(
-            'user_settings.tpl', 
-            array( 
+            'user_settings.tpl',
+            array(
                 "options" => array(
                     "connected" => ClefUtils::user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
@@ -56,7 +57,7 @@ class ClefUserSettings {
             )
         );
         $this->rendered = true;
-    } 
+    }
 
     public function register_assets() {
         $this->script_identifier = ClefUtils::register_script('connect', array('jquery', 'backbone', 'underscore'));

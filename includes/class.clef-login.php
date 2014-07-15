@@ -60,7 +60,7 @@ class ClefLogin {
             add_action('register_form', array($this, 'login_form'));
         }
 
-        $this->apply_filter_and_action_fixes('init');
+        $this->apply_filter_and_action_fixes('plugins_loaded');
     }
 
     public function add_clef_login_button_to_wpmu() {
@@ -363,7 +363,7 @@ class ClefLogin {
     }
 
     public function apply_filter_and_action_fixes($hook) {
-        if ($hook === "init") {
+        if ($hook === "plugins_loaded") {
             // Hack to make Clef work with theme my login. This works
             // because Theme My Login only runs the login commands on their custom
             // login page if the request is a POST. Could potentially cause
