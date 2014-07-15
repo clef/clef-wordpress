@@ -324,14 +324,16 @@ class ClefLogin {
     public function connect_clef_account_on_login($user) {
         if (ClefUtils::isset_POST('clef_id')) {
             ClefUtils::associate_clef_id(ClefUtils::isset_POST('clef_id'), $user->ID);
-            $this->session->set('clef_account_connected_on_login', true);
+            $session = ClefSession::start();
+            $session->set('clef_account_connected_on_login', true);
         }
         return $user;
     }
 
     public function display_connect_clef_account_success() {
-        if ($this->session->get('clef_account_connected_on_login')) {
-            $this->session->set('clef_account_connected_on_login', null);
+        $session = ClefSession::start();
+        if ($session->get('clef_account_connected_on_login')) {
+            $session->set('clef_account_connected_on_login', null);
 
             ?>
             <div class="updated clef-flash connect-clef-account-on-login-message">

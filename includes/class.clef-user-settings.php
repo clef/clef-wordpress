@@ -87,13 +87,12 @@ class ClefUserSettings {
         }
 
         $result = ClefUtils::associate_clef_id($info->id);
-        $session = ClefSession::start();
-        $session->set('logged_in_at', time());
 
         if (is_wp_error($result)) {
             return $result;
         } else {
-            $this->session->set('logged_in_at', time());
+            $session = ClefSession::start();
+            $session->set('logged_in_at', time());
 
             return array("success" => true);
         }
