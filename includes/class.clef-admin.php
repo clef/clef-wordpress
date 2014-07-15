@@ -22,7 +22,6 @@ class ClefAdmin {
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         if (is_admin()) {
@@ -519,7 +518,8 @@ class ClefAdmin {
         if (is_wp_error($result)) {
             return $result;
         } else {
-            $this->session->set('logged_in_at', time());
+            $session = ClefSession::start();
+            $session->set('logged_in_at', time());
 
             return array("success" => true);
         }

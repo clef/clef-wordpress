@@ -9,7 +9,6 @@ class ClefUserSettings {
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         add_action('wp_enqueue_scripts', array($this, 'register_assets'));
@@ -88,6 +87,8 @@ class ClefUserSettings {
         }
 
         $result = ClefUtils::associate_clef_id($info->id);
+        $session = ClefSession::start();
+        $session->set('logged_in_at', time());
 
         if (is_wp_error($result)) {
             return $result;

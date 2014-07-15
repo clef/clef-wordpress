@@ -15,7 +15,7 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-utils.php');
         require_once(CLEF_PATH . 'includes/class.clef-translation.php');
 
-        $this->initialize_session();
+        require_once(CLEF_PATH . 'includes/class.clef-session.php');
 
         // Site options
         require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');
@@ -139,12 +139,6 @@ class ClefCore {
         }
 
         $this->settings->set("version", $version);
-    }
-
-    public function initialize_session() {
-        // Clef logout hook functions
-        require_once(CLEF_PATH . 'includes/class.clef-session.php');
-        $this->session = ClefSession::start();
     }
 
     public static function manage_wp_fix() {
