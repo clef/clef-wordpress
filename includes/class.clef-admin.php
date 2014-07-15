@@ -161,7 +161,7 @@ class ClefAdmin {
         // Ensure that if the Waltz notification bubble was showing, that it is
         // never shown again.
         if (ClefUtils::isset_REQUEST('page') === $this->settings->settings_path &&
-          $this->should_display_badged_menu_title()) {
+          $this->get_menu_badge() === 1) {
             update_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
         }
 
@@ -247,25 +247,33 @@ class ClefAdmin {
     public function get_clef_menu_title() {
         $clef_menu_title = __('Clef', 'clef');
 
-        if ($this->should_display_badged_menu_title()) {
-            $clef_menu_title .= $this->render_badge(1);
+        if ($badge = $this->get_menu_badge()) {
+            $clef_menu_title .= $this->render_badge($badge);
         }
 
         return $clef_menu_title;
     }
 
-    public function should_display_badged_menu_title() {
-        $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
+    public function get_menu_badge() {
         $user_is_admin = current_user_can('manage_options');
+        $needs_setup_badge = ($user_is_admin && !$this->settings->is_configured());
+        if ($needs_setup_badge) return _('needs setup');
+
+        $needs_connect_badge = $this->settings->is_configured() && !ClefUtils::user_has_clef();
+        if ($needs_connect_badge) return _('add security');
+
+        $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
         $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
         $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
 
-        $badge_menu_title = $user_is_admin &&
+        $needs_waltz_badge = $user_is_admin &&
                             $login_count >= self::CLEF_WALTZ_LOGIN_COUNT &&
                             !$hide_waltz_badge &&
                             $is_google_chrome;
 
-        return $badge_menu_title;
+        if ($needs_waltz_badge) return 1;
+
+        return false;
     }
 
     public function render_clef_user_settings() {
