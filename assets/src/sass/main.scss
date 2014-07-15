@@ -43,7 +43,7 @@
 }
 
 // Styles for when Clef is embedded
-.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account) {
     #login {
         padding-top: 50px;
         width: 400px;

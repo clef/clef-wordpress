@@ -18,6 +18,17 @@ For support, we recommend emailing us directly at [support@getclef.com](mailto:s
 
 If you find an issue, let us know in the issues section!
 
+## Translation
+
+If you're interested in contributing to the Clef plugin for WordPress, translating is an easy way to get started. The easiest way to get involved is to [join the Clef organization on Transifex](https://www.transifex.com/projects/p/wpclef/) and choose a new language to translate for. There's an easy online translation manager and you'll be done in no time!
+
+The following users have contributed to translating Clef (if you've contributed and you're not on this list, let us know):
+
+* @music47ell
+* @thobu
+* @yeltsin
+* Andrew Kurtis @ [WebHostingHub](http://www.webhostinghub.com/)
+
 ## Contribution Guidelines
 
 From the [Rubinius](http://rubini.us/) contribution page:

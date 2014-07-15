@@ -59,3 +59,21 @@
         margin: 20px 0 10px 0;
     }
 }
+
+.clef-flash.updated {
+    padding: 10px;
+    img {
+        float: left;
+        margin-right: 10px;
+
+        animation-name: spin;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-iteration-count: 1;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}

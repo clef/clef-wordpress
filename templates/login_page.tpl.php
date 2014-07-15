@@ -1,12 +1,14 @@
 <div class="clef-login-container">
 
-    <?php if (!$passwords_disabled || $override_key || $invite_code) { ?>
+    <?php if (!$passwords_disabled || $override_key || $invite_code || $clef_id) { ?>
 
         <?php if ($override_key) { ?>
             <input type="hidden" value="<?php echo $override_key ?>" name="override"/>
         <?php } if ($invite_code) { ?>
             <input type="hidden" value="<?php echo $invite_code ?>" name="clef_invite_code"/>
             <input type="hidden" value="<?php echo $invite_email ?>" name="clef_invite_id"/>
+        <?php } if ($clef_id) { ?>
+            <input type="hidden" value="<?php echo $clef_id ?>" name="clef_id">
         <?php } ?>
 
         <div style="position: relative" class="or-container">
@@ -16,10 +18,10 @@
 
     <?php } ?>
 
-    <?php if ($clef_embedded && !$override_key && !$invite_code) { ?>
+    <?php if ($clef_embedded && !$override_key && !$invite_code && !$clef_id) { ?>
 
     <div class="clef-button-container">
-        <?php do_action('clef_render_login_button', $redirect_url, $app_id, true); ?>
+        <?php do_action('clef_render_login_button', $redirect_url, $app_id, $clef_embedded); ?>
     </div>
 
     <?php if (!$passwords_disabled) { ?>

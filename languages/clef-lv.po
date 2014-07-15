@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "POT-Creation-Date: 2014-02-28 19:46-0700\n"
-"PO-Revision-Date: 2014-04-14 18:42+0000\n"
-"Last-Translator: jessepollak <jesse@getclef.com>\n"
+"PO-Revision-Date: 2014-07-10 00:03+0000\n"
+"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Latvian (http://www.transifex.com/projects/p/wpclef/language/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: ../includes/class.clef-admin.php:246 ../includes/class.clef-admin.php:295
 #: ../templates/admin/form.tpl.php:4
 msgid "Clef"
-msgstr ""
+msgstr "Clef"
 
 #: ../includes/class.clef-admin.php:256
 msgid "Disconnect Clef account"
