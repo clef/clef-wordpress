@@ -26,6 +26,6 @@ plugin_slug=wpclef
 plugin_dir=$WP_CORE_DIR/wp-content/plugins/$plugin_slug
 
 cd ..
-mv $plugin_slug $plugin_dir
+mv wordpress $plugin_dir
 
 cd $plugin_dir

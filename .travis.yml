@@ -25,7 +25,7 @@ env:
 
 # Grab the setup script and execute
 before_script:
-    - wget https://raw.github.com/clef/wordpress/tests/setup/setup.sh
+    - wget https://raw.githubusercontent.com/clef/wordpress/unit-testing/tests/setup/source.sh
     - source setup.sh
 
 script: phpunit
