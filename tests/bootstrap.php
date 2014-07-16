@@ -20,9 +20,8 @@ define('CLEF_TESTING', true);
 // location. Otherwise, we'll just assume that this plugin is installed in a
 // WordPress develop SVN checkout.
 
-if( false !== getenv( 'WP_DEVELOP_DIR' ) || getenv( 'WP_TESTS_DIR' ) !== false ) {
-    $base = getenv( 'WP_DEVELOP_DIR' ) || getenv( 'WP_TESTS_DIR' );
-    require $base . '/tests/phpunit/includes/bootstrap.php';
+if( false !== getenv( 'WP_TESTS_DIR' ) ) {
+    require getenv( 'WP_TESTS_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
 } else {
     require '../../../../tests/phpunit/includes/bootstrap.php';
 }
