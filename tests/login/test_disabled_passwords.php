@@ -5,6 +5,8 @@
  *
  * @package wordpress-plugins-tests
  */
+
+require_once dirname(__FILE__) . '/../bootstrap.php';
 require_once BASE_TEST_DIR . '/clef-require.php';
 Clef::start();
 require_once BASE_TEST_DIR . '/includes/class.clef-session.php';
@@ -14,6 +16,7 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
 
     public function setUp() {
         parent::setUp();
+
         $this->setUpMocks();
 
         $this->settings = ClefInternalSettings::start();
@@ -49,9 +52,9 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
             ->expects(new PHPUnit_Framework_MockObject_Matcher_InvokedCount(1))
             ->method('start')
             ->with(
-                PHPUnit_Framework_Assert::equalTo($name)
+                PHPUnit_Framework_Assert::equalTo('name')
             )
-            ->will(new PHPUnit_Framework_MockObject_Stub_Return($replace));
+            ->will(new PHPUnit_Framework_MockObject_Stub_Return('replace'));
 
     }
 
@@ -72,26 +75,32 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
         $this->settings->set('clef_override_settings_key', $override);
         $_POST = array( 'override' => 'bad');
 
-        $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
+        $this->assertInstanceOf('WP_Error', $this->login->disable_passwords($this->user));
     }
 
     function test_disabled() {
-        $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
+        $this->assertInstanceOf('WP_Error', $this->login->disable_passwords($this->user));
     }
 
      function test_empty_post() {
         global $_POST;
         $_POST = array();
 
-        $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
+        $this->assertInstanceOf('WP_Error', $this->login->disable_passwords($this->user));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     function test_xml_disabled() {
         define('XMLRPC_REQUEST', true);
 
-        $this->assertInstanceOf(WP_Error, $this->login->disable_passwords($this->user));
+        $this->assertInstanceOf('WP_Error', $this->login->disable_passwords($this->user));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     function test_xml_enabled() {
         define('XMLRPC_REQUEST', true);
         $this->settings->set('clef_password_settings_xml_allowed', true);

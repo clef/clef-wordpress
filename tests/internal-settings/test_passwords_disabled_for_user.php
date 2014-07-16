@@ -47,35 +47,35 @@ class WP_Test_InternalSettings_Passwords_Disabled_For_User extends WP_UnitTestCa
         $this->user->add_role('subscriber');
 
 
-        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Contributor'); 
+        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Contributor');
         $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
 
         $this->user->add_role('contributor');
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
 
 
-        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Author'); 
+        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Author');
         $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
 
         $this->user->add_role('author');
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
 
 
-        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Editor'); 
+        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Editor');
         $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
 
         $this->user->add_role('editor');
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
 
 
-        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Administrator'); 
+        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Administrator');
         $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
 
         $this->user->add_role('administrator');
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
 
 
-        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Super Administrator'); 
+        $this->settings->set('clef_password_settings_disable_certain_passwords', 'Super Administrator');
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
     }
 
