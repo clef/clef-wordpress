@@ -3,35 +3,40 @@
 # Tell Travis CI we're using PHP
 language: php
 
-# Versions of PHP to test against
+# PHP version used in first build configuration.
 php:
-    - "5.3"
+    - "5.5"
     - "5.4"
+    - "5.3"
 
-# Specify versions of WordPress to test against
-# WP_VERSION = WordPress version number (use "master" for SVN trunk)
-# WP_MULTISITE = whether to test multisite (use either "0" or "1")
+# WordPress version used in first build configuration.
 env:
-    - WP_VERSION=master WP_MULTISITE=0
-    - WP_VERSION=3.8.3 WP_MULTISITE=0
-    - WP_VERSION=3.7.3 WP_MULTISITE=0
-    - WP_VERSION=3.6.1 WP_MULTISITE=0
-    - WP_VERSION=3.5.2 WP_MULTISITE=0
-    - WP_VERSION=master WP_MULTISITE=1
-    - WP_VERSION=3.8.3 WP_MULTISITE=1
-    - WP_VERSION=3.7.3 WP_MULTISITE=1
-    - WP_VERSION=3.6.1 WP_MULTISITE=1
-    - WP_VERSION=3.5.2 WP_MULTISITE=1
+    - WP_VERSION=master
+    - WP_VERSION=3.9.1
+    - WP_VERSION=3.8.3
 
-# Grab the setup script and execute
+# Clones WordPress and configures our testing environment.
 before_script:
-    - wget https://raw.github.com/tierra/wordpress-plugin-tests/setup/setup.sh
-    - source setup.sh
+    - export REPO_SLUG=$(basename $(pwd))
+    - export PLUGIN_SLUG=wpclef
+
+    # fix sendmail
+    - chmod +x tests/setup/fakesendmail.sh
+    - sudo mkdir -p /var/qmail/bin
+    - sudo cp tests/setup/fakesendmail.sh /var/qmail/bin/sendmail
+    - sudo cp tests/setup/fakesendmail.sh /usr/sbin/sendmail
+    - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -r 'echo PHP_VERSION;'`/etc/conf.d/sendmail.ini"
+
+    # clone wordpress
+    - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
+    - cd ..
+    - mv "$REPO_SLUG" "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+    - cd /tmp/wordpress
+    - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
+    - cp wp-tests-config-sample.php wp-tests-config.php
+    - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
+    - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
+    - sed -i "s/yourpasswordhere//" wp-tests-config.php
+    - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
 
 script: phpunit
-
-# wordpress-plugin-tests specific config
-# Tells Travis CI not to run unit tests against the setup branch
-branches:
-    except:
-        - setup
