@@ -22,7 +22,7 @@ define('CLEF_TESTING', true);
 
 if( false !== getenv( 'WP_DEVELOP_DIR' ) || getenv( 'WP_TESTS_DIR' ) !== false ) {
     $base = getenv( 'WP_DEVELOP_DIR' ) || getenv( 'WP_TESTS_DIR' );
-    require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
+    require $base . '/tests/phpunit/includes/bootstrap.php';
 } else {
     require '../../../../tests/phpunit/includes/bootstrap.php';
 }
