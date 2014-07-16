@@ -17,6 +17,7 @@ env:
 
 # Clones WordPress and configures our testing environment.
 before_script:
+    - echo 'sendmail_path=sendmail -t -i' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - export REPO_SLUG=$(basename $(pwd))
     - export PLUGIN_SLUG=wpclef
     - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
