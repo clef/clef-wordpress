@@ -17,8 +17,6 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
     public function setUp() {
         parent::setUp();
 
-        $this->setUpMocks();
-
         $this->settings = ClefInternalSettings::start();
         $this->settings->set('clef_settings_app_id', 'test_app_id');
         $this->settings->set('clef_settings_app_secret', 'test_app_secret');
@@ -31,31 +29,6 @@ class WP_Test_Login_Disable_Passwords extends WP_UnitTestCase {
         $this->settings->set('clef_password_settings_force', true);
         global $_POST;
         $_POST['pwd'] = 'password';
-    }
-
-    function setUpMocks() {
-        $mock = PHPUnit_Framework_MockObject_Generator::getMock(
-            'ClefSession',
-            array('start'),
-            array(),
-            '',
-            false
-        );
-
-        // Replace protected self reference with mock object
-        $ref = new ReflectionProperty('ClefSession', 'instance');
-        $ref->setAccessible(true);
-        $ref->setValue(null, $mock);
-
-        // Set expectations and return values
-        $mock
-            ->expects(new PHPUnit_Framework_MockObject_Matcher_InvokedCount(1))
-            ->method('start')
-            ->with(
-                PHPUnit_Framework_Assert::equalTo('name')
-            )
-            ->will(new PHPUnit_Framework_MockObject_Stub_Return('replace'));
-
     }
 
     function test_valid_override() {
