@@ -32,7 +32,7 @@ class ClefBadge {
     public function hook_onboarding() {
         if (empty($_POST)) {
             if ($this->should_display_prompt()) {
-                add_action('wp_enqueue_script', array($this, 'register_scripts'));
+                add_action('admin_enqueue_scripts', array($this, 'register_scripts'));
                 add_action('admin_notices', array($this, 'badge_prompt_html'));
             }
         } else {
