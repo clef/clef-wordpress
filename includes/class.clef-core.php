@@ -124,9 +124,10 @@ class ClefCore {
                     "clef_password_settings_override_key" => "clef_override_settings_key"
                 );
             }
+
         } else {
             $this->settings->set('installed_at', $version);
-            $this->settings->set('clef_form_settings_overlay_button', 1);
+            $this->settings->set('clef_form_settings_embed_clef', 1);
         }
 
         if ($settings_changes) {
