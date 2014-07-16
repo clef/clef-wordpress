@@ -17,9 +17,17 @@ env:
 
 # Clones WordPress and configures our testing environment.
 before_script:
-    - echo 'sendmail_path=sendmail -t -i' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - export REPO_SLUG=$(basename $(pwd))
     - export PLUGIN_SLUG=wpclef
+
+    # fix sendmail
+    - chmod +x tests/setup/fakesendmail.sh
+    - sudo mkdir -p /var/qmail/bin
+    - sudo cp tests/setup/fakesendmail.sh /var/qmail/bin/sendmail
+    - sudo cp tests/setup/fakesendmail.sh /usr/sbin/sendmail
+    - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -r 'echo PHP_VERSION;'`/etc/conf.d/sendmail.ini"
+
+    # clone wordpress
     - git clone --depth=50 --branch="$WP_VERSION" git://develop.git.wordpress.org/ /tmp/wordpress
     - cd ..
     - mv "$REPO_SLUG" "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
