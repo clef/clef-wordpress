@@ -9,8 +9,13 @@
   return $(function() {
     $('.close-overlay').click(closeOverlay);
     $('.open-overlay').click(openOverlay);
-    return $('.overlay-info .open').click(function() {
+    $('.overlay-info .open').click(function() {
       return $('.overlay-info').removeClass('closed');
+    });
+    return $('iframe').on('load', function() {
+      if ($(this).attr('src').match('clef\.io/iframes/qr')) {
+        return $('.spinner-container').hide();
+      }
     });
   });
 }).call(this, jQuery);

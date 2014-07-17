@@ -21,6 +21,10 @@
     <?php if ($clef_embedded && !$override_key && !$invite_code && !$clef_id) { ?>
 
     <div class="clef-button-container">
+        <div class="spinner-container">
+            <h2>loading clef login</h2>
+            <span class="spinner"></span>
+        </div>
         <?php do_action('clef_render_login_button', $redirect_url, $app_id, $clef_embedded); ?>
     </div>
 

@@ -10,5 +10,10 @@
         $('.overlay-info .open').click ->
             $('.overlay-info').removeClass 'closed'
 
+        $('iframe').on 'load', ->
+            if $(this).attr('src').match('clef\.io/iframes/qr')
+                $('.spinner-container').hide()
+
+
 
 ).call this, jQuery
