@@ -27,10 +27,17 @@
         </div>
         <?php do_action('clef_render_login_button', $redirect_url, $app_id, $clef_embedded); ?>
     </div>
+    <noscript>
+        <style>
+        .clef-login-container { display: none; }
+        #login { width: 320px !important; }
+        #loginform { height: auto !important; }
+        </style>
+    </noscript>
 
     <?php if (!$passwords_disabled) { ?>
-    <div class="close-overlay overlay-text"><?php _e('log in with a password'); ?></div>
-    <div class="open-overlay overlay-text"><?php _e('show clef login'); ?></div>
+    <a class="close-overlay overlay-text" href="?clefup=true"><?php _e('log in with a password'); ?></a>
+    <a class="open-overlay overlay-text" href="?clefup=false"><?php _e('show clef login'); ?></a>
     <?php } ?>
 
     <div class="overlay-info closed">

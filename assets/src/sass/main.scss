@@ -43,7 +43,7 @@
 }
 
 // Styles for when Clef is embedded
-.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account) {
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) {
     #login {
         padding-top: 50px;
         width: 400px;
@@ -109,6 +109,10 @@
     }
 
 
+    .clef-embed-container {
+        display: none;
+    }
+
     .clef-button-container {
         margin: 0 auto;
         position: absolute;
@@ -147,9 +151,14 @@
         display: block;
         color: #aaa;
         cursor: pointer;
+        text-decoration: none;
 
         &:hover {
             color: #999;
+        }
+
+        &:active {
+            outline: none;
         }
     }
 

@@ -122,9 +122,12 @@ class ClefLogin {
 
             $app_id = $this->settings->get( 'clef_settings_app_id' );
 
+            $clef_embedded = $this->settings->should_embed_clef_login();
+            if (ClefUtils::isset_GET('clefup') == 'true') $clef_embedded = false;
+
             echo ClefUtils::render_template('login_page.tpl', array(
                 "passwords_disabled" => $passwords_disabled,
-                "clef_embedded" => $this->settings->should_embed_clef_login(),
+                "clef_embedded" => $clef_embedded,
                 "override_key" => $override_key,
                 "redirect_url" => $redirect_url,
                 "invite_code" => $invite_code,
@@ -212,6 +215,13 @@ class ClefLogin {
 
         if ($this->settings->should_embed_clef_login()) {
             array_push($classes, 'clef-login-form-embed');
+        }
+
+        // used to show username and password form in worst case scenario
+        // where javascript fails and on-page toggle fails
+        $show_username_password_form = ClefUtils::isset_GET('clefup') == 'true';
+        if ($show_username_password_form) {
+            array_push($classes, 'clef-show-username-password');
         }
 
         return $classes;

@@ -5,12 +5,15 @@ if (!$clef_js_included) {
     $clef_js_included = true;
 }
 ?>
+<?php if ($embed) { ?> <div class="clef-embed-container"><?php }?>
 <div class="clef-button-to-render" data-app-id='<?php echo $app_id; ?>'
     <?php if ($embed) { ?> data-embed="true" <?php } ?>
     data-redirect-url='<?php echo $redirect_url; ?>'
     <?php if (isset($custom['logo'])) { ?>data-custom-logo="<?php echo $custom['logo'] ?>"<?php } ?>
     <?php if (isset($custom['message'])) { ?>data-custom-message="<?php echo $custom['message'] ?>"<?php } ?>
 >
+<?php if ($embed) { ?> </div> <?php }?>
+
 </div>
 <script data-cfasync="false" type='text/javascript'>
     if (typeof(ClefButton.initialize) === "function") {
