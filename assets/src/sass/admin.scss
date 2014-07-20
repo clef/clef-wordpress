@@ -59,3 +59,29 @@
         margin: 20px 0 10px 0;
     }
 }
+
+.clef-flash.updated {
+    padding: 10px;
+    img {
+        float: left;
+        margin-right: 10px;
+
+        animation-name: spin;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-iteration-count: 1;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+body #wp-auth-check-wrap #wp-auth-check {
+    width: 90%;
+    margin-left: 0;
+    left: 5%;
+    max-height: none !important;
+    height: 90%;
+}

@@ -22,6 +22,7 @@ class ClefBadge {
     }
 
     public function should_display_prompt() {
+        if ($this->is_active()) return false;
         $login_count = $this->onboarding->get_login_count_for_current_user();
         $prompt_hidden = $this->onboarding->get_key(self::PROMPT_HIDDEN);
         $has_admin_capability = current_user_can('manage_options');
@@ -31,7 +32,7 @@ class ClefBadge {
     public function hook_onboarding() {
         if (empty($_POST)) {
             if ($this->should_display_prompt()) {
-                $this->register_scripts();      
+                add_action('admin_enqueue_scripts', array($this, 'register_scripts'));
                 add_action('admin_notices', array($this, 'badge_prompt_html'));
             }
         } else {
@@ -42,7 +43,7 @@ class ClefBadge {
     }
 
     public function hook_display() {
-        if (!$this->is_active()) return;   
+        if (!$this->is_active()) return;
         add_action('wp_footer', array($this, 'draw'));
     }
 
@@ -71,7 +72,7 @@ class ClefBadge {
     public function handle_badge_prompt_ajax() {
         if (isset($_POST['enable'])) {
             $this->settings->set(self::SETTING_NAME, $_POST['enable']);
-        } 
+        }
 
         $this->hide_prompt();
 

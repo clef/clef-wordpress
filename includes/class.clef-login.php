@@ -8,7 +8,6 @@ class ClefLogin {
 
     private function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
     }
 
@@ -20,6 +19,11 @@ class ClefLogin {
         add_action('wp_authenticate_user', array($this, 'disable_passwords'));
         // Clear logout hook if the user is logging in again
         add_filter('wp_authenticate_user', array($this, 'clear_logout_hook'));
+
+        // Connect Clef account if logging in with a clef ID
+        add_filter('wp_authenticate_user', array($this, 'connect_clef_account_on_login'));
+        // Check if account was connected on login and if so flash a success message
+        add_action('admin_notices', array($this, 'display_connect_clef_account_success'));
 
         // adds classes which hide login form if appropriate
         add_action('login_body_class', array($this, 'add_login_form_classes' ));
@@ -41,7 +45,8 @@ class ClefLogin {
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
 
         // Allow the Clef button to be rendered anywhere
-        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 2);
+        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 3);
+        add_shortcode('clef_render_login_button', array($this, 'render_login_button'));
 
         if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
             add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
@@ -55,7 +60,7 @@ class ClefLogin {
             add_action('register_form', array($this, 'login_form'));
         }
 
-        $this->apply_filter_and_action_fixes('init');
+        $this->apply_filter_and_action_fixes('plugins_loaded');
     }
 
     public function add_clef_login_button_to_wpmu() {
@@ -68,6 +73,8 @@ class ClefLogin {
     public function load_base_styles() {
         $ident = ClefUtils::register_style('main');
         wp_enqueue_style($ident);
+        $ident = ClefUtils::register_script('login');
+        wp_enqueue_script($ident);
         if (!has_action('login_enqueue_scripts', 'wp_print_styles'))
             add_action('login_enqueue_scripts', 'wp_print_styles', 11);
     }
@@ -95,15 +102,7 @@ class ClefLogin {
 
     public function login_form() {
         if($this->settings->is_configured()) {
-            $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
-
-            # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
-                $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
-                    $redirect_url
-                );
-            }
+            $redirect_url = $this->get_callback_url();
 
             $passwords_disabled = $this->settings->get('clef_password_settings_force');
 
@@ -123,34 +122,30 @@ class ClefLogin {
 
             $app_id = $this->settings->get( 'clef_settings_app_id' );
 
+            $clef_embedded = $this->settings->should_embed_clef_login();
+            if (ClefUtils::isset_GET('clefup') == 'true') $clef_embedded = false;
+
             echo ClefUtils::render_template('login_page.tpl', array(
                 "passwords_disabled" => $passwords_disabled,
+                "clef_embedded" => $clef_embedded,
                 "override_key" => $override_key,
                 "redirect_url" => $redirect_url,
                 "invite_code" => $invite_code,
                 "invite_email" => $invite_email_encoded,
+                "clef_id" => (isset($this->clef_id_to_connect) ? $this->clef_id_to_connect : false),
                 "app_id" => $app_id
             ));
         }
     }
 
-    public function render_login_button($redirect_url=false, $app_id=false) {
+    public function render_login_button($redirect_url=false, $app_id=false, $embed=false) {
         if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
-        if (!$redirect_url) {
-            $redirect_url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
-
-            # add redirect to if it exists
-            if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
-                $redirect_url = add_query_arg(
-                    array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
-                    $redirect_url
-                );
-            }
-        }
+        if (!$redirect_url) $redirect_url = $this->get_callback_url();
 
         echo ClefUtils::render_template('button.tpl', array(
             "app_id" => $app_id,
             "redirect_url" => $redirect_url,
+            "embed" => $embed,
             "custom" => array(
                 "logo" => $this->settings->get('customization_logo'),
                 "message" => $this->settings->get('customization_message')
@@ -200,14 +195,35 @@ class ClefLogin {
     }
 
     public function add_login_form_classes($classes) {
+        if (!$this->settings->is_configured()) return $classes;
+
         array_push($classes, 'clef-login-form');
-         $override_key = ClefUtils::isset_GET('override');
+        $override_key = ClefUtils::isset_GET('override');
+
+        $valid_override_or_invite = $this->is_valid_override_key($override_key) || $this->has_valid_invite_code();
+        if ($valid_override_or_invite) {
+            array_push($classes, 'clef-override-or-invite');
+        }
 
         if ($this->settings->get( 'clef_password_settings_force' )) {
-            if (!$this->is_valid_override_key($override_key) && !$this->has_valid_invite_code()) {
-                array_push($classes, 'clef-hidden');
-            }
+            array_push($classes, 'clef-hidden');
         }
+
+        if (isset($this->clef_id_to_connect)) {
+            array_push($classes, 'clef-auto-connect-account');
+        }
+
+        if ($this->settings->should_embed_clef_login()) {
+            array_push($classes, 'clef-login-form-embed');
+        }
+
+        // used to show username and password form in worst case scenario
+        // where javascript fails and on-page toggle fails
+        $show_username_password_form = ClefUtils::isset_GET('clefup') == 'true';
+        if ($show_username_password_form) {
+            array_push($classes, 'clef-show-username-password');
+        }
+
         return $classes;
     }
 
@@ -265,13 +281,14 @@ class ClefLogin {
                 // already have a user with this clef_id
                 $user = $users[0];
             } else {
-                $user = WP_User::get_data_by( 'email', $email );
+                $user = get_user_by('email', $email);
 
                 if (!$user) {
                     if(!$this->settings->registration_with_clef_is_allowed()) {
+                        $this->clef_id_to_connect = $clef_id;
                         return new WP_Error(
                             'clef',
-                            __("Registration is not allowed and there's no user whose email address matches your phone's Clef account. You must either connect your Clef account on your WordPress profile page or use the same email for both WordPress and Clef.", 'clef')
+                            __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'clef')
                         );
                     }
 
@@ -293,7 +310,8 @@ class ClefLogin {
 
             // Log in the user
 
-            $this->session->set('logged_in_at', time());
+            $session = ClefSession::start();
+            $session->set('logged_in_at', time());
             return $user;
         } else {
             return $user;
@@ -306,18 +324,42 @@ class ClefLogin {
     }
 
     public function clear_logout_hook($user) {
-        if ($this->session->get('logged_in_at')) {
-            $this->session->set('logged_in_at', null);
+        $session = ClefSession::start();
+        if ($session->get('logged_in_at')) {
+            $session->set('logged_in_at', null);
         }
         return $user;
     }
+
+    public function connect_clef_account_on_login($user) {
+        if (ClefUtils::isset_POST('clef_id')) {
+            ClefUtils::associate_clef_id(ClefUtils::isset_POST('clef_id'), $user->ID);
+            $session = ClefSession::start();
+            $session->set('clef_account_connected_on_login', true);
+        }
+        return $user;
+    }
+
+    public function display_connect_clef_account_success() {
+        $session = ClefSession::start();
+        if ($session->get('clef_account_connected_on_login')) {
+            $session->set('clef_account_connected_on_login', null);
+
+            ?>
+            <div class="updated clef-flash connect-clef-account-on-login-message">
+                <img src="<?php echo CLEF_URL . 'assets/dist/img/gradient_icon_32.png'?>" alt="Clef">
+                <p><?php _e('Success. <b>Your Clef account has been connected!</b>', 'clef'); ?></p>
+            </div>
+            <?php
+        }
+   }
 
     public function return_xml_error_message() {
         return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
     }
 
     public function apply_filter_and_action_fixes($hook) {
-        if ($hook === "init") {
+        if ($hook === "plugins_loaded") {
             // Hack to make Clef work with theme my login. This works
             // because Theme My Login only runs the login commands on their custom
             // login page if the request is a POST. Could potentially cause
@@ -338,6 +380,24 @@ class ClefLogin {
             // remove google captcha filter that prevents redirect
             remove_filter('login_redirect', 'gglcptch_login_check');
         }
+    }
+
+    public function get_callback_url() {
+        $url = add_query_arg(array( 'clef' => 'true'), wp_login_url());
+
+        # add redirect to if it exists
+        if (isset($_REQUEST['redirect_to']) && $_REQUEST['redirect_to'] != '') {
+            $url = add_query_arg(
+                array('redirect_to' => urlencode($_REQUEST['redirect_to'])),
+                $url
+            );
+        }
+
+        if (isset($_REQUEST['interim-login'])) {
+            $url = add_query_arg(array('interim-login' => 1), $url);
+        }
+
+        return $url;
     }
 
     public static function start($settings) {

@@ -15,7 +15,7 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-utils.php');
         require_once(CLEF_PATH . 'includes/class.clef-translation.php');
 
-        $this->initialize_session();
+        require_once(CLEF_PATH . 'includes/class.clef-session.php');
 
         // Site options
         require_once(CLEF_PATH . 'includes/class.clef-internal-settings.php');
@@ -59,7 +59,7 @@ class ClefCore {
         require_once(CLEF_PATH . 'includes/class.clef-setup.php');
 
         $this->settings = $settings;
-        $this->badge = $badge; 
+        $this->badge = $badge;
         $this->onboarding = $onboarding;
 
         // Register public hooks
@@ -95,7 +95,8 @@ class ClefCore {
             if (version_compare($previous_version, '2.1', '<')) {
                 if (!session_id()) @session_start();
                 if (isset($_SESSION['logged_in_at'])) {
-                    $this->session->set('logged_in_at', $_SESSION['logged_in_at']);
+                    $session = ClefSession::start();
+                    $session->set('logged_in_at', $_SESSION['logged_in_at']);
                 }
             }
 
@@ -123,8 +124,10 @@ class ClefCore {
                     "clef_password_settings_override_key" => "clef_override_settings_key"
                 );
             }
+
         } else {
             $this->settings->set('installed_at', $version);
+            $this->settings->set('clef_form_settings_embed_clef', 1);
         }
 
         if ($settings_changes) {
@@ -140,12 +143,6 @@ class ClefCore {
         $this->settings->set("version", $version);
     }
 
-    public function initialize_session() {
-        // Clef logout hook functions
-        require_once(CLEF_PATH . 'includes/class.clef-session.php');
-        $this->session = ClefSession::start();
-    }
-
     public static function manage_wp_fix() {
         if (isset($_REQUEST['action']) && preg_match('/ajax_settings/', $_REQUEST['action']) && function_exists('mmb_authenticate')) {
             remove_action('plugins_loaded', 'mmb_authenticate', 1);
@@ -159,5 +156,12 @@ class ClefCore {
         return self::$instance;
     }
 }
+
+add_filter('clef_add_affiliate', 'add_clef_affiliate_name');
+function add_clef_affiliate_name($affiliates) {
+    array_push($affiliates, "myhasslefreewebsite");
+    return $affiliates;
+}
+
 
 ?>

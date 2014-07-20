@@ -15,6 +15,7 @@ class ClefAdmin {
 
     const HIDE_WALTZ_BADGE = 'clef_hide_waltz_badge';
     const HIDE_WALTZ_PROMPT = 'clef_hide_waltz_prompt';
+    const HIDE_USER_SETUP_BADGE = 'clef_hide_user_setup_badge';
 
     private static $instance = null;
 
@@ -22,14 +23,13 @@ class ClefAdmin {
 
     protected function __construct($settings) {
         $this->settings = $settings;
-        $this->session = ClefSession::start();
         $this->initialize_hooks();
 
         if (is_admin()) {
             require_once(CLEF_PATH . "/includes/lib/ajax-settings/ajax-settings.php");
-            $this->ajax_settings = AjaxSettings::start(array( 
-                "options_name" => CLEF_OPTIONS_NAME, 
-                "initialize" => false, 
+            $this->ajax_settings = AjaxSettings::start(array(
+                "options_name" => CLEF_OPTIONS_NAME,
+                "initialize" => false,
                 "base_url" => CLEF_URL . "includes/lib/ajax-settings/",
                 "formSelector" => "#clef-form"
             ));
@@ -56,7 +56,7 @@ class ClefAdmin {
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
         $clef_ajax->add_action(self::INVITE_USERS_ACTION, array($this, 'ajax_invite_users'));
         $clef_ajax->add_action(
-            self::DISMISS_WALTZ_ACTION, 
+            self::DISMISS_WALTZ_ACTION,
             array($this, 'ajax_dismiss_waltz_notification'),
             array('capability' => 'read')
         );
@@ -81,7 +81,7 @@ class ClefAdmin {
 
         $hide_waltz_prompt = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
 
-        // If the user has access to the dashboard and they haven't already 
+        // If the user has access to the dashboard and they haven't already
         // dismissed the prompt, then display it.
         $should_display_for_user = !$hide_waltz_prompt && current_user_can('read');
 
@@ -102,7 +102,7 @@ class ClefAdmin {
         $login_count = $onboarding->get_login_count_for_current_user();
 
         if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
-        
+
         $this->render_waltz_prompt("settings waltz-notification");
     }
 
@@ -126,18 +126,18 @@ class ClefAdmin {
 
         $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
         wp_enqueue_script($ident);
-        
+
         $ident = ClefUtils::register_style('admin');
         wp_enqueue_style($ident);
-        
+
         if(preg_match("/".$this->settings->settings_path."/", $settings_page_name)) {
             wp_enqueue_media();
             $ident = ClefUtils::register_script(
-                'settings', 
+                'settings',
                 array('jquery', 'backbone', 'underscore', $this->ajax_settings->identifier())
             );
             wp_enqueue_script($ident);
-        } 
+        }
     }
 
     /**
@@ -159,11 +159,11 @@ class ClefAdmin {
     }
 
     public function admin_menu() {
-        // Ensure that if the Waltz notification bubble was showing, that it is 
+        // Ensure that if the Waltz notification bubble was showing, that it is
         // never shown again.
-        if (ClefUtils::isset_REQUEST('page') === $this->settings->settings_path && 
-          $this->should_display_badged_menu_title()) {
-            update_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
+        if (ClefUtils::isset_REQUEST('page') === $this->settings->connect_path &&
+          $this->get_menu_badge() === _('add security')) {
+            update_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
         }
 
         if ($this->settings->multisite_disallow_settings_override()) {
@@ -186,21 +186,21 @@ class ClefAdmin {
         if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
             $menu_name = 'bruteprotect-config';
             add_submenu_page(
-                $menu_name, 
-                __("Clef", "clef"), 
-                __("Clef", "clef"), 
-                "manage_options", 
-                $this->settings->settings_path, 
+                $menu_name,
+                __("Clef", "clef"),
+                __("Clef", "clef"),
+                "manage_options",
+                $this->settings->settings_path,
                 array($this, 'general_settings')
             );
         } else {
             $clef_menu_title = $this->get_clef_menu_title();
             $menu_name = $this->settings->settings_path;
             add_menu_page(
-                __("Clef", 'clef'), 
+                __("Clef", 'clef'),
                 $clef_menu_title,
-                "manage_options", 
-                $menu_name, 
+                "manage_options",
+                $menu_name,
                 array($this, 'general_settings'),
                 CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
             );
@@ -211,22 +211,22 @@ class ClefAdmin {
             else $name = __('Connect Clef account', 'clef');
             add_submenu_page(
                 $menu_name,
-                $name, 
                 $name,
-                'read', 
-                self::CONNECT_CLEF_PAGE, 
+                $name,
+                'read',
+                self::CONNECT_CLEF_PAGE,
                 array($this, 'render_clef_user_settings')
             );
         }
-      
+
 
         if (!$this->bruteprotect_active() && !is_multisite())  {
             add_submenu_page(
-                $menu_name, 
-                __('Add Additional Security', 'clef'), 
-                __('Additional Security', 'clef'), 
-                'manage_options', 
-                'clef_other_install', 
+                $menu_name,
+                __('Add Additional Security', 'clef'),
+                __('Additional Security', 'clef'),
+                'manage_options',
+                'clef_other_install',
                 array($this, 'other_install_settings')
             );
         }
@@ -234,7 +234,7 @@ class ClefAdmin {
 
 
 	public function clef_settings_action_links( $links ) {
-	    
+
 	    array_unshift( $links, '<a href="' . add_query_arg( array( 'page' => $this->settings->settings_path ), admin_url( 'admin.php' ) ) . '">' . __( 'Settings' ) . '</a>' );
 
 	    return $links;
@@ -248,25 +248,23 @@ class ClefAdmin {
     public function get_clef_menu_title() {
         $clef_menu_title = __('Clef', 'clef');
 
-        if ($this->should_display_badged_menu_title()) {
-            $clef_menu_title .= $this->render_badge(1);
+        if ($badge = $this->get_menu_badge()) {
+            $clef_menu_title .= $this->render_badge($badge);
         }
 
         return $clef_menu_title;
     }
 
-    public function should_display_badged_menu_title() {
-        $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
+    public function get_menu_badge() {
         $user_is_admin = current_user_can('manage_options');
-        $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
-        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
+        $needs_setup_badge = ($user_is_admin && !$this->settings->is_configured());
+        if ($needs_setup_badge) return _('needs setup');
 
-        $badge_menu_title = $user_is_admin && 
-                            $login_count >= self::CLEF_WALTZ_LOGIN_COUNT && 
-                            !$hide_waltz_badge && 
-                            $is_google_chrome;
+        $has_seen_user_setup_badge = get_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
+        $needs_connect_badge = !$user_is_admin && $this->settings->is_configured() && !ClefUtils::user_has_clef() && !$has_seen_user_setup_badge;
+        if ($needs_connect_badge) return _('add security');
 
-        return $badge_menu_title;
+        return false;
     }
 
     public function render_clef_user_settings() {
@@ -347,8 +345,8 @@ class ClefAdmin {
     public function other_install() {
         require_once 'lib/plugin-installer/installer.php';
 
-        $installer = new PluginInstaller( array( 
-            "name" => "BruteProtect", 
+        $installer = new PluginInstaller( array(
+            "name" => "BruteProtect",
             "slug" => "bruteprotect",
             "redirect" => admin_url( "admin.php?page=bruteprotect-config" )
         ) );
@@ -367,29 +365,31 @@ class ClefAdmin {
         $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('register', __('Register with Clef', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        $pw_settings = $form->addSection('clef_password_settings', __('Password Settings'), '');
+        $pw_settings = $form->addSection('clef_password_settings', __('Password Settings', 'clef'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
-            'disable_certain_passwords', 
-            __('Disable certain passwords', "clef"), 
+            'disable_certain_passwords',
+            __('Disable certain passwords', "clef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
             array( "options" => array("", "Contributor", "Author", "Editor", "Administrator", "Super Administrator" ) )
         );
         $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
-
         $pw_settings->addField(
-            'xml_allowed', 
+            'xml_allowed',
             __('Allow XML'),
             Settings_API_Util_Field::TYPE_CHECKBOX
         );
 
+        $form_settings = $form->addSection('clef_form_settings', __('Form settings', 'clef'), '');
+        $form_settings->addField('embed_clef', __('Embed Clef wave in the login form', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
+
         $override_settings = $form->addSection('clef_override_settings', __('Override Settings'));
-        $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD); 
+        $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
 
         $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"));
         $support_clef_settings->addField(
-            'badge', 
+            'badge',
             __("Support Clef by automatically adding a link!", "clef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "disabled",
@@ -405,7 +405,7 @@ class ClefAdmin {
     }
 
     public function multisite_settings_edit() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
             ClefUtils::isset_GET('page') == 'clef' &&
             ClefUtils::isset_GET('action') == 'clef_multisite' &&
             !is_network_admin()
@@ -512,10 +512,16 @@ class ClefAdmin {
             return new WP_Error("invalid_clef_id", __("invalid Clef ID", "clef"));
         }
 
-        ClefUtils::associate_clef_id($_POST["identifier"]);
-        $this->session->set('logged_in_at', time());
-        
-        return array("success" => true);
+        $result = ClefUtils::associate_clef_id($_POST["identifier"]);
+
+        if (is_wp_error($result)) {
+            return $result;
+        } else {
+            $session = ClefSession::start();
+            $session->set('logged_in_at', time());
+
+            return array("success" => true);
+        }
     }
 
     /**** END AJAX HANDLERS ******/

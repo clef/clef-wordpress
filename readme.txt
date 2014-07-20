@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 2.1.3
+Stable tag: 2.2.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -97,7 +97,7 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Changelog ==
 
-= 2.1.3 =
+= 2.2.0 =
 
 * Bug fix: fixes XMLRPC edge case with login on WordPress Mobile App
 

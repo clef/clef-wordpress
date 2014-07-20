@@ -1,4 +1,4 @@
-# [Clef for WordPress](http://wordpress.org/plugins/wpclef/)
+# [Clef for WordPress](http://wordpress.org/plugins/wpclef/) [![Build Status](https://travis-ci.org/clef/wordpress.svg?branch=master)](https://travis-ci.org/clef/wordpress)
 
 Welcome to the Clef for WordPress development repository!
 

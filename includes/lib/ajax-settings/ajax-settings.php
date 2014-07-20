@@ -13,10 +13,10 @@ class AjaxSettings {
 
 
         add_action('admin_enqueue_scripts', array($this, "enqueue_scripts"));
-        $this->enqueue_styles();
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
 
         add_action(
-            'wp_ajax_ajax_settings_save_' . $this->name(), 
+            'wp_ajax_ajax_settings_save_' . $this->name(),
             array($this, 'handle_settings_save')
         );
     }
@@ -83,7 +83,7 @@ class AjaxSettings {
                     $nested_key = $output[2];
                     $to_be_saved[$nested_key] = $value;
                 }
-            } 
+            }
         }
 
         $to_be_saved = apply_filters('ajax_settings_pre_save', $to_be_saved);
