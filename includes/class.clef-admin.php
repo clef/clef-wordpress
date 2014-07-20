@@ -15,6 +15,7 @@ class ClefAdmin {
 
     const HIDE_WALTZ_BADGE = 'clef_hide_waltz_badge';
     const HIDE_WALTZ_PROMPT = 'clef_hide_waltz_prompt';
+    const HIDE_USER_SETUP_BADGE = 'clef_hide_user_setup_badge';
 
     private static $instance = null;
 
@@ -160,9 +161,9 @@ class ClefAdmin {
     public function admin_menu() {
         // Ensure that if the Waltz notification bubble was showing, that it is
         // never shown again.
-        if (ClefUtils::isset_REQUEST('page') === $this->settings->settings_path &&
-          $this->get_menu_badge() === 1) {
-            update_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
+        if (ClefUtils::isset_REQUEST('page') === $this->settings->connect_path &&
+          $this->get_menu_badge() === _('add security')) {
+            update_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
         }
 
         if ($this->settings->multisite_disallow_settings_override()) {
@@ -259,19 +260,9 @@ class ClefAdmin {
         $needs_setup_badge = ($user_is_admin && !$this->settings->is_configured());
         if ($needs_setup_badge) return _('needs setup');
 
-        $needs_connect_badge = $this->settings->is_configured() && !ClefUtils::user_has_clef();
+        $has_seen_user_setup_badge = get_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
+        $needs_connect_badge = !$user_is_admin && $this->settings->is_configured() && !ClefUtils::user_has_clef() && !$has_seen_user_setup_badge;
         if ($needs_connect_badge) return _('add security');
-
-        $login_count = ClefOnboarding::start($this->settings)->get_login_count_for_current_user();
-        $hide_waltz_badge = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_BADGE, true);
-        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
-
-        $needs_waltz_badge = $user_is_admin &&
-                            $login_count >= self::CLEF_WALTZ_LOGIN_COUNT &&
-                            !$hide_waltz_badge &&
-                            $is_google_chrome;
-
-        if ($needs_waltz_badge) return 1;
 
         return false;
     }

@@ -15,6 +15,7 @@ class ClefInternalSettings {
         $this->use_individual_settings = $this->check_individual_settings();
         $this->settings = $this->get_site_option();
         $this->settings_path = 'clef';
+        $this->connect_path = 'connect_clef_account';
         add_action('admin_menu', array($this, 'apply_settings_path_filter'), 11);
         add_filter('ajax_settings_pre_save', array($this, 'merge_settings'));
     }
