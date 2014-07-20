@@ -46,7 +46,7 @@ class ClefLogin {
 
         // Allow the Clef button to be rendered anywhere
         add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 3);
-        add_shortcode('clef_render_login_button', array($this, 'render_login_button'));
+        add_shortcode('clef_render_login_button', array($this, 'shortcode_render_login_button'));
 
         if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
             add_action('signup_hidden_fields', array($this, 'add_clef_login_button_to_wpmu'));
@@ -136,6 +136,14 @@ class ClefLogin {
                 "app_id" => $app_id
             ));
         }
+    }
+
+    public function shortcode_render_login_button($atts) {
+        $app_id = isset($atts['app_id']) ? $atts['app_id'] : false;
+        $redirect_url = isset($atts['redirect_url']) ? $atts['redirect_url'] : false;
+        $embed = isset($atts['embed']) ? $atts['embed'] : false;
+
+        $this->render_login_button($redirect_url, $app_id, $embed);
     }
 
     public function render_login_button($redirect_url=false, $app_id=false, $embed=false) {
