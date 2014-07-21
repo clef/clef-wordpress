@@ -66,7 +66,7 @@ gulp.task('coffee', function() {
     function build(strm, output) {
         strm = strm
             .pipe(plumber())
-            .pipe(coffeelint({ 
+            .pipe(coffeelint({
                 "indentation": {
                     "name": "indentation",
                     "value": 4,
@@ -121,13 +121,36 @@ gulp.task('build', function() {
     );
 })
 
+gulp.task('translations', function() {
+    var es = require('event-stream'),
+        GetText = require('node-gettext'),
+        gettext = new GetText(),
+        path = require('path'),
+        ext = require('replace-ext');
+
+    gulp.src('languages/*.po')
+        .pipe(es.map(
+            function(file, cb) {
+                if (file.isNull()) return cb(null, file);
+
+                gettext.addTextdomain(file.path, file.contents);
+
+                file.path = ext(file.path, '.mo');
+                file.contents = gettext.compileMO(file.path);
+
+                cb(null, file);
+            }
+        ))
+        .pipe(gulp.dest('languages'));
+});
+
 gulp.task('watch', function() {
     server.listen(35729, function(err) {
         if (err) {
             gutil.log(err);
         }
     });
-    
+
     gulp.watch('assets/src/**/*.scss', ['sass']);
     gulp.watch('assets/src/**/*.coffee', ['coffee']);
     gulp.watch('assets/src/img/**/*', ['images']);
