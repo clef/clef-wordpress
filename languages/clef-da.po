@@ -1,14 +1,15 @@
-# 
+#
 # Translators:
 # Ulrik Johansen, 2014
 # Ulrik Johansen, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
-"POT-Creation-Date: 2014-07-20 17:55-0800\n"
-"PO-Revision-Date: 2014-07-21 00:56+0000\n"
+"POT-Creation-Date: 2014-07-20 18:30-0800\n"
+"PO-Revision-Date: 2014-07-20 18:45-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: Danish (http://www.transifex.com/projects/p/wpclef/language/da/)\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/wpclef/language/"
+"da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -195,8 +196,8 @@ msgstr "der er ingen brugere uden Clef med denne rolle eller højere"
 #: ../build/wpclef/includes/class.clef-admin.php:498
 #: ../includes/class.clef-admin.php:498
 msgid ""
-"there was an error sending the invite email to all users. Copy and paste the"
-" preview email to your users and they'll be walked through a tutorial to "
+"there was an error sending the invite email to all users. Copy and paste the "
+"preview email to your users and they'll be walked through a tutorial to "
 "connect with Clef"
 msgstr ""
 
@@ -240,12 +241,14 @@ msgstr "Desværre, det er ikke en gyldig invitationskode."
 #: ../build/wpclef/includes/class.clef-login.php:201
 #: ../includes/class.clef-login.php:201
 msgid ""
-"Sorry, this invite link has expired. Please contact your administrator for a"
-" new one."
-msgstr "Beklager, dette invitationslink er udløbet. Kontakt din administrator for et nyt."
+"Sorry, this invite link has expired. Please contact your administrator for a "
+"new one."
+msgstr ""
+"Beklager, dette invitationslink er udløbet. Kontakt din administrator for et "
+"nyt."
 
 #: ../build/wpclef/includes/class.clef-login.php:265
-#: ../build/wpclef/includes/class.clef-login.php:366
+#: ../build/wpclef/includes/class.clef-login.php:367
 #: ../includes/class.clef-login.php:265 ../includes/class.clef-login.php:367
 msgid "Passwords have been disabled for this user."
 msgstr "Adgangskoder er blevet deaktiveret for denne bruger."
@@ -263,7 +266,7 @@ msgstr ""
 msgid "An error occurred when creating your new account: "
 msgstr "Der opstod en fejl under oprettelsen af din nye konto:"
 
-#: ../build/wpclef/includes/class.clef-login.php:359
+#: ../build/wpclef/includes/class.clef-login.php:360
 #: ../includes/class.clef-login.php:360
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
@@ -283,24 +286,32 @@ msgstr "Snyder du?"
 #: ../includes/class.clef-settings.php:50
 #, php-format
 msgid ""
-"Please link your Clef account before you fully disable passwords. You can do"
-" this <a href='%s'>here</a>"
-msgstr "Forbind venligst med din Clef-konto før du deaktiverer adgangskoder. Du kan gøre det <a href='%s'>her</a>"
+"Please link your Clef account before you fully disable passwords. You can do "
+"this <a href='%s'>here</a>"
+msgstr ""
+"Forbind venligst med din Clef-konto før du deaktiverer adgangskoder. Du kan "
+"gøre det <a href='%s'>her</a>"
 
 #: ../build/wpclef/includes/class.clef-translation.php:14
 #: ../includes/class.clef-translation.php:14
 msgid ""
 "There was a problem automatically connecting your Clef account: <%= error "
 "%>. Please refresh and try again."
-msgstr "Der opstod et problem under den automatiske oprettelse af forbindelse til din Clef-konto: <%= error %>. Genindlæs venligst siden og prøv igen."
+msgstr ""
+"Der opstod et problem under den automatiske oprettelse af forbindelse til "
+"din Clef-konto: <%= error %>. Genindlæs venligst siden og prøv igen."
 
 #: ../build/wpclef/includes/class.clef-translation.php:15
 #: ../includes/class.clef-translation.php:15
 msgid ""
-"There was a problem creating a new Clef application for your WordPress site:"
-" <%= error %>. Please refresh and try again. If the issue, persists, email "
-"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
-msgstr "Der var et problem med oprettelsen af en ny Clef-applikation til din WordPress-side: <%= error %>. Genindlæs venligst siden og prøv igen. Hvis problemet fortsætter, kan du sende en email til <a href='mailto:support@getclef.com'>support@getclef.com</a>."
+"There was a problem creating a new Clef application for your WordPress site: "
+"<%= error %>. Please refresh and try again. If the issue, persists, email <a "
+"href='mailto:support@getclef.com'>support@getclef.com</a>."
+msgstr ""
+"Der var et problem med oprettelsen af en ny Clef-applikation til din "
+"WordPress-side: <%= error %>. Genindlæs venligst siden og prøv igen. Hvis "
+"problemet fortsætter, kan du sende en email til <a href='mailto:"
+"support@getclef.com'>support@getclef.com</a>."
 
 #: ../build/wpclef/includes/class.clef-translation.php:16
 #: ../includes/class.clef-translation.php:16
@@ -315,7 +326,9 @@ msgstr "Noget gik galt. Genindlæs venligst siden og prøv igen."
 #: ../build/wpclef/includes/class.clef-translation.php:18
 #: ../includes/class.clef-translation.php:18
 msgid "There was a problem disconnecting your Clef account: <%= error %>."
-msgstr "Der var et problem med at afbryde forbindelsen til din Clef-konto: <%= error %>."
+msgstr ""
+"Der var et problem med at afbryde forbindelsen til din Clef-konto: <%= error "
+"%>."
 
 #: ../build/wpclef/includes/class.clef-translation.php:21
 #: ../includes/class.clef-translation.php:21
@@ -340,7 +353,8 @@ msgstr "Forbindelsen til Clef-kontoen blev afbrudt."
 #: ../build/wpclef/includes/class.clef-translation.php:26
 #: ../includes/class.clef-translation.php:26
 msgid "Settings are being saved. Are you sure you want to navigate away?"
-msgstr "Indstillinger er ved at blive gemt. Er du sikker på, at du vil navigere væk?"
+msgstr ""
+"Indstillinger er ved at blive gemt. Er du sikker på, at du vil navigere væk?"
 
 #: ../build/wpclef/includes/class.clef-user-settings.php:80
 #: ../includes/class.clef-user-settings.php:80
@@ -353,7 +367,11 @@ msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
 "before disconnecting your Clef account"
-msgstr "dine adgangskoder er i øjeblikket deaktiveret. <br/> Hvis du afbryder forbindelsen til din Clef-konto, vil du ikke være i stand til at logge ind. Aktivér venligst adgangskoder før du afbryder forbindelsen til din Clef-konto."
+msgstr ""
+"dine adgangskoder er i øjeblikket deaktiveret. <br/> Hvis du afbryder "
+"forbindelsen til din Clef-konto, vil du ikke være i stand til at logge ind. "
+"Aktivér venligst adgangskoder før du afbryder forbindelsen til din Clef-"
+"konto."
 
 #: ../build/wpclef/includes/class.clef-utils.php:145
 #: ../includes/class.clef-utils.php:145
@@ -407,9 +425,12 @@ msgstr "Du har lige gennemført dit første login med Clef!"
 #: ../templates/admin/badge-prompt.tpl.php:8
 msgid ""
 "Let your visitors know that you are protected with the Clef login by adding "
-"a Clef badge to the footer of your page. </br> This helps your visitors know"
-" they are browsing a secure site and helps us spread the word about Clef."
-msgstr "Lad dine besøgende vide, at du er beskyttet med Clef-login ved at tilføje et Clef-badge til sidefoden. </br> Dette lader dine besøgende vide, at de benytter en sikker webside, og det hjælper os med at sprede viden om Clef."
+"a Clef badge to the footer of your page. </br> This helps your visitors know "
+"they are browsing a secure site and helps us spread the word about Clef."
+msgstr ""
+"Lad dine besøgende vide, at du er beskyttet med Clef-login ved at tilføje et "
+"Clef-badge til sidefoden. </br> Dette lader dine besøgende vide, at de "
+"benytter en sikker webside, og det hjælper os med at sprede viden om Clef."
 
 #: ../build/wpclef/templates/admin/badge-prompt.tpl.php:10
 #: ../templates/admin/badge-prompt.tpl.php:10
@@ -436,7 +457,8 @@ msgstr ""
 #: ../templates/admin/form.tpl.php:26
 msgid ""
 "Disable passwords for all users with privileges greater than or equal to "
-msgstr "Deaktivér adgangskoder for alle brugere med roller højere eller lig med"
+msgstr ""
+"Deaktivér adgangskoder for alle brugere med roller højere eller lig med"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:30
 #: ../templates/admin/form.tpl.php:30
@@ -447,7 +469,8 @@ msgstr "Deaktivér adgangskoder for alle brugere og skjul adgangskodefeltet."
 #: ../templates/admin/form.tpl.php:34
 msgid ""
 "Allow passwords for API (necessary for things like the WordPress mobile app)"
-msgstr "Tillad adgangskoder for API (nødvendig for ting som WordPress-mobil-app'en)"
+msgstr ""
+"Tillad adgangskoder for API (nødvendig for ting som WordPress-mobil-app'en)"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:37
 #: ../templates/admin/form.tpl.php:37
@@ -470,7 +493,10 @@ msgid ""
 "You have disabled passwords for some (or all) users. In case of emergency, "
 "you can create a special link where passwords can still be used. This is a "
 "good safety precaution."
-msgstr "Du har deaktiveret adgangskoder for nogle (eller alle) bruger. I tilfælde af en nødsituation kan du oprette et specielt link, hvor man stadig kan logge ind med adgangskoder. Dette er en god sikkerhedsforanstaltning."
+msgstr ""
+"Du har deaktiveret adgangskoder for nogle (eller alle) bruger. I tilfælde af "
+"en nødsituation kan du oprette et specielt link, hvor man stadig kan logge "
+"ind med adgangskoder. Dette er en god sikkerhedsforanstaltning."
 
 #: ../build/wpclef/templates/admin/form.tpl.php:52
 #: ../templates/admin/form.tpl.php:52
@@ -498,7 +524,10 @@ msgid ""
 "Clef is, and will always be, free for you and your users. We'd really "
 "appreciate it if you'd support us (and show visitors they are browsing a "
 "secure site) by adding a link to Clef in your site footer!"
-msgstr "Clef er, og vil altid forblive, gratis for dig og dine brugere. Vi vil virkelig værdsætte det, hvis du vil støtte os (og vise dine besøgende, at de benytter en sikker webside) ved at tilføje et link til Clef i din sidefod!"
+msgstr ""
+"Clef er, og vil altid forblive, gratis for dig og dine brugere. Vi vil "
+"virkelig værdsætte det, hvis du vil støtte os (og vise dine besøgende, at de "
+"benytter en sikker webside) ved at tilføje et link til Clef i din sidefod!"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:75
 #: ../templates/admin/form.tpl.php:75
@@ -552,9 +581,12 @@ msgstr "Clef API-indstillinger"
 #: ../templates/admin/form.tpl.php:103
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
-"to. For more advanced settings, visit the <a "
-"href='http://getclef.com/developer'>Clef developer site</a>."
-msgstr "Disse koder forbinder din WordPress-side til Clef-applikationen, du logger ind med. For mere avancerede indstillinger, besøg <a href='http://getclef.com/developer'>Clef-udviklersiden</a>."
+"to. For more advanced settings, visit the <a href='http://getclef.com/"
+"developer'>Clef developer site</a>."
+msgstr ""
+"Disse koder forbinder din WordPress-side til Clef-applikationen, du logger "
+"ind med. For mere avancerede indstillinger, besøg <a href='http://getclef."
+"com/developer'>Clef-udviklersiden</a>."
 
 #: ../build/wpclef/templates/admin/form.tpl.php:113
 #: ../templates/admin/form.tpl.php:113
@@ -601,7 +633,9 @@ msgstr "Aktivér Clef på tværs af hele netværket"
 msgid ""
 "If you would like to enable Clef across all sites on the network using the "
 "options you set here, click the button below."
-msgstr "Hvis du ønsker at aktivere Clef på tværs af alle websiderne på netværket med de indstillinger, du har valgt her, klik på knappen herunder."
+msgstr ""
+"Hvis du ønsker at aktivere Clef på tværs af alle websiderne på netværket med "
+"de indstillinger, du har valgt her, klik på knappen herunder."
 
 #: ../build/wpclef/templates/admin/multisite/network-disabled.tpl.php:8
 #: ../templates/admin/multisite/network-disabled.tpl.php:8
@@ -619,9 +653,12 @@ msgstr "Deaktiver brug af samme indstillinger i hele netværket"
 #: ../templates/admin/multisite/network-enabled.tpl.php:5
 msgid ""
 "Currently, you control Clef settings for all the sites in your network. If "
-"you disable network-wide settings, individual sites in the network will need"
-" to manage their own Clef settings."
-msgstr "I øjeblikket styrer du Clef-indstillingerne for alle websiderne i dit netværk. Hvis du deaktiverer brug af samme indstillinger i hele netværket, vil alle de individuelle sider skulle styre deres egne Clef-indstillinger."
+"you disable network-wide settings, individual sites in the network will need "
+"to manage their own Clef settings."
+msgstr ""
+"I øjeblikket styrer du Clef-indstillingerne for alle websiderne i dit "
+"netværk. Hvis du deaktiverer brug af samme indstillinger i hele netværket, "
+"vil alle de individuelle sider skulle styre deres egne Clef-indstillinger."
 
 #: ../build/wpclef/templates/admin/multisite/network-enabled.tpl.php:18
 #: ../templates/admin/multisite/network-enabled.tpl.php:18
@@ -633,7 +670,9 @@ msgstr "Netværksindstillinger for individuelle websider"
 msgid ""
 "You can let individual sites manage their own Clef configuration if you "
 "would like to customize how Clef works on each site."
-msgstr "Du kan lade individuelle websider styre deres egen Clef-konfiguration, hvis du ønsker at tilpasse, hvordan Clef virker på hver webside."
+msgstr ""
+"Du kan lade individuelle websider styre deres egen Clef-konfiguration, hvis "
+"du ønsker at tilpasse, hvordan Clef virker på hver webside."
 
 #: ../build/wpclef/templates/admin/multisite/network-enabled.tpl.php:24
 #: ../templates/admin/multisite/network-enabled.tpl.php:24
@@ -651,7 +690,10 @@ msgid ""
 "You've decided to manage your own settings for Clef. To re-enabled the "
 "settings configured by your site's network administrator, please click the "
 "button below."
-msgstr "Du har valgt at styre dine egne indstillinger for Clef. Hvis du ønsker at genaktivere de indstillinger, din websides netværksadministrator har konfigureret, kan du klikke på knappen herunder."
+msgstr ""
+"Du har valgt at styre dine egne indstillinger for Clef. Hvis du ønsker at "
+"genaktivere de indstillinger, din websides netværksadministrator har "
+"konfigureret, kan du klikke på knappen herunder."
 
 #: ../build/wpclef/templates/admin/multisite/single-disabled.tpl.php:7
 #: ../templates/admin/multisite/single-disabled.tpl.php:7
@@ -669,7 +711,10 @@ msgid ""
 "Your Clef installation is currently managed by your network administrator. "
 "To use your own Clef settings, you can override the network-wide settings "
 "below."
-msgstr "Din Clef-indstallation bliver i øjeblikket styret af din netværksadministrator. Hvis du ønsker at anvende dine egne indstillinger, kan du tilsidesætte denne styring herunder."
+msgstr ""
+"Din Clef-indstallation bliver i øjeblikket styret af din "
+"netværksadministrator. Hvis du ønsker at anvende dine egne indstillinger, "
+"kan du tilsidesætte denne styring herunder."
 
 #: ../build/wpclef/templates/admin/multisite/single-enabled.tpl.php:7
 #: ../templates/admin/multisite/single-enabled.tpl.php:7
@@ -691,7 +736,10 @@ msgstr "Andre plugins Clef anbefaler for at holde sin side sikker."
 msgid ""
 "BruteProtect is a cloud-powered Brute Force attack prevention plugin. It "
 "leverages millions of WordPress sites to identify and block malicious IPs."
-msgstr "BruteProtect er et cloud-basseret plugin, der beskytter dig mod Brute Force-angreb. Det gør brug af millioner af WordPress-sider til at identificere ondsindede IPer."
+msgstr ""
+"BruteProtect er et cloud-basseret plugin, der beskytter dig mod Brute Force-"
+"angreb. Det gør brug af millioner af WordPress-sider til at identificere "
+"ondsindede IPer."
 
 #: ../build/wpclef/templates/admin/other-install.tpl.php:8
 #: ../templates/admin/other-install.tpl.php:8
@@ -703,7 +751,9 @@ msgstr "Installér og aktivér BruteProtect"
 msgid ""
 "Clef makes logging into your site safer and easier. <br> It's <b>free</b>, "
 "and getting set up takes <b>30 seconds</b>."
-msgstr "Clef gør det mere sikkert og nemmere at logge ind på din side. <br> Det er <b>gratis</b> og det tager kun <b>30 sekunder</b> at opsætte."
+msgstr ""
+"Clef gør det mere sikkert og nemmere at logge ind på din side. <br> Det er "
+"<b>gratis</b> og det tager kun <b>30 sekunder</b> at opsætte."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:6
 #: ../templates/admin/tutorial.tpl.php:6
@@ -728,10 +778,11 @@ msgstr "Forbind din Clef-konto"
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:39
 #: ../templates/admin/tutorial.tpl.php:39
 msgid ""
-"To connect, click the button below and sync the Wave. Once you're connected,"
-" you'll be able to log in and out of your WordPress site with just your "
-"phone."
-msgstr "For at forbinde, klik på knappe herunder og synkronisér med bølgen. Når du er forbundet, kan du logge ind og ud af din WordPress-side med din telefon."
+"To connect, click the button below and sync the Wave. Once you're connected, "
+"you'll be able to log in and out of your WordPress site with just your phone."
+msgstr ""
+"For at forbinde, klik på knappe herunder og synkronisér med bølgen. Når du "
+"er forbundet, kan du logge ind og ud af din WordPress-side med din telefon."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:43
 #: ../templates/admin/tutorial.tpl.php:43
@@ -753,7 +804,10 @@ msgstr "Synkronisér en gang, log ind overalt."
 msgid ""
 "When you scan a Clef Wave, you'll be logged in to all of your sites on that "
 "computer. This means you don't have to keep scanning as you browse the web."
-msgstr "Når du scanner en Clef-bølge, bliver du logget ind på alle dine sider på den computer. Det betyder, at du kun behøver scanne én gang, selvom du besøger flere Clef-sider."
+msgstr ""
+"Når du scanner en Clef-bølge, bliver du logget ind på alle dine sider på den "
+"computer. Det betyder, at du kun behøver scanne én gang, selvom du besøger "
+"flere Clef-sider."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:51
 #: ../templates/admin/tutorial.tpl.php:51
@@ -766,7 +820,10 @@ msgid ""
 "When you want to log out of your sites, click the logout button <b>on your "
 "phone</b>. This will log you out of all of your sites and can be done from "
 "anywhere (including after you walk away)."
-msgstr "Når du vil logge ud af dine sider, klikker du bare på log ud-knappen <b>på din telefon</b>. Dette vil logge dig ud af alle dine sider, og du kan gøre det fra hvor som helst (også selv om du er langt væk fra computeren)."
+msgstr ""
+"Når du vil logge ud af dine sider, klikker du bare på log ud-knappen <b>på "
+"din telefon</b>. Dette vil logge dig ud af alle dine sider, og du kan gøre "
+"det fra hvor som helst (også selv om du er langt væk fra computeren)."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:53
 #: ../templates/admin/tutorial.tpl.php:53
@@ -776,10 +833,13 @@ msgstr "Mistet din enhed?"
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:54
 #: ../templates/admin/tutorial.tpl.php:54
 msgid ""
-"If you lose your device, don't fret! Just visit <a "
-"href='https://getclef.com/lost'>getclef.com/lost</a>, deactivate with your "
-"PIN, and reactivate on a new device."
-msgstr "Hvis du mister din ended, er der ingen grund til panik. Bare gå til <a href='https://getclef.com/lost'>getclef.com/lost</a>, deaktivér din PIN og genaktivér på en ny enhed."
+"If you lose your device, don't fret! Just visit <a href='https://getclef.com/"
+"lost'>getclef.com/lost</a>, deactivate with your PIN, and reactivate on a "
+"new device."
+msgstr ""
+"Hvis du mister din ended, er der ingen grund til panik. Bare gå til <a "
+"href='https://getclef.com/lost'>getclef.com/lost</a>, deaktivér din PIN og "
+"genaktivér på en ny enhed."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:55
 #: ../templates/admin/tutorial.tpl.php:55
@@ -808,7 +868,11 @@ msgid ""
 "extension that lets you log in to sites like Facebook, Gmail, and Twitter "
 "using Clef. It takes 5 seconds to install and will give you the full Clef "
 "experience."
-msgstr "<a target='_blank' href='http://getwaltz.com'>Waltz</a> er en Chrome-udvidelse, der lader dig logge ind på sider som Facebook, Gmail og Twitter med Clef. Det tager 5 sekunder at installere og giver dig den fulde Clef-oplevelse."
+msgstr ""
+"<a target='_blank' href='http://getwaltz.com'>Waltz</a> er en Chrome-"
+"udvidelse, der lader dig logge ind på sider som Facebook, Gmail og Twitter "
+"med Clef. Det tager 5 sekunder at installere og giver dig den fulde Clef-"
+"oplevelse."
 
 #: ../build/wpclef/templates/admin/waltz-prompt.tpl.php:8
 #: ../templates/admin/waltz-prompt.tpl.php:8
@@ -824,10 +888,11 @@ msgstr "Hej"
 #: ../templates/invite_email.tpl.php:12
 #, php-format
 msgid ""
-"The administrator for %s just set up <a "
-"href=\"https://getclef.com\">Clef</a>, which means you can now log in "
-"without passwords."
-msgstr "Administratoren for %s har installeret <a href=\"https://getclef.com\">Clef</a>, hvilket betyder at du nu kan logge ind uden brug af adgangskoder."
+"The administrator for %s just set up <a href=\"https://getclef.com\">Clef</"
+"a>, which means you can now log in without passwords."
+msgstr ""
+"Administratoren for %s har installeret <a href=\"https://getclef.com\">Clef</"
+"a>, hvilket betyder at du nu kan logge ind uden brug af adgangskoder."
 
 #: ../build/wpclef/templates/invite_email.tpl.php:13
 #: ../templates/invite_email.tpl.php:13
@@ -835,14 +900,18 @@ msgstr "Administratoren for %s har installeret <a href=\"https://getclef.com\">C
 msgid ""
 "Click <a href=\"%s\">here</a> and log in with your username and password "
 "(for the last time) to get started."
-msgstr "Klik <a href=\"%s\">her</a> og log ind med dit brugernavn og adgangskode (for sidste gang) for at komme i gang."
+msgstr ""
+"Klik <a href=\"%s\">her</a> og log ind med dit brugernavn og adgangskode "
+"(for sidste gang) for at komme i gang."
 
 #: ../build/wpclef/templates/invite_email.tpl.php:14
 #: ../templates/invite_email.tpl.php:14
 msgid ""
 "Want a video walkthrough of setting up Clef? We've created one for you <a "
 "href='http://getclef.wistia.com/medias/8mnrh6og39'>here</a>."
-msgstr "Har du lyst til at se en video-gennemgang af Clef? Vi har lavet en til dig <a href='http://getclef.wistia.com/medias/8mnrh6og39'>her</a>."
+msgstr ""
+"Har du lyst til at se en video-gennemgang af Clef? Vi har lavet en til dig "
+"<a href='http://getclef.wistia.com/medias/8mnrh6og39'>her</a>."
 
 #: ../build/wpclef/templates/invite_email.tpl.php:15
 #: ../templates/invite_email.tpl.php:15
@@ -864,9 +933,14 @@ msgstr "Din webside er kun så sikker som dets svageste adgangskode."
 msgid ""
 "We've made it really easy to get all of your site's users up and running "
 "with Clef. Click the button below and we'll send an email inviting your "
-"users to set up their Clef account on your site. The invite email has <b"
-">step-by-step instructions</b> and a video walkthrough."
-msgstr "Vi har gjort det nemt at få alle din websides brugere i gang med at bruge Clef. Klik på knappen herunder, og så sender vi en email til alle dine brugere med en invitation til at komme i gang med Clef på din side. Inviterings-emailen har <b>trin-for-trin instruktioner</b> og en video-gennemgang."
+"users to set up their Clef account on your site. The invite email has "
+"<b>step-by-step instructions</b> and a video walkthrough."
+msgstr ""
+"Vi har gjort det nemt at få alle din websides brugere i gang med at bruge "
+"Clef. Klik på knappen herunder, og så sender vi en email til alle dine "
+"brugere med en invitation til at komme i gang med Clef på din side. "
+"Inviterings-emailen har <b>trin-for-trin instruktioner</b> og en video-"
+"gennemgang."
 
 #: ../build/wpclef/templates/js-templates/invite.tpl.php:11
 #: ../templates/js-templates/invite.tpl.php:11
@@ -940,8 +1014,8 @@ msgstr ""
 #: ../build/wpclef/templates/pro/form.tpl.php:5
 #: ../templates/pro/form.tpl.php:5
 msgid ""
-"Add a custom logo and message to the Clef overlay to make your visitors feel"
-" at home."
+"Add a custom logo and message to the Clef overlay to make your visitors feel "
+"at home."
 msgstr ""
 
 #: ../build/wpclef/templates/pro/form.tpl.php:7
@@ -970,11 +1044,15 @@ msgstr "Afbryd forbindelsen til din Clef-konto"
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
-msgstr "Du har i øjeblikket en Clef-konto forbundet med denne WordPress-bruger. For at afbryde forbindelsen, kan du klikke på knappen herunder."
+msgstr ""
+"Du har i øjeblikket en Clef-konto forbundet med denne WordPress-bruger. For "
+"at afbryde forbindelsen, kan du klikke på knappen herunder."
 
 #: ../build/wpclef/templates/user_settings.tpl.php:7
 #: ../templates/user_settings.tpl.php:7
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
-msgstr "Bemærk: Hvis adgangskoder er deaktiveret for alle brugere og du afbryder forbindelsen til din Clef-konto, vil du ikke længere kunne logge ind."
+msgstr ""
+"Bemærk: Hvis adgangskoder er deaktiveret for alle brugere og du afbryder "
+"forbindelsen til din Clef-konto, vil du ikke længere kunne logge ind."

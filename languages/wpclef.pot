@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Clef\n"
-"POT-Creation-Date: 2014-07-20 17:55-0800\n"
-"PO-Revision-Date: 2014-07-20 17:56-0800\n"
+"POT-Creation-Date: 2014-07-20 18:30-0800\n"
+"PO-Revision-Date: 2014-07-20 18:30-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Clef <support@getclef.com>\n"
 "Language: en\n"
@@ -241,7 +241,7 @@ msgid ""
 msgstr ""
 
 #: ../build/wpclef/includes/class.clef-login.php:265
-#: ../build/wpclef/includes/class.clef-login.php:366
+#: ../build/wpclef/includes/class.clef-login.php:367
 #: ../includes/class.clef-login.php:265 ../includes/class.clef-login.php:367
 msgid "Passwords have been disabled for this user."
 msgstr ""
@@ -259,7 +259,7 @@ msgstr ""
 msgid "An error occurred when creating your new account: "
 msgstr ""
 
-#: ../build/wpclef/includes/class.clef-login.php:359
+#: ../build/wpclef/includes/class.clef-login.php:360
 #: ../includes/class.clef-login.php:360
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""

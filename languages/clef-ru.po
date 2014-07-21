@@ -1,17 +1,19 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
-"POT-Creation-Date: 2014-07-20 17:55-0800\n"
-"PO-Revision-Date: 2014-07-21 00:56+0000\n"
+"POT-Creation-Date: 2014-07-20 18:30-0800\n"
+"PO-Revision-Date: 2014-07-20 18:45-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/wpclef/language/ru/)\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/wpclef/language/"
+"ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.6.6\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -193,8 +195,8 @@ msgstr ""
 #: ../build/wpclef/includes/class.clef-admin.php:498
 #: ../includes/class.clef-admin.php:498
 msgid ""
-"there was an error sending the invite email to all users. Copy and paste the"
-" preview email to your users and they'll be walked through a tutorial to "
+"there was an error sending the invite email to all users. Copy and paste the "
+"preview email to your users and they'll be walked through a tutorial to "
 "connect with Clef"
 msgstr ""
 
@@ -238,12 +240,12 @@ msgstr ""
 #: ../build/wpclef/includes/class.clef-login.php:201
 #: ../includes/class.clef-login.php:201
 msgid ""
-"Sorry, this invite link has expired. Please contact your administrator for a"
-" new one."
+"Sorry, this invite link has expired. Please contact your administrator for a "
+"new one."
 msgstr ""
 
 #: ../build/wpclef/includes/class.clef-login.php:265
-#: ../build/wpclef/includes/class.clef-login.php:366
+#: ../build/wpclef/includes/class.clef-login.php:367
 #: ../includes/class.clef-login.php:265 ../includes/class.clef-login.php:367
 msgid "Passwords have been disabled for this user."
 msgstr ""
@@ -261,7 +263,7 @@ msgstr ""
 msgid "An error occurred when creating your new account: "
 msgstr ""
 
-#: ../build/wpclef/includes/class.clef-login.php:359
+#: ../build/wpclef/includes/class.clef-login.php:360
 #: ../includes/class.clef-login.php:360
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
@@ -281,8 +283,8 @@ msgstr ""
 #: ../includes/class.clef-settings.php:50
 #, php-format
 msgid ""
-"Please link your Clef account before you fully disable passwords. You can do"
-" this <a href='%s'>here</a>"
+"Please link your Clef account before you fully disable passwords. You can do "
+"this <a href='%s'>here</a>"
 msgstr ""
 
 #: ../build/wpclef/includes/class.clef-translation.php:14
@@ -295,9 +297,9 @@ msgstr ""
 #: ../build/wpclef/includes/class.clef-translation.php:15
 #: ../includes/class.clef-translation.php:15
 msgid ""
-"There was a problem creating a new Clef application for your WordPress site:"
-" <%= error %>. Please refresh and try again. If the issue, persists, email "
-"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
+"There was a problem creating a new Clef application for your WordPress site: "
+"<%= error %>. Please refresh and try again. If the issue, persists, email <a "
+"href='mailto:support@getclef.com'>support@getclef.com</a>."
 msgstr ""
 
 #: ../build/wpclef/includes/class.clef-translation.php:16
@@ -405,8 +407,8 @@ msgstr ""
 #: ../templates/admin/badge-prompt.tpl.php:8
 msgid ""
 "Let your visitors know that you are protected with the Clef login by adding "
-"a Clef badge to the footer of your page. </br> This helps your visitors know"
-" they are browsing a secure site and helps us spread the word about Clef."
+"a Clef badge to the footer of your page. </br> This helps your visitors know "
+"they are browsing a secure site and helps us spread the word about Clef."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/badge-prompt.tpl.php:10
@@ -550,8 +552,8 @@ msgstr ""
 #: ../templates/admin/form.tpl.php:103
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
-"to. For more advanced settings, visit the <a "
-"href='http://getclef.com/developer'>Clef developer site</a>."
+"to. For more advanced settings, visit the <a href='http://getclef.com/"
+"developer'>Clef developer site</a>."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/form.tpl.php:113
@@ -617,8 +619,8 @@ msgstr ""
 #: ../templates/admin/multisite/network-enabled.tpl.php:5
 msgid ""
 "Currently, you control Clef settings for all the sites in your network. If "
-"you disable network-wide settings, individual sites in the network will need"
-" to manage their own Clef settings."
+"you disable network-wide settings, individual sites in the network will need "
+"to manage their own Clef settings."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/multisite/network-enabled.tpl.php:18
@@ -726,9 +728,8 @@ msgstr ""
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:39
 #: ../templates/admin/tutorial.tpl.php:39
 msgid ""
-"To connect, click the button below and sync the Wave. Once you're connected,"
-" you'll be able to log in and out of your WordPress site with just your "
-"phone."
+"To connect, click the button below and sync the Wave. Once you're connected, "
+"you'll be able to log in and out of your WordPress site with just your phone."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:43
@@ -774,9 +775,9 @@ msgstr ""
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:54
 #: ../templates/admin/tutorial.tpl.php:54
 msgid ""
-"If you lose your device, don't fret! Just visit <a "
-"href='https://getclef.com/lost'>getclef.com/lost</a>, deactivate with your "
-"PIN, and reactivate on a new device."
+"If you lose your device, don't fret! Just visit <a href='https://getclef.com/"
+"lost'>getclef.com/lost</a>, deactivate with your PIN, and reactivate on a "
+"new device."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:55
@@ -822,9 +823,8 @@ msgstr ""
 #: ../templates/invite_email.tpl.php:12
 #, php-format
 msgid ""
-"The administrator for %s just set up <a "
-"href=\"https://getclef.com\">Clef</a>, which means you can now log in "
-"without passwords."
+"The administrator for %s just set up <a href=\"https://getclef.com\">Clef</"
+"a>, which means you can now log in without passwords."
 msgstr ""
 
 #: ../build/wpclef/templates/invite_email.tpl.php:13
@@ -862,8 +862,8 @@ msgstr ""
 msgid ""
 "We've made it really easy to get all of your site's users up and running "
 "with Clef. Click the button below and we'll send an email inviting your "
-"users to set up their Clef account on your site. The invite email has <b"
-">step-by-step instructions</b> and a video walkthrough."
+"users to set up their Clef account on your site. The invite email has "
+"<b>step-by-step instructions</b> and a video walkthrough."
 msgstr ""
 
 #: ../build/wpclef/templates/js-templates/invite.tpl.php:11
@@ -938,8 +938,8 @@ msgstr ""
 #: ../build/wpclef/templates/pro/form.tpl.php:5
 #: ../templates/pro/form.tpl.php:5
 msgid ""
-"Add a custom logo and message to the Clef overlay to make your visitors feel"
-" at home."
+"Add a custom logo and message to the Clef overlay to make your visitors feel "
+"at home."
 msgstr ""
 
 #: ../build/wpclef/templates/pro/form.tpl.php:7

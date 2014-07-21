@@ -1,14 +1,15 @@
-# 
+#
 # Translators:
 # limayeltsin <webyelt@gmail.com>, 2014
 # limayeltsin <webyelt@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
-"POT-Creation-Date: 2014-07-20 17:55-0800\n"
-"PO-Revision-Date: 2014-07-21 00:56+0000\n"
+"POT-Creation-Date: 2014-07-20 18:30-0800\n"
+"PO-Revision-Date: 2014-07-20 18:45-0800\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/wpclef/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"wpclef/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -195,8 +196,8 @@ msgstr "não nenhum outro usuário sem Clef com esta regra ou maior"
 #: ../build/wpclef/includes/class.clef-admin.php:498
 #: ../includes/class.clef-admin.php:498
 msgid ""
-"there was an error sending the invite email to all users. Copy and paste the"
-" preview email to your users and they'll be walked through a tutorial to "
+"there was an error sending the invite email to all users. Copy and paste the "
+"preview email to your users and they'll be walked through a tutorial to "
 "connect with Clef"
 msgstr ""
 
@@ -240,12 +241,14 @@ msgstr "Desculpe, este não é um convite válido."
 #: ../build/wpclef/includes/class.clef-login.php:201
 #: ../includes/class.clef-login.php:201
 msgid ""
-"Sorry, this invite link has expired. Please contact your administrator for a"
-" new one."
-msgstr "Desculpe, o link de convite expirou. Por favor, contate o administrador para um novo."
+"Sorry, this invite link has expired. Please contact your administrator for a "
+"new one."
+msgstr ""
+"Desculpe, o link de convite expirou. Por favor, contate o administrador para "
+"um novo."
 
 #: ../build/wpclef/includes/class.clef-login.php:265
-#: ../build/wpclef/includes/class.clef-login.php:366
+#: ../build/wpclef/includes/class.clef-login.php:367
 #: ../includes/class.clef-login.php:265 ../includes/class.clef-login.php:367
 msgid "Passwords have been disabled for this user."
 msgstr "As senhas foram desabilitadas para este usuário."
@@ -263,7 +266,7 @@ msgstr ""
 msgid "An error occurred when creating your new account: "
 msgstr "Um erro ocorreu ao criar sua nova conta:"
 
-#: ../build/wpclef/includes/class.clef-login.php:359
+#: ../build/wpclef/includes/class.clef-login.php:360
 #: ../includes/class.clef-login.php:360
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
@@ -283,24 +286,32 @@ msgstr "Trapaçeando &#8217;, hein?"
 #: ../includes/class.clef-settings.php:50
 #, php-format
 msgid ""
-"Please link your Clef account before you fully disable passwords. You can do"
-" this <a href='%s'>here</a>"
-msgstr "Por favor, link sua conta Clef antes de desativar totalmente as senhas. Você pode realizar isso <a href='%s'>aqui</a>."
+"Please link your Clef account before you fully disable passwords. You can do "
+"this <a href='%s'>here</a>"
+msgstr ""
+"Por favor, link sua conta Clef antes de desativar totalmente as senhas. Você "
+"pode realizar isso <a href='%s'>aqui</a>."
 
 #: ../build/wpclef/includes/class.clef-translation.php:14
 #: ../includes/class.clef-translation.php:14
 msgid ""
 "There was a problem automatically connecting your Clef account: <%= error "
 "%>. Please refresh and try again."
-msgstr "Ocorreu um erro ao conectar automaticamente com sua conta Clef: <%= error %>. Por favor atualize a página e tente novamente."
+msgstr ""
+"Ocorreu um erro ao conectar automaticamente com sua conta Clef: <%= error "
+"%>. Por favor atualize a página e tente novamente."
 
 #: ../build/wpclef/includes/class.clef-translation.php:15
 #: ../includes/class.clef-translation.php:15
 msgid ""
-"There was a problem creating a new Clef application for your WordPress site:"
-" <%= error %>. Please refresh and try again. If the issue, persists, email "
-"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
-msgstr "Ocorreu um problema ao criar uma nova aplicação Clef para seu site WordPress: <%= error %>. Por favor, atualize a página e tente novamente. Se o problema persistir, envie um e-mail para <a href='mailto:support@getclef.com'>support@getclef.com</a>."
+"There was a problem creating a new Clef application for your WordPress site: "
+"<%= error %>. Please refresh and try again. If the issue, persists, email <a "
+"href='mailto:support@getclef.com'>support@getclef.com</a>."
+msgstr ""
+"Ocorreu um problema ao criar uma nova aplicação Clef para seu site "
+"WordPress: <%= error %>. Por favor, atualize a página e tente novamente. Se "
+"o problema persistir, envie um e-mail para <a href='mailto:support@getclef."
+"com'>support@getclef.com</a>."
 
 #: ../build/wpclef/includes/class.clef-translation.php:16
 #: ../includes/class.clef-translation.php:16
@@ -340,7 +351,9 @@ msgstr "Desconectado com sucesso da conta Clef."
 #: ../build/wpclef/includes/class.clef-translation.php:26
 #: ../includes/class.clef-translation.php:26
 msgid "Settings are being saved. Are you sure you want to navigate away?"
-msgstr "As configurações estão sendo salvas. Você tem certeza que deseja navegar para outra página?"
+msgstr ""
+"As configurações estão sendo salvas. Você tem certeza que deseja navegar "
+"para outra página?"
 
 #: ../build/wpclef/includes/class.clef-user-settings.php:80
 #: ../includes/class.clef-user-settings.php:80
@@ -353,7 +366,10 @@ msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
 "before disconnecting your Clef account"
-msgstr "suas senhas estão desativadas. <br/> Se você desconectar sua conta Clef, você não poderá fazer o login. Por favor ative as senhas para você antes de desconectar sua conta Clef."
+msgstr ""
+"suas senhas estão desativadas. <br/> Se você desconectar sua conta Clef, "
+"você não poderá fazer o login. Por favor ative as senhas para você antes de "
+"desconectar sua conta Clef."
 
 #: ../build/wpclef/includes/class.clef-utils.php:145
 #: ../includes/class.clef-utils.php:145
@@ -407,9 +423,13 @@ msgstr "Você acabou de realizar o seu primeiro login seguro com o Clef!"
 #: ../templates/admin/badge-prompt.tpl.php:8
 msgid ""
 "Let your visitors know that you are protected with the Clef login by adding "
-"a Clef badge to the footer of your page. </br> This helps your visitors know"
-" they are browsing a secure site and helps us spread the word about Clef."
-msgstr "Permite a seus visitantes saber que você está protegido com o login Clef, adicionando um badge Clef no rodapé da sua página. </ br> Isso ajuda a seus visitantes saber que eles estão navegando em um site seguro e nos ajuda a espalhar a palavra sobre Clef."
+"a Clef badge to the footer of your page. </br> This helps your visitors know "
+"they are browsing a secure site and helps us spread the word about Clef."
+msgstr ""
+"Permite a seus visitantes saber que você está protegido com o login Clef, "
+"adicionando um badge Clef no rodapé da sua página. </ br> Isso ajuda a seus "
+"visitantes saber que eles estão navegando em um site seguro e nos ajuda a "
+"espalhar a palavra sobre Clef."
 
 #: ../build/wpclef/templates/admin/badge-prompt.tpl.php:10
 #: ../templates/admin/badge-prompt.tpl.php:10
@@ -436,18 +456,23 @@ msgstr ""
 #: ../templates/admin/form.tpl.php:26
 msgid ""
 "Disable passwords for all users with privileges greater than or equal to "
-msgstr "Desativar senhas para todos os usuários com privilégios maiores ou iguais a"
+msgstr ""
+"Desativar senhas para todos os usuários com privilégios maiores ou iguais a"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:30
 #: ../templates/admin/form.tpl.php:30
 msgid "Disable passwords for all users and hide the password login form."
-msgstr "Desativar senha para todos os usuários e esconder o campo de senha do formulário de login."
+msgstr ""
+"Desativar senha para todos os usuários e esconder o campo de senha do "
+"formulário de login."
 
 #: ../build/wpclef/templates/admin/form.tpl.php:34
 #: ../templates/admin/form.tpl.php:34
 msgid ""
 "Allow passwords for API (necessary for things like the WordPress mobile app)"
-msgstr "Permitir senhas para API (necessário para coisas como o aplicativo do WordPress para celulares)"
+msgstr ""
+"Permitir senhas para API (necessário para coisas como o aplicativo do "
+"WordPress para celulares)"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:37
 #: ../templates/admin/form.tpl.php:37
@@ -470,7 +495,10 @@ msgid ""
 "You have disabled passwords for some (or all) users. In case of emergency, "
 "you can create a special link where passwords can still be used. This is a "
 "good safety precaution."
-msgstr "Você desativou as senhas para alguns (ou todos) usuários. Em caso de emergência, voê pode criar um link especial onde as senhas ainda são utilizadas. Isso é ótimo como medida de preocaução."
+msgstr ""
+"Você desativou as senhas para alguns (ou todos) usuários. Em caso de "
+"emergência, voê pode criar um link especial onde as senhas ainda são "
+"utilizadas. Isso é ótimo como medida de preocaução."
 
 #: ../build/wpclef/templates/admin/form.tpl.php:52
 #: ../templates/admin/form.tpl.php:52
@@ -498,7 +526,11 @@ msgid ""
 "Clef is, and will always be, free for you and your users. We'd really "
 "appreciate it if you'd support us (and show visitors they are browsing a "
 "secure site) by adding a link to Clef in your site footer!"
-msgstr "Clef é e sempre será grátis para você e seus usuários. Nós apreciamos se você puder colaborar conosco (e mostrar aos seus visitantes que eles estão navegando em um site seguro) adicionando um link para o Clef no rodapé do seu site!"
+msgstr ""
+"Clef é e sempre será grátis para você e seus usuários. Nós apreciamos se "
+"você puder colaborar conosco (e mostrar aos seus visitantes que eles estão "
+"navegando em um site seguro) adicionando um link para o Clef no rodapé do "
+"seu site!"
 
 #: ../build/wpclef/templates/admin/form.tpl.php:75
 #: ../templates/admin/form.tpl.php:75
@@ -552,9 +584,12 @@ msgstr "Configurações da API do Clef"
 #: ../templates/admin/form.tpl.php:103
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
-"to. For more advanced settings, visit the <a "
-"href='http://getclef.com/developer'>Clef developer site</a>."
-msgstr "Essas chaves conectam o WordPress com a aplicação Clef que você realiza login. Para configurações mais avançadas, visite o <a href='http://getclef.com/developer'>site de desenvolvimento Clef</a>."
+"to. For more advanced settings, visit the <a href='http://getclef.com/"
+"developer'>Clef developer site</a>."
+msgstr ""
+"Essas chaves conectam o WordPress com a aplicação Clef que você realiza "
+"login. Para configurações mais avançadas, visite o <a href='http://getclef."
+"com/developer'>site de desenvolvimento Clef</a>."
 
 #: ../build/wpclef/templates/admin/form.tpl.php:113
 #: ../templates/admin/form.tpl.php:113
@@ -601,7 +636,9 @@ msgstr "Ativar Clef em toda a rede"
 msgid ""
 "If you would like to enable Clef across all sites on the network using the "
 "options you set here, click the button below."
-msgstr "Se você deseja ativar Clef em toda a sua rede usando as opção que você configurou aqui, clique no botão abaixo."
+msgstr ""
+"Se você deseja ativar Clef em toda a sua rede usando as opção que você "
+"configurou aqui, clique no botão abaixo."
 
 #: ../build/wpclef/templates/admin/multisite/network-disabled.tpl.php:8
 #: ../templates/admin/multisite/network-disabled.tpl.php:8
@@ -619,9 +656,12 @@ msgstr ""
 #: ../templates/admin/multisite/network-enabled.tpl.php:5
 msgid ""
 "Currently, you control Clef settings for all the sites in your network. If "
-"you disable network-wide settings, individual sites in the network will need"
-" to manage their own Clef settings."
-msgstr "Atualmente, você controla as configurações Clef para todos os usuários em sua rede. Se você desativar essa opção, sites individuais na rede precisarão gerenciar suas próprias configurações Clef."
+"you disable network-wide settings, individual sites in the network will need "
+"to manage their own Clef settings."
+msgstr ""
+"Atualmente, você controla as configurações Clef para todos os usuários em "
+"sua rede. Se você desativar essa opção, sites individuais na rede precisarão "
+"gerenciar suas próprias configurações Clef."
 
 #: ../build/wpclef/templates/admin/multisite/network-enabled.tpl.php:18
 #: ../templates/admin/multisite/network-enabled.tpl.php:18
@@ -691,7 +731,10 @@ msgstr "Outros plugins que Clef recomenda para a segurança do seu site."
 msgid ""
 "BruteProtect is a cloud-powered Brute Force attack prevention plugin. It "
 "leverages millions of WordPress sites to identify and block malicious IPs."
-msgstr "BruteProtect é um plugin de prevenção de ataque Brute Force, que funciona baseado na nuvem. Ele aproveita milhões de sites WordPress para identificar e bloquear IPs maliciosos."
+msgstr ""
+"BruteProtect é um plugin de prevenção de ataque Brute Force, que funciona "
+"baseado na nuvem. Ele aproveita milhões de sites WordPress para identificar "
+"e bloquear IPs maliciosos."
 
 #: ../build/wpclef/templates/admin/other-install.tpl.php:8
 #: ../templates/admin/other-install.tpl.php:8
@@ -728,15 +771,15 @@ msgstr "Conecte sua conta do Clef"
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:39
 #: ../templates/admin/tutorial.tpl.php:39
 msgid ""
-"To connect, click the button below and sync the Wave. Once you're connected,"
-" you'll be able to log in and out of your WordPress site with just your "
-"phone."
+"To connect, click the button below and sync the Wave. Once you're connected, "
+"you'll be able to log in and out of your WordPress site with just your phone."
 msgstr ""
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:43
 #: ../templates/admin/tutorial.tpl.php:43
 msgid "Don't have the app? Let us text you the download link."
-msgstr "Não tem um aplicativo? Deixe-nos enviar um texto com o link do download."
+msgstr ""
+"Não tem um aplicativo? Deixe-nos enviar um texto com o link do download."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:48
 #: ../templates/admin/tutorial.tpl.php:48
@@ -753,7 +796,10 @@ msgstr "Sincronize uma vez, faça login em qualquer lugar"
 msgid ""
 "When you scan a Clef Wave, you'll be logged in to all of your sites on that "
 "computer. This means you don't have to keep scanning as you browse the web."
-msgstr "Quando você escanea uma Clef Wave, você será automaticamente logado em todos os seus sites naquele computador. Isso significa que você não precisa ficar escaneando enquanto navega na internet."
+msgstr ""
+"Quando você escanea uma Clef Wave, você será automaticamente logado em todos "
+"os seus sites naquele computador. Isso significa que você não precisa ficar "
+"escaneando enquanto navega na internet."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:51
 #: ../templates/admin/tutorial.tpl.php:51
@@ -776,10 +822,13 @@ msgstr "Perdeu seu dispositivo?"
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:54
 #: ../templates/admin/tutorial.tpl.php:54
 msgid ""
-"If you lose your device, don't fret! Just visit <a "
-"href='https://getclef.com/lost'>getclef.com/lost</a>, deactivate with your "
-"PIN, and reactivate on a new device."
-msgstr "Se você perdeu seu dispositivo, não surte! Basta visitar <a href='https://getclef.com/lost'>getclef.com/lost</a>, desativar seu PIN e reativar com outro dispositivo."
+"If you lose your device, don't fret! Just visit <a href='https://getclef.com/"
+"lost'>getclef.com/lost</a>, deactivate with your PIN, and reactivate on a "
+"new device."
+msgstr ""
+"Se você perdeu seu dispositivo, não surte! Basta visitar <a href='https://"
+"getclef.com/lost'>getclef.com/lost</a>, desativar seu PIN e reativar com "
+"outro dispositivo."
 
 #: ../build/wpclef/templates/admin/tutorial.tpl.php:55
 #: ../templates/admin/tutorial.tpl.php:55
@@ -808,7 +857,11 @@ msgid ""
 "extension that lets you log in to sites like Facebook, Gmail, and Twitter "
 "using Clef. It takes 5 seconds to install and will give you the full Clef "
 "experience."
-msgstr "<a target='_blank' href='http://getwaltz.com'>Waltz</a> é uma extensão do Chrome que permite que você realize o login em sites como Facebook, Gmail e Twitter usando o Clef. Leva 5 segundos para instalar e ter toda a experiência Clef."
+msgstr ""
+"<a target='_blank' href='http://getwaltz.com'>Waltz</a> é uma extensão do "
+"Chrome que permite que você realize o login em sites como Facebook, Gmail e "
+"Twitter usando o Clef. Leva 5 segundos para instalar e ter toda a "
+"experiência Clef."
 
 #: ../build/wpclef/templates/admin/waltz-prompt.tpl.php:8
 #: ../templates/admin/waltz-prompt.tpl.php:8
@@ -824,9 +877,8 @@ msgstr "Olá,"
 #: ../templates/invite_email.tpl.php:12
 #, php-format
 msgid ""
-"The administrator for %s just set up <a "
-"href=\"https://getclef.com\">Clef</a>, which means you can now log in "
-"without passwords."
+"The administrator for %s just set up <a href=\"https://getclef.com\">Clef</"
+"a>, which means you can now log in without passwords."
 msgstr ""
 
 #: ../build/wpclef/templates/invite_email.tpl.php:13
@@ -864,8 +916,8 @@ msgstr "Seu site é tão seguro quanto a sua senha mais fraca."
 msgid ""
 "We've made it really easy to get all of your site's users up and running "
 "with Clef. Click the button below and we'll send an email inviting your "
-"users to set up their Clef account on your site. The invite email has <b"
-">step-by-step instructions</b> and a video walkthrough."
+"users to set up their Clef account on your site. The invite email has "
+"<b>step-by-step instructions</b> and a video walkthrough."
 msgstr ""
 
 #: ../build/wpclef/templates/js-templates/invite.tpl.php:11
@@ -940,8 +992,8 @@ msgstr ""
 #: ../build/wpclef/templates/pro/form.tpl.php:5
 #: ../templates/pro/form.tpl.php:5
 msgid ""
-"Add a custom logo and message to the Clef overlay to make your visitors feel"
-" at home."
+"Add a custom logo and message to the Clef overlay to make your visitors feel "
+"at home."
 msgstr ""
 
 #: ../build/wpclef/templates/pro/form.tpl.php:7
@@ -970,11 +1022,15 @@ msgstr "Desconectar sua conta Clef"
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
-msgstr "Atualmente você tem uma conta Clef conectada com este usuário do WordPress. Para desconectar esta conta Clef, clique no botão abaixo."
+msgstr ""
+"Atualmente você tem uma conta Clef conectada com este usuário do WordPress. "
+"Para desconectar esta conta Clef, clique no botão abaixo."
 
 #: ../build/wpclef/templates/user_settings.tpl.php:7
 #: ../templates/user_settings.tpl.php:7
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
-msgstr "Nota: se as senhas estiverem desativadas para todos os usuários e você desconectar sua conta Clef, você ficará impedido de fazer login."
+msgstr ""
+"Nota: se as senhas estiverem desativadas para todos os usuários e você "
+"desconectar sua conta Clef, você ficará impedido de fazer login."

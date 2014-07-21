@@ -35,7 +35,8 @@
     "gulp-zip": "~0.3.3",
     "node-gettext": "~0.2.14",
     "through2": "~0.5.1",
-    "replace-ext": "0.0.1"
+    "replace-ext": "0.0.1",
+    "gettext-parser": "~0.2.0"
   },
   "keywords": []
 }
