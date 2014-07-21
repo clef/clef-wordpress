@@ -20,12 +20,12 @@ class ClefUtils {
     }
 
     /**
-     * Renders the specified template, giving it access to $variables. 
+     * Renders the specified template, giving it access to $variables.
      * Strings are escaped.
      *
-     * @param string $name The name (with no .php extension) of a file in 
+     * @param string $name The name (with no .php extension) of a file in
      *   templates/.
-     * @param array $variables A list of variables to be used in the 
+     * @param array $variables A list of variables to be used in the
      *   template.
      * @return string
      */
@@ -83,10 +83,10 @@ class ClefUtils {
         }
         $name .= '.js';
         wp_register_script(
-            $ident, 
-            CLEF_URL .'assets/dist/js/' . $name, 
-            $dependencies, 
-            CLEF_VERSION, 
+            $ident,
+            CLEF_URL .'assets/dist/js/' . $name,
+            $dependencies,
+            CLEF_VERSION,
             TRUE
         );
         wp_localize_script($ident, "clefTranslations", ClefTranslation::javascript());
@@ -100,24 +100,24 @@ class ClefUtils {
         }
         $name .= '.css';
         wp_register_style(
-            $ident, 
-            CLEF_URL . 'assets/dist/css/' . $name, 
-            FALSE, 
+            $ident,
+            CLEF_URL . 'assets/dist/css/' . $name,
+            FALSE,
             CLEF_VERSION
-        ); 
+        );
         return $ident;
     }
 
     public static function style_has_been_added($name) {
         $ident = "wpclef-" . $name;
-        return wp_style_is($ident, 'enqueued') 
+        return wp_style_is($ident, 'enqueued')
             || wp_style_is($ident, 'done')
             || wp_style_is($ident, 'to_do');
     }
 
     public static function script_has_been_added($name) {
         $ident = "wpclef-" . $name;
-        return wp_script_is($ident, 'enqueued') 
+        return wp_script_is($ident, 'enqueued')
             || wp_script_is($ident, 'done')
             || wp_script_is($ident, 'to_do');
     }
@@ -133,6 +133,19 @@ class ClefUtils {
             $user_id = wp_get_current_user()->ID;
         }
 
+        $user = get_users(array(
+            'meta_key' => 'clef_id',
+            'meta_value' => $clef_id,
+            'blog_id' => false
+        ));
+
+        if (!empty($user))  {
+            return new WP_Error(
+                'clef_id_already_associated',
+                __("The Clef account you're trying to connect is already associated to a different WordPress account")
+            );
+        }
+
         update_user_meta($user_id, 'clef_id', $clef_id);
     }
 
@@ -140,7 +153,7 @@ class ClefUtils {
         if (!$user_id) {
             $user_id = wp_get_current_user()->ID;
         }
-        
+
         delete_user_meta($user_id, "clef_id");
     }
 
@@ -156,7 +169,7 @@ class ClefUtils {
             'app_secret' => $app_secret,
         );
 
-        $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) ); 
+        $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) );
 
         if ( is_wp_error($response)  ) {
             throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
@@ -187,7 +200,7 @@ class ClefUtils {
 
     public static function user_fulfills_role($user, $role) {
         $fulfills_role = false;
-        $role_map = array( 
+        $role_map = array(
             "subscriber",
             "contributor",
             "author",
@@ -202,7 +215,7 @@ class ClefUtils {
                 $fulfills_role = true;
                 break;
             }
-        } 
+        }
 
         if ($role == "super administrator" && is_super_admin($user->ID)) {
             $fulfills_role = true;

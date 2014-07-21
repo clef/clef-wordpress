@@ -16,11 +16,11 @@ class Clef {
 
         require_once(CLEF_PATH . 'includes/class.clef-core.php');
         add_action('plugins_loaded', array('ClefCore', 'manage_wp_fix'), 0);
-        add_action('init', array('ClefCore', 'start'));
+        add_action('plugins_loaded', array('ClefCore', 'start'));
     }
 
     private function define_constants() {
-        define('CLEF_VERSION', '2.1.3');
+        define('CLEF_VERSION', '2.2.0');
 
         if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', false);
 

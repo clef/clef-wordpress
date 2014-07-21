@@ -587,6 +587,9 @@
     passwordsFullyDisabled: function() {
       return !!parseInt(this.cget('clef_password_settings_force'));
     },
+    loginIsEmbedded: function() {
+      return !!parseInt(this.cget('clef_form_settings_embed_clef'));
+    },
     overrideIsSet: function() {
       return !!this.overrideKey();
     },
@@ -634,7 +637,8 @@
       return this.toggleForm();
     },
     toggleForm: function(e) {
-      return this.$el.toggleClass('only-clef', this.model.passwordsFullyDisabled());
+      this.$el.toggleClass('only-clef', this.model.passwordsFullyDisabled());
+      return this.$el.toggleClass('embed-clef', this.model.loginIsEmbedded());
     }
   });
   this.AppView = AppView;
@@ -771,10 +775,10 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
       'change input, change textarea': 'render',
       'keyup textarea': 'render'
     },
-    preview: _.template($('#clef-customization-template').html()),
     initialize: function(opts, model) {
       this.opts = opts;
       this.model = model;
+      return this.preview = _.template($('#clef-customization-template').html());
     },
     render: function() {
       this.$el.find('#custom-login-view').html(this.preview({
