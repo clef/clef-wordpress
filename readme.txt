@@ -99,6 +99,18 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 = 2.2.0 =
 
+* Feature: adds shortcode to easily render login button
+* Feature: use modal to allow users to login and preserve state when they are logged out with Clef
+* Feature: menu notification when user hasn't configured Clef
+* Feature: by default, embed the Wave in the login form rather than making users click a button
+* Bug fix: issue where if passwords were fully disabled, but Clef wasn't configured, no login form would be shown
+* Bug fix: issue where a new session was opened for every request, not just ones where it was necessary (in admin for Clef users)
+* Bug fix: issue where users can connect the same Clef account to two WordPress accounts
+* Bug fix: issue where if the heartbeat API wasn't available, Clef could interfere with the loading of other plugins
+* Bug fix: issue where prompt to add Clef badge was shown even if the badge was already displayed
+
+= 2.1.3 =
+
 * Bug fix: fixes XMLRPC edge case with login on WordPress Mobile App
 
 = 2.1.2 =
