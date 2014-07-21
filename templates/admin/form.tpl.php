@@ -142,7 +142,7 @@
         </div>
         <div class="clef-overlay">
             <img src="<?php echo CLEF_URL ?>assets/dist/img/overlay.png" alt="clef overlay">
-            <div class="close-overlay overlay-text"><?php _e('close and log in with a password'); ?></div>
+            <div class="close-overlay overlay-text"><?php _e('log in with a password'); ?></div>
         </div>
         <p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox" class="ajax-ignore" id="rememberme" value="forever"> <?php _e("Remember Me"); ?></label></p>
         <p class="submit">
