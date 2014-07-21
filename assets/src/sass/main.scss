@@ -44,8 +44,11 @@
 
 // Styles for when Clef is embedded
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) {
-    #login {
+    &:not(.interim-login) #login {
         padding-top: 50px;
+    }
+
+    #login {
         width: 400px;
         margin: auto;
 

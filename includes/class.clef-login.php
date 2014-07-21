@@ -344,6 +344,7 @@ class ClefLogin {
             ClefUtils::associate_clef_id(ClefUtils::isset_POST('clef_id'), $user->ID);
             $session = ClefSession::start();
             $session->set('clef_account_connected_on_login', true);
+            $session->set('logged_in_at', time());
         }
         return $user;
     }

@@ -57,8 +57,9 @@ Styles
 .clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) .clef-button-container {
   margin-bottom: 0; }
 
+.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password):not(.interim-login) #login {
+  padding-top: 50px; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) #login {
-  padding-top: 50px;
   width: 400px;
   margin: auto; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) #login form {

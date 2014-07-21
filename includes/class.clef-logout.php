@@ -10,7 +10,7 @@ class ClefLogout {
         $this->initialize_hooks();
 
         if (!defined('DOING_AJAX') || !DOING_AJAX) {
-            $this->logged_out_check();
+            $this->logged_out_check(array("redirect" => true));
         }
     }
 
@@ -32,7 +32,7 @@ class ClefLogout {
             );
 
             $response = wp_remote_post( CLEF_API_BASE . 'logout', array( 'method' => 'POST',
-                'timeout' => 45, 'body' => $args ) ); 
+                'timeout' => 45, 'body' => $args ) );
 
             $body = json_decode( $response['body'] );
 
@@ -73,8 +73,6 @@ class ClefLogout {
             } else {
                 $logged_out = false;
             }
-        } else {
-            $logged_out = true;
         }
 
         if ($opts['redirect'] && $logged_out) {

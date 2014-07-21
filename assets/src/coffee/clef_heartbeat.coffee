@@ -1,5 +1,5 @@
 jQuery(document).ready ->
-    if wp.hearbeat
+    if wp.heartbeat
         wp.heartbeat.interval "fast"
         wp.heartbeat.enqueue "clef", "cleflogout", true
 
