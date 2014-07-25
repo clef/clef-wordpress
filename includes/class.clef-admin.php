@@ -323,6 +323,13 @@ class ClefAdmin {
             array_push($affiliates, "responsive");
         }
 
+        $affiliate_file_path = CLEF_PATH . "affiliates";
+        if (file_exists($affiliate_file_path) && $affiliate_file = fopen($affiliate_file_path, "r")) {
+            $line = fgets($affiliate_file);
+            if (strlen($line) > 0) $affiliates = array_merge($affiliates, array_map('trim', explode(',', $line)));
+            fclose($affiliate_file);
+        }
+
         return $affiliates;
     }
 
