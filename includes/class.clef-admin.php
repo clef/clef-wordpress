@@ -42,6 +42,9 @@ class ClefAdmin {
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
 
+        // Display the badge message, if appropriate
+        add_action('admin_init', array($this, 'clef_hook_onboarding'));
+
         add_action('clef_hook_admin_menu', array($this, "hook_admin_menu"));
         add_filter('clef_add_affiliate', array($this, "add_affiliates"));
 
@@ -61,7 +64,9 @@ class ClefAdmin {
             array('capability' => 'read')
         );
 
-        // Display the badge message, if appropriate
+    }
+
+    public function clef_hook_onboarding() {
         do_action('clef_hook_onboarding');
     }
 

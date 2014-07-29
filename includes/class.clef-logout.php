@@ -8,21 +8,20 @@ class ClefLogout {
     private function __construct($settings) {
         $this->settings = $settings;
         $this->initialize_hooks();
-
-        if (!defined('DOING_AJAX') || !DOING_AJAX) {
-            $this->logged_out_check(array("redirect" => true));
-        }
     }
 
     public function initialize_hooks() {
         add_filter( 'heartbeat_received',  array($this, "hook_heartbeat"), 10, 3);
-        $this->register_logout_hook_handler();
+        add_filter( 'init', array($this, 'logout_hook_handler'));
+        if (!defined('DOING_AJAX') || !DOING_AJAX) {
+            add_filter('init', array($this, "logged_out_check_with_redirect"));
+        }
     }
 
     /**
      * Handle a Clef logout hook handshake, if the parameters exist.
      */
-    public function register_logout_hook_handler() {
+    public function logout_hook_handler() {
         if(isset($_POST) && isset($_POST['logout_token'])) {
 
             $args = array(
@@ -60,6 +59,10 @@ class ClefLogout {
             // upon success, log user out
             update_user_meta($user->ID, 'logged_out_at', time());
         }
+    }
+
+    public function logged_out_check_with_redirect() {
+        $this->logged_out_check(array("redirect" => true));
     }
 
     public function logged_out_check($opts = array("redirect" => false)) {
