@@ -73,8 +73,7 @@ class ClefLogin {
     public function load_base_styles() {
         $ident = ClefUtils::register_style('main');
         wp_enqueue_style($ident);
-        $ident = ClefUtils::register_script('login');
-        wp_enqueue_script($ident);
+
         if (!has_action('login_enqueue_scripts', 'wp_print_styles'))
             add_action('login_enqueue_scripts', 'wp_print_styles', 11);
     }
