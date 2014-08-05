@@ -24,7 +24,7 @@
         if ($(this).attr('src').match('clef\.io/iframes/qr')) {
           $spinnerContainer.hide();
           return setTimeout(function() {
-            return $('.clef-embed-container').slideDown();
+            return $embedContainer.slideDown();
           });
         }
       });

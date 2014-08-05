@@ -22,6 +22,6 @@
             $('iframe').on 'load', ->
                 if $(this).attr('src').match('clef\.io/iframes/qr')
                     $spinnerContainer.hide()
-                    setTimeout -> $('.clef-embed-container').slideDown()
+                    setTimeout -> $embedContainer.slideDown()
 
 ).call this, jQuery
