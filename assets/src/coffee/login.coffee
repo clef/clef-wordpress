@@ -7,15 +7,21 @@
         false
 
     $ ->
+        $embedContainer = $('.clef-embed-container')
         $('.close-overlay').click closeOverlay
         $('.open-overlay').click openOverlay
         $('.overlay-info .open').click ->
             $('.overlay-info').removeClass 'closed'
 
-        if $('.clef-embed-container').length
+        if $embedContainer.length
+            $spinnerContainer = $('.spinner-container')
+
+            $embedContainer.hide()
+            $spinnerContainer.show()
+
             $('iframe').on 'load', ->
                 if $(this).attr('src').match('clef\.io/iframes/qr')
-                    $('.spinner-container').hide()
+                    $spinnerContainer.hide()
                     setTimeout -> $('.clef-embed-container').slideDown()
 
 ).call this, jQuery
