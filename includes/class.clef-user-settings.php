@@ -10,8 +10,6 @@ class ClefUserSettings {
     protected function __construct($settings) {
         $this->settings = $settings;
         $this->initialize_hooks();
-
-        add_action('wp_enqueue_scripts', array($this, 'register_assets'));
     }
 
     public function initialize_hooks() {
@@ -19,6 +17,7 @@ class ClefUserSettings {
         add_action('wp_footer', array($this, 'print_assets'));
 
         add_shortcode('clef_user_settings', array($this, 'render'));
+        add_action('wp_enqueue_scripts', array($this, 'register_assets'));
 
         global $clef_ajax;
         $clef_ajax->add_action(

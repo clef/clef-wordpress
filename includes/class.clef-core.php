@@ -128,6 +128,7 @@ class ClefCore {
         } else {
             $this->settings->set('installed_at', $version);
             $this->settings->set('clef_form_settings_embed_clef', 1);
+            $this->settings->set_saved_affiliates();
         }
 
         if ($settings_changes) {
