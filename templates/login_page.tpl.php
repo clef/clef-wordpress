@@ -56,7 +56,5 @@
 
     <?php } ?>
 
-    <!-- we manually include the javascript file to prevent plugin conflicts where the javascript file is not loaded -->
-    <script src="<?php echo CLEF_URL . '/assets/dist/js/login.' . (CLEF_DEBUG ? '' : 'min.') . 'js' ?>"></script>
 </div>
 
