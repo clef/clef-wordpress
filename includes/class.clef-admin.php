@@ -18,6 +18,7 @@ class ClefAdmin {
     const HIDE_USER_SETUP_BADGE = 'clef_hide_user_setup_badge';
 
     private static $instance = null;
+    private static $affiliates = array('siteground');
 
     protected $settings;
 
@@ -220,7 +221,7 @@ class ClefAdmin {
         }
 
 
-        if (!$this->bruteprotect_active() && !is_multisite())  {
+        if (!$this->bruteprotect_active() && !is_multisite() && !$this->affiliate_check())  {
             add_submenu_page(
                 $menu_name,
                 __('Add Additional Security', 'clef'),
@@ -323,12 +324,9 @@ class ClefAdmin {
             array_push($affiliates, "responsive");
         }
 
-        $uploads_dir = wp_upload_dir();
-        $affiliate_file_path = trailingslashit($uploads_dir['basedir']) . "wpclef/affiliates";
-        if (file_exists($affiliate_file_path) && $affiliate_file = fopen($affiliate_file_path, "r")) {
-            $line = fgets($affiliate_file);
-            if (strlen($line) > 0) $affiliates = array_merge($affiliates, array_map('trim', explode(',', $line)));
-            fclose($affiliate_file);
+        $saved_affiliates = $this->settings->get_saved_affiliates();
+        if ($saved_affiliates && count($saved_affiliates) > 0) {
+            $affiliates = array_unique(array_merge($affiliates, $saved_affiliates));
         }
 
         return $affiliates;
@@ -448,6 +446,14 @@ class ClefAdmin {
 
     public function bruteprotect_active() {
         return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
+    }
+
+    public function affiliate_check() {
+        $saved_affiliates = $this->settings->get_saved_affiliates();
+        foreach (self::$affiliates as $affiliate) {
+            if (in_array($affiliate, $saved_affiliates)) return true;
+        }
+        return false;
     }
 
     /**** BEGIN AJAX HANDLERS ******/
