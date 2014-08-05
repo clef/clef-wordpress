@@ -170,6 +170,34 @@ class ClefInternalSettings {
         return $this->get('clef_form_settings_embed_clef');
     }
 
+    public function set_saved_affiliates() {
+        $affiliate_file_path = trailingslashit(CLEF_PATH) . "affiliates";
+        $affiliates = false;
+
+        if (file_exists($affiliate_file_path) && $affiliate_file = fopen($affiliate_file_path, "r")) {
+            $line = fgets($affiliate_file);
+            fclose($affiliate_file);
+
+            if (strlen($line) > 0) {
+                $affiliates = array_map('trim', explode(',', $line));
+                $this->set('affiliates', $affiliates);
+                return $affiliates;
+            }
+        }
+
+        return false;
+    }
+
+    public function get_saved_affiliates() {
+        $saved_affiliates = $this->get('affiliates');
+        if (is_null($saved_affiliates)) $saved_affiliates = $this->set_saved_affiliates();
+        if ($saved_affiliates) {
+            return $saved_affiliates;
+        } else {
+            return array();
+        }
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;
