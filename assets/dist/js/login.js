@@ -9,15 +9,20 @@
     return false;
   };
   return $(function() {
+    var $embedContainer, $spinnerContainer;
+    $embedContainer = $('.clef-embed-container');
     $('.close-overlay').click(closeOverlay);
     $('.open-overlay').click(openOverlay);
     $('.overlay-info .open').click(function() {
       return $('.overlay-info').removeClass('closed');
     });
-    if ($('.clef-embed-container').length) {
+    if ($embedContainer.length) {
+      $spinnerContainer = $('.spinner-container');
+      $embedContainer.hide();
+      $spinnerContainer.show();
       return $('iframe').on('load', function() {
         if ($(this).attr('src').match('clef\.io/iframes/qr')) {
-          $('.spinner-container').hide();
+          $spinnerContainer.hide();
           return setTimeout(function() {
             return $('.clef-embed-container').slideDown();
           });
