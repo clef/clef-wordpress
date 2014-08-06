@@ -175,11 +175,10 @@ class ClefInternalSettings {
         $affiliates = false;
 
         if (file_exists($affiliate_file_path) && $affiliate_file = fopen($affiliate_file_path, "r")) {
-            $line = fgets($affiliate_file);
+            $affiliates = fgets($affiliate_file);
             fclose($affiliate_file);
 
-            if (strlen($line) > 0) {
-                $affiliates = array_map('trim', explode(',', $line));
+            if (strlen($affiliates) > 0) {
                 $this->set('affiliates', $affiliates);
                 return $affiliates;
             }
@@ -192,7 +191,7 @@ class ClefInternalSettings {
         $saved_affiliates = $this->get('affiliates');
         if (is_null($saved_affiliates)) $saved_affiliates = $this->set_saved_affiliates();
         if ($saved_affiliates) {
-            return $saved_affiliates;
+            return array_map('trim', explode(',', $saved_affiliates));
         } else {
             return array();
         }
