@@ -301,7 +301,7 @@ class Settings_API_Util_Field {
   }
 
   /**
-   * Checkbox
+   * Radio
    * @param array $options
    */
   public static function radio(array $options) {
