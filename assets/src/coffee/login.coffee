@@ -14,16 +14,14 @@
             $('.overlay-info').removeClass 'closed'
 
         if $embedContainer.length
-            loaded = false
             $spinnerContainer = $('.spinner-container')
             $iframe = $embedContainer.find('iframe')
 
             $iframe.load ->
-                loaded = true
                 $spinnerContainer.hide()
                 setTimeout -> $embedContainer.slideDown()
 
-            if not loaded
+            if not $iframe.attr 'data-loaded'
                 $embedContainer.hide()
                 $spinnerContainer.show()
 
