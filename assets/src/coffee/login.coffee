@@ -14,14 +14,17 @@
             $('.overlay-info').removeClass 'closed'
 
         if $embedContainer.length
+            loaded = false
             $spinnerContainer = $('.spinner-container')
+            $iframe = $embedContainer.find('iframe')
 
-            $embedContainer.hide()
-            $spinnerContainer.show()
+            $iframe.load ->
+                loaded = true
+                $spinnerContainer.hide()
+                setTimeout -> $embedContainer.slideDown()
 
-            $('iframe').on 'load', ->
-                if $(this).attr('src').match('clef\.io/iframes/qr')
-                    $spinnerContainer.hide()
-                    setTimeout -> $embedContainer.slideDown()
+            if not loaded
+                $embedContainer.hide()
+                $spinnerContainer.show()
 
 ).call this, jQuery
