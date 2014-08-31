@@ -305,7 +305,7 @@ class ClefLogin {
                     if(is_wp_error($id)) {
                         return new WP_Error(
                             'clef',
-                            __("An error occurred when creating your new account: ", 'clef') . $res->get_error_message()
+                            __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
                         );
                     }
                     $user = get_user_by('id', $id );
