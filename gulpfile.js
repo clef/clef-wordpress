@@ -98,8 +98,6 @@ gulp.task('images', function() {
         .pipe(notify({message: "Images minified."}));
 });
 
-gulp.task
-
 gulp.task('build', function() {
     runSequence(
         ['images', 'sass', 'coffee'],
@@ -120,31 +118,6 @@ gulp.task('build', function() {
         }
     );
 })
-
-// need to fix
-// gulp.task('translations', function() {
-//     var es = require('event-stream'),
-//         gettext = require('gettext-parser'),
-//         path = require('path'),
-//         ext = require('replace-ext');
-
-//     gulp.src('languages/*.po')
-//         .pipe(es.map(
-//             function(file, cb) {
-//                 if (file.isNull()) return cb(null, file);
-
-//                 var domain = file.path.match('clef-(.*)\.po')[1];
-
-
-
-//                 file.path = ext(file.path, '.mo');
-//                 file.contents = gettext.mo.compile(gettext.po.parse(file.contents));
-
-//                 cb(null, file);
-//             }
-//         ))
-//         .pipe(gulp.dest('languages'));
-// });
 
 gulp.task('watch', function() {
     server.listen(35729, function(err) {

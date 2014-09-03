@@ -15,13 +15,14 @@
 
         if $embedContainer.length
             $spinnerContainer = $('.spinner-container')
+            $iframe = $embedContainer.find('iframe')
 
-            $embedContainer.hide()
-            $spinnerContainer.show()
+            $iframe.load ->
+                $spinnerContainer.hide()
+                setTimeout -> $embedContainer.slideDown()
 
-            $('iframe').on 'load', ->
-                if $(this).attr('src').match('clef\.io/iframes/qr')
-                    $spinnerContainer.hide()
-                    setTimeout -> $embedContainer.slideDown()
+            if not $iframe.attr 'data-loaded'
+                $embedContainer.hide()
+                $spinnerContainer.show()
 
 ).call this, jQuery
