@@ -6,7 +6,7 @@
                 <h4 class='subheader'><?php _e('Your site is only as secure as its weakest password.', "clef"); ?></h4>
             </div>
             <p><?php _e("We've made it really easy to get all of your site's users up and running with Clef. Click the button below and we'll send an email inviting your users to set up their Clef account on your site. The invite email has <b>step-by-step instructions</b> and a video walkthrough.", "clef"); ?></p>
-            
+
             <div class="input-container">
                 <label for=""><?php _e("Invite all users with roles <b>greater than or equal</b> to ", "clef"); ?></label>
                 <select class="ajax-ignore" name="invite-users-role">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="preview-container">
-            <h4>Email preview</h4>
+            <h4><?php _e("Email preview", "clef"); ?></h4>
             <div class="email">
                 <?php include CLEF_TEMPLATE_PATH . "invite_email.tpl.php"; ?>
             </div>

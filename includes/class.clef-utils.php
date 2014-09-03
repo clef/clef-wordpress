@@ -142,7 +142,7 @@ class ClefUtils {
         if (!empty($user))  {
             return new WP_Error(
                 'clef_id_already_associated',
-                __("The Clef account you're trying to connect is already associated to a different WordPress account")
+                __("The Clef account you're trying to connect is already associated to a different WordPress account", "clef")
             );
         }
 

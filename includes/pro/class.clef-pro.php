@@ -20,13 +20,13 @@ class ClefPro  {
     public function add_settings($form) {
         $customization = $form->addSection('customization', __('Customization', 'clef'));
         $customization->addField(
-            'message', 
-            __('Message for login page'),
+            'message',
+            __('Message for login page', 'clef'),
             Settings_API_Util_Field::TYPE_TEXTAREA
         );
         $customization->addField(
-            'logo', 
-            __('Logo for login page'),
+            'logo',
+            __('Logo for login page', 'clef'),
             Settings_API_Util_Field::TYPE_HIDDEN
         );
     }
@@ -46,7 +46,7 @@ class ClefPro  {
             return $response;
         } else {
             $body = json_decode($response['body'], true);
-            
+
             if (isset($body['success']) && $body['success']) {
                 return $body['services'];
             } else {

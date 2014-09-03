@@ -17,7 +17,7 @@
         <div class="settings-section">
             <div class="password-settings">
                 <div class="inputs-container">
-                    <h3><?php _e("Disable passwords"); ?></h3>
+                    <h3><?php _e("Disable passwords", "clef"); ?></h3>
                     <div class="input-container">
                         <label for="disable_passwords"><?php _e("Disable passwords for Clef users", "clef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('disable_passwords')->render(); ?>
@@ -34,7 +34,7 @@
                         <label for=""><?php _e("Allow passwords for API (necessary for things like the WordPress mobile app)", "clef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('xml_allowed')->render(); ?>
                     </div>
-                    <h3><?php _e("Form style"); ?></h3>
+                    <h3><?php _e("Form style", "clef"); ?></h3>
                     <div class="input-container">
                         <label for=""><?php _e("Show Clef wave as primary login option", "clef"); ?></label>
                         <?php $form->getSection('clef_form_settings')->getField('embed_clef')->render(); ?>
@@ -110,7 +110,7 @@
                     <?php $form->getSection('clef_settings')->getField('app_secret')->render(); ?>
                 </div>
                 <div class="input-container">
-                    <label for=""><?php _e("Allow visitors to your site to register with Clef"); ?></label>
+                    <label for=""><?php _e("Allow visitors to your site to register with Clef", "clef"); ?></label>
                     <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
                 </div>
             </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="clef-overlay">
             <img src="<?php echo CLEF_URL ?>assets/dist/img/overlay.png" alt="clef overlay">
-            <div class="close-overlay overlay-text"><?php _e('log in with a password'); ?></div>
+            <div class="close-overlay overlay-text"><?php _e('log in with a password', "clef"); ?></div>
         </div>
         <p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox" class="ajax-ignore" id="rememberme" value="forever"> <?php _e("Remember Me"); ?></label></p>
         <p class="submit">

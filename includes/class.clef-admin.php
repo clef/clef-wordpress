@@ -388,14 +388,14 @@ class ClefAdmin {
         $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'xml_allowed',
-            __('Allow XML'),
+            __('Allow XML', 'clef'),
             Settings_API_Util_Field::TYPE_CHECKBOX
         );
 
         $form_settings = $form->addSection('clef_form_settings', __('Form settings', 'clef'), '');
         $form_settings->addField('embed_clef', __('Embed Clef wave in the login form', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        $override_settings = $form->addSection('clef_override_settings', __('Override Settings'));
+        $override_settings = $form->addSection('clef_override_settings', __('Override Settings', 'clef'));
         $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
 
         $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"));
@@ -516,9 +516,9 @@ class ClefAdmin {
             if (count($errors) == count($filtered_users)) {
                 $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
             } else {
-                $message = __("unable to send emails to the following users: ");
+                $message = __("unable to send emails to the following users: ", 'clef');
                 $message .= join(", ", $errors);
-                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef");
+                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
             }
             return new WP_Error('clef_mail_error', $message);
         } else {

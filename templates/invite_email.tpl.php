@@ -1,7 +1,7 @@
-<?php 
-if(empty($invite_link)) { 
-    if (isset($options) && isset($options['connectClefUrl'])) { 
-        $invite_link = $options['connectClefUrl']; 
+<?php
+if(empty($invite_link)) {
+    if (isset($options) && isset($options['connectClefUrl'])) {
+        $invite_link = $options['connectClefUrl'];
     } else {
         $invite_link = '#';
     }
