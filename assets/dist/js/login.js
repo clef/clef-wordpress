@@ -9,7 +9,7 @@
     return false;
   };
   return $(function() {
-    var $embedContainer, $spinnerContainer;
+    var $embedContainer, $iframe, $spinnerContainer;
     $embedContainer = $('.clef-embed-container');
     $('.close-overlay').click(closeOverlay);
     $('.open-overlay').click(openOverlay);
@@ -18,16 +18,17 @@
     });
     if ($embedContainer.length) {
       $spinnerContainer = $('.spinner-container');
-      $embedContainer.hide();
-      $spinnerContainer.show();
-      return $('iframe').on('load', function() {
-        if ($(this).attr('src').match('clef\.io/iframes/qr')) {
-          $spinnerContainer.hide();
-          return setTimeout(function() {
-            return $embedContainer.slideDown();
-          });
-        }
+      $iframe = $embedContainer.find('iframe');
+      $iframe.load(function() {
+        $spinnerContainer.hide();
+        return setTimeout(function() {
+          return $embedContainer.slideDown();
+        });
       });
+      if (!$iframe.attr('data-loaded')) {
+        $embedContainer.hide();
+        return $spinnerContainer.show();
+      }
     }
   });
 }).call(this, jQuery);
