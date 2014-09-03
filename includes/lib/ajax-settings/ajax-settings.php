@@ -52,7 +52,7 @@ class AjaxSettings {
         }
 
         // strip off any leading characters before json starts and then parse
-        $stripped = preg_replace('/^.*{/', '{', $HTTP_RAW_POST_DATA);
+        $stripped = preg_replace('/^.*?{/', '{', $HTTP_RAW_POST_DATA);
         $settings = json_decode($stripped, true);
 
         if (!$settings) wp_die(__('Settings could not be parsed — this may be caused by a plugin conflict.'));
