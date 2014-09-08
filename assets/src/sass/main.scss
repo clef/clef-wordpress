@@ -52,6 +52,10 @@
         width: 400px;
         margin: auto;
 
+        input, label {
+            visibility: hidden;
+        }
+
         form {
             box-sizing: border-box;
             width: 100%;
@@ -87,6 +91,10 @@
     &.clef-closed {
         #login {
             width: 320px;
+            input, label {
+                visibility: visible
+            }
+
             form {
                 height: auto;
             }
