@@ -61,6 +61,7 @@ Styles
   padding-top: 50px; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) #login {
   width: 400px;
+  max-width: 100%;
   margin: auto; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) #login form {
     -webkit-box-sizing: border-box;
