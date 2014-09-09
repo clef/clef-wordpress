@@ -79,4 +79,28 @@ class WP_Test_InternalSettings_Passwords_Disabled_For_User extends WP_UnitTestCa
         $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
     }
 
+    function test_passwords_disabled_for_custom_role() {
+        $custom_role = add_role(
+            'customrole4u',
+            'Test Custom Role',
+            array(
+                'read'         => true,  // true allows this capability
+                'edit_posts'   => true,
+                'delete_posts' => false, // Use false to explicitly deny
+            )
+        );
+
+        $this->settings->set('clef_password_settings_disable_passwords_custom_role_customrole4u', 1);
+
+        $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
+
+        $this->user->add_role('customrole4u');
+
+        $this->assertTrue($this->settings->passwords_are_disabled_for_user($this->user));
+
+        $this->user->remove_role('customrole4u');
+
+        $this->assertFalse($this->settings->passwords_are_disabled_for_user($this->user));
+    }
+
 }

@@ -6,6 +6,7 @@
  * @since 2.0
  */
 class ClefUtils {
+    public static $default_roles = array("Subscriber", "Contributor", "Author", "Editor", "Administrator", "Super Administrator" );
     /**
      * Runs esc_html on strings. Leaves input untouched if it's not a string.
      *
@@ -221,6 +222,20 @@ class ClefUtils {
             $fulfills_role = true;
         }
         return $fulfills_role;
+    }
+
+    public static function get_custom_roles() {
+        $all_roles = get_editable_roles();
+        $custom_roles = array();
+        foreach($all_roles as $role => $role_obj) {
+            if (isset($role_obj['name'])) {
+                $role_name = $role_obj['name'];
+                if (!in_array($role_name, self::$default_roles)) {
+                    $custom_roles[$role] = $role_obj;
+                }
+            }
+        }
+        return $custom_roles;
     }
 
 }

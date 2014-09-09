@@ -20,6 +20,7 @@ class ClefAdmin {
     private static $instance = null;
     private static $affiliates = array('siteground');
 
+
     protected $settings;
 
     protected function __construct($settings) {
@@ -383,8 +384,21 @@ class ClefAdmin {
             __('Disable certain passwords', "clef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
-            array( "options" => array("", "Contributor", "Author", "Editor", "Administrator", "Super Administrator" ) )
+            array( "options" => array_merge(array(""), ClefUtils::$default_roles))
         );
+
+        $custom_roles = ClefUtils::get_custom_roles();
+        if (count($custom_roles) > 0) {
+            $pw_settings->custom_roles = $custom_roles;
+            foreach ($custom_roles as $role => $role_obj) {
+                $pw_settings->addField(
+                    "disable_passwords_custom_role_$role",
+                    $role_obj['name'],
+                    Settings_API_Util_Field::TYPE_CHECKBOX
+                );
+            }
+        }
+
         $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'xml_allowed',
