@@ -1,5 +1,5 @@
 === Clef ===
-Contributors: csixty4, jessepollak, zrathustra, inthylight
+Contributors: csixty4, jessepollak, zrathustra
 Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
