@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -96,6 +96,12 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 2.2.5 =
+
+* Feature: allow administrators to disable passwords for custom roles
+* Fix: setup tutorial now works in IE9
+* Fix: password login error message displays correctly with Clef login embed
 
 = 2.2.4 =
 
