@@ -50,13 +50,18 @@
 
     #login {
         width: 400px;
+        max-width: 100%;
         margin: auto;
+
+        input, label {
+            visibility: hidden;
+        }
 
         form {
             box-sizing: border-box;
             width: 100%;
             height: 520px;
-            position: relative;
+            position: relative !important;
         }
 
         .clef-embed-wrapper {
@@ -87,6 +92,10 @@
     &.clef-closed {
         #login {
             width: 320px;
+            input, label {
+                visibility: visible
+            }
+
             form {
                 height: auto;
             }

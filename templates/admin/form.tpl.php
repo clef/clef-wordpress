@@ -26,6 +26,17 @@
                         <label for=""><?php _e("Disable passwords for all users with privileges greater than or equal to ", "clef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('disable_certain_passwords')->render(); ?>
                     </div>
+                    <?php if (property_exists($form->getSection('clef_password_settings'), 'custom_roles')) { ?>
+                    <div class="input-container custom-roles">
+                        <label class="title"><?php _e("Disable passwords for custom roles"); ?></label>
+                        <?php foreach($form->getSection('clef_password_settings')->custom_roles as $role => $role_obj) { ?>
+                            <div class="custom-role">
+                                <label for=""><?php echo $role_obj['name'] ?></label>
+                                <?php $form->getSection('clef_password_settings')->getField('disable_passwords_custom_role_' . $role)->render(); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php }?>
                     <div class="input-container">
                         <label for=""><?php _e("Disable passwords for all users and hide the password login form.", "clef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('force')->render(); ?>
