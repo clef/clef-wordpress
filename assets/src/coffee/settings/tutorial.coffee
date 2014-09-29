@@ -68,8 +68,10 @@
                 @currentSub = newSub
 
         handleMessages: (e) ->
-            return unless e.originalEvent.origin.indexOf @opts.clefBase >= 0
-            e.originalEvent.data
+            return unless e.originalEvent.origin.indexOf(@opts.clefBase) >= 0
+            data = e.originalEvent.data
+            data = JSON.parse(data) if typeof(data) == "string"
+            data
 
         connectClefAccount: (data, cb) ->
             connectData =
