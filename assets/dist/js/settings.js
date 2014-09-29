@@ -191,10 +191,15 @@
       }
     },
     handleMessages: function(e) {
-      if (!e.originalEvent.origin.indexOf(this.opts.clefBase >= 0)) {
+      var data;
+      if (!(e.originalEvent.origin.indexOf(this.opts.clefBase) >= 0)) {
         return;
       }
-      return e.originalEvent.data;
+      data = e.originalEvent.data;
+      if (typeof data === "string") {
+        data = JSON.parse(data);
+      }
+      return data;
     },
     connectClefAccount: function(data, cb) {
       var connectData, failure;
