@@ -146,6 +146,17 @@
     .password-settings {
         min-height: 400px;
 
+        .input-container.custom-roles {
+            .title {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .custom-role {
+                label { clear: both; }
+            }
+        }
+
         #login-form-view {
             $button-height: 34px;
             $button-width: 187px;

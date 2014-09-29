@@ -133,7 +133,12 @@ class ClefInternalSettings {
 
         if ($disable_certain_passwords && $disable_certain_passwords != "") {
             $max_role = strtolower($disable_certain_passwords);
-            return ClefUtils::user_fulfills_role($user, $max_role);
+            if (ClefUtils::user_fulfills_role($user, $max_role)) return true;
+        }
+
+        $potential_custom_user_roles = (array) $user->roles;
+        foreach ($potential_custom_user_roles as $role) {
+            if ($this->get("clef_password_settings_disable_passwords_custom_role_$role")) return true;
         }
 
         return false;

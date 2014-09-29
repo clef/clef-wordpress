@@ -675,6 +675,12 @@ Styles
         margin-right: 0; } }
 #clef-settings-form .password-settings {
   min-height: 400px; }
+  #clef-settings-form .password-settings .input-container.custom-roles .title {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px; }
+  #clef-settings-form .password-settings .input-container.custom-roles .custom-role label {
+    clear: both; }
   #clef-settings-form .password-settings #login-form-view {
     display: block;
     float: left;
