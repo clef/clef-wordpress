@@ -41,10 +41,12 @@ Styles
     .clef-badge.pretty:hover {
       opacity: 1; }
 
-.login-action-login.clef-login-form .clef-login-container .clef-button-container {
+.clef-login-form .clef-button-container {
   width: 188px;
   height: 35px;
-  margin: auto;
+  margin: auto; }
+
+.login-action-login.clef-login-form .clef-login-container .clef-button-container {
   margin-bottom: 30px; }
 .login-action-login.clef-login-form .clef-login-container .close-overlay, .login-action-login.clef-login-form .clef-login-container .overlay-info, .login-action-login.clef-login-form .clef-login-container .open-overlay {
   display: none; }
@@ -186,3 +188,6 @@ Styles
   .login-action-login.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite) #login {
     width: 320px;
     padding: 0; } }
+
+.login-action-register.clef-login-form .clef-register-container {
+  padding-top: 20px; }

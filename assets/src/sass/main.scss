@@ -2,15 +2,19 @@
 @import "_mixins";
 @import "_badge";
 
-.login-action-login.clef-login-form {
+.clef-login-form {
     $button-width: 188px;
     $button-height: 35px;
 
+    .clef-button-container {
+        width: $button-width;
+        height: $button-height;
+        margin: auto;
+    }
+}
+.login-action-login.clef-login-form {
     .clef-login-container {
         .clef-button-container {
-            width: $button-width;
-            height: $button-height;
-            margin: auto;
             margin-bottom: 30px;
         }
 
@@ -235,6 +239,12 @@
                 padding: 0;
             }
         }
+    }
+}
+
+.login-action-register.clef-login-form {
+    .clef-register-container {
+        padding-top: 20px;
     }
 }
 
