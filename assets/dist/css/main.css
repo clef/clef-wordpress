@@ -81,7 +81,8 @@ Styles
   width: 100%;
   height: 100%;
   background: white;
-  overflow: visible; }
+  overflow: visible;
+  z-index: 99999; }
   .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) .clef-login-container .clef-button-container {
     padding-top: 5px; }
 .clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password):not(.clef-closed) p#nav {
