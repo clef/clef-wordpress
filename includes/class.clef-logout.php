@@ -33,19 +33,27 @@ class ClefLogout {
             $response = wp_remote_post( CLEF_API_BASE . 'logout', array( 'method' => 'POST',
                 'timeout' => 45, 'body' => $args ) );
 
-            $body = json_decode( $response['body'] );
-
-            if (isset($body->success) && isset($body->clef_id)) {
-                $this->set_user_logged_out_at($body->clef_id);
+            if (is_wp_error($response)) {
                 $return = array(
-                    "success" => true
+                    "error" => $response->get_error_message(),
+                    "success" => false
                 );
             } else {
-                $return = array(
-                    "success" => false,
-                    "error" => $body->error
-                );
+                $body = json_decode( $response['body'] );
+
+                if (isset($body->success) && isset($body->clef_id)) {
+                    $this->set_user_logged_out_at($body->clef_id);
+                    $return = array(
+                        "success" => true
+                    );
+                } else {
+                    $return = array(
+                        "success" => false,
+                        "error" => $body->error
+                    );
+                }
             }
+
             echo(json_encode($return));
             exit();
         }
