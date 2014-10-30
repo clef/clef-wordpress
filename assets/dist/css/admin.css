@@ -54,8 +54,17 @@ Styles
   padding: 40px 20px; }
   .login-action-login.clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform input, .login-action-login.clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform label {
     display: none; }
-.login-action-login.clef-login-form.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) .clef-button-container {
-  margin-bottom: 0; }
+.login-action-login.clef-login-form .clef-login-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  overflow: visible;
+  z-index: 99999; }
+  .login-action-login.clef-login-form .clef-login-container .clef-button-container {
+    margin-bottom: 0; }
 .login-action-login.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password):not(.interim-login) #login {
   padding-top: 50px; }
 .login-action-login.clef-login-form.clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password) #login {
