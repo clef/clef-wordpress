@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -96,6 +96,13 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 4. A correctly configured settings page for Clef.
 
 == Changelog ==
+
+= 2.2.6 =
+
+* Fix: bug where registration and lost password pages do not render correctly
+* Fix: bug where login button shortcode renders out of order
+* Fix: bug where invalid logout hook caused PHP error
+* Fix: bug where other login page plugins rendered on top of embedded wave
 
 = 2.2.5 =
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2014-09-29 09:19-0700\n"
+"POT-Creation-Date: 2014-11-02 12:28-0800\n"
 "PO-Revision-Date: 2014-09-29 16:19+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/wpclef/language/de_DE/)\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "3 tips for using Clef"
 msgstr ""
 
-#: templates/login_page.tpl.php:46
+#: templates/login.tpl.php:46
 msgid ""
 "<a href=\"http://getclef.com\">Clef</a> lets you securely log in with your "
 "phone."
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Allow visitors to your site to register with Clef"
 msgstr ""
 
-#: includes/class.clef-login.php:308
+#: includes/class.clef-login.php:321
 msgid "An error occurred when creating your new account: "
 msgstr "Dieser Fehler ist beim Anlegen des Kontos aufgetreten: "
 
@@ -446,7 +446,7 @@ msgstr ""
 msgid "Password Settings"
 msgstr "Passworteinstellungen"
 
-#: includes/class.clef-login.php:265 includes/class.clef-login.php:367
+#: includes/class.clef-login.php:278 includes/class.clef-login.php:380
 msgid "Passwords have been disabled for this user."
 msgstr "Passworte wurden für diesen User deaktiviert."
 
@@ -514,17 +514,17 @@ msgstr "Etwas ist schiefgelaufen: "
 msgid "Something wrong, please refresh and try again."
 msgstr "Etwas ist schiefgelaufen, bitte neu laden und nochmals probieren."
 
-#: includes/class.clef-login.php:184
+#: includes/class.clef-login.php:197
 msgid "Sorry, that isn't a valid invite code."
 msgstr ""
 
-#: includes/class.clef-login.php:201
+#: includes/class.clef-login.php:214
 msgid ""
 "Sorry, this invite link has expired. Please contact your administrator for a"
 " new one."
 msgstr ""
 
-#: includes/class.clef-login.php:360
+#: includes/class.clef-login.php:373
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr "Beim Versuch das Konto von Clef zu trennen, gab es dieses Problem: <%= e
 msgid "There was a problem sending invites: <%= error %>."
 msgstr ""
 
-#: includes/class.clef-login.php:299
+#: includes/class.clef-login.php:312
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
@@ -605,7 +605,7 @@ msgid ""
 "href='http://getclef.com/developer'>Clef developer site</a>."
 msgstr ""
 
-#: templates/login_page.tpl.php:47
+#: templates/login.tpl.php:47
 msgid ""
 "To change the way the login form displays with Clef, log in and go to the "
 "Clef settings page."
@@ -752,7 +752,7 @@ msgstr "ungültoge nonce"
 msgid "invalid role"
 msgstr "ungültige Rolle"
 
-#: templates/admin/form.tpl.php:156 templates/login_page.tpl.php:39
+#: templates/admin/form.tpl.php:156 templates/login.tpl.php:39
 msgid "log in with a password"
 msgstr ""
 
@@ -764,7 +764,7 @@ msgstr ""
 msgid "or"
 msgstr "oder"
 
-#: templates/login_page.tpl.php:40
+#: templates/login.tpl.php:40
 msgid "show clef login"
 msgstr ""
 

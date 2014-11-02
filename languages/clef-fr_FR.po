@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2014-09-29 09:19-0700\n"
+"POT-Creation-Date: 2014-11-02 12:28-0800\n"
 "PO-Revision-Date: 2014-09-29 16:19+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/wpclef/language/fr_FR/)\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "3 tips for using Clef"
 msgstr "3 trucs pour utiliser Clef"
 
-#: templates/login_page.tpl.php:46
+#: templates/login.tpl.php:46
 msgid ""
 "<a href=\"http://getclef.com\">Clef</a> lets you securely log in with your "
 "phone."
@@ -96,7 +96,7 @@ msgstr "Autoriser les mots de passe pour l'API (nécessaire par exemple pour les
 msgid "Allow visitors to your site to register with Clef"
 msgstr "Autoriser les visiteurs de votre site à se connecter avec Clef"
 
-#: includes/class.clef-login.php:308
+#: includes/class.clef-login.php:321
 msgid "An error occurred when creating your new account: "
 msgstr "Une erreur est survenue en créant votre nouveau compte :"
 
@@ -448,7 +448,7 @@ msgstr "Mot de passe"
 msgid "Password Settings"
 msgstr "Paramètres du mot de passe"
 
-#: includes/class.clef-login.php:265 includes/class.clef-login.php:367
+#: includes/class.clef-login.php:278 includes/class.clef-login.php:380
 msgid "Passwords have been disabled for this user."
 msgstr "La connexion avec mot de passe a été désactivée pour cet utilisateur."
 
@@ -516,17 +516,17 @@ msgstr "Quelque chose s'est mal passé :"
 msgid "Something wrong, please refresh and try again."
 msgstr "Quelque chose s'est mal passé, merci de rafraîchir votre page et de réessayer."
 
-#: includes/class.clef-login.php:184
+#: includes/class.clef-login.php:197
 msgid "Sorry, that isn't a valid invite code."
 msgstr "Désolé, ce code d'invitation est invalide."
 
-#: includes/class.clef-login.php:201
+#: includes/class.clef-login.php:214
 msgid ""
 "Sorry, this invite link has expired. Please contact your administrator for a"
 " new one."
 msgstr "Désolé, ce lien d'invitation a expiré. S'il vous plaît, contactez l'administrateur pour un nouveau lien."
 
-#: includes/class.clef-login.php:360
+#: includes/class.clef-login.php:373
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
 
@@ -593,7 +593,7 @@ msgstr "Un problème est survenu lors de la déconnexion de votre compte Clef : 
 msgid "There was a problem sending invites: <%= error %>."
 msgstr "Un problème est survenu lors de l'envoi de l'invitation : <%= error %>."
 
-#: includes/class.clef-login.php:299
+#: includes/class.clef-login.php:312
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
@@ -607,7 +607,7 @@ msgid ""
 "href='http://getclef.com/developer'>Clef developer site</a>."
 msgstr "Ces clés vous permettent d'accéder à votre site WordPress avec l'application Clef à laquelle vous êtes connecté(e). Pour une configuration avancée, rendez-vous sur <a href='http://getclef.com/developer'>le site du développeur de Clef</a>."
 
-#: templates/login_page.tpl.php:47
+#: templates/login.tpl.php:47
 msgid ""
 "To change the way the login form displays with Clef, log in and go to the "
 "Clef settings page."
@@ -754,7 +754,7 @@ msgstr "invalide pour l'instant"
 msgid "invalid role"
 msgstr "rôle invalide"
 
-#: templates/admin/form.tpl.php:156 templates/login_page.tpl.php:39
+#: templates/admin/form.tpl.php:156 templates/login.tpl.php:39
 msgid "log in with a password"
 msgstr ""
 
@@ -766,7 +766,7 @@ msgstr ""
 msgid "or"
 msgstr "ou"
 
-#: templates/login_page.tpl.php:40
+#: templates/login.tpl.php:40
 msgid "show clef login"
 msgstr ""
 

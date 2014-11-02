@@ -30,6 +30,7 @@ class ClefLogin {
 
         // Render the login form with the Clef button no matter what
         add_action('login_form', array( $this, 'login_form' ) );
+        add_action('register_form', array( $this, 'register_form') );
 
         add_filter('wp_login_failed', array($this, 'handle_login_failed'));
         add_action('login_enqueue_scripts', array($this, 'load_base_styles'));
@@ -45,7 +46,7 @@ class ClefLogin {
         add_filter('login_redirect', array($this, 'redirect_if_invite_code'), 10, 3);
 
         // Allow the Clef button to be rendered anywhere
-        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 3);
+        add_action('clef_render_login_button', array($this, 'render_login_button'), 10, 4);
         add_shortcode('clef_render_login_button', array($this, 'shortcode_render_login_button'));
 
         if (defined('MEMBERSHIP_MASTER_ADMIN') && defined('MEMBERSHIP_SETACTIVATORAS_ADMIN')) {
@@ -54,10 +55,6 @@ class ClefLogin {
             add_action('membership_popover_extend_registration_form', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('signup_extra_fields', array($this, 'add_clef_login_button_to_wpmu'));
             add_action('membership_popover_extend_login_form', array($this, 'add_clef_login_button_to_wpmu'));
-        }
-
-        if ($this->settings->registration_with_clef_is_allowed()) {
-            add_action('register_form', array($this, 'login_form'));
         }
 
         $this->apply_filter_and_action_fixes('plugins_loaded');
@@ -125,7 +122,7 @@ class ClefLogin {
             $clef_embedded = $this->settings->should_embed_clef_login();
             if (ClefUtils::isset_GET('clefup') == 'true') $clef_embedded = false;
 
-            echo ClefUtils::render_template('login_page.tpl', array(
+            echo ClefUtils::render_template('login.tpl', array(
                 "passwords_disabled" => $passwords_disabled,
                 "clef_embedded" => $clef_embedded,
                 "override_key" => $override_key,
@@ -138,15 +135,30 @@ class ClefLogin {
         }
     }
 
+    public function register_form() {
+        if ($this->settings->is_configured() && $this->settings->registration_with_clef_is_allowed()) {
+            echo ClefUtils::render_template('register.tpl', array(
+                "redirect_url" => $this->get_callback_url(),
+                "app_id" => $this->settings->get( 'clef_settings_app_id' )
+            ));
+        }
+    }
+
     public function shortcode_render_login_button($atts) {
         $app_id = isset($atts['app_id']) ? $atts['app_id'] : false;
         $redirect_url = isset($atts['redirect_url']) ? $atts['redirect_url'] : false;
         $embed = isset($atts['embed']) ? $atts['embed'] : false;
+        $type = isset($atts['type']) ? $atts['type'] : "login";
 
+        ob_start();
         $this->render_login_button($redirect_url, $app_id, $embed);
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        return $output;
     }
 
-    public function render_login_button($redirect_url=false, $app_id=false, $embed=false) {
+    public function render_login_button($redirect_url=false, $app_id=false, $embed=false, $type="login") {
         if (!$app_id) $app_id = $this->settings->get( 'clef_settings_app_id' );
         if (!$redirect_url) $redirect_url = $this->get_callback_url();
 
@@ -154,6 +166,7 @@ class ClefLogin {
             "app_id" => $app_id,
             "redirect_url" => $redirect_url,
             "embed" => $embed,
+            "type" => $type,
             "custom" => array(
                 "logo" => $this->settings->get('customization_logo'),
                 "message" => $this->settings->get('customization_message')
