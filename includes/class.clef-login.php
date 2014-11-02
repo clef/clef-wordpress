@@ -150,7 +150,12 @@ class ClefLogin {
         $embed = isset($atts['embed']) ? $atts['embed'] : false;
         $type = isset($atts['type']) ? $atts['type'] : "login";
 
+        ob_start();
         $this->render_login_button($redirect_url, $app_id, $embed);
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        return $output;
     }
 
     public function render_login_button($redirect_url=false, $app_id=false, $embed=false, $type="login") {
