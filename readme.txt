@@ -54,31 +54,36 @@ If you have any questions or installation issues, please e-mail [support@getclef
 
 == Frequently Asked Questions ==
 
-= How secure is Clef? =
+= How secure is Clef login? =
 
-[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
+[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use mobile app.
 
 Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks.
 
-= How secure is my data on Clef's servers? =
+= How secure is my data on Clef’s servers? =
 
-Clef's architecture is fully distributed so it stores no user credentials on its servers. When you use the Clef App, you create a profile and a private encryption key that never leave your phone. The Clef App uses that data to generate a unique, encrypted, digital signature every time you log in. Since all of your personal info stays on your phone, nothing in the Clef database can compromise your identity even in the unlikely event that the server is hacked.
+Clef's security architecture is fully distributed, which means Clef stores no user credentials on its servers. When you use the Clef mobile app, you create a profile and a private encryption key that never leave your phone. The Clef app then uses that data to generate a unique, encrypted digital signature every time you log in. Since all of your personal info stays on your phone, nothing in the Clef database can compromise your identity even in the unlikely event that the server is hacked.
 
-= What if I lose my phone? =
+= What should I do if my phone is lost or stolen, or if I switch to a new phone? =
 
-Visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
+1. [Deactivate](http://support.getclef.com/article/32-what-should-i-do-if-my-phone-is-lost-or-stolen) your old phone.
+1. [Reactivate](http://support.getclef.com/article/59-how-do-i-move-my-clef-account-to-a-new-phone) your new phone.
 
-= How much does Clef for WordPress cost? =
+= Is Clef for WordPress really free? =
 
-Clef for WordPress is and will always be 100% free.
+Yes. Clef’s free [developer tier](https://getclef.com/pricing) is 100% free, and it provides capacity for up to 1,000 logins per month, which is well more than enough for most non-commercial sites.
 
 = Can existing users on my WordPress site sign in with Clef? =
 
-As long as your users register on their Clef Apps using the same email address as their WordPress accounts, they can start using Clef instantly. Also, once Clef for WordPress is activated on your site, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
+Yes. As long as your users register on their Clef moble apps using the same email address as their WordPress accounts, they can start using Clef instantly.
 
-= What if I have some users who do not have smartphones? =
+= How does Clef accommodate logins for users who do not have smartphones? =
 
-Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode (no passwords). If you want to enjoy the protection of full Clef mode but still need to allow passwords for users who do not have smartphones, then on the Clef Settings page you can create a secure override key that enables password logins at a secret URL.
+Clef can protect WordPress in hybrid mode (passwords allowed for all users; least secure) or full Clef mode (passwords disabled for some or all users; recommended). If you want to enjoy the protection of full Clef mode but still need to allow passwords for users who do not have smartphones, then on the Clef Settings page you can either
+- disable passwords for all users and create a secure override that enables password logins at a secret URL,
+- or disable passwords for high-permission roles (i.e., administrator accounts) only while allowing passwords for low-permission roles.
+
+See [the users without smartphones tutorial](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones) for more details.
 
 == Screenshots ==
 
