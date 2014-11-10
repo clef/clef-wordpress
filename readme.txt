@@ -18,15 +18,15 @@ http://vimeo.com/77091221
 
 = Features =
 
-- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with encrypted authentication using the well respected [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public key cryptosystem.
+- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with the well respected [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem.
 
-- **Comprehensive password protection**: Clef disables passwords at [all three WP password authentication vectors](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin#vectors): DashBoard access, API access, and automatic password resets via e-mail.
+- **Comprehensive password protection**: Clef disables passwords on [all three WP password authentication vectors](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin#vectors): DashBoard access, API access, and automatic password resets via e-mail.
 
-- **Fine-tuned control**: Clef’s powerful [settings](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin) allow you to selectively disable passwords and to accommodate [users without smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones).
+- **Fine-tuned control**: Clef’s [password settings](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin) allow you to selectively disable passwords for standard and custom roles and to accommodate [users without smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones).
 
 - **Single sign on/off**: Clef makes administering multiple WP sites a breeze. Sign in once at your first Clef-enabled site, and you are automatically signed in to all of your subsequent Clef-enabled sites. Also, thanks to the customizable timer you are automatically logged out of all your sites after the duration of your choosing.
 
-- **[Login button shortcode](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)**: insert the Clef login button or embedded Clef Wave in any post, page, or widget using the **clef_render_login_button** shortcode.
+- **[Login button shortcode](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)**: insert the Clef login button or the embedded Clef Wave in any post, page, or widget using the **clef_render_login_button** shortcode.
 
 - **Multisite network support**
 
@@ -38,23 +38,19 @@ http://vimeo.com/77091221
 
 == Installation ==
 
-= Installing the Plugin =
+= Step 1: install the Clef mobile app =
 
-Install Clef automatically from your WordPress Dashboard by selecting "Plugins" and then "Add New" from the sidebar menu. Search for Clef, and then choose "Install Now."
+- Install the Clef app on your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device, and complete the account sign up.
 
-Or:
+= Step 2: install the Clef WordPress plugin =
 
-1. Download the latest version of Clef for WordPress (via the download button at the top right).
-1. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
-1. Activate the plugin through the "Plugins" menu in WordPress
+1. In your WordPress Dashboard select **Plugins** and then **Add New** from the sidebar menu. Search for **Clef**, and then choose **Install Now.**
+1. Activate the plugin.
+1. Start the Clef setup wizard, and then sync your phone with the Clef Wave.
 
-= Getting Started =
+For detailed setup instructions [see the installation tutorial](http://support.getclef.com/article/13-setting-up-clef-on-a-wordpress-site).
 
-1. If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-2. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
-
-If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
-
+If you have any questions or installation issues, please e-mail [support@getclef.com](mailto:support@getclef.com). We’re happy to help you get set up with Clef! :-)
 
 == Frequently Asked Questions ==
 
@@ -70,11 +66,11 @@ Clef's architecture is fully distributed so it stores no user credentials on its
 
 = What if I lose my phone? =
 
-Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
+Visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
 
-= How much does Clef cost? =
+= How much does Clef for WordPress cost? =
 
-Clef is and will always be 100% free.
+Clef for WordPress is and will always be 100% free.
 
 = Can existing users on my WordPress site sign in with Clef? =
 
