@@ -1,41 +1,40 @@
-=== Clef ===
+=== Clef Two-Factor Authentication ===
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
-Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
+Tags: login, security, two factor, two-factor, two factor authentication, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, smartphone, encryption, admin, wp-admin, ssl, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-The easiest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
+Futuristic two-factor that people love to use: no passwords or temporary codes, single sign on/off, prevents password attacks.
 
 == Description ==
 
-= What is Clef? =
-[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, two-factor authentication using your smartphone.
-
-= How do I log in to WordPress using Clef? =
+[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted two-factor authentication using [your smartphone](getclef.com/apps). Watch [our 30-second demonstration](http://vimeo.com/77091221).
 
 http://vimeo.com/77091221
 
-1. Click the "Log in with your phone" button
-2. Sync the Clef Wave with your [Clef app](https://getclef.com/apps)
-3. You're securely logged in without ever typing a password
+= Features =
 
-Watch the [30 second video](http://getclef.wistia.com/medias/8mnrh6og39) and see for yourself.
+- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with encrypted authentication using the well respected [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public key cryptosystem.
 
-= How secure is Clef? =
+- **Comprehensive password protection**: Clef disables passwords at [all three WP password authentication vectors](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin#vectors): DashBoard access, API access, and automatic password resets via e-mail.
 
-[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
+- **Fine-tuned control**: Clef’s powerful [settings](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin) allow you to selectively disable passwords and to accommodate [users without smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones).
 
-= How does single sign on with Clef work? =
+- **Single sign on/off**: Clef makes administering multiple WP sites a breeze. Sign in once at your first Clef-enabled site, and you are automatically signed in to all of your subsequent Clef-enabled sites. Also, thanks to the customizable timer you are automatically logged out of all your sites after the duration of your choosing.
 
-Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click — no more typing and retyping passwords. When you're done managing your site, just hit the "log out" button on your phone and you are automatically signed out of all your WordPress sites.
+- **[Login button shortcode](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)**: insert the Clef login button or embedded Clef Wave in any post, page, or widget using the **clef_render_login_button** shortcode.
 
-= What happens if I lose my phone? =
+- **Multisite network support**
 
-Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
+- **[Internationalization support](https://www.transifex.com/projects/p/wpclef/)**: Danish, Dutch, French, German, Portuguese, Russian, Spanish. More on the way; [contributions welcome](https://www.transifex.com/projects/p/wpclef/).
+
+- **Fulsome [documentation](http://support.getclef.com/collection/1-wordpress)** 
+
+- **Free [e-mail support](mailto:support@getclef.com)**
 
 == Installation ==
 
