@@ -8,31 +8,38 @@ Stable tag: 2.2.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Futuristic two-factor that people love to use: strong authentication without passwords or timed codes; single sign on/off; magical user experience.
+Secure two-factor that people love to use: strong authentication without passwords or tokens; single sign on/off; magical user experience.
 
 == Description ==
 
-[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted two-factor authentication using [your smartphone](getclef.com/apps). Watch [our 30-second demo](http://vimeo.com/77091221).
+[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted two-factor authentication using [your smartphone](getclef.com/apps). [Watch our 30-sec. demonstration](http://vimeo.com/77091221).
 
 http://vimeo.com/77091221
 
-= Clef Two-Factor for WordPress Features =
+= Features =
 
-- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with the well respected, tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem.
+- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with the tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem.
 
-- **Comprehensive password protection**: Clef disables passwords for [all three WordPress authentication vectors](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin#vectors): Dashboard access, API access, and automatic password resets via email.
+- **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it can protect your users against
+ - bruteforce and botnet login attacks,
+ - weak, reused, and recycled passwords,
+ - sending login credentials via an insecure (non-ssl) connection,
+ - password phishing attempts,
+ - and account takovers via email account breaches.
 
-- **Precise control**: Clef’s [password settings](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin) allow you to selectively disable passwords for standard and custom user roles and to accommodate [users who do not have smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones).
+- **[Flexible configuration options](http://support.getclef.com/article/50-how-to-use-the-password-settings-in-clefs-wordpress-plugin)**: selectively disable passwords for standard and custom user roles and for API access, choose how to accommodate [users who do not have smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones), and more.
 
-- **Single sign on/off**: Clef two-factor makes administering multiple WordPress sites a breeze. Sign in once at your first Clef-enabled site, and you are automatically signed in to all of your other Clef-enabled sites. Also, thanks to the customizable timer, you are automatically logged out of all your sites after the duration of your choosing. No more guessing whether you remembered to log out after leaving the office!
+- **[Single sign on/off](http://support.getclef.com/article/52-how-does-clef-s-single-sign-on-work)**: Sign in once at your first Clef-enabled site, and you are automatically signed in to all of your other Clef-enabled sites. Also, you are automatically logged out of all your sites after the duration of your choosing.
 
-- **Login button shortcode**: insert the Clef login button or the embedded Clef Wave in any post, page, or widget using the **[clef_render_login_button](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)** shortcode.
+- **[Shortcode support](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)**: insert Clef’s “login with your phone” button or the Clef Wave in any post, page, or text widget using the **clef_render_login_button** shortcode.
+
+- **Standards-based compatibility**: Clef’s WordPress plugin adheres to WordPress coding guidelines and is thus compatible with most mainstream plugins.
+
+- **Internationalization support**: Danish, Dutch, French, German, Portuguese, Russian, Spanish. More on the way; [help us add your language](https://www.transifex.com/projects/p/wpclef/).
 
 - **Multisite network support**
 
-- **Internationalization support**: Danish, Dutch, French, German, Portuguese, Russian, Spanish. More on the way; [contributions welcome](https://www.transifex.com/projects/p/wpclef/).
-
-- **Fulsome [documentation](http://support.getclef.com/)** for Clef’s mobile app and WordPress plugin 
+- **Fulsome [documentation](http://support.getclef.com/)** 
 
 - **Free [email support](mailto:support@getclef.com)**
 
@@ -60,11 +67,11 @@ If you have any questions or installation issues, please email [support@getclef.
 
 When configured to disable passwords, Clef protects WordPress users against 
 
+- bruteforce and botnet attacks,
 - weak, reused, and recycled passwords,
-- bruteforce and botnet password attacks,
-- insecure login connections (i.e., sending login credentials via a non-ssl connection),
+- sending login credentials via an insecure (non-ssl) connection,
 - password phishing attempts,
-- malicious forgotten password resets and corresponding account takovers via email breaches.
+- and account takovers via email breaches.
 
 = How secure is my data on Clef’s servers? =
 
