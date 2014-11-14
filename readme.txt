@@ -27,7 +27,9 @@ http://vimeo.com/77091221
 
 = Security Features =
 
-- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with the tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem.
+- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with highly secure two-factor logins using the tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem. 
+ - Clef stores your encrypted digital signature (i.e., private key) on your phone rather than in a central database. Thus even in the unlikely event of a catastrphic failure on Clef’s servers (e.g., if hackers were to fully breach the system), your login credentials remain secure on your phone.
+ - Clef logins require two identification factors. So, if your phone is lost or stolen, your credentials remain safe even regardless of whether you have enabled your phone’s security features (i.e., PINs, biometric locks, etc.)
 
 - **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it protects your users against
  - bruteforce and botnet login attacks,
