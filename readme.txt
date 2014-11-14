@@ -49,7 +49,7 @@ http://vimeo.com/77091221
 
 - **Standards-based compatibility**: Clef’s WordPress plugin adheres to WordPress coding guidelines and is thus compatible with most mainstream plugins.
 
-- **Internationalization and localization support**: Danish, Dutch, French, German, Portuguese, Russian, Spanish. More translations on the way. [Help translate Clef](https://www.transifex.com/projects/p/wpclef/) for your language.
+- **Internationalization and localization support**: Arabic, Danish, Dutch, French, German, Greek, Japanese, Latvian, Portuguese, Russian, Spanish. More translations on the way. [Help translate Clef](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin) into your language.
 
 - **Multisite network support**
 
@@ -359,6 +359,6 @@ Released 17 January 2013
 
 == Roadmap ==
 
-* More localization. If you want to help with translation, get started [here](http://transifex.com/projects/p/wpclef/)).
+* More localization. To help tranlate, see [the localization guide](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin)).
 * Improved invite system for adding new Clef users
 * Support for Clef team member login and account creation
