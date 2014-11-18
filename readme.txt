@@ -368,6 +368,6 @@ Released 17 January 2013
 
 == Roadmap ==
 
-* More localization. To help tranlate, see [the localization guide](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin)).
+* More localization. To help translate, see [the localization guide](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin)).
 * Improved invite system for adding new Clef users
 * Support for Clef team member login and account creation
