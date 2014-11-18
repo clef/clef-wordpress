@@ -77,9 +77,18 @@ If you have any questions or installation issues, please email [support@getclef.
 
 = Is Clef for WordPress really free? =
 
-Yes. Clef for WordPress is free up to 1,000 logins per month, which is more than enough for most WordPress sites.
+Yes. Really. Boom! And your free account includes
 
-Flexible [pricing options](https://getclef.com/pricing) are available for high traffic sites.
+- unlimited users,
+- unlimited logins,
+- chat and email support,
+- and basic usage analytics.
+
+= How do you keep the lights on? =
+
+To ensure that Clef can continue to provide secure two-factor to all WordPress users for free, we display a small, non-tracking ad below the Clef Wave. Our carefully curated ads are for WordPress services we love and recommend to our customers.
+
+You can remove the ad forever either with a small, one-time fee or by enabling the Clef badge in your site’s footer.
 
 = Can existing users on my WordPress site sign in with Clef after I install the plugin? =
 
