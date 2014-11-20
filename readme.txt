@@ -1,107 +1,148 @@
-=== Clef ===
+=== Clef Two-Factor Authentication ===
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
-Tags: login, two factor, two-factor, 2-factor, two-step, 2-step, 2-step authentication, 2-step verification, two factor authentication, security, single sign on, log in, authentication, iphone, android, password, mfa, 2fa, multi-factor, sso, oauth, phone, mobile, encryption, admin, wp-admin, ssl
+Tags: 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, oauth, password, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor, two factor authentication, two step, wp-admin, wp-login
 Requires at least: 3.5
 Tested up to: 4.0
 Stable tag: 2.2.7
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-The easiest and most secure way to log in to WordPress: no passwords, no temporary codes, single sign-on/off.
+Secure two-factor that people love to use: strong authentication without passwords or tokens; single sign on/off; magical user experience.
 
 == Description ==
 
-= What is Clef? =
-[Clef](https://getclef.com) replaces passwords with beautifully simple, strongly encrypted, two-factor authentication using your smartphone.
+[Clef](https://getclef.com) provides easy-to-use strong two-factor authentication using smartphones. It replaces insecure passwords and cumbersome one-time codes with the beautiful Clef Wave.
 
-= How do I log in to WordPress using Clef? =
+To log in with Clef, simply open the mobile app and sync with the Clef Wave. [Watch our 30-sec. demo](http://vimeo.com/77091221).
 
 http://vimeo.com/77091221
 
-1. Click the "Log in with your phone" button
-2. Sync the Clef Wave with your [Clef app](https://getclef.com/apps)
-3. You're securely logged in without ever typing a password
+= Our Users’ Favorite Features =
+- **The “magical” [Clef Wave](https://getclef.com/tutorial/)**: login securely without passwords, and enjoy two-factor protection without one-time codes.
 
-Watch the [30 second video](http://getclef.wistia.com/medias/8mnrh6og39) and see for yourself.
+- **Convenience**: use your smartphone for strong authentication instead of a “third device” such as a USB drive or extra security key.
 
-= How secure is Clef? =
+- **[Single sign on/off](http://support.getclef.com/article/52-how-does-clef-s-single-sign-on-work)**: Sync with the Clef Wave once, then enjoy one-click sign ins for all subsequent sites. Also, you are automatically logged out when you’re done working.
 
-[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
+= Security Features =
 
-= How does single sign on with Clef work? =
+- **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with highly secure two-factor logins using the tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem.
+ - Clef stores your encrypted private key on your phone rather than in a central database. Thus even in the unlikely event of a catastrophic security breach on Clef’s servers, your login credentials remain secure on your phone.
+ - Every Clef login requires two identification factors: your phone and a fingerprint or PIN. So even if your phone is lost or stolen, you’ll be safe.
 
-Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click — no more typing and retyping passwords. When you're done managing your site, just hit the "log out" button on your phone and you are automatically signed out of all your WordPress sites.
+- **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it protects against the full spectrum of password-based attacks:
+ - brute-force and botnet login attacks
+ - weak, reused, and recycled passwords
+ - sending login credentials via an insecure (non-ssl) connection
+ - password phishing attempts
+ - account takeovers via email account breaches
 
-= What happens if I lose my phone? =
+= Configuration Features =
 
-Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
+- **[Flexible password settings](http://support.getclef.com/article/60-recommended-password-settings-for-clef-wordpress-plugin)**
+ - Disable passwords for select WordPress user roles including custom roles.
+ - Disable passwords for API access.
+ - Accommodate [users who do not have smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones).
+
+- **[Shortcode support](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode)**: insert Clef’s “login with your phone” button or the Clef Wave in any post, page, or text widget using the **clef_render_login_button** shortcode.
+
+- **Standards-based compatibility**: Clef’s WordPress plugin adheres to WordPress coding guidelines and is thus compatible with most mainstream plugins.
+
+- **Internationalization and localization support**: Arabic, Danish, Dutch, French, German, Greek, Japanese, Latvian, Portuguese, Russian, Spanish. More translations on the way. [Help translate Clef](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin) into your language.
+
+- **[Multisite network](http://support.getclef.com/article/55-does-clefs-wordpress-plugin-support-multisite-networks) support**
+
+- **Helpful [documentation](http://support.getclef.com/)**
+
+- **Free [email](mailto:support@getclef.com) and [chat](https://www.hipchat.com/go5kUkq90) support**
 
 == Installation ==
 
-= Installing the Plugin =
+1. In your WordPress Dashboard select **Plugins** and then **Add New** from the sidebar menu. Search for **Clef**, and then choose **Install Now.**
+1. Activate the plugin.
+1. Follow the Clef setup wizard.
 
-Install Clef automatically from your WordPress Dashboard by selecting "Plugins" and then "Add New" from the sidebar menu. Search for Clef, and then choose "Install Now."
+For detailed setup instructions [see the installation guide](http://support.getclef.com/article/13-setting-up-clef-on-a-wordpress-site).
 
-Or:
-
-1. Download the latest version of Clef for WordPress (via the download button at the top right).
-1. Unzip the archive and upload the `wpclef` directory to the `/wp-content/plugins/` directory on your WordPress site.
-1. Activate the plugin through the "Plugins" menu in WordPress
-
-= Getting Started =
-
-1. If you don't already have a Clef account, download the Clef app for your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device and sign up.
-2. With your Clef app in hand, visit the Clef settings page in your WordPress Dashboard and walk through the brief setup wizard.
-
-If you have any questions or problems, don't hesitate to contact Clef support at [support@getclef.com](mailto:support@getclef.com).
-
+If you have any questions or installation issues, please email [support@getclef.com](mailto:support@getclef.com). We’re happy to help you get set up with Clef! :-)
 
 == Frequently Asked Questions ==
 
-= How secure is Clef? =
+= Is Clef for WordPress really free? =
 
-[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use package.
+Yes. Really. Boom! And your free account includes
 
-Clef protects WordPress not only from insecure passwords but also from malicious forgotten password resets and bruteforce attacks.
+- unlimited users,
+- unlimited logins,
+- [email](mailto:support@getclef.com) and [chat](https://www.hipchat.com/go5kUkq90) support,
+- and basic usage analytics.
 
-= How secure is my data on Clef's servers? =
+= How do you keep the lights on? =
 
-Clef's architecture is fully distributed so it stores no user credentials on its servers. When you use the Clef App, you create a profile and a private encryption key that never leave your phone. The Clef App uses that data to generate a unique, encrypted, digital signature every time you log in. Since all of your personal info stays on your phone, nothing in the Clef database can compromise your identity even in the unlikely event that the server is hacked.
+To ensure that Clef can continue to provide secure two-factor to all WordPress users for free, we display a small, non-tracking ad below the Clef Wave. Our carefully curated ads are for WordPress services we love and recommend to our customers.
 
-= What if I lose my phone? =
+You can remove the ad forever either with a small, one-time fee or by enabling the Clef badge in your site’s footer.
 
-Simply visit [Clef's "lost phone" page](https://getclef.com/lost) to deactivate your phone. Once you've deactivated, you can reactivate on a new device and all of your accounts will transfer over.
+= Can existing users on my WordPress site sign in with Clef after I install the plugin? =
 
-= How much does Clef cost? =
+Yes. As long as your users register on their Clef mobile apps using the same email address as their WordPress accounts, they can start using Clef instantly.
 
-Clef is and will always be 100% free.
+Also, Clef makes it easy to invite your users with optional invitation emails.
 
-= Can existing users on my WordPress site sign in with Clef? =
+= How does Clef accommodate logins for WordPress users who do not have smartphones? =
 
-As long as your users register on their Clef Apps using the same email address as their WordPress accounts, they can start using Clef instantly. Also, once Clef for WordPress is activated on your site, your existing WordPress users can link their accounts to Clef via the Profile page in WordPress.
+The [disable passwords options](http://support.getclef.com/article/60-recommended-password-settings-for-clef-wordpress-plugin) and [secret override url](http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password) provide several options for allowing password logins.
 
-= What if I have some users who do not have smartphones? =
+See [the guide for accommodating users without smartphones](http://support.getclef.com/article/57-how-does-clef-accommodate-wordpress-logins-for-users-who-do-not-have-smartphones) for details.
 
-Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode (no passwords). If you want to enjoy the protection of full Clef mode but still need to allow passwords for users who do not have smartphones, then on the Clef Settings page you can create a secure override key that enables password logins at a secret URL.
+= What should I do if my phone is lost or stolen, or if I switch to a new phone? =
+
+1. [Deactivate](http://support.getclef.com/article/32-what-should-i-do-if-my-phone-is-lost-or-stolen) your old phone.
+1. [Reactivate](http://support.getclef.com/article/59-how-do-i-move-my-clef-account-to-a-new-phone) your new phone.
+
+= How do I create a custom login page or widget with the Clef login shortcode? =
+You can add the Clef Wave or the Clef “login with your phone” button by inserting the **clef_render_login_button** shortcode into any post, page, or text widget. See the [shortcode guide](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) for details.
+
+= How do I configure Clef for multisite networks? =
+
+If you have a subdirectory network, then no additional configuration is required.
+
+If you have a subdomain or full domain network, then you must [configure the application domain setting](http://support.getclef.com/article/55-does-clefs-wordpress-plugin-support-multisite-networks) to allow Clef logins at multiple subdomains or domains.
+
+= How secure are Clef logins? =
+
+[Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use mobile app.
+
+When configured to disable passwords, Clef protects WordPress users against the full spectrum of password-based attacks:
+
+- brute-force and botnet attacks
+- weak, reused, and recycled passwords
+- sending login credentials via an insecure (non-ssl) connection
+- password phishing attempts
+- account takeovers via email breaches
+
+= How secure is my data on Clef’s servers? =
+
+Clef’s security architecture is fully distributed, which means Clef stores no user credentials on its servers. When you use the Clef mobile app, you create a profile and a private encryption key that never leave your phone. The Clef app then uses that data to generate a unique, encrypted digital signature every time you log in. Since all of your personal info stays on your phone, nothing in the Clef database can compromise your identity even in the unlikely event that the server is hacked.
 
 == Screenshots ==
 
-1. WordPress login form with Clef login enabled.
+1. WordPress login form with passwords disabled.
 
-2. Location of the Clef configuration screen.
+2. Clef setup wizard.
 
-3. Clef setup wizard.
-
-4. A correctly configured settings page for Clef.
+3. The settings page for Clef.
 
 == Changelog ==
 
 = 2.2.7 =
+Released 3 November 2014
 
 * Fix: bug where obfuscating login page URL causes rendering issues
 
 = 2.2.6 =
+Released 2 November 2014
 
 * Fix: bug where registration and lost password pages do not render correctly
 * Fix: bug where login button shortcode renders out of order
@@ -109,12 +150,14 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * Fix: bug where other login page plugins rendered on top of embedded wave
 
 = 2.2.5 =
+Released 29 September 2014
 
 * Feature: allow administrators to disable passwords for custom roles
 * Fix: setup tutorial now works in IE9
 * Fix: password login error message displays correctly with Clef login embed
 
 = 2.2.4 =
+Released 4 September 2014
 
 * Feature: adds more translations!
 * Fix: issue where embedded login was hidden then shown
@@ -122,60 +165,70 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * Fix: issue where PHP error occurred if an error occurred during user registration with Clef
 
 = 2.2.3 =
+Released 6 August 2014
 
 * Fix: store affiliates as string rather than array
 
 = 2.2.2 =
+Released 6 August 2014
 
 * Feature: adds even easier affiliates
 * Fix: plugin conflict with NextGen Gallery where login iframe does not load
 * Fix: plugin conflict with BuddyPress
 
 = 2.2.1 =
+Released 29 July 2014
 
 * Feature: adds easier affiliates
 * Fix: adds better error checking
 
 = 2.2.0 =
+Released 21 July 2014
 
 * Feature: adds shortcode to easily render login button
 * Feature: use modal to allow users to login and preserve state when they are logged out with Clef
-* Feature: menu notification when user hasn't configured Clef
+* Feature: menu notification when user hasn’t configured Clef
 * Feature: by default, embed the Wave in the login form rather than making users click a button
-* Bug fix: issue where if passwords were fully disabled, but Clef wasn't configured, no login form would be shown
+* Bug fix: issue where if passwords were fully disabled, but Clef wasn’t configured, no login form would be shown
 * Bug fix: issue where a new session was opened for every request, not just ones where it was necessary (in admin for Clef users)
 * Bug fix: issue where users can connect the same Clef account to two WordPress accounts
-* Bug fix: issue where if the heartbeat API wasn't available, Clef could interfere with the loading of other plugins
+* Bug fix: issue where if the heartbeat API wasn’t available, Clef could interfere with the loading of other plugins
 * Bug fix: issue where prompt to add Clef badge was shown even if the badge was already displayed
 
 = 2.1.3 =
+Released 26 May 2014
 
 * Bug fix: fixes XMLRPC edge case with login on WordPress Mobile App
 
 = 2.1.2 =
+Released 22 May 2014
 
 * Feature: improved onboarding experience for new users
-* Bug fix: login now now works with Theme My Login (github/clef/wordpress#125)
+* Bug fix: login now works with Theme My Login (github/clef/wordpress#125)
 * Bug fix: login now works with Google Captcha (github/clef/wordpress#127)
 * Bug fix: removes unnecessary CSS files on frontend
 
 = 2.1.1 =
+Released 17 April 2014
 
 * Feature: add framework for Clef affiliate referrals
 * Feature: add a shortcode for displaying the Clef settings
-* Bug fix: error where invite emails errored when there was a blank email
+* Bug fix: error where invite emails erred when there was a blank email
 * Bug fix: issue where Clef button displayed multiple times
 
 = 2.1 =
+Released 19 March 2014
 
 * Feature: customize the Clef login page
 * Feature: configure default site settings that will be set for all new sites
 
 = 2.0.1 =
+Released 12 March 2014
 
 * Bug fix: fixes compatibility issue with 5.2
 
 = 2.0 =
+Released 24 February 2014
 
 * Feature: new and improved single-page responsive settings page
 * Feature: easy user invitations
@@ -184,31 +237,37 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * Feature: restructured code base for easier integrations
 
 = 1.9.1.2 =
+Released 4 February 2014
 
 * Bug fix: fix override URL issue
 
 = 1.9.1.1 =
+Released 30 January 2014
 
 * Bug fix: fix issue where upgrades are detected incorrectly
 
 = 1.9.1 =
+Released 30 January 2014
 
 * New feature: Clef account is automatically connected when you set up a new account
-* New feature: clarifies settings language so it's a little bit clearer
+* New feature: clarifies settings language so it’s a little bit clearer
 * Bug fix: resolves issue with badge prompt displaying multiple times
 
 = 1.9 =
+Released 21 January 2014
 
 * New feature: automatically add a badge showing off that your login is protected by Clef
 * New feature: adds framework for adding translations to plugin
 * Various stability fixes
 
 = 1.8.1.2 =
+Released 13 January 2014
 
 * New feature: hides login with Clef button if Clef is not configured
 * Bug fix: fixes issue with mobile login where Clef would not work
 
 = 1.8.1 =
+Released 21 November 2013
 
 * New feature: force users with certain permissions to log in with Clef
 * New feature: force multisite settings on sub-site users
@@ -216,6 +275,7 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * Compatibility update: supports 3.7+
 
 = 1.8.0 =
+Released 15 October 2013
 
 * New feature: adds support using Clef on multisite networks (currently only supports single-domain setups)
 * New feature: warns user if they try and disable passwords without a connected Clef account
@@ -223,60 +283,79 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 * New developer feature: adds testing framework
 
 = 1.7.1 =
+Released 3 October 2013
 
 * Bug fix: fixes issue caused by Clef applications that did not request last name from users
 * Bug fix: adds state parameter to OAuth flow for connecting a Clef account to a WordPress account
 
 = 1.7 =
+Released 20 September 2013
 
 * New feature: require Clef authentication for all users with optional override key. When this new setting is selected, Clef for WordPress enables true password-free WordPress authentication by hiding the default login form and requiring Clef authentication for all users. If the need arises, you can set an optional override key to allow password logins at a secret URL. Secure keys can be generated automatically, or you can input your own key.
 * New feature: lost password reset protection. If you are running Clef for WordPress in hybrid mode, then lost password resets are disabled for Clef users only. If you are running in full Clef mode, then lost password resets are disabled for all users.
-* New feature: Clef for Wordpress' settings are deleted on uninstall
+* New feature: Clef for Wordpress’ settings are deleted on uninstall
 
 = 1.6.3 =
+Released 10 September 2013
 
 * Updated feature: better error messages
 * Various bug fixes
 
 = 1.6 =
+Released 9 September 2013
 
 * New feature: connect any Clef account to any WordPress account. This feature removes the restriction on matching emails on Clef and WordPress accounts.
 
 = 1.5.4 =
+Released 2 September 2013
 
 * New feature: better error messages
 * Fix for FPD
 * Various bug fixes
 
 = 1.5.3 =
+Released 2 September 2013
 
 * New feature: JavaScript logout through heartbeat API
 
 = 1.5.2 =
+Released 30 August 2013
 
 * New feature: autofill setup variables
 * Changes tested WP compatibility version
 * Various bug fixes
 
 = 1.5 =
-* Updated feature: instead of changing Clef-enabled users' passwords every time they sign in to WordPress, usernames and passwords are entirely disabled for Clef accounts
+Released 11 July 2013
+
+* Updated feature: instead of changing Clef-enabled users’ passwords every time they sign in to WordPress, usernames and passwords are entirely disabled for Clef accounts
 
 = 1.4 =
+Released 19 June 2013
+
 * New feature: single sign-off. When you sign out of your phone, you sign out of all of your WordPress sites.
-* New feature: greater password protection. If a site admin opts-in, a user's passwords will be reset to a random 40 characters every time they sign in.
+* New feature: greater password protection. If a site admin opts-in, a user’s passwords will be reset to a random 40 characters every time they sign in.
 
 = 1.3 =
+Released 26 April 2013
+
 * Beautified WordPress login form with Clef
 * New feature: setup wizard for easy install
 
 = 1.2 =
+Released 22 January 2013
+
 * Updates for Clef v2 API
 
 = 1.1 =
-* Added an admin "pointer" to call out the configuration screen on new installs
+Released 18 January 2013
+
+* Added an admin “pointer” to call out the configuration screen on new installs
 * User registration
 
 = 1.0 =
+Released 17 January 2013
+
 * Initial release: log in using the Clef app.
 
 == Upgrade Notice ==
@@ -285,10 +364,10 @@ Clef can protect WordPress in hybrid mode (passwords allowed) or full Clef mode 
 
 == Credits ==
 
-[Dave Ross](http://davidmichaelross.com) created the original Clef for WordPress plugin. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
+[Dave Ross](http://davidmichaelross.com) created the original Clef plugin for WordPress. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
 
 == Roadmap ==
 
-* Better international support (if you want to help, you can get started [here](http://transifex.com/projects/p/wpclef/))
+* More localization. To help translate, see [the localization guide](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin)).
 * Improved invite system for adding new Clef users
 * Support for Clef team member login and account creation
