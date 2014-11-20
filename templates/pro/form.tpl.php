@@ -1,7 +1,7 @@
 <div id="clef-pro-section">
     <div id="clef-pro-customization" class="clef-settings settings-section pro-section">
         <div class="inputs-container">
-            <h3><?php _e("Customize the Clef login screen", "clef"); ?></h3>
+            <h3><?php _e("Customize the Clef login screen", "clef"); ?> <a class="setting-info" href="http://support.getclef.com/article/8-customizing-the-clef-login-page-in-wordpress" target="clef">Learn more about this setting</a></h3>
             <p><?php _e("Add a custom logo and message to the Clef overlay to make your visitors feel at home."); ?></p>
             <div class="input-container">
                 <label for=""><?php _e("Custom logo", "clef"); ?></label>
