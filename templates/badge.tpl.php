@@ -1,1 +1,1 @@
-<a href="https://bit.ly/wordpress-login-clef" class="clef-badge <?php if ($pretty) {?>pretty<?php } ?>" target="_blank"><?php _e('WordPress Login Protected by Clef', "clef"); ?></a>
+<a href="https://getclef.com?utm_source=badge" class="clef-badge <?php if ($pretty) {?>pretty<?php } ?>" target="_blank">Clef two-factor authentication</a>
