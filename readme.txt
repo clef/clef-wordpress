@@ -31,12 +31,12 @@ http://vimeo.com/77091221
  - Clef stores your encrypted private key on your phone rather than in a central database. Thus even in the unlikely event of a catastrophic security breach on Clef’s servers, your login credentials remain secure on your phone.
  - Every Clef login requires two identification factors: your phone and a fingerprint or PIN. So even if your phone is lost or stolen, you’ll be safe.
 
-- **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it protects your users against
- - brute-force and botnet login attacks,
- - weak, reused, and recycled passwords,
- - sending login credentials via an insecure (non-ssl) connection,
- - password phishing attempts,
- - and account takeovers via email account breaches.
+- **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it protects against the full spectrum of password-based attacks:
+ - brute-force and botnet login attacks
+ - weak, reused, and recycled passwords
+ - sending login credentials via an insecure (non-ssl) connection
+ - password phishing attempts
+ - account takeovers via email account breaches
 
 = Configuration Features =
 
@@ -108,13 +108,13 @@ You can add the Clef Wave or the Clef “login with your phone” button by inse
 
 [Very](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/). Clef leverages the computational power of your smartphone and the proven strengths of distributed, [asymmetric cryptography](http://blog.getclef.com/2013/10/asymmetric-cryptography-use/) and [multi-factor authentication](http://blog.getclef.com/2013/10/2-factor-authentication/) to provide secure WordPress logins in a beautifully simple and easy-to-use mobile app.
 
-When configured to disable passwords, Clef protects WordPress users against 
+When configured to disable passwords, Clef protects WordPress users against the full spectrum of password-based attacks:
 
-- brute-force and botnet attacks,
-- weak, reused, and recycled passwords,
-- sending login credentials via an insecure (non-ssl) connection,
-- password phishing attempts,
-- and account takeovers via email breaches.
+- brute-force and botnet attacks
+- weak, reused, and recycled passwords
+- sending login credentials via an insecure (non-ssl) connection
+- password phishing attempts
+- account takeovers via email breaches
 
 = How secure is my data on Clef’s servers? =
 
