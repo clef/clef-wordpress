@@ -17,7 +17,7 @@
         <div class="settings-section">
             <div class="password-settings">
                 <div class="inputs-container">
-                    <h3><?php _e("Disable passwords", "clef"); ?> <a class="setting-info" href="#">Learn more about this setting</a></h3>
+                    <h3><?php _e("Disable passwords", "clef"); ?> <a class="setting-info" href="http://support.getclef.com/article/60-recommended-password-settings-for-clef-wordpress-plugin" target="clef">Learn more about these settings</a></h3>
                     <div class="input-container">
                         <label for="disable_passwords"><?php _e("Disable passwords for Clef users", "clef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('disable_passwords')->render(); ?>
@@ -56,7 +56,7 @@
         </div>
         <div class="override-settings settings-section">
            <div class="inputs-container">
-                <h3><?php _e("Override settings", "clef"); ?> <a class="setting-info" href="#">Learn more about this setting</a></h3>
+                <h3><?php _e("Override URL", "clef"); ?> <a class="setting-info" href="http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password" target="clef">Learn more about this setting</a></h3>
                 <p><?php _e("You have disabled passwords for some (or all) users. In case of emergency, you can create a special link where passwords can still be used. This is a good safety precaution.", "clef"); ?></p>
                 <div class="input-container">
                     <label for=""><?php echo wp_login_url() ?>?override=</label>
@@ -80,7 +80,7 @@
         </div>
         <div class="support-settings settings-section">
             <div class="inputs-container">
-               <h3><?php _e("Support Clef", "clef"); ?> <a class="setting-info" href="#">Learn more about this setting</a></h3>
+               <h3><?php _e("Support Clef", "clef"); ?></h3>
                <p><?php _e("Clef is, and will always be, free for you and your users. We'd really appreciate it if you'd support us (and show visitors they are browsing a secure site) by adding a link to Clef in your site footer!", "clef"); ?></p>
                 <div class="input-container">
                     <label for=""><?php _e("Support Clef in your footer", "clef"); ?></label>
