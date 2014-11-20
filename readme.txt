@@ -14,7 +14,7 @@ Secure two-factor that people love to use: strong authentication without passwor
 
 [Clef](https://getclef.com) provides easy-to-use strong two-factor authentication using smartphones. It replaces insecure passwords and cumbersome one-time codes with the beautiful Clef Wave.
 
-To log in with Clef, simply open the mobile app, and sync with the Clef Wave. [Watch our 30-sec. demo](http://vimeo.com/77091221).
+To log in with Clef, simply open the mobile app and sync with the Clef Wave. [Watch our 30-sec. demo](http://vimeo.com/77091221).
 
 http://vimeo.com/77091221
 
@@ -28,8 +28,8 @@ http://vimeo.com/77091221
 = Security Features =
 
 - **Strong authentication**: Clef [replaces passwords](http://blog.getclef.com/2013/05/why-we-need-real-cryptography-instead-of-passwords/) with highly secure two-factor logins using the tried-and-true [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) public-key cryptosystem. 
- - Clef stores your encrypted digital signature (i.e., private key) on your phone rather than in a central database. Thus even in the unlikely event of a catastrophic failure on Clef’s servers (e.g., if hackers were to fully breach the system), your login credentials remain secure on your phone.
- - Clef logins require two identification factors. So your login credentials remain safe even if your phone is lost or stolen, and even regardless of whether you have enabled your phone’s screen lock.
+ - Clef stores your encrypted private key on your phone rather than in a central database. Thus even in the unlikely event of a catastrophic security breach on Clef’s servers, your login credentials remain secure on your phone.
+ - Every Clef login requires two identification factors: your phone and a fingerprint or PIN. So even if your phone is lost or stolen, you’ll be safe.
 
 - **Comprehensive protection**: Clef disables passwords for all three WordPress authentication vectors: Dashboard access, API access, and automatic password resets via email. Thus it protects your users against
  - brute-force and botnet login attacks,
@@ -55,19 +55,13 @@ http://vimeo.com/77091221
 
 - **Helpful [documentation](http://support.getclef.com/)** 
 
-- **Free [email support](mailto:support@getclef.com)**
+- **Free [email](mailto:support@getclef.com) and [chat](https://www.hipchat.com/go5kUkq90) support**
 
 == Installation ==
 
-= Step 1: install the Clef mobile app =
-
-- Install the Clef mobile app on your [iPhone](http://itunes.apple.com/us/app/clef/id558706348?ls=1&mt=8) or [Android](https://play.google.com/store/apps/details?id=io.clef) device, and complete the account sign up on your phone.
-
-= Step 2: install the Clef WordPress plugin =
-
 1. In your WordPress Dashboard select **Plugins** and then **Add New** from the sidebar menu. Search for **Clef**, and then choose **Install Now.**
 1. Activate the plugin.
-1. Start the Clef setup wizard, and then sync your phone with the Clef Wave.
+1. Follow the Clef setup wizard.
 
 For detailed setup instructions [see the installation guide](http://support.getclef.com/article/13-setting-up-clef-on-a-wordpress-site).
 
@@ -81,7 +75,7 @@ Yes. Really. Boom! And your free account includes
 
 - unlimited users,
 - unlimited logins,
-- chat and email support,
+- [email](mailto:support@getclef.com) and [chat](https://www.hipchat.com/go5kUkq90) support,
 - and basic usage analytics.
 
 = How do you keep the lights on? =
