@@ -51,7 +51,7 @@ http://vimeo.com/77091221
 
 - **Internationalization and localization support**: Arabic, Danish, Dutch, French, German, Greek, Japanese, Latvian, Portuguese, Russian, Spanish. More translations on the way. [Help translate Clef](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin) into your language.
 
-- **Multisite network support**
+- **[Multisite network](http://support.getclef.com/article/55-does-clefs-wordpress-plugin-support-multisite-networks) support**
 
 - **Helpful [documentation](http://support.getclef.com/)** 
 
@@ -103,6 +103,12 @@ See [the guide for accommodating users without smartphones](http://support.getcl
 
 = How do I create a custom login page or widget with the Clef login shortcode? =
 You can add the Clef Wave or the Clef “login with your phone” button by inserting the **clef_render_login_button** shortcode into any post, page, or text widget. See the [shortcode guide](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) for details.
+
+= How do I configure Clef for multisite networks? =
+
+If you have a subdirectory network, then no additional configuration is required. 
+
+If you have a subdomain or full domain network, then you must [configure the application domain setting](http://support.getclef.com/article/55-does-clefs-wordpress-plugin-support-multisite-networks) to allow Clef logins at multiple subdomains or domains.
 
 = How secure are Clef logins? =
 
