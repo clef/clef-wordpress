@@ -375,7 +375,6 @@ class ClefAdmin {
         $settings = $form->addSection('clef_settings', __('API Settings', 'clef'));
         $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        $settings->addField('register', __('Register with Clef', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings', 'clef'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
