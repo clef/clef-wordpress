@@ -1,7 +1,7 @@
 === Clef Two-Factor Authentication ===
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
-Tags: 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, oauth, password, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor, two factor authentication, two step, wp-admin, wp-login
+Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, oauth, password, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login
 Requires at least: 3.5
 Tested up to: 4.0
 Stable tag: 2.2.8
@@ -14,9 +14,9 @@ Secure two-factor that people love to use: strong authentication without passwor
 
 [Clef](https://getclef.com) provides easy-to-use strong two-factor authentication using smartphones. It replaces insecure passwords and cumbersome one-time codes with the beautiful Clef Wave.
 
-To log in with Clef, simply open the mobile app and sync with the Clef Wave. [Watch our 30-sec. demo](http://vimeo.com/77091221).
+To log in with Clef, simply open the mobile app and sync with the Clef Wave. [Watch our 30-sec. demo](http://vimeo.com/103148853).
 
-http://vimeo.com/77091221
+http://vimeo.com/103148853
 
 = Our Users’ Favorite Features =
 - **The “magical” [Clef Wave](https://getclef.com/tutorial/)**: login securely without passwords, and enjoy two-factor protection without one-time codes.
