@@ -9,24 +9,23 @@ $wpclef_opts = get_option('wpclef');
 /**
  * Configure wpclef from the command line.
  */
-class Clef_Password_Command extends WP_CLI_Command {
+class Clef_WPCLI_Command extends WP_CLI_Command {
 
     /**
      * Disable passwords for select WP roles; show the Clef Wave or the default login form on wp-login.php.
      * 
      * ## OPTIONS
      * 
-     * [<all>] [<clef>] [<subscriber>] [<contributor>] [<author>] [<editor>] [<admin>] [superadmin>] [--allow-api=<yes/no>] [--show-wave=<yes/no>] [<reset>]
-     * : The name of the user role for which you wish to disable passwords.
-     * 1. Highest security: <all>
-     * 2. Higher security: select one of the standard roles
-     *    (e.g., <contributor>)
-     * 3. High security: <clef>
+     * [<all>]
+     * : Disable passwords for all WP users. Highest security.
      *
-     * The <clef> role is all WP users who have connected their Clef mobile apps to their WP users regardless of their WP role.
+     * [<subscriber>] [<contributor>] [<author>] [<editor>] [<admin>] [superadmin>]
+     * : Disable passwords for select WP user roles. Higher security. 
      *
-     * You can select more than one role at a time. It only makes sense to do this with <clef> plus a standard WP role like <author> or <editor>, etc. Use the WP Dashboard to select custom WP roles.
-     * 
+     * [<clef>]
+     * : Disable passwords for all WP users who have connected their Clef mobile
+     * apps to their WP users. High security.
+     *
      * [--allow-api=<yes/no>]
      * : Whether to allow password logins via the WP API (including XML-RPC).
      *  Default: no.
@@ -35,9 +34,11 @@ class Clef_Password_Command extends WP_CLI_Command {
      * : Whether to show the Clef Wave as the primary option on wp-login.php.
      *  Default: yes.
      *
-     * * [<reset>] 
-     * : Returns the disable password settings to their post-installation defaults.
+     * [<reset>]
+     * : Reset your disable password settings to their fresh-install defaults.
      *
+     * You can disable more than one role at a time. However, it only makes sense to do this with the <clef> role plus a standard WP role such as <author> or <editor>, etc. Custom roles may be disabled via the WP Dashboard GUI.
+     * 
      * ## EXAMPLES
      * 
      *     wp clef disable all
@@ -154,6 +155,81 @@ class Clef_Password_Command extends WP_CLI_Command {
         }
             
     }
+
+    /**
+     * Test your logout hook from the command line.
+     * 
+     * ## OPTIONS
+     * 
+     * [<url>]
+     * : Manually enter the logout hook URL setting from the Clef application that
+     * is connected to your WP site. You will find this URL in your
+     * getclef.com/user dashboard.
+     *
+     *[<siteurl>]
+     * : The WordPress site_url(). Use this debugging option when the logout hook
+     * URL in your Clef application is diffefent than the value of your site_url().  
+     *
+     * ## EXAMPLES
+     * 
+     *     wp clef hook http://blog.getclef.com
+     *     wp clef hook siteurl
+     *
+     * @synopsis [<url>] [<siteurl>]
+     */
+    function hook($args, $assoc_args) {
+        
+        // If an url for 'hook' is entered, run the logout hook test via curl.
+        if (!empty($args)) {
+        
+            $args = array_map('strtolower', $args);
+            
+            foreach ($args as $arg) {
+                switch ($arg) {
+                    // user enters logout hook url manually
+                    case (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $arg) ? true : false):
+                        
+                        // create a new cURL resource and set options
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $arg);
+                        curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
+
+                        // execute cURL command and print to STDOUT
+                        curl_exec($ch);
+                                                
+                        // close cURL
+                        curl_close($ch);
+                        
+                        WP_CLI::line('');    
+                        break;
+                    
+                    // user tests with WP's site_url() 
+                    case 'siteurl':
+
+                        $hook_url = site_url();
+                        if (preg_match('/localhost/', $hook_url)) {
+                            WP_CLI::error('The logout hook test does not work on local test servers that are not connected to the internet (e.g., http://localhost).');
+                            break;
+                        }
+
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $hook_url);
+                        curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
+                        curl_exec($ch);
+                        curl_close($ch);
+                    
+                        WP_CLI::line('');
+                        break;
+                    default:
+                        WP_CLI::error("Please enter a valid option for the 'hook' command. For help use 'wp help clef hook'.");
+                    break;
+                }
+            }
+        }
+    }
 }
 
-WP_CLI::add_command('clef', 'Clef_Password_Command');?>
+WP_CLI::add_command('clef', 'Clef_WPCLI_Command');
+?>
