@@ -46,7 +46,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      */
     function disable($args, $assoc_args) {
 
-        // If options for 'disable' are entered, run the commands.
+        /**
+        * If no options for 'disable' are entered, display error; otherwise, execute the commands and flags.
+        */
+        if (empty($args) && empty($assoc_args)) {
+            
+            WP_CLI::error("Please enter a valid option for 'disable'. For help use 'wp help clef disable'.");
+            
+        } 
+        
+        // commands
         if (!empty($args)) {
         
             $args = array_map('strtolower', $args);
@@ -109,9 +118,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                     break;
                 }
             }
-        }
+        } 
         
-        // If flags are entered, run the commands.
+        // flags
         if (!empty($assoc_args)) {
             
             $assoc_args = array_map('strtolower', $assoc_args);
