@@ -1,18 +1,18 @@
 <?php
-
-/**
- * Define globals.
- */
-$wpclef_opts = get_option('wpclef');
-
-
 /**
  * Configure wpclef from the command line.
  */
 class Clef_WPCLI_Command extends WP_CLI_Command {
 
     /**
-     * Disable passwords for select WP roles; show the Clef Wave or the default login form on wp-login.php.
+     * Define class properties.
+     */
+    function __construct() {
+        $this->wpclef_opts = get_option('wpclef');
+    }
+    
+    /**
+     * Disable passwords for select WP roles and for the WP API.
      * 
      * ## OPTIONS
      * 
@@ -26,16 +26,13 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * : Disable passwords for all WP users who have connected their Clef mobile
      * apps to their WP users. High security.
      *
-     * [--allow-api=<yes/no>]
-     * : Whether to allow password logins via the WP API (including XML-RPC).
+     * [--allow-api=<yes|no>]
+     * : Yes allows password logins via the WP API (including XML-RPC).
+     * No disallows them.
      *  Default: no.
      *
-     * [--show-wave=<yes/no>]
-     * : Whether to show the Clef Wave as the primary option on wp-login.php.
-     *  Default: yes.
-     *
      * [<reset>]
-     * : Reset your disable password settings to their fresh-install defaults.
+     * : Return your disable password settings to their fresh-install defaults.
      *
      * You can disable more than one role at a time. However, it only makes sense to do this with the <clef> role plus a standard WP role such as <author> or <editor>, etc. Custom roles may be disabled via the WP Dashboard GUI.
      * 
@@ -44,13 +41,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      *     wp clef disable all
      *     wp clef disable clef author
      *     wp clef disable --allow-api=yes
-     *     wp clef disable --show-wave=no
      *
-     * @synopsis [<role>] [<other-role>] [--allow-api=<yes/no>] [--show-wave=<yes/no>]
+     * @synopsis [<role>] [<other-role>] [--allow-api=<yes|no>]
      */
     function disable($args, $assoc_args) {
-        
-        global $wpclef_opts;
 
         // If options for 'disable' are entered, run the commands.
         if (!empty($args)) {
@@ -60,54 +54,54 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             foreach ($args as $arg) {
                 switch ($arg) {
                     case 'all':
-                        $wpclef_opts['clef_password_settings_force'] = 1;
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_force'] = 1;
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for all users.");
                         break;
                     case 'clef':
-                        $wpclef_opts['clef_password_settings_disable_passwords'] = 1;
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_passwords'] = 1;
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for Clef users.");
                         break;
                     case 'subscriber':   
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Subscriber';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Subscriber';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled subscriber and higher roles.");
                         break;
                     case 'contributor':
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Contributor';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Contributor';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for contributor and higher.");
                         break;
                     case 'author':
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Author';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Author';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for author and higher roles. (Clef is no longer protecting your site!)");
                         break;
                     case 'editor':
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Editor';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Editor';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for editor and higher roles");
                         break;
                     case 'admin':
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Administrator';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Administrator';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success("Passwords are disabled for administrator and higher roles.");
                         break;
                     case 'superadmin':
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Super Administrator';
-                        update_option('wpclef', $wpclef_opts);
+                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Super Administrator';
+                        update_option('wpclef', $this->wpclef_opts);
                         WP_CLI::success('Passwords are disabled for super administrator and higher roles.');
                         break;
                     case 'reset':
                         // If confirm = true, reset the settings.
                         WP_CLI::confirm('Are you sure you want to reset your password settings to their default values?');
-                            $wpclef_opts['clef_password_settings_force'] = 0;
-                            $wpclef_opts['clef_password_settings_disable_passwords'] = 1;
-                            $wpclef_opts['clef_password_settings_disable_certain_passwords'] = '';    
-                            $wpclef_opts['clef_password_settings_xml_allowed'] = 0;
-                            $wpclef_opts['clef_form_settings_embed_clef'] = 1;
-                            update_option('wpclef', $wpclef_opts);
+                            $this->wpclef_opts['clef_password_settings_force'] = 0;
+                            $this->wpclef_opts['clef_password_settings_disable_passwords'] = 1;
+                            $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = '';    
+                            $this->wpclef_opts['clef_password_settings_xml_allowed'] = 0;
+                            $this->wpclef_opts['clef_form_settings_embed_clef'] = 1;
+                            update_option('wpclef', $this->wpclef_opts);
                             WP_CLI::success('Disable password settings have been reset to their default values.');
                         break;
                     default:
@@ -126,34 +120,65 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 switch ($key) {
                     case 'allow-api':
                         if ($value == 'yes') { 
-                            $wpclef_opts['clef_password_settings_xml_allowed'] = 1;
-                            update_option('wpclef', $wpclef_opts);
+                            $this->wpclef_opts['clef_password_settings_xml_allowed'] = 1;
+                            update_option('wpclef', $this->wpclef_opts);
                             WP_CLI::success("Passwords are allowed for the WP API.");
+                            break;
                         } elseif ($value == 'no') { 
-                            $wpclef_opts['clef_password_settings_xml_allowed'] = 0;
-                            update_option('wpclef', $wpclef_opts);
+                            $this->wpclef_opts['clef_password_settings_xml_allowed'] = 0;
+                            update_option('wpclef', $this->wpclef_opts);
                             WP_CLI::success('Passwords are disabled for the WP API.');
+                            break;
                         } else {
                             WP_CLI::error("Please enter 'yes' or 'no' for --allow-api=");
+                            break;
                         }
-                        break;
-                    case 'show-wave':
-                        if ($value == 'yes') { 
-                            $wpclef_opts['clef_form_settings_embed_clef'] = 1;
-                            update_option('wpclef', $wpclef_opts);
-                            WP_CLI::success('The Clef Wave will show as primary login option on wp-login.php.');
-                        } elseif ($value == 'no') { 
-                            $wpclef_opts['clef_form_settings_embed_clef'] = 0;
-                            update_option('wpclef', $wpclef_opts);
-                            WP_CLI::success('Wp-login.php will show the default login form.');
-                        } else {
-                            WP_CLI::error("Please enter 'yes' or 'no' for --show-wave=");
-                        }
-                        break;
                 }
             }
         }
+    }
+    
+    /**
+     * Show the Clef Wave or the standard WP login form on wp-login.php.
+     * 
+     * ## OPTIONS
+     * 
+     * <yes|no>
+     * : Yes shows the Clef Wave on wp-login.php. No shows the standard WP login form.
+     * Default: yes.
+     *
+     * ## EXAMPLES
+     * 
+     *     wp clef wave yes
+     *     wp clef wave no
+     *
+     * @synopsis <yes|no>
+     */
+    function wave($args, $assoc_args) {
+
+        // If options for 'disable' are entered, run the commands.
+        if (!empty($args)) {
+        
+            $args = array_map('strtolower', $args);
             
+            foreach ($args as $arg) {
+                switch ($arg) {
+                    case 'yes':
+                        $this->wpclef_opts['clef_form_settings_embed_clef'] = 1;
+                        update_option('wpclef', $this->wpclef_opts);
+                        WP_CLI::success("Wp-login.php will show the Clef Wave.");
+                        break;
+                    case 'no':
+                        $this->wpclef_opts['clef_form_settings_embed_clef'] = 0;
+                        update_option('wpclef', $this->wpclef_opts);
+                        WP_CLI::success("Wp-login.php will show the standard WP login form.");
+                        break;
+                    default:
+                        WP_CLI::error("Please enter a valid option for the 'wave' command. For help use 'wp help clef wave'.");
+                    break;
+                }
+            }
+        }            
     }
 
     /**
