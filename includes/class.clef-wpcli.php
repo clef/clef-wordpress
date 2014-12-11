@@ -263,6 +263,184 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             }
         }
     }
+    
+    /**
+     * Disable passwords for select WP roles and for the WP API.
+     * 
+     * ## OPTIONS
+     * 
+     * [<--info>]
+     * : Display your current override URL. 
+     *
+     * [<create>]
+     * : Create a new override URL or overwrite existing URL. 
+     *
+     * [<--key=<your_key>]
+     * : Option to enter a custom key. E.g., http://example.com?override=your_key.
+     *
+     * [--email=<me|address>]
+     * : Send the override URL to an email address. Enter <me> to send it to your own WP user's email address. 
+     * Enter a custom <address> (e.g., jane@doe.com) to send it anywhere else.
+     *
+     * [<delete>]
+     * : Delete your existing override URL.
+     * 
+     * ## EXAMPLES
+     * 
+     *     wp clef override create
+     *     wp clef override create --key=my_secret_key
+     *     wp clef override --email=me
+     *     wp clef override --email=jane@doe.com
+     *     wp clef override delete
+     *
+     * @synopsis [--info] [<create>] [--key=<your_key>] [--email=<me|address>] [<delete>]
+     */
+    function override($args, $assoc_args) {
+
+        /**
+        * Function vars.
+        */
+        $this->siteurl = site_url();
+        
+        /**
+        * Function methods.
+        */
+        function create_override($key) {
+            if (!empty($wpclef_opts['clef_override_settings_key'])) {
+                WP_CLI::confirm('Your current override URL is: '
+                                .$siteurl
+                                .'/override=?'
+                                .$wpclef_opts['clef_override_settings_key']
+                                .' Do you want to overwrite this with a new one?');
+                    if (isset($key)) {
+                        $wpclef_opts['clef_override_settings_key'] = urlencode($key);
+                    } else {
+                        $wpclef_opts['clef_override_settings_key'] = substr ( (md5(uniqid(mt_rand(), true))), 0, 15 );
+                    }
+                
+            } else {
+                if (isset($key)) {
+                        $wpclef_opts['clef_override_settings_key'] = urlencode($key);
+                    } else {
+                        $wpclef_opts['clef_override_settings_key'] = substr ( (md5(uniqid(mt_rand(), true))), 0, 15 );
+                    }
+            }
+            
+            if (update_option('wpclef', $wpclef_opts)) {
+                return $wpclef_opts['clef_override_settings_key'];
+            } else {
+                return false;
+            }
+
+        }
+        
+        function send_email($to, $url) {
+            $msg = 
+'Hello,
+
+Here is your Clef override URL:
+
+'.$url;
+            if (wp_mail($to, 'Clef override URL', $msg)) {
+                return true;
+            }
+        }
+        
+        function get_override_url() {
+            global $wpclef_opts;
+            $url = site_url();
+            $url .= '/override=?';
+            $url .= $wpclef_opts['clef_override_settings_key'];
+            
+            return $url;
+        }
+        
+        /**
+        * If no options are entered, display error; otherwise, execute the commands and flags.
+        */
+        if (empty($args) && empty($assoc_args)) {
+            
+            WP_CLI::error("Please enter a valid option for 'override'. For help use 'wp help clef override'.");
+            
+        } 
+        
+        // commands
+        if (!empty($args)) {
+        
+            $args = array_map('strtolower', $args);
+            
+            foreach ($args as $arg) {
+                switch ($arg) {
+                    case 'create':
+                        if (create_override()) {
+                            WP_CLI::success('Your new override URL is: '.$this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
+                            WP_CLI::confirm("Would you like to email yourself a copy of your override URL so you don't forget it?");
+                                WP_CLI::run_command(['clef', 'override'],['email' => 'me']);
+                        }
+                        break;
+                    case 'clef':
+                        $this->wpclef_opts['clef_password_settings_disable_passwords'] = 1;
+                        update_option('wpclef', $this->wpclef_opts);
+                        WP_CLI::success("Passwords are disabled for Clef users.");
+                        break;
+                    default:
+                        WP_CLI::error("Please enter a valid option for the 'override' command. For help use 'wp help clef override'.");
+                    break;
+                }
+            }
+        } 
+        
+        // flags
+        if (!empty($assoc_args)) {
+            
+            $assoc_args = array_map('strtolower', $assoc_args);
+            
+            foreach ($assoc_args as $key => $value) {
+                switch ($key) {
+                    case 'info':
+                        if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
+                            WP_CLI::line($this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
+                        break;
+                        } else {
+                            WP_CLI::confirm('Your override URL is currently not enabled. Would you like to create one?');
+                                WP_CLI::run_command(['clef', 'override', 'create']);
+                        break;
+                        }
+                    case 'key':
+                        if ($this->wpclef_opts['clef_override_settings_key'] = create_override($value)) {
+                            WP_CLI::success('Your new override URL is: '.$this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
+                            WP_CLI::confirm("Would you like to email yourself a copy of your override URL so you don't forget it?");
+                                //***WP_CLI::run_command(['clef', 'override'],['email' => 'me']);
+                        }
+                        break;
+                    case 'email':
+                        if (strtolower($value) == 'me') {
+                            $current_user = wp_get_current_user();
+                            $to = $current_user->user_email;
+                            $url = get_override_url();
+                            
+                            WP_CLI::line($url);
+                            
+                            if (send_email($to, $url)) {
+                                WP_CLI::success('Email sent to: ' .$to);
+                            } else {
+                                WP_CLI::error("Email not sent!");
+                            }
+                            
+                        } elseif (strtolower($value) == 'blah') {
+                            WP_CLI::success('Email sent to: ');
+                        } else {
+                            WP_CLI::error("Please enter a valid option for the 'email' flag.");
+                        }
+                        break;
+                    default:
+                        WP_CLI::error("Please enter a valid option for the 'override' command. For help use 'wp help clef override'.");
+                        break;
+                }
+            }
+        }
+    }
+    
 }
 
 WP_CLI::add_command('clef', 'Clef_WPCLI_Command');
