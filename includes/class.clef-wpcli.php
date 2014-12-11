@@ -16,7 +16,7 @@ class Clef_Password_Command extends WP_CLI_Command {
      * 
      * ## OPTIONS
      * 
-     * [<all>] [<clef>] [<subscriber>] [<contributor>] [<author>] [<editor>] [<admin>] [superadmin>] [--allow-api=<yes|no>] [--show-wave=<yes|no>] [<reset>]
+     * [<all>] [<clef>] [<subscriber>] [<contributor>] [<author>] [<editor>] [<admin>] [superadmin>] [--allow-api=<yes/no>] [--show-wave=<yes/no>] [<reset>]
      * : The name of the user role for which you wish to disable passwords.
      * 1. Highest security: <all>
      * 2. Higher security: select one of the standard roles
@@ -27,11 +27,11 @@ class Clef_Password_Command extends WP_CLI_Command {
      *
      * You can select more than one role at a time. It only makes sense to do this with <clef> plus a standard WP role like <author> or <editor>, etc. Use the WP Dashboard to select custom WP roles.
      * 
-     * [--allow-api=<yes|no>]
+     * [--allow-api=<yes/no>]
      * : Whether to allow password logins via the WP API (including XML-RPC).
      *  Default: no.
      *
-     * [--show-wave=<yes|no>]
+     * [--show-wave=<yes/no>]
      * : Whether to show the Clef Wave as the primary option on wp-login.php.
      *  Default: yes.
      *
@@ -42,15 +42,16 @@ class Clef_Password_Command extends WP_CLI_Command {
      * 
      *     wp clef disable all
      *     wp clef disable clef author
-     *     wp clef disable --allow-api=no
+     *     wp clef disable --allow-api=yes
+     *     wp clef disable --show-wave=no
      *
-     * @synopsis [<role>] [<other-role>] [--allow-api=<yes|no>] [--show-wave=<yes|no>]
+     * @synopsis [<role>] [<other-role>] [--allow-api=<yes/no>] [--show-wave=<yes/no>]
      */
     function disable($args, $assoc_args) {
         
         global $wpclef_opts;
 
-        // If commands are selected, run the commands.
+        // If options for 'disable' are entered, run the commands.
         if (!empty($args)) {
         
             $args = array_map('strtolower', $args);
@@ -98,13 +99,15 @@ class Clef_Password_Command extends WP_CLI_Command {
                         WP_CLI::success('Passwords are disabled for super administrator and higher roles.');
                         break;
                     case 'reset':
-                        $wpclef_opts['clef_password_settings_force'] = 0;
-                        $wpclef_opts['clef_password_settings_disable_passwords'] = 1;
-                        $wpclef_opts['clef_password_settings_disable_certain_passwords'] = '';    
-                        $wpclef_opts['clef_password_settings_xml_allowed'] = 0;
-                        $wpclef_opts['clef_form_settings_embed_clef'] = 1;
-                        update_option('wpclef', $wpclef_opts);
-                        WP_CLI::success('Disable password settings have been reset to their default values.');
+                        // If confirm = true, reset the settings.
+                        WP_CLI::confirm('Are you sure you want to reset your password settings to their default values?');
+                            $wpclef_opts['clef_password_settings_force'] = 0;
+                            $wpclef_opts['clef_password_settings_disable_passwords'] = 1;
+                            $wpclef_opts['clef_password_settings_disable_certain_passwords'] = '';    
+                            $wpclef_opts['clef_password_settings_xml_allowed'] = 0;
+                            $wpclef_opts['clef_form_settings_embed_clef'] = 1;
+                            update_option('wpclef', $wpclef_opts);
+                            WP_CLI::success('Disable password settings have been reset to their default values.');
                         break;
                     default:
                         WP_CLI::error("Please enter a valid option for the 'disable' command. For help use 'wp help clef disable'.");
