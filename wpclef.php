@@ -29,6 +29,8 @@ if (CLEF_DEBUG) require_once('includes/lib/symlink-fix.php');
 
 if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', true);
 
+if (defined('WP_CLI') && WP_CLI) require_once('includes/class.clef-wpcli.php');
+
 require_once('clef-require.php');
 
 Clef::start();
