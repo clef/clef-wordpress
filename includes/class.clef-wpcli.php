@@ -53,7 +53,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 }
                 
             } else {
-                WP_CLI::error("Unable to complete update_option() for $option.");
+                WP_CLI::error("Unable to complete update_wpclef_option() for $option.");
             }
         }
     }
@@ -258,14 +258,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             foreach ($commands as $command) {
                 switch ($command) {
                     case 'yes':
-                        $this->wpclef_opts['clef_form_settings_embed_clef'] = 1;
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Wp-login.php will show the Clef Wave.");
+                        self::update_wpclef_option('clef_form_settings_embed_clef', 1, 'Wp-login.php will show the Clef Wave.');
                         break;
                     case 'no':
-                        $this->wpclef_opts['clef_form_settings_embed_clef'] = 0;
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Wp-login.php will show the standard WP login form.");
+                        self::update_wpclef_option('clef_form_settings_embed_clef', 0, 'Wp-login.php will show the standard WP login form.');
                         break;
                     default:
                         self::error_invalid_option('wave');
@@ -311,7 +307,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         
                         // create a new cURL resource and set options
                         $ch = curl_init();
-                        curl_setopt($ch, CURLOPT_URL, $arg);
+                        curl_setopt($ch, CURLOPT_URL, $command);
                         curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
                         curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
 
@@ -400,14 +396,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         break;
                     case 'delete':
                         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
-
-                            $this->wpclef_opts['clef_override_settings_key'] = '';
-
-                            if (update_option('wpclef', $this->wpclef_opts)) {
-                                WP_CLI::success('Override URL deleted.');
-                            } else {
-                                WP_CLI::error('Could not delete override URL.');
-                            }
+                            
+                            self::update_wpclef_option('clef_override_settings_key', '', 'Override URL deleted.');
+                            
                         } else {
                             WP_CLI::line('Your override URL is not set; there is nothing to delete.');
                         }
