@@ -16,6 +16,19 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
    /**
     * Define utility methods.
     */
+    function validate_command_input($args, $assoc_args, $command) {
+        
+        if (empty($args) && empty($assoc_args)) {
+            WP_CLI::error("Please enter a valid option for $command. For help use 'wp help clef $command'.");
+        }
+    }
+    
+    function filter_command_input($input) {
+        
+        $input = array_map('strtolower', $input);
+        return $input;
+    }
+    
     function create_override($key = null) {
         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
             
@@ -354,25 +367,17 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      */
     function override($args, $assoc_args) {
         
-        /**
-        * If no options are entered, display error; otherwise, execute the commands and flags.
-        */
-        if (empty($args) && empty($assoc_args)) {
-            
-            WP_CLI::error("Please enter a valid option for 'override'. For help use 'wp help clef override'.");
-            
-        } 
+        //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::validate_command_input($args, $assoc_args, 'override');
         
-        // commands
-        if (!empty($args)) {
-        
-            $args = array_map('strtolower', $args);
-            
-            foreach ($args as $arg) {
-                switch ($arg) {
+        // Execute commands.
+        if ($commands = self::filter_command_input($args)) {
+
+            foreach ($commands as $command) {
+                switch ($command) {
                     case 'create':
                         if (self::create_override()) {
-                            
+
                             WP_CLI::success('Your new override URL is: '.$this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
                             WP_CLI::confirm("Would you like to email yourself a copy of your override URL so you don't forget it?");
                                 WP_CLI::run_command(['clef', 'override'],['email' => 'me']);
@@ -380,9 +385,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         break;
                     case 'delete':
                         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
-                            
+
                             $this->wpclef_opts['clef_override_settings_key'] = '';
-                            
+
                             if (update_option('wpclef', $this->wpclef_opts)) {
                                 WP_CLI::success('Override URL deleted.');
                             } else {
@@ -397,14 +402,12 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                     break;
                 }
             }
-        } 
+        }
         
-        // flags
-        if (!empty($assoc_args)) {
-            
-            $assoc_args = array_map('strtolower', $assoc_args);
-            
-            foreach ($assoc_args as $key => $value) {
+        // Execute flags.
+        if ($flags = self::filter_command_input($assoc_args)) {
+
+            foreach ($flags as $key => $value) {
                 switch ($key) {
                     case 'info':
                         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
@@ -419,7 +422,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         if ($this->wpclef_opts['clef_override_settings_key'] = self::create_override($value)) {
                             $msg = 'Your new override URL is: ';
                             $msg .= self::get_override_url();
-                            
+
                             WP_CLI::success($msg);
                             WP_CLI::confirm("Would you like to email yourself a copy of your override URL so you don't forget it?");
                                 WP_CLI::run_command(['clef', 'override'],['email' => 'me']);
@@ -428,13 +431,13 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                     case 'email':
                         if (strtolower($value) == 'me') {
                             $url = self::get_override_url();
-                            
+
                             if (self::send_email('laurence.odonnell@gmail.com', $url)) {
                                 WP_CLI::success('Email sent to ***Laurence.');
                             } else {
                                 WP_CLI::error("Email not sent!");
                             }
-                            
+
                         //} elseif (strtolower($value) == 'blah') {
                         //    WP_CLI::success('Email sent to: ');
                         } else {
@@ -445,10 +448,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         WP_CLI::error("Please enter a valid option for the 'override' command. For help use 'wp help clef override'.");
                         break;
                 }
-            }
-        }
+            }       
+        }   
     }
-    
 }
 
 WP_CLI::add_command('clef', 'Clef_WPCLI_Command');
