@@ -1,16 +1,29 @@
 <?php
 /**
- * Configure wpclef from the command line.
- */
+ * Manage wpclef from the command line.
+ * 
+ * This class adds WP-CLI (http://wp-cli.org) functionality to the wpclef plugin (https://wordpress.org/plugins/wpclef/).
+ * 
+ * Contributions are welcome! See https://github.com/clef/wordpress.
+ * 
+ * @author Laurence O’Donnell <laurence@getclef.com>
+ * @version 0.0
+ * @since 2.2.9
+ * @uses 
+ */ 
 class Clef_WPCLI_Command extends WP_CLI_Command {
 
    /**
     * Define class properties.
     */
+    private $wpclef_opts;
+    private $site_url;
+    private $user_email;
+    
     function __construct() {
         $this->wpclef_opts = get_option('wpclef');
-        $this->siteurl = site_url();
-        $this->current_user = wp_get_current_user();
+        $this->site_url = site_url();
+        $this->user_email = $user->user_email;
     }
     
    /**
@@ -33,6 +46,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         
         WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
+    
+    
     
     function update_wpclef_option($option, $value, $msg = null) {
             
@@ -110,7 +125,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
 
     function send_email($to, $url) {
         $msg = '<p>Hello,</p><p>Here is your Clef override URL:<br />'.$url;
-        $subject = 'Clef override URL for ' .$this->siteurl;
+        $subject = 'Clef override URL for ' .$this->site_url;
         
         if (wp_mail($to, $subject, $msg)) {
             return true;
@@ -429,7 +444,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 switch ($key) {
                     case 'info':
                         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
-                            WP_CLI::line($this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
+                            WP_CLI::line($this->site_url.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
                         break;
                         } else {
                             WP_CLI::confirm('You have not yet set an override URL. Would you like to create one now?');
