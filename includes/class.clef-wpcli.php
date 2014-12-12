@@ -16,13 +16,12 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
    /**
     * Define utility methods.
     */
-    function create_override($key) {
+    function create_override($key = null) {
         if (!empty($this->wpclef_opts['clef_override_settings_key'])) {
-            WP_CLI::confirm('Your current override URL is: '
-                            .$siteurl
-                            .'/override=?'
-                            .$this->wpclef_opts['clef_override_settings_key']
-                            .' Do you want to replace this with a new one?');
+            
+            $current_url = self::get_override_url();
+            
+            WP_CLI::confirm('Your current override URL is: ' .$current_url .' Do you want to replace it with the new one?');
                 if (isset($key)) {
                     $this->wpclef_opts['clef_override_settings_key'] = urlencode($key);
                 } else {
@@ -323,7 +322,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
     /**
-     * Disable passwords for select WP roles and for the WP API.
+     * Configure an override URL that allows password-based logins via a secret URL.
      * 
      * ## OPTIONS
      * 
@@ -334,7 +333,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * : Create a new override URL or overwrite existing URL. 
      *
      * [<--key=<your_key>]
-     * : Option to enter a custom key. E.g., http://example.com?override=your_key.
+     * : Create a custom key for your override URL. E.g., http://example.com?override=your_key.
      *
      * [--email=<me|address>]
      * : Send the override URL to an email address. Enter <me> to send it to your own WP user's email address. 
@@ -372,7 +371,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             foreach ($args as $arg) {
                 switch ($arg) {
                     case 'create':
-                        if (create_override()) {
+                        if (self::create_override()) {
                             
                             WP_CLI::success('Your new override URL is: '.$this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
                             WP_CLI::confirm("Would you like to email yourself a copy of your override URL so you don't forget it?");
@@ -386,9 +385,11 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                             
                             if (update_option('wpclef', $this->wpclef_opts)) {
                                 WP_CLI::success('Override URL deleted.');
+                            } else {
+                                WP_CLI::error('Could not delete override URL.');
                             }
                         } else {
-                            WP_CLI::warning('Your override URL is not set; there is nothing to delete.');
+                            WP_CLI::line('Your override URL is not set; there is nothing to delete.');
                         }
                         break;
                     default:
@@ -410,7 +411,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                             WP_CLI::line($this->siteurl.'/override=?'.$this->wpclef_opts['clef_override_settings_key']);
                         break;
                         } else {
-                            WP_CLI::confirm('Your override URL is currently not enabled. Would you like to create one?');
+                            WP_CLI::confirm('You have not yet set an override URL. Would you like to create one now?');
                                 WP_CLI::run_command(['clef', 'override', 'create']);
                         break;
                         }
