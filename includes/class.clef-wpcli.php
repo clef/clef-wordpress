@@ -19,7 +19,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     function validate_command_input($args, $assoc_args, $command) {
         
         if (empty($args) && empty($assoc_args)) {
-            WP_CLI::error("Please enter a valid option for $command. For help use 'wp help clef $command'.");
+            self::error_invalid_option($command);
         }
     }
     
@@ -27,6 +27,27 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         
         $input = array_map('strtolower', $input);
         return $input;
+    }
+    
+    function error_invalid_option($command) {
+        WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
+    }
+    
+    function update_wpclef_option($option, $value, $msg) {
+            
+        // Check whether the option is already set to the input value. If not, update the option.
+        if ($this->wpclef_opts[$option] === $value) {
+            WP_CLI::success($msg);
+        } else {
+            // Update the option.
+            $this->wpclef_opts[$option] = $value;
+            
+            if (update_option('wpclef', $this->wpclef_opts)) {
+                WP_CLI::success($msg);
+            } else {
+                WP_CLI::error("Unable to complete update_option() for $option.");
+            }
+        }
     }
     
     function create_override($key = null) {
@@ -116,102 +137,77 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      */
     function disable($args, $assoc_args) {
 
-        /**
-        * If no options for 'disable' are entered, display error; otherwise, execute the commands and flags.
-        */
-        if (empty($args) && empty($assoc_args)) {
-            
-            WP_CLI::error("Please enter a valid option for 'disable'. For help use 'wp help clef disable'.");
-            
-        } 
+         //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::validate_command_input($args, $assoc_args, 'disable');
         
-        // commands
-        if (!empty($args)) {
+        // Execute commands.
+        if ($commands = self::filter_command_input($args)) {
         
-            $args = array_map('strtolower', $args);
-            
-            foreach ($args as $arg) {
-                switch ($arg) {
+            foreach ($commands as $command) {
+                switch ($command) {
                     case 'all':
-                        $this->wpclef_opts['clef_password_settings_force'] = 1;
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for all users.");
+                        self::update_wpclef_option('clef_password_settings_force', 1, 'Passwords are disabled for all users.');
                         break;
                     case 'clef':
-                        $this->wpclef_opts['clef_password_settings_disable_passwords'] = 1;
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for Clef users.");
+                        self::update_wpclef_option('clef_password_settings_disable_passwords', 1, 'Passwords are disabled for Clef users.');
                         break;
-                    case 'subscriber':   
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Subscriber';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled subscriber and higher roles.");
+                    case 'subscriber':
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Subscriber', 'Passwords are disabled subscriber and higher roles.');
                         break;
                     case 'contributor':
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Contributor';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for contributor and higher.");
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Contributor', 'Passwords are disabled for contributor and higher.');
                         break;
                     case 'author':
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Author';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for author and higher roles. (Clef is no longer protecting your site!)");
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Author', 'Passwords are disabled for author and higher roles.');
                         break;
                     case 'editor':
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Editor';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for editor and higher roles");
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Editor', 'Passwords are disabled for editor and higher roles');
                         break;
                     case 'admin':
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Administrator';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success("Passwords are disabled for administrator and higher roles.");
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Administrator', 'Passwords are disabled for administrator and higher roles.');
                         break;
                     case 'superadmin':
-                        $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = 'Super Administrator';
-                        update_option('wpclef', $this->wpclef_opts);
-                        WP_CLI::success('Passwords are disabled for super administrator and higher roles.');
+                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Super Administrator', 'Passwords are disabled for super administrator and higher roles.');
                         break;
                     case 'reset':
                         // If confirm = true, reset the settings.
-                        WP_CLI::confirm('Are you sure you want to reset your password settings to their default values?');
-                            $this->wpclef_opts['clef_password_settings_force'] = 0;
-                            $this->wpclef_opts['clef_password_settings_disable_passwords'] = 1;
-                            $this->wpclef_opts['clef_password_settings_disable_certain_passwords'] = '';    
-                            $this->wpclef_opts['clef_password_settings_xml_allowed'] = 0;
-                            $this->wpclef_opts['clef_form_settings_embed_clef'] = 1;
-                            update_option('wpclef', $this->wpclef_opts);
-                            WP_CLI::success('Disable password settings have been reset to their default values.');
+                        //WP_CLI::confirm('Are you sure you want to reset your password settings to their default values?');
+                            
+                    self::update_wpclef_option('clef_password_settings_force', 0, 'Passwords are disabled for all users.');
+                    //self::update_wpclef_option('clef_password_settings_disable_passwords', 1, 'Passwords are disabled for Clef users.');
+                            //self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', '');    
+                            //self::update_wpclef_option('clef_password_settings_xml_allowed', 0, '');
+                            //self::update_wpclef_option('clef_form_settings_embed_clef', 1, '');
+                            WP_CLI::success('Disable password settings have been reset to their fresh-install default values.');
                         break;
                     default:
-                        WP_CLI::error("Please enter a valid option for the 'disable' command. For help use 'wp help clef disable'.");
+                        self::error_invalid_option('disable');
                     break;
                 }
             }
         } 
         
-        // flags
-        if (!empty($assoc_args)) {
-            
-            $assoc_args = array_map('strtolower', $assoc_args);
-            
-            foreach ($assoc_args as $key => $value) {
+        // Execute flags.
+        if ($flags = self::filter_command_input($assoc_args)) {
+
+            foreach ($flags as $key => $value) {
                 switch ($key) {
                     case 'allow-api':
                         if ($value == 'yes') { 
                             $this->wpclef_opts['clef_password_settings_xml_allowed'] = 1;
                             update_option('wpclef', $this->wpclef_opts);
                             WP_CLI::success("Passwords are allowed for the WP API.");
-                            break;
                         } elseif ($value == 'no') { 
                             $this->wpclef_opts['clef_password_settings_xml_allowed'] = 0;
                             update_option('wpclef', $this->wpclef_opts);
                             WP_CLI::success('Passwords are disabled for the WP API.');
-                            break;
                         } else {
-                            WP_CLI::error("Please enter 'yes' or 'no' for --allow-api=");
-                            break;
+                            self::error_invalid_option('disable');
                         }
+                        break;
+                    default:
+                        self::error_invalid_option('disable');
+                        break;
                 }
             }
         }
@@ -235,13 +231,14 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      */
     function wave($args, $assoc_args) {
 
-        // If options for 'disable' are entered, run the commands.
-        if (!empty($args)) {
+        //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::validate_command_input($args, $assoc_args, 'wave');
         
-            $args = array_map('strtolower', $args);
-            
-            foreach ($args as $arg) {
-                switch ($arg) {
+        // Execute commands.
+        if ($commands = self::filter_command_input($args)) {
+        
+            foreach ($commands as $command) {
+                switch ($command) {
                     case 'yes':
                         $this->wpclef_opts['clef_form_settings_embed_clef'] = 1;
                         update_option('wpclef', $this->wpclef_opts);
@@ -253,7 +250,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         WP_CLI::success("Wp-login.php will show the standard WP login form.");
                         break;
                     default:
-                        WP_CLI::error("Please enter a valid option for the 'wave' command. For help use 'wp help clef wave'.");
+                        self::error_invalid_option('wave');
                     break;
                 }
             }
@@ -283,15 +280,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      */
     function hook($args, $assoc_args) {
         
-        // If an url for 'hook' is entered, run the logout hook test via curl.
-        if (!empty($args)) {
+       //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::validate_command_input($args, $assoc_args, 'hook');
         
-            $args = array_map('strtolower', $args);
-            
-            foreach ($args as $arg) {
-                switch ($arg) {
+        // Execute commands.
+        if ($commands = self::filter_command_input($args)) {
+        
+            foreach ($commands as $command) {
+                switch ($command) {
                     // user enters logout hook url manually
-                    case (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $arg) ? true : false):
+                    case (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $command) ? true : false):
                         
                         // create a new cURL resource and set options
                         $ch = curl_init();
@@ -313,8 +311,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
 
                         $hook_url = site_url();
                         if (preg_match('/localhost/', $hook_url)) {
-                            WP_CLI::error('The logout hook test does not work on local test servers that are not connected to the internet (e.g., http://localhost).');
-                            break;
+                            WP_CLI::error('Clef’s logout hook server cannot ping local servers that are not connected to the internet (e.g., http://localhost).');
                         }
 
                         $ch = curl_init();
@@ -327,8 +324,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         WP_CLI::line('');
                         break;
                     default:
-                        WP_CLI::error("Please enter a valid option for the 'hook' command. For help use 'wp help clef hook'.");
-                    break;
+                        self::error_invalid_option('hook');
+                        break;
                 }
             }
         }
@@ -398,7 +395,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         }
                         break;
                     default:
-                        WP_CLI::error("Please enter a valid option for the 'override' command. For help use 'wp help clef override'.");
+                        self::error_invalid_option('override');
                     break;
                 }
             }
@@ -437,15 +434,12 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                             } else {
                                 WP_CLI::error("Email not sent!");
                             }
-
-                        //} elseif (strtolower($value) == 'blah') {
-                        //    WP_CLI::success('Email sent to: ');
                         } else {
-                            WP_CLI::error("Please enter a valid option for the 'email' flag.");
+                            self::error_invalid_option('override');
                         }
                         break;
                     default:
-                        WP_CLI::error("Please enter a valid option for the 'override' command. For help use 'wp help clef override'.");
+                        self::error_invalid_option('override');
                         break;
                 }
             }       
