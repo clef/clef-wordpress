@@ -17,6 +17,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     * Define class properties.
     */
     private $wpclef_opts;
+    const PWD_OPT_CLEF = 'clef_password_settings_disable_passwords';
+    const PWD_OPT_WP = 'clef_password_settings_disable_certain_passwords';
+    const PWD_OPT_ALL = 'clef_password_settings_force';
+    const PWD_OPT_WAVE = 'clef_form_settings_embed_clef';
     private $site_url;
     private $user_email;
     
@@ -206,7 +210,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      *     wp clef pass enable clef 
      *     wp clef pass --reset
      *
-     * @synopsis <action> <role>
+     * @synopsis <action> <role> --reset
      */
     function pass($args, $assoc_args) {
 
@@ -216,80 +220,105 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $args = self::get_filtered_command_input($args);
         $assoc_args = self::get_filtered_command_input($assoc_args);
         
+        
+        // Execute commands. The order of the positional arguments: $args[0] = <action>; $args[1] = <role>.
+        foreach (array($assoc_args) as $key => $value) {
+            switch ($key) {
+                case 'none':
+                    self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are NOT disabled for any WP roles.');
+                    break;
+                case 'reset':
+                    // If confirm = true, reset the settings.
+                    WP_CLI::confirm('Are you sure you want to reset your password settings to their fresh-install default values?');
+                        self::update_wpclef_option(self::PWD_OPT_ALL, 0);
+                        self::update_wpclef_option(self::PWD_OPT_CLEF, 1);
+                        self::update_wpclef_option(self::PWD_OPT_WP, '');    
+                        self::update_wpclef_option('clef_password_settings_xml_allowed', 0);
+                        self::update_wpclef_option(PWD_OPT_WAVE, 1);
+                        WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
+                    break;
+                case 'info':
+                    if ($this->wpclef_opts[self::PWD_OPT_ALL] == 1) {
+                        WP_CLI::line('Disable passwords for Clef users:');
+                    }
+                    break;
+                default:
+                    self::error_invalid_option('pass');
+                    break;
+            }
+        }
+        
         // Execute commands. The order of the positional arguments: $args[0] = <action>; $args[1] = <role>.
         foreach (array($args) as $arg) {
             switch ($arg[1]) {
                 case 'clef':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_passwords', 1, 'Passwords are disabled for Clef users.');
+                        self::update_wpclef_option(self::PWD_OPT_CLEF, 1, 'Passwords are disabled for Clef users.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_passwords', 0, 'Passwords are enabled for Clef users.');
+                        self::update_wpclef_option(self::PWD_OPT_CLEF, 0, 'Passwords are enabled for Clef users.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
-                case 'none':
-                    self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are NOT disabled for any WP roles.');
-                    break;
                 case 'subscriber':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Subscriber', 'Passwords are disabled for subscriber and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Subscriber', 'Passwords are disabled for subscriber and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'contributor':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Contributor', 'Passwords are disabled for contributor and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Contributor', 'Passwords are disabled for contributor and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'author':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Author', 'Passwords are disabled for author and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Author', 'Passwords are disabled for author and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'editor':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Editor', 'Passwords are disabled for editor and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Editor', 'Passwords are disabled for editor and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'admin':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Administrator', 'Passwords are disabled for administrator and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Administrator', 'Passwords are disabled for administrator and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'superadmin':
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Super Administrator', 'Passwords are disabled for super administrator and higher roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, 'Super Administrator', 'Passwords are disabled for super administrator and higher roles.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are enabled for all standard WP roles.');
+                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
                     break;
                 case 'all': 
                     if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_force', 1, 'Passwords are disabled for all WP users.');
+                        self::update_wpclef_option(self::PWD_OPT_ALL, 1, 'Passwords are disabled for all WP users.');
                     } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_force', '', 'Passwords are enabled for all WP users.');
+                        self::update_wpclef_option(self::PWD_OPT_ALL, '', 'Passwords are enabled for all WP users.');
                     } else {
                         self::error_invalid_option('passwords');
                     }
@@ -303,21 +332,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         self::error_invalid_option('passwords');
                     }    
                 break;
-                case 'reset':
-                    // If confirm = true, reset the settings.
-                    WP_CLI::confirm('Are you sure you want to reset your password settings to their fresh-install default values?');
-                        self::update_wpclef_option('clef_password_settings_force', 0);
-                        self::update_wpclef_option('clef_password_settings_disable_passwords', 1);
-                        self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '');    
-                        self::update_wpclef_option('clef_password_settings_xml_allowed', 0);
-                        self::update_wpclef_option('clef_form_settings_embed_clef', 1);
-                        WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
-                    break;
-                case 'info':
-                    if ($this->wpclef_opts['clef_password_settings_force'] == 1) {
-                        WP_CLI::line('Disable passwords for Clef users:');
-                    }
-                    break;
                 default:
                     self::error_invalid_option('pass');
                     break;
@@ -354,10 +368,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             foreach (array($args) as $arg) {
                 switch ($arg[0]) {
                     case 'enable':
-                        self::update_wpclef_option('clef_form_settings_embed_clef', 1, 'Wp-login.php will show the Clef Wave.');
+                        self::update_wpclef_option(self::PWD_OPT_WAVE, 1, 'Wp-login.php will show the Clef Wave.');
                         break;
                     case 'disable':
-                        self::update_wpclef_option('clef_form_settings_embed_clef', 0, 'Wp-login.php will show the standard WP login form.');
+                        self::update_wpclef_option(self::PWD_OPT_WAVE, 0, 'Wp-login.php will show the standard WP login form.');
                         break;
                     default:
                         self::error_invalid_option('wave');
@@ -371,73 +385,73 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * 
      * ## OPTIONS
      * 
-     * [<url>]
-     * : Manually enter the logout hook URL setting from the Clef application that
-     * is connected to your WP site. You will find this URL in your
+     * <url>
+     * : The logout hook URL from the Clef application that is connected
+     * to your WP site. You will find this URL in your
      * getclef.com/user dashboard.
      *
-     *[<siteurl>]
+     * --siteurl
      * : The WordPress site_url(). Use this debugging option when the logout hook
      * URL in your Clef application is diffefent than the value of your site_url().  
      *
      * ## EXAMPLES
      * 
      *     wp clef hook http://blog.getclef.com
-     *     wp clef hook siteurl
-     *
-     * @synopsis [<url>] [<siteurl>]
-     */
+     *     wp clef hook --siteurl
+     * 
+     * @synopsis <url>
+     * */
     function hook($args, $assoc_args) {
         
-       //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
         self::is_valid_command_input($args, $assoc_args, 'hook');
         
         // Execute commands.
-        if ($commands = self::get_filtered_command_input($args)) {
+        $args = self::get_filtered_command_input($args);
+        $assoc_args = self::get_filtered_command_input($args);
+
         
-            foreach ($commands as $command) {
-                switch ($command) {
-                    // user enters logout hook url manually
-                    case (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $command) ? true : false):
-                        
-                        // create a new cURL resource and set options
-                        $ch = curl_init();
-                        curl_setopt($ch, CURLOPT_URL, $command);
-                        curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
+        if (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $args[0]) ? true : false) {
 
-                        // execute cURL command and print to STDOUT
-                        curl_exec($ch);
-                                                
-                        // close cURL
-                        curl_close($ch);
-                        
-                        WP_CLI::line('');    
-                        break;
-                    
-                    // user tests with WP's site_url() 
-                    case 'siteurl':
+            // create a new cURL resource and set options
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $command);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
 
-                        $hook_url = site_url();
-                        if (preg_match('/localhost/', $hook_url)) {
-                            WP_CLI::error('Clef’s logout hook server cannot ping local servers that are not connected to the internet (e.g., http://localhost).');
-                        }
+            // execute cURL command and print to STDOUT
+            curl_exec($ch);
 
-                        $ch = curl_init();
-                        curl_setopt($ch, CURLOPT_URL, $hook_url);
-                        curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
-                        curl_exec($ch);
-                        curl_close($ch);
-                    
-                        WP_CLI::line('');
-                        break;
-                    default:
-                        self::error_invalid_option('hook');
-                        break;
-                }
-            }
+            // close cURL
+            curl_close($ch);
+
+            WP_CLI::line('');
+        } else {
+            self::error_invalid_option('hook');
         }
+        
+
+        if ($assoc_args['siteurl']) {
+            
+            // return error if this is the localhost since Clef logout hooks require the server to be connected to the internet.
+            $hook_url = site_url();
+            if (preg_match('/localhost/', $hook_url)) {
+                WP_CLI::error('Clef’s logout hook server cannot ping local servers that are not connected to the internet (e.g., http://localhost).');
+            } else {
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $hook_url);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
+                curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
+                curl_exec($ch);
+                curl_close($ch);
+            
+                WP_CLI::line('');
+            }
+        } else {
+            self::error_invalid_option('hook');
+        }
+       
     }
     
     /**
