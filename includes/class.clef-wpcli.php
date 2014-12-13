@@ -58,7 +58,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     function do_pass_command($cmd_name, $arg, $role, $wprole, $msg_disable, $msg_enable) {
         
         // Check whether a standard WP role was sent, which indicates
-        // that we're dealing with a standard WP role (i.e., the SELECT option in wpclef's pwd settings)
+        // that we're dealing with a string (i.e., the standard WP roles used in the SELECT option in wpclef's pwd settings)
         if (!empty($wprole)) {
             if ($arg == 'info') {
                 self::get_option_info($role);
@@ -76,7 +76,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         // Otherwise, we're dealing with a boolean option.
         // But the WP API boolean value is inverted, so run a check for that option first
         // before handling the ordinary boolean options.
-        elseif ($role == 'api') {
+        elseif ($role == self::PWD_OPT_API) {
             if ($arg == 'info') {
                 self::get_option_info($role);
             } elseif ($arg == 'disable') {
@@ -90,7 +90,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 self::error_invalid_option($cmd_name);
             }
         } 
-        // With the exceptional cases out of the way, now handle the ordinary boolean options.
+        // Now handle the ordinary boolean options.
         elseif ($arg == 'info') {
             self::get_option_info($role);
         } elseif ($arg == 'disable') {
