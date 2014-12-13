@@ -190,13 +190,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * [--reset]
      * : Return your password settings to their fresh-install default values.
      * 
+     * [--info]
+     * : Display wpclef’s current password settings.
+     * 
      * ## EXAMPLES
      * 
      *     wp clef passwords --clef=off
      *     wp clef passwords --clef=on --editor=off
      *     wp clef passwords --reset
      *
-     * @synopsis [--all=<on|off>] [--clef=<on|off>] [--subscriber=<on|off>] [--contributor=<on|off>] [--author=<on|off>] [--editor=<on|off>] [--admin=<on|off>] [--superadmin=<on|off>] [--api=<on|off>] [--none] [--reset]
+     * @synopsis [--all=<on|off>] [--clef=<on|off>] [--subscriber=<on|off>] [--contributor=<on|off>] [--author=<on|off>] [--editor=<on|off>] [--admin=<on|off>] [--superadmin=<on|off>] [--api=<on|off>] [--none] [--reset] [--info]
      */
     function passwords($args, $assoc_args) {
 
@@ -302,6 +305,13 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         self::update_wpclef_option('clef_password_settings_xml_allowed', 0);
                         self::update_wpclef_option('clef_form_settings_embed_clef', 1);
                         WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
+                    break;
+                case 'info':
+                    if ($this->wpclef_opts['clef_password_settings_force'] == 1) {
+                        WP_CLI::line('Disable passwords for Clef users:');
+                    }
+                    
+                        
                     break;
                 default:
                     self::error_invalid_option('passwords');
