@@ -47,49 +47,17 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
     
-    function toggle_wpclef_option($option) {
-        
-        // If option and input values are both true or both false, then toggle the option.
-        // Since the API uses the inverse boolean, treat it separately.
-        if ( ($this->wpclef_opts[$option] != 'clef_password_settings_xml_allowed') && ($this->wpclef_opts[$option] == 1) ) {
-            
-            switch($option) {
-                case 'clef_password_settings_force':
-                    $disable_pass_type = 'all WP users';
-                    break;
-                case 'clef_password_settings_disable_passwords':
-                    $disable_pass_type = 'Clef users';
-                    break;
-            }
-            
-            WP_CLI::confirm("Are you sure you want to turn OFF password disabling for $disable_pass_type?");
-                self::update_wpclef_option($option, 0);
-                return 0;
-            
-        } elseif ( ($this->wpclef_opts[$option] == 'clef_password_settings_xml_allowed') && ($this->wpclef_opts[$option] == 0) ) {
-            $disable_pass_type = 'the WP API';
-            WP_CLI::confirm("Are you sure you want to turn OFF password disabling for $disable_pass_type?");
-                self::update_wpclef_option($option, 0);
-                return 0;
-        } elseif ($this->wpclef_opts[$option] == 0) {
-            
-            self::update_wpclef_option($option, 1);
-            return 1;
-        
-        } else {
-         
-            WP_CLI::error("Unable to complete toggle_wpclef_option() for $option.");
-        }
-    }
     
     function update_wpclef_option($option, $value, $msg = null) {
             
-        // Check whether the option is already set to the input value. If not, update the option.
+        // If the option is already set to the input value, return true.
+        // Else, update the option to the input value and return true.
         if ($this->wpclef_opts[$option] == $value) {
             
             if (isset($msg)) {
                 WP_CLI::success($msg);
             }
+            return 1;
             
         } else {
             // Update the option.
@@ -174,40 +142,35 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * ## OPTIONS
      * 
      * [<clef>]
-     * : Toggle password disabling for WP users who have linked their Clef mobile accounts
+     * : Disable passwords for WP users who have linked their Clef mobile accounts
      * with their WP user accounts.
-     * High security.
      * Default value: true.
      * 
      * [<none>] [<subscriber>] [<contributor>] [<author>] [<editor>] [<admin>] [superadmin>]
-     * : Disable passwords for select WP user roles. 
-     * Higher security.
+     * : Disable passwords for WP users with roles greater than or equal to selected value. 
      * Default value: <none>.
      * 
      * [<all>]
-     * : Toggle password disabling for all WP users.
-     * Highest security.
+     * : Disable passwords for all WP users and hide the standard password login
+     * form (i.e., force Clef-based logins for all users).
      * Default value: false.
      *      
      * [<api>]
-     * : Toggle password disabling for the WP API (including XML-RPC).
-     * Default value: false.
+     * : Disable passwords for the WP API (including XML-RPC).
+     * Default value: true.
      *
      * [<reset>]
      * : Return your disable password settings to their default values.
-     *
-     * You can disable more than one role at a time. However, it only makes sense to do this with the <clef> role plus a standard WP role such as <author> or <editor>, etc. Custom roles may be disabled via the WP Dashboard GUI.
      * 
      * ## EXAMPLES
      * 
-     *     wp clef disable --all=yes
+     *     wp clef disable clef
      *     wp clef disable author
-     *     wp clef disable --clef=yes admin
-     *     wp clef disable --allow-api=yes
+     *     wp clef disable api
      *
-     * @synopsis [<clef>] [<role>] [--all=<yes|no>] [--allow-api=<yes|no>] [<reset>]
+     * @synopsis <option>
      */
-    function disable($args, $assoc_args) {
+    function disable($args, $assoc_args=null) {
 
         //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
         self::validate_command_input($args, $assoc_args, 'disable');
@@ -218,11 +181,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             foreach ($commands as $command) {
                 switch ($command) {
                     case 'clef':
-                        if (self::toggle_wpclef_option('clef_password_settings_disable_passwords')) {
-                            WP_CLI::success('Passwords are disabled for Clef users (i.e., all WP users who have linked their accounts with their Clef mobile apps).');
-                        } else {
-                            WP_CLI::success('*** Passwords are NOT disabled for Clef users. ***');
-                        }
+                        self::update_wpclef_option('clef_password_settings_disable_passwords', 1, 'Passwords are disabled for Clef users.');
                         break;
                     case 'none':
                         self::update_wpclef_option('clef_password_settings_disable_certain_passwords', '', 'Passwords are NOT disabled for any WP roles.');
@@ -246,19 +205,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         self::update_wpclef_option('clef_password_settings_disable_certain_passwords', 'Super Administrator', 'Passwords are disabled for super administrator and higher roles.');
                         break;
                     case 'all': 
-                        if (self::toggle_wpclef_option('clef_password_settings_force')) {
-                            WP_CLI::success('Passwords are disabled for all users.');
-                        } else {
-                            WP_CLI::success('*** Passwords are NOT disabled for all users. ***');
-                        }
+                        self::update_wpclef_option('clef_password_settings_force', 1, 'Passwords are disabled for all users.');
                         break;
                     case 'api': 
-                        // the negator reflects the opposite logic on this setting
-                        if (!self::toggle_wpclef_option('clef_password_settings_xml_allowed')) {
-                            WP_CLI::success('Passwords are disabled for the WP API.');
-                        } else {
-                            WP_CLI::success('*** Passwords are NOT disabled for the WP API. ***');
-                        }
+                        self::update_wpclef_option('clef_password_settings_xml_allowed', 0, 'Passwords are disabled for the WP API.');
                         break;
                     case 'reset':
                         // If confirm = true, reset the settings.
@@ -276,45 +226,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 }
             }
         } 
-        
-        // Execute flags.
-        if ($flags = self::filter_command_input($assoc_args)) {
-
-            foreach ($flags as $key => $value) {
-                switch ($key) {
-                    case 'all':
-                        if ($value == 'yes') { 
-                            self::update_wpclef_option('clef_password_settings_force', 1, 'Passwords are disabled for all WP users.');
-                        } elseif ($value == 'no') { 
-                            self::update_wpclef_option('clef_password_settings_force', 0, 'Passwords are NOT disabled for all WP users.');
-                        } else {
-                            self::error_invalid_option('disable');
-                        }
-                        break;
-                    case 'allow-api':
-                        if ($value == 'yes') { 
-                            self::update_wpclef_option('clef_password_settings_xml_allowed', 1, 'Passwords are allowed for the WP API.');
-                        } elseif ($value == 'no') { 
-                            self::update_wpclef_option('clef_password_settings_xml_allowed', 0, 'Passwords are NOT allowed for the WP API.');
-                        } else {
-                            self::error_invalid_option('disable');
-                        }
-                        break;
-                    case 'clef':
-                        if ($value == 'yes') { 
-                            self::update_wpclef_option('clef_password_settings_disable_passwords', 1, 'Passwords are disabled for Clef users (i.e., all WP users who have linked their accounts with their Clef mobile apps).');
-                        } elseif ($value == 'no') { 
-                            self::update_wpclef_option('clef_password_settings_disable_passwords', 0, '*** Passwords are NOT disabled for Clef users. ***');
-                        } else {
-                            self::error_invalid_option('disable');
-                        }
-                        break;
-                    default:
-                        self::error_invalid_option('disable');
-                        break;
-                }
-            }
-        }
     }
     
     /**
