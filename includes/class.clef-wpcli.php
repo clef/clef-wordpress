@@ -20,6 +20,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     const PWD_OPT_CLEF = 'clef_password_settings_disable_passwords';
     const PWD_OPT_WP = 'clef_password_settings_disable_certain_passwords';
     const PWD_OPT_ALL = 'clef_password_settings_force';
+    const PWD_OPT_API = 'clef_password_settings_xml_allowed';
     const PWD_OPT_WAVE = 'clef_form_settings_embed_clef';
     private $site_url;
     private $user_email;
@@ -54,6 +55,111 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
     
+    function do_pass_command($cmd_name, $arg, $role, $wprole, $msg_disable, $msg_enable) {
+        
+        // Check whether a standard WP role was sent, which indicates
+        // that we're dealing with a standard WP role (i.e., the SELECT option in wpclef's pwd settings)
+        if (!empty($wprole)) {
+            if ($arg == 'info') {
+                self::get_option_info($role);
+            } elseif ($arg == 'disable') {
+                $value = $wprole;
+                self::update_wpclef_option($role, $value, $msg_disable);
+            } 
+            elseif (($arg == 'enable')) {
+                $value = '';
+                self::update_wpclef_option($role, $value, $msg_enable);
+            } else {
+                self::error_invalid_option($cmd_name);
+            }
+        } 
+        // Otherwise, we're dealing with a boolean option.
+        // But the WP API boolean value is inverted, so run a check for that option first
+        // before handling the ordinary boolean options.
+        elseif ($role == 'api') {
+            if ($arg == 'info') {
+                self::get_option_info($role);
+            } elseif ($arg == 'disable') {
+                $value = 0;
+                self::update_wpclef_option($role, $value, $msg_disable);
+            } 
+            elseif (($arg == 'enable')) {
+                $value = 1;
+                self::update_wpclef_option($role, $value, $msg_enable);
+            } else {
+                self::error_invalid_option($cmd_name);
+            }
+        } 
+        // With the exceptional cases out of the way, now handle the ordinary boolean options.
+        elseif ($arg == 'info') {
+            self::get_option_info($role);
+        } elseif ($arg == 'disable') {
+            $value = 1;
+            self::update_wpclef_option($role, $value, $msg_disable);
+        } elseif (($arg == 'enable')) {
+            $value = 0;
+            self::update_wpclef_option($role, $value, $msg_enable);
+        } else {
+            self::error_invalid_option($cmd_name);
+        }
+    }
+    
+    function get_option_info($option) {
+            
+        $current_value = $this->wpclef_opts[$option];
+        $msg = null;
+        
+        switch($option) {
+            case self::PWD_OPT_ALL:
+                if ($current_value == 1) {
+                    $msg = 'Passwords are disabled for all users.';
+                } elseif ($current_value == 0) {
+                    $msg = 'Passwords are enabled for all users.';
+                }
+                break;
+            case self::PWD_OPT_CLEF:
+                if ($current_value == 1) {
+                    $msg = 'Passwords are disabled for clef users.';
+                } elseif ($current_value == 0) {
+                    $msg = 'Passwords are enabled for clef users.';
+                }
+                break;
+            case self::PWD_OPT_WP:
+                if ($current_value == 'Subscriber') {
+                    $msg = 'Passwords are disabled for WP roles >= Subscriber.';
+                } elseif ($current_value == 'Contributor') {
+                    $msg = 'Passwords are disabled for WP roles >= Contributor';
+                } elseif ($current_value == 'Author') {
+                    $msg = 'Passwords are disabled for WP roles >= Author';
+                    } elseif ($current_value == 'Editor') {
+                    $msg = 'Passwords are disabled for WP roles >= Editor';
+                    } elseif ($current_value == 'Administrator') {
+                    $msg = 'Passwords are disabled for WP roles >= Administrator';
+                    } elseif ($current_value == 'Super Administrator') {
+                    $msg = 'Passwords are disabled for WP roles >= Super Administrator';
+                } elseif ($current_value == '') {
+                    $msg = 'Passwords are not disabled for standard WP roles.';
+                }
+                break;
+            case self::PWD_OPT_API:
+                if ($current_value == 0) {
+                    $msg = 'Passwords are disabled for the WP API.';
+                } elseif ($current_value == 1) {
+                    $msg = 'Passwords are enabled for the WP API.';
+                }
+                break;
+            case 'all-roles':
+                break;
+            default:
+                break;
+        }
+        
+        if (isset($msg)) {
+            return WP_CLI::line($msg);
+        } else {
+            return WP_CLI::error("Unable to complete get_option_info() for $option");
+        }
+    }
     
     function update_wpclef_option($option, $value, $msg = null) {
             
@@ -154,14 +260,17 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * 
      * ## OPTIONS
      * 
-     * <name>|<title>
+     * <name>
      * : The name of the person to greet.
+     * 
+     * --boom
+     * : Here comes the
      * 
      * ## EXAMPLES
      * 
      *     wp example hello Newman
      *
-     * @synopsis <name>
+     * @synopsis [<name>] [--boom]
      */
     function hello( $args, $assoc_args ) {
         list( $name ) = $args;
@@ -178,8 +287,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * 
      * <action>
      * : The password disabling action to perform. The valid actions are:
-     * (1) disable
-     * (2) allow
+     * (1) disable (turn off passwords)
+     * (2) allow (turn on passwords)
+     * (3) info (show current setting)
      * 
      * <role>
      * : The role to which you want to apply the action. The valid roles include:
@@ -192,6 +302,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * (7) admin (WP roles >= Administrator; default value: allow).
      * (8) superadmin (Super Administrator WP role; default value: allow).
      * (9) api (the WP API including XML-RPC; default value: disable).
+     * (*) all-roles (use with <action> 'info' to show all pwd settings).
      * 
      * --none
      * : Use this flag to remove password password disabling from all of the
@@ -202,7 +313,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * : Return all password settings to their default values.
      * 
      * --info
-     * : Display wpclef’s current password settings.
+     * : Display a role’s current password settings.
      * 
      * ## EXAMPLES
      * 
@@ -210,19 +321,20 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      *     wp clef pass enable clef 
      *     wp clef pass --reset
      *
-     * @synopsis <action> <role> --reset
+     * @synopsis <action> <role>
      */
     function pass($args, $assoc_args) {
-
+        $cmd_name = 'pass';
+        
         //If no commands or flags are entered, exit; otherwise, filter input and execute the commands and flags.
-        self::is_valid_command_input($args, $assoc_args, 'passwords');
+        self::is_valid_command_input($args, $assoc_args, $cmd_name);
         
         $args = self::get_filtered_command_input($args);
         $assoc_args = self::get_filtered_command_input($assoc_args);
         
         
-        // Execute commands. The order of the positional arguments: $args[0] = <action>; $args[1] = <role>.
-        foreach (array($assoc_args) as $key => $value) {
+        // Execute flags. The order of the positional arguments: $args[0] = <action>; $args[1] = <role>.
+        foreach ($assoc_args as $key => $value) {
             switch ($key) {
                 case 'none':
                     self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are NOT disabled for any WP roles.');
@@ -233,7 +345,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                         self::update_wpclef_option(self::PWD_OPT_ALL, 0);
                         self::update_wpclef_option(self::PWD_OPT_CLEF, 1);
                         self::update_wpclef_option(self::PWD_OPT_WP, '');    
-                        self::update_wpclef_option('clef_password_settings_xml_allowed', 0);
+                        self::update_wpclef_option(self::PWD_OPT_API, 0);
                         self::update_wpclef_option(PWD_OPT_WAVE, 1);
                         WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
                     break;
@@ -252,88 +364,28 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         foreach (array($args) as $arg) {
             switch ($arg[1]) {
                 case 'clef':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_CLEF, 1, 'Passwords are disabled for Clef users.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_CLEF, 0, 'Passwords are enabled for Clef users.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
+                    $role = ucwords($arg[1]) .' users';
+                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_CLEF, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
+                    break;
+                case 'all':
+                    $role = ucwords($arg[1]) .' users';
+                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_ALL, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
+                    break;
+                case 'api':
+                    $role = 'the WP API';
+                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_API, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
                     break;
                 case 'subscriber':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Subscriber', 'Passwords are disabled for subscriber and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
                 case 'contributor':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Contributor', 'Passwords are disabled for contributor and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
                 case 'author':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Author', 'Passwords are disabled for author and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
                 case 'editor':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Editor', 'Passwords are disabled for editor and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
                 case 'admin':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Administrator', 'Passwords are disabled for administrator and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
                 case 'superadmin':
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_WP, 'Super Administrator', 'Passwords are disabled for super administrator and higher roles.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_WP, '', 'Passwords are enabled for all standard WP roles.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
+                    $wprole = ucwords($arg[1]);
+                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_WP, "$wprole", "Passwords are disabled for WP roles >= $wprole.", "Passwords are enabled for the $wprole role.");
                     break;
-                case 'all': 
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option(self::PWD_OPT_ALL, 1, 'Passwords are disabled for all WP users.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option(self::PWD_OPT_ALL, '', 'Passwords are enabled for all WP users.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }
-                    break;
-                case 'api': 
-                    if ($arg[0] == 'disable') {
-                        self::update_wpclef_option('clef_password_settings_xml_allowed', 0, 'Passwords are disabled for the WP API.');
-                    } elseif (($arg[0] == 'enable')) {
-                        self::update_wpclef_option('clef_password_settings_xml_allowed', 1, 'Passwords are enabled for the WP API.');
-                    } else {
-                        self::error_invalid_option('passwords');
-                    }    
-                break;
                 default:
-                    self::error_invalid_option('pass');
+                    self::error_invalid_option($cmd_name);
                     break;
             }
         }
