@@ -280,43 +280,65 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     /**
      * Configure password disabling for select user roles and for the WP API.
      * 
-     * ## OPTIONS
+     * ## ACTIONS
      * 
-     * <action>
-     * : The configuration action to perform. The valid actions are:
-     * (1) <disable> (turn off passwords for selected <role>)
-     * (2) <allow> (turn on passwords for selected <role>)
-     * (3) <info> (show current settings for selected <role> or <option>)
-     * (4) <reset> (use exclusively with <all-options> role to reset all
-     * wpclef password settings to their default values)
+     * <disable>
+     * : Turn off passwords (i.e., add Clef auth security).
      * 
-     * <role>
-     * : The role to which you want to apply the <action>. Valid roles include:
-     * (1) <all> (all WP users; default value: allow).
-     * (2) <clef> (all Clef mobile app users; default value: disable).
-     * (3) <subscriber> (WP roles >= Subscriber; default value: allow).
-     * (4) <contributor> (WP roles >= Contributor; default value: allow).
-     * (5) <author> (WP roles >= Author; default value: allow).
-     * (6) <editor> (WP roles >= Editor; default value: allow).
-     * (7) <admin> (WP roles >= Administrator; default value: allow).
-     * (8) <superadmin> (Super Administrator WP role; default value: allow).
-     * (9) <api> (the WP API including XML-RPC; default value: disable).
+     * <enable>
+     * : Turn on passwords (i.e., remove Clef auth security).
      * 
-     * <option>
-     * : Options for the <action>. Valid options include:
-     * (1) <all-options> (use exclusively with the <info> and <reset> actions)
+     * <info>
+     * : Show the current password settings for the selected role or option.
+     * 
+     * <reset>
+     * : Reset all password settings to their default values.
+     * Use exclusively with the <all-options> option.
+     * 
+     * ## ROLES & OPTIONS
+     * 
+     * <all>
+     * : All WP users. Default value: enable passwords.
+     * 
+     * <clef>
+     * : All Clef mobile app users. Default value: disable passwords.
+     * 
+     * <subscriber>
+     * : WP roles >= Subscriber. Default value: enable passwords.
+     * 
+     * <contributor>
+     * : WP roles >= Contributor. Default value: enable passwords.
+     * 
+     * <author>
+     * : WP roles >= Author. Default value: enable passwords.
+     * 
+     * <editor>
+     * : WP roles >= Editor. Default value: enable passwords.
+     * 
+     * <admin>
+     * : WP roles >= Administrator. Default value: enable passwords.
+     * 
+     * <superadmin>
+     * : Super Administrator WP role. Default value: enable passwords.
+     * 
+     * <api>
+     * : Tthe WP API including XML-RPC. Default value: disable passwords.
+     * 
+     * <all-options>
+     * : All password options. Use exclusively with the <info> and <reset> actions.
      * 
      * ## EXAMPLES
      * 
-     *     wp clef pass disable all
-     *     wp clef pass enable clef 
-     *     wp clef pass info admin
-     *     wp clef pass reset all-options
+     *     wp clef passwords disable all
+     *     wp clef passwords enable clef 
+     *     wp clef passwords info admin
+     *     wp clef passwords info all-options
+     *     wp clef passwords reset all-options
      *
      * @synopsis <action> <role|option>
      */
-    function pass($args, $assoc_args) {
-        $cmd_name = 'pass';
+    function passwords($args, $assoc_args) {
+        $cmd_name = 'passwords';
         
         //If no commands or flags are entered, exit; otherwise, filter input and execute the commands and flags.
         self::is_valid_command_input($args, $assoc_args, $cmd_name);
@@ -359,22 +381,24 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
     /**
-     * Display either the Clef Wave (enable) or the standard WP login form (disable) on wp-login.php.
+     * Display either the Clef Wave or the standard WP login form on wp-login.php.
      * 
      * ## OPTIONS
      * 
-     * <action>
-     * : Show or hide the Clef Wave on wp-login.php. There are two action options:
-     * (1) enable (show the Clef Wave on wp-login.php).
-     * (2) disable (show the standard WP login form on wp-login.php).
-     * Default: enable.
+     * <enable>
+     * : Show the Clef Wave on wp-login.php.
+     * 
+     * <disable>
+     * : Show the standard WP login form on wp-login.php.
+     * 
+     * Default value: enable.
      *
      * ## EXAMPLES
      * 
      *     wp clef wave enable
      *     wp clef wave disable
      *
-     * @synopsis <action>
+     * @synopsis <option>
      */
     function wave($args, $assoc_args) {
         $cmd_name = 'wave';
@@ -416,45 +440,24 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * getclef.com/user dashboard.
      *
      * --siteurl
-     * : The WordPress site_url(). Use this debugging option when the logout hook
-     * URL in your Clef application is diffefent than the value of your site_url().  
+     * : The WordPress site_url(). Use this option for debugging when the logout hook
+     * URL in your Clef application is different than the value of your site_url().  
      *
      * ## EXAMPLES
      * 
      *     wp clef hook http://blog.getclef.com
      *     wp clef hook --siteurl
      * 
-     * @synopsis <url>
+     * @synopsis [<url>] [--siteurl]
      * */
     function hook($args, $assoc_args) {
         
         //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
         self::is_valid_command_input($args, $assoc_args, 'hook');
         
-        // Execute commands.
+        // Execute commands and flags.
         $args = self::get_filtered_command_input($args);
-        $assoc_args = self::get_filtered_command_input($args);
-
-        
-        if (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $args[0]) ? true : false) {
-
-            // create a new cURL resource and set options
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $command);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
-
-            // execute cURL command and print to STDOUT
-            curl_exec($ch);
-
-            // close cURL
-            curl_close($ch);
-
-            WP_CLI::line('');
-        } else {
-            self::error_invalid_option('hook');
-        }
-        
+        $assoc_args = self::get_filtered_command_input($assoc_args);
 
         if ($assoc_args['siteurl']) {
             
@@ -473,6 +476,21 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             
                 WP_CLI::line('');
             }
+        } elseif (preg_match('/(https?):\/\/([A-Za-z0-9]+)(\.+)([A-Za-z]+)/', $args[0]) ? true : false) {
+
+            // create a new cURL resource and set options
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $command);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Clef/1.0 (https://getclef.com)');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, 'logout_token=1234567890');
+
+            // execute cURL command and print to STDOUT
+            curl_exec($ch);
+
+            // close cURL
+            curl_close($ch);
+
+            WP_CLI::line('');
         } else {
             self::error_invalid_option('hook');
         }
@@ -482,33 +500,38 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     /**
      * Configure an override URL that allows password-based logins via a secret URL.
      * 
-     * ## OPTIONS
+     * ## COMMANDS
      * 
-     * [--info]
+     * <info>
      * : Display your current override URL. 
      *
-     * [<create>]
-     * : Create a new override URL or overwrite existing URL. 
+     * <create>
+     * : Create a new override URL or overwrite the existing one.
+     * 
+     * <email>
+     * : Email your override URL to your WP user’s email address. 
+     * 
+     * <delete>
+     * : Delete the existing override URL.
+     * 
+     * ## OPTIONS
+     * 
+     * [--key=<your_custom_key>]
+     * : Customize your override URL: http://example.com?override=your_custom_key.
      *
-     * [--key=<your_key>]
-     * : Create a custom key for your override URL. E.g., http://example.com?override=your_key.
-     *
-     * [--email=<me|address>]
-     * : Send the override URL to an email address. Enter <me> to send it to your own WP user's email address. 
-     * Enter a custom <address> (e.g., jane@doe.com) to send it anywhere else.
-     *
-     * [<delete>]
-     * : Delete your existing override URL.
+     * [--to=<address>]
+     * : Email the override URL to the specified email address.
      * 
      * ## EXAMPLES
      * 
+     *     wp clef override info
      *     wp clef override create
      *     wp clef override create --key=my_secret_key
-     *     wp clef override --email=me
-     *     wp clef override --email=jane@doe.com
+     *     wp clef override email
+     *     wp clef override email --to=jane@doe.com
      *     wp clef override delete
      *
-     * @synopsis [--info] [<create>] [--key=<your_key>] [--email=<me|address>] [<delete>]
+     * @synopsis <command> [--option=<value>]
      */
     function override($args, $assoc_args) {
         
