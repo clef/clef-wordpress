@@ -14,7 +14,6 @@
 class Clef_WPCLI_Command extends WP_CLI_Command {
 
    // Define class properties.
-    private $wpclef_opts;
     const PWD_OPT_CLEF = 'clef_password_settings_disable_passwords';
     const PWD_OPT_WP = 'clef_password_settings_disable_certain_passwords';
     const PWD_OPT_ALL = 'clef_password_settings_force';
@@ -23,12 +22,13 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     const PWD_OPT_OVERRIDE = 'clef_override_settings_key';
     const PWD_OPT_BADGE = 'support_clef_badge';
     private $site_url;
-    private $user_email;
+    private $admin_email;
+    private $wpclef_opts;
     
     function __construct() {
         $this->wpclef_opts = get_option('wpclef');
         $this->site_url = site_url();
-        $this->user_email = $user->user_email;
+        $this->admin_email = get_option('admin_email');
     }
     
    // Define utility methods. 
@@ -311,8 +311,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
     function get_override_url() {
-        $url = site_url();
-        $url .= '/wp-login.php?override=';
+        $url = wp_login_url();
+        $url .= '?override=';
         $url .= $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
 
         return $url;
@@ -562,13 +562,13 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * <info>
      * : Display your current override URL. 
      *
-     * <create>
+     * <enable>
      * : Create a new override URL or overwrite the existing one.
      * 
      * <email>
      * : Email your override URL to your WP user’s email address. 
      * 
-     * <delete>
+     * <disable>
      * : Delete the existing override URL.
      * 
      * ## OPTIONS
@@ -582,11 +582,11 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * ## EXAMPLES
      * 
      *     wp clef override info
-     *     wp clef override create
-     *     wp clef override create --key=my_secret_key
+     *     wp clef override enable
+     *     wp clef override enable --key=my_secret_key
      *     wp clef override email
      *     wp clef override email --to=jane@doe.com
-     *     wp clef override delete
+     *     wp clef override disable
      *
      * @synopsis <command> [--key=<your_custom_key>] [--to=<email-address>]
      */
@@ -602,29 +602,30 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         if ( ($args[0] == 'info') && (empty($args[1])) && (empty($assoc_args)) ) {
             return self::get_option_info(self::PWD_OPT_OVERRIDE);
         } 
-        // 'wp clef override create'
-        elseif ( ($args[0] == 'create') && (empty($args[1])) && (empty($assoc_args['key'])) ) {
+        // 'wp clef override enable'
+        elseif ( ($args[0] == 'enable') && (empty($args[1])) && (empty($assoc_args['key'])) ) {
             if (self::create_override()) {
                 self::show_override_confirmation();
             }
         }
-        // 'wp clef override create --key=my_secret_key'
-        elseif ( ($args[0] == 'create') && (isset($assoc_args['key'])) ) {
+        // 'wp clef override enable --key=my_secret_key'
+        elseif ( ($args[0] == 'enable') && (isset($assoc_args['key'])) ) {
             self::create_override($assoc_args['key']);
             self::show_override_confirmation();
         }
          // 'wp clef override email'
         elseif ( ($args[0] == 'email') && (empty($args[1])) && (empty($assoc_args['to'])) ) {
             // add email command
-            WP_CLI::line('The email feature is coming soon!');
+            WP_CLI::confirm("Email the override URL to $this->admin_email?");
+            WP_CLI::line('Email feature is coming soon!');
         }
         // 'wp clef override email --to=jane@doe.com'
         elseif ( ($args[0] == 'email') && (isset($assoc_args['to'])) ) {
             // add email command
             WP_CLI::line('The email feature with custom \'to\' address is coming soon!');
         }
-        // 'wp clef override delete'
-        elseif ( ($args[0] == 'delete') && (empty($args[1])) && (empty($assoc_args)) ) {
+        // 'wp clef override disable'
+        elseif ( ($args[0] == 'disable') && (empty($args[1])) && (empty($assoc_args)) ) {
             if (!empty($this->wpclef_opts[self::PWD_OPT_OVERRIDE])) {
                 self::update_wpclef_option(self::PWD_OPT_OVERRIDE, '', 'Override URL deleted.');
             } else {
