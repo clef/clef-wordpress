@@ -21,6 +21,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     const PWD_OPT_API = 'clef_password_settings_xml_allowed';
     const PWD_OPT_WAVE = 'clef_form_settings_embed_clef';
     const PWD_OPT_OVERRIDE = 'clef_override_settings_key';
+    const PWD_OPT_BADGE = 'support_clef_badge';
     private $site_url;
     private $user_email;
     
@@ -83,6 +84,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             return self::update_wpclef_option(self::PWD_OPT_WAVE, 0, 'Wp-login.php will show the standard WP login form.');
         } elseif (($arg == 'enable')) {
             return self::update_wpclef_option(self::PWD_OPT_WAVE, 1, 'Wp-login.php will show the Clef Wave.');
+        }
+    }
+    
+    protected function toggle_badge($cmd_name, $arg) {
+        if ($arg == 'disable') {
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'disabled', 'Do not show the Clef badge or link.');
+        } elseif (($arg == 'enable')) {
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'badge', 'Show the Clef badge.');
+        } elseif (($arg == 'link')) {
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'link', 'Show the Clef link.');
         }
     }
     
@@ -153,6 +164,15 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 } elseif ($current_value == 0) {
                     $msg = self::get_override_url();
                 }    
+                break;
+            case self::PWD_OPT_BADGE:
+                if ($current_value == 'disabled') {
+                    $msg = 'Do not show the Clef badge or link.';
+                } elseif ($current_value == 'badge') {
+                    $msg = 'Show the Clef badge.';
+                } elseif ($current_value == 'link') {
+                    $msg = 'Show the Clef link.';
+                }
                 break;
             default:
                 break;
@@ -613,6 +633,56 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         } else {
             self::error_invalid_option("$cmd_name");
         } 
+    }
+    
+    /**
+     * Display the Clef badge or link in the site’s footer.
+     * 
+     * ## OPTIONS
+     * 
+     * <info>
+     * : Display the current value of the 'badge' option.
+     * 
+     * <enable>
+     * : Show the Clef badge.
+     * 
+     * <link>
+     * : Show the Clef link.
+     * 
+     * <disable> (default value)
+     * : Do not show the Clef badge or link. 
+     *
+     * ## EXAMPLES
+     * 
+     *     wp clef badge info
+     *     wp clef badge enable
+     *     wp clef badge link
+     *     wp clef badge disable
+     *
+     * @synopsis <option>
+     */
+    function badge($args, $assoc_args) {
+        $cmd_name = 'badge';
+        
+        //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::is_valid_command_input($args, $assoc_args, "$cmd_name");
+        
+        // Execute commands.
+        $args = self::get_filtered_command_input($args);
+
+        switch($args[0]) {
+            case 'info':
+                return self::get_option_info(self::PWD_OPT_BADGE);
+                break;
+            case 'enable':
+            case 'disable':
+            case 'link':
+                self::toggle_badge($cmd_name, $args[0]);
+                break;
+            default:
+                self::error_invalid_option("$cmd_name");
+                break;
+        }
     }
 }
 
