@@ -1,4 +1,5 @@
-# [Clef for WordPress](http://wordpress.org/plugins/wpclef/) [![Build Status](https://travis-ci.org/clef/wordpress.svg?branch=master)](https://travis-ci.org/clef/wordpress) [![Stories in Ready](https://badge.waffle.io/clef/wordpress.png?label=ready&title=Ready)](https://waffle.io/clef/wordpress)
+[![Stories in Ready](https://badge.waffle.io/clef/wordpress.png?label=ready&title=Ready)](https://waffle.io/clef/wordpress)
+# [Clef for WordPress](http://wordpress.org/plugins/wpclef/) [![Build Status](https://travis-ci.org/clef/wordpress.svg?branch=master)](https://travis-ci.org/clef/wordpress)
 
 Welcome to the Clef for WordPress development repository!
 
