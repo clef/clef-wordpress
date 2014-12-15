@@ -51,67 +51,49 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
     
-    function do_pass_command($cmd_name, $arg, $role, $wprole, $msg_disable, $msg_enable) {
-        
-        // Check whether a standard WP role was sent, which indicates that we're dealing with a string
-        // (i.e., the standard WP roles used in the SELECT option in wpclef's pwd settings)
-        if (!empty($wprole)) {
-            if ($arg == 'info') {
-                return self::get_option_info($role);
-            } elseif ($arg == 'disable') {
-                $value = $wprole;
-                return self::update_wpclef_option($role, $value, $msg_disable);
-            } elseif (($arg == 'enable')) {
-                $value = '';
-                return self::update_wpclef_option($role, $value, $msg_enable);
-            } else {
-                return self::error_invalid_option($cmd_name);
-            }
+    protected function toggle_passwords($cmd_name, $arg, $option, $role) {
+        if ($arg == 'disable') {
+            return self::update_wpclef_option($option, 1, "Passwords are now disabled for $role.");
+        } elseif (($arg == 'enable')) {
+            return self::update_wpclef_option($option, 0, "Passwords are now enabled for $role.");
         }
-        // Otherwise, if the all-options role is set, handle the appropriate command.
-        elseif ( ($arg == 'reset') && ($role == 'all-options') ) {
-                WP_CLI::confirm('Are you sure you want to reset your password settings to their fresh-install default values?');
-                    self::update_wpclef_option(self::PWD_OPT_ALL, 0);
-                    self::update_wpclef_option(self::PWD_OPT_CLEF, 1);
-                    self::update_wpclef_option(self::PWD_OPT_WP, '');    
-                    self::update_wpclef_option(self::PWD_OPT_API, 0);
-                    self::update_wpclef_option(PWD_OPT_WAVE, 1);
+    }
+    
+    protected function toggle_passwords_api($cmd_name, $arg, $option, $role) {
+        if ($arg == 'disable') {
+            return self::update_wpclef_option($option, 0, "Passwords are now disabled for $role.");
+        } elseif (($arg == 'enable')) {
+            return self::update_wpclef_option($option, 1, "Passwords are now enabled for $role.");
+        }
+    }
+    
+    function toggle_passwords_wprole($cmd_name, $arg, $role, $wprole) {
+        if ($arg == 'disable') {
+            $value = $wprole;
+            return self::update_wpclef_option($role, $value, "Passwords are disabled for WP roles >= $wprole.");
+        } elseif (($arg == 'enable')) {
+            $value = ''; // reset the SELECT box to null, which enables passwords for all WP roles
+            return self::update_wpclef_option($role, $value, "Passwords are enabled for the $wprole role.");
+        }
+    }
+    
+    protected function toggle_wave($cmd_name, $arg) {
+        if ($arg == 'disable') {
+            return self::update_wpclef_option(self::PWD_OPT_WAVE, 0, 'Wp-login.php will show the standard WP login form.');
+        } elseif (($arg == 'enable')) {
+            return self::update_wpclef_option(self::PWD_OPT_WAVE, 1, 'Wp-login.php will show the Clef Wave.');
+        }
+    }
+    
+    protected function reset_pass_settings() {
+        WP_CLI::confirm('Are you sure you want to reset your password settings to their fresh-install default values?');
+            self::update_wpclef_option(self::PWD_OPT_ALL, 0);
+            self::update_wpclef_option(self::PWD_OPT_CLEF, 1);
+            self::update_wpclef_option(self::PWD_OPT_WP, '');    
+            self::update_wpclef_option(self::PWD_OPT_API, 0);
+            self::update_wpclef_option(PWD_OPT_WAVE, 1);
 
-                    return WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
-
-        } elseif ( ($arg == 'info') && ($role == 'all-options') ) {
-                return self::get_all_pass_option_info();
-        }
-        // Otherwise, we're dealing with a boolean option.
-        // The WP API and wave options have inverted boolean values, so handle those options first
-        // before handling the ordinary boolean options.
-        elseif ( ($role == self::PWD_OPT_API) || ($role == self::PWD_OPT_WAVE) ) {
-            if ($arg == 'info') {
-                return self::get_option_info($role);
-            } elseif ($arg == 'disable') {
-                $value = 0;
-                return self::update_wpclef_option($role, $value, $msg_disable);
-            } 
-            elseif (($arg == 'enable')) {
-                $value = 1;
-                return self::update_wpclef_option($role, $value, $msg_enable);
-            } else {
-                return self::error_invalid_option($cmd_name);
-            }
-        } 
-        // Now handle the ordinary boolean options.
-        // Exclude the 'all-options' option as invalid for the boolean options.
-        elseif ($arg == 'info') {
-            return self::get_option_info($role);
-        } elseif ( ($arg == 'disable') && ($role != 'all-options') ) {
-            $value = 1;
-            return self::update_wpclef_option($role, $value, $msg_disable);
-        } elseif ( ($arg == 'enable') && ($role != 'all-options') ) {
-            $value = 0;
-            return self::update_wpclef_option($role, $value, $msg_enable);
-        } else {
-            return self::error_invalid_option($cmd_name);
-        }
+            return WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
     }
     
     function get_option_info($option) {
@@ -175,11 +157,66 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    function get_all_pass_option_info() {
-        self::get_option_info(self::PWD_OPT_CLEF);
-        self::get_option_info(self::PWD_OPT_WP);
-        self::get_option_info(self::PWD_OPT_ALL);
-        self::get_option_info(self::PWD_OPT_API);
+    protected function get_pass_option_value($option) {
+        $current_value = $this->wpclef_opts[$option];
+        return $current_value;
+    }
+    
+    protected function get_all_pass_option_info() {
+        // build table row: clef                        
+        if (self::get_pass_option_value(self::PWD_OPT_CLEF)) {
+            $row_clef = array('Clef', 'Disabled'); 
+        } else {
+            $row_clef = array('Clef', 'Enabled');
+        }
+        
+        // build table row: all
+        if (self::get_pass_option_value(self::PWD_OPT_ALL)) {
+            $row_all = array('All', 'Disabled'); 
+        } else {
+            $row_all = array('All', 'Enabled');
+        }
+        
+        // build table row: api
+        if (!self::get_pass_option_value(self::PWD_OPT_API)) {
+            $row_api = array('WP API', 'Disabled'); 
+        } else {
+            $row_api = array('WP API', 'Enabled');
+        }
+        
+        // build table row: wp roles
+        $wp_role = self::get_pass_option_value(self::PWD_OPT_WP);
+        
+        if ($wp_role == '') {
+            $row_wp = array('WP roles', 'Enabled');
+        } else {
+            switch($wp_role) {
+                case 'Subscriber':
+                case 'Contributor':
+                case 'Author':
+                case 'Editor':
+                case 'Administrator':
+                case 'Super Administrator':
+                    $row_wp = array('WP roles', "Disabled for roles >= $wp_role");
+                break;
+            }
+        }
+        
+        // construct table
+        $headers = array('Role', 'Passwords');
+        $data = array(
+            $row_clef,
+            $row_all,
+            $row_wp,
+            $row_api
+        );
+        
+        $table = new \cli\Table();
+        $table->setHeaders($headers);
+        $table->setRows($data);
+        $table->display();
+        
+        // Show Clef Wave info
         self::get_option_info(self::PWD_OPT_WAVE);
     }
     
@@ -289,7 +326,9 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * : Turn on passwords (i.e., remove Clef auth security).
      * 
      * <info>
-     * : Show the current password settings for the selected role or option.
+     * : Show the current password settings.
+     * Use without options to view all password settings values.
+     * Use with a role option to view only that role's password setting value.
      * 
      * <reset>
      * : Reset all password settings to their default values.
@@ -324,54 +363,63 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * <api>
      * : Tthe WP API including XML-RPC. Default value: disable passwords.
      * 
-     * <all-options>
-     * : All password options. Use exclusively with the <info> and <reset> actions.
-     * 
      * ## EXAMPLES
      * 
+     *     wp clef passwords info
+     *     wp clef passwords info admin
      *     wp clef passwords disable all
      *     wp clef passwords enable clef 
-     *     wp clef passwords info admin
-     *     wp clef passwords info all-options
-     *     wp clef passwords reset all-options
+     *     wp clef passwords reset
      *
-     * @synopsis <action> <role|option>
+     * @synopsis <action> [<role|option>]
      */
     function passwords($args, $assoc_args) {
         $cmd_name = 'passwords';
         
         //If no commands or flags are entered, exit; otherwise, filter input and execute the commands and flags.
         self::is_valid_command_input($args, $assoc_args, $cmd_name);
-        
         $args = self::get_filtered_command_input($args);
         $assoc_args = self::get_filtered_command_input($assoc_args);
         
-        // Execute commands. The order of the positional arguments: $args[0] = <action>; $args[1] = <role>.
+        // Handle 'info' and 'reset' actions first.
+        if ( ($args[0] == 'info') && (empty($args[1])) ) {
+            self::get_all_pass_option_info();
+            return;
+        } elseif ( ($args[0] == 'reset') && (empty($args[1])) ) {
+            self::reset_pass_settings();
+            return;
+        }
+            
+        // Now handle all other 'passwords' subcommands (action + option).
+        // The order of the positional arguments: $args[0] = <action>; $args[1] = <role|option>.
         foreach (array($args) as $arg) {
             switch ($arg[1]) {
                 case 'clef':
                     $role = ucwords($arg[1]) .' users';
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_CLEF, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
+                    self::toggle_passwords($cmd_name, $arg[0], self::PWD_OPT_CLEF, $role);
                     break;
                 case 'all':
                     $role = ucwords($arg[1]) .' users';
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_ALL, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
+                    self::toggle_passwords($cmd_name, $arg[0], self::PWD_OPT_ALL, $role);
                     break;
                 case 'api':
                     $role = 'the WP API';
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_API, null, "Passwords are now disabled for $role.", "Passwords are now enabled for $role.");
+                    self::toggle_passwords_api($cmd_name, $arg[0], self::PWD_OPT_API, $role);
                     break;
                 case 'subscriber':
                 case 'contributor':
                 case 'author':
                 case 'editor':
-                case 'admin':
-                case 'superadmin':
                     $wprole = ucwords($arg[1]);
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_WP, "$wprole", "Passwords are disabled for WP roles >= $wprole.", "Passwords are enabled for the $wprole role.");
+                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
                     break;
-                case 'all-options':
-                    self::do_pass_command($cmd_name, $arg[0], 'all-options', null, 'Disabled message', 'Enabled message');
+                case 'admin':
+                    $wprole = 'Administrator';
+                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
+                    break;
+                case 'superadmin':
+                    $wprole = 'Super Administrator';
+                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
                     break;
                 default:
                     self::error_invalid_option($cmd_name);
@@ -385,16 +433,19 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * 
      * ## OPTIONS
      * 
-     * <enable>
+     * <info>
+     * : Display the current value of the wave option.
+     * 
+     * <enable> (default value)
      * : Show the Clef Wave on wp-login.php.
      * 
      * <disable>
      * : Show the standard WP login form on wp-login.php.
      * 
-     * Default value: enable.
      *
      * ## EXAMPLES
      * 
+     *     wp clef wave info
      *     wp clef wave enable
      *     wp clef wave disable
      *
@@ -408,24 +459,18 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         
         // Execute commands.
         $args = self::get_filtered_command_input($args);
-        $disable_msg = 'Wp-login.php will show the standard WP login form.';
-        $enable_msg = 'Wp-login.php will show the Clef Wave.';
 
-        foreach (array($args) as $arg) {
-            switch ($arg[0]) {
-                case 'enable':
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_WAVE, null, $disable_msg, $enable_msg);
-                    break;
-                case 'disable':
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_WAVE, null, $disable_msg, $enable_msg);
-                    break;
-                case 'info':
-                    self::do_pass_command($cmd_name, $arg[0], self::PWD_OPT_WAVE, null, $disable_msg, $enable_msg);
+        switch($args[0]) {
+            case 'info':
+                return self::get_option_info(self::PWD_OPT_WAVE);
                 break;
-                default:
-                    self::error_invalid_option("$cmd_name");
+            case 'enable':
+            case 'disable':
+                self::toggle_wave($cmd_name, $args[0]);
                 break;
-            }
+            default:
+                self::error_invalid_option("$cmd_name");
+                break;
         }
     }
 
@@ -604,6 +649,58 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 }
             }       
         }   
+    }
+    
+    /**
+     * Prints a table.
+     * 
+     * ## OPTIONS
+     * 
+     * [<name>]
+     * : The name of the person to greet.
+     * 
+     * ## EXAMPLES
+     * 
+     *     wp example hello Newman
+     *
+     * @synopsis [<name>]
+     */
+    function table( $args, $assoc_args ) {
+        
+        $headers = array('First Name', 'Last Name', 'City', 'State');
+        $data = array(
+            array('Maryam',   'Elliott',    'Elizabeth City',   'SD'),
+            array('Jerry',    'Washington', 'Bessemer',         'ME'),
+            array('Allegra',  'Hopkins',    'Altoona',          'ME'),
+            array('Audrey',   'Oneil',      'Dalton',           'SK'),
+            array('Ruth',     'Mcpherson',  'San Francisco',    'ID'),
+            array('Odessa',   'Tate',       'Chattanooga',      'FL'),
+            array('Violet',   'Nielsen',    'Valdosta',         'AB'),
+            array('Summer',   'Rollins',    'Revere',           'SK'),
+            array('Mufutau',  'Bowers',     'Scottsbluff',      'WI'),
+            array('Grace',    'Rosario',    'Garden Grove',     'KY'),
+            array('Amanda',   'Berry',      'La Habra',         'AZ'),
+            array('Cassady',  'York',       'Fulton',           'BC'),
+            array('Heather',  'Terrell',    'Statesboro',       'SC'),
+            array('Dominic',  'Jimenez',    'West Valley City', 'ME'),
+            array('Rhonda',   'Potter',     'Racine',           'BC'),
+            array('Nathan',   'Velazquez',  'Cedarburg',        'BC'),
+            array('Richard',  'Fletcher',   'Corpus Christi',   'BC'),
+            array('Cheyenne', 'Rios',       'Broken Arrow',     'VA'),
+            array('Velma',    'Clemons',    'Helena',           'IL'),
+            array('Samuel',   'Berry',      'Lawrenceville',    'NU'),
+            array('Marcia',   'Swanson',    'Fontana',          'QC'),
+            array('Zachary',  'Silva',      'Port Washington',  'MB'),
+            array('Hilary',   'Chambers',   'Suffolk',          'HI'),
+            array('Idola',    'Carroll',    'West Sacramento',  'QC'),
+            array('Kirestin', 'Stephens',   'Fitchburg',        'AB'),
+        );
+        $table = new \cli\Table();
+        $table->setHeaders($headers);
+        $table->setRows($data);
+        $table->display();
+        
+        
     }
 }
 
