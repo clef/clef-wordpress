@@ -13,7 +13,7 @@
  */ 
 class Clef_WPCLI_Command extends WP_CLI_Command {
 
-   // Define class properties.
+   // Class properties.
     const PWD_OPT_CLEF = 'clef_password_settings_disable_passwords';
     const PWD_OPT_WP = 'clef_password_settings_disable_certain_passwords';
     const PWD_OPT_ALL = 'clef_password_settings_force';
@@ -31,7 +31,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $this->admin_email = get_option('admin_email');
     }
     
-   // Define utility methods. 
+   // Class utility methods. 
     function is_valid_command_input($args, $assoc_args, $command) {
         
         if (empty($args) && empty($assoc_args)) {
@@ -251,7 +251,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     function update_wpclef_option($option, $value, $msg = null) {
             
         // If the option is already set to the input value, return true.
-        // Else, update the option to the input value and return true.
+        // Else, update the option to the input value, then return true.
         if ($this->wpclef_opts[$option] == $value) {
             
             if (isset($msg)) {
@@ -325,15 +325,35 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         WP_CLI::success($msg);
     }
 
-    function send_email($to, $url) {
-        $msg = '<p>Hello,</p><p>Here is your Clef override URL:<br />'.$url;
-        $subject = 'Clef override URL for ' .$this->site_url;
+    function send_override_email($to=null) {
         
-        if (wp_mail($to, $subject, $msg)) {
-            return true;
+        $site_name = get_bloginfo('name');
+        $subject = "$site_name Clef override URL";
+        $from_email = $this->admin_email;
+        if (isset($to)) {
+            // validate email address
+            if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
+                $to_email = $to;
+            } else {
+                WP_CLI::error('Invalid email address entered for --to option.');
+                return;
+            }
+            
+            $to_email = $to;
         } else {
-            return false;
+            $to_email = $this->admin_email;
         }
+        $override_url = self::get_override_url();
+        $message = "<p>Your Clef override URL for $site_name: $override_url</p><p>Bookmark this URL for safekeeping.</p><p>Thanks for using Clef!<br>the Clef Team<br>https://getclef.com</p>";
+            
+            
+        $headers = "From: WordPress Admin <$from_email> \r\n";
+        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+
+        $sent = wp_mail($to_email, $subject, $message, $headers);
+
+        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+        return $sent;
     }
 
     /**
@@ -615,14 +635,42 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
          // 'wp clef override email'
         elseif ( ($args[0] == 'email') && (empty($args[1])) && (empty($assoc_args['to'])) ) {
-            // add email command
-            WP_CLI::confirm("Email the override URL to $this->admin_email?");
-            WP_CLI::line('Email feature is coming soon!');
+            // If an override URL is set, send the email
+            if (!empty($this->wpclef_opts[self::PWD_OPT_OVERRIDE])) {
+                WP_CLI::confirm("Email the override URL to $this->admin_email?");
+                if (self::send_override_email()) {
+                    WP_CLI::success('Email sent.');
+                } else {
+                    WP_CLI::success('Could not send email.');
+                }
+            } else {
+                WP_CLI::line('The override URL has not been enabled. Enable it first, then you can email it.');
+            }
+                
+            
         }
         // 'wp clef override email --to=jane@doe.com'
         elseif ( ($args[0] == 'email') && (isset($assoc_args['to'])) ) {
-            // add email command
-            WP_CLI::line('The email feature with custom \'to\' address is coming soon!');
+            // If override url is set, send email to --to=address
+            if (!empty($this->wpclef_opts[self::PWD_OPT_OVERRIDE])) {
+            
+                // If valid email address, send the override email.
+                if (filter_var($assoc_args['to'], FILTER_VALIDATE_EMAIL)) {
+
+                    WP_CLI::confirm("Email the override URL to {$assoc_args['to']}?");
+                    if (self::send_override_email($assoc_args['to'])) {
+                        return WP_CLI::success('Email sent.');
+                    } else {
+                        return WP_CLI::error('Could not send email.');
+                    }
+                } else {
+                    WP_CLI::error('Invalid email address entered for --to=address option.');
+                    return;
+                }
+            
+            } else {
+                WP_CLI::line('The override URL has not been enabled. Enable it first, then you can email it.');
+            }
         }
         // 'wp clef override disable'
         elseif ( ($args[0] == 'disable') && (empty($args[1])) && (empty($assoc_args)) ) {
