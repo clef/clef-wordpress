@@ -4,10 +4,10 @@
  * 
  * This class adds WP-CLI (http://wp-cli.org) functionality to the wpclef plugin (https://wordpress.org/plugins/wpclef/).
  * 
- * Contributions are welcome! See https://github.com/clef/wordpress.
+ * Contributions are welcome. See https://github.com/clef/wordpress.
  * 
  * @author Laurence O’Donnell <laurence@getclef.com>
- * @version 0.0
+ * @version 1.0
  * @since 2.2.9
  * @uses 
  */ 
@@ -34,7 +34,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
    // Class utility methods. 
-    function is_valid_command_input($args, $assoc_args, $command) {
+    protected function is_valid_command_input($args, $assoc_args, $command) {
         
         if (empty($args) && empty($assoc_args)) {
             self::error_invalid_option($command);
@@ -44,18 +44,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    function get_filtered_command_input($input) {
-        
+    protected function get_filtered_command_input($input) {
         $input = array_map('strtolower', $input);
         return $input;
     }
     
-    function error_invalid_option($command) {
-        
-        WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
+    protected function error_invalid_option($command) {
+         WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
     
-    protected function toggle_passwords($cmd_name, $arg, $option, $role) {
+    protected function toggle_passwords($arg, $option, $role) {
         if ($arg == 'disable') {
             return self::update_wpclef_option($option, 1, "Passwords are now disabled for $role.");
         } elseif (($arg == 'enable')) {
@@ -63,7 +61,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_passwords_api($cmd_name, $arg, $option, $role) {
+    protected function toggle_passwords_api($arg, $option, $role) {
         if ($arg == 'disable') {
             return self::update_wpclef_option($option, 0, "Passwords are now disabled for $role.");
         } elseif (($arg == 'enable')) {
@@ -71,7 +69,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    function toggle_passwords_wprole($cmd_name, $arg, $role, $wprole) {
+    protected function toggle_passwords_wprole($arg, $role, $wprole) {
         if ($arg == 'disable') {
             $value = $wprole;
             return self::update_wpclef_option($role, $value, "Passwords are disabled for WP roles >= $wprole.");
@@ -81,7 +79,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_wave($cmd_name, $arg) {
+    protected function toggle_wave($arg) {
         if ($arg == 'disable') {
             return self::update_wpclef_option(self::PWD_OPT_WAVE, 0, 'Wp-login.php will show the standard WP login form.');
         } elseif (($arg == 'enable')) {
@@ -89,7 +87,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_badge($cmd_name, $arg) {
+    protected function toggle_badge($arg) {
         if ($arg == 'disable') {
             return self::update_wpclef_option(self::PWD_OPT_BADGE, 'disabled', 'Do not show the Clef badge or link.');
         } elseif (($arg == 'enable')) {
@@ -123,7 +121,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    function get_option_info($option) {
+    protected function get_option_info($option) {
         $msg = null;
         $current_value = $this->wpclef_opts[$option];
         
@@ -277,7 +275,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         self::get_option_info(self::PWD_OPT_WAVE);
     }
     
-    function update_wpclef_option($option, $value, $msg = null) {
+    protected function update_wpclef_option($option, $value, $msg=null) {
         // If the option is already set to the input value, return true.
         // Else, update the option to the input value, then return true.
         if ($this->wpclef_opts[$option] == $value) {
@@ -305,12 +303,12 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    function is_confirm_enable_passwords() {
+    protected function is_confirm_enable_passwords() {
         WP_CLI::confirm('Enabling passwords makes your site less secure. Are you sure you want to do this?');
         return 1;
     }
     
-    function create_override($key = null) {
+    protected function create_override($key = null) {
         if (!empty($this->wpclef_opts[self::PWD_OPT_OVERRIDE])) {
             
             $current_url = self::get_override_url();
@@ -336,7 +334,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
     }
     
-    function get_override_url() {
+    protected function get_override_url() {
         $url = wp_login_url();
         $url .= '?override=';
         $url .= $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
@@ -344,15 +342,14 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $url;
     }
     
-    function show_override_confirmation() {
+    protected function show_override_confirmation() {
         $msg = 'Your new override URL is: ';
         $msg .= self::get_override_url();
 
         WP_CLI::success($msg);
     }
 
-    function send_override_email($to=null) {
-        
+    protected function send_override_email($to=null) {
         $site_name = get_bloginfo('name');
         $subject = "$site_name Clef override URL";
         $from_email = $this->admin_email;
@@ -463,30 +460,30 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             switch ($arg[1]) {
                 case 'clef':
                     $role = ucwords($arg[1]) .' users';
-                    self::toggle_passwords($cmd_name, $arg[0], self::PWD_OPT_CLEF, $role);
+                    self::toggle_passwords($arg[0], self::PWD_OPT_CLEF, $role);
                     break;
                 case 'all':
                     $role = ucwords($arg[1]) .' users';
-                    self::toggle_passwords($cmd_name, $arg[0], self::PWD_OPT_ALL, $role);
+                    self::toggle_passwords($arg[0], self::PWD_OPT_ALL, $role);
                     break;
                 case 'api':
                     $role = 'the WP API';
-                    self::toggle_passwords_api($cmd_name, $arg[0], self::PWD_OPT_API, $role);
+                    self::toggle_passwords_api($arg[0], self::PWD_OPT_API, $role);
                     break;
                 case 'subscriber':
                 case 'contributor':
                 case 'author':
                 case 'editor':
                     $wprole = ucwords($arg[1]);
-                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
+                    self::toggle_passwords_wprole($arg[0], self::PWD_OPT_WP, $wprole);
                     break;
                 case 'admin':
                     $wprole = 'Administrator';
-                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
+                    self::toggle_passwords_wprole($arg[0], self::PWD_OPT_WP, $wprole);
                     break;
                 case 'superadmin':
                     $wprole = 'Super Administrator';
-                    self::toggle_passwords_wprole($cmd_name, $arg[0], self::PWD_OPT_WP, $wprole);
+                    self::toggle_passwords_wprole($arg[0], self::PWD_OPT_WP, $wprole);
                     break;
                 default:
                     self::error_invalid_option($cmd_name);
@@ -533,7 +530,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 break;
             case 'enable':
             case 'disable':
-                self::toggle_wave($cmd_name, $args[0]);
+                self::toggle_wave($args[0]);
                 break;
             default:
                 self::error_invalid_option("$cmd_name");
@@ -751,7 +748,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             case 'enable':
             case 'disable':
             case 'link':
-                self::toggle_badge($cmd_name, $args[0]);
+                self::toggle_badge($args[0]);
                 break;
             default:
                 self::error_invalid_option("$cmd_name");
