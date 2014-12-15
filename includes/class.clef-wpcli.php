@@ -21,6 +21,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     const PWD_OPT_WAVE = 'clef_form_settings_embed_clef';
     const PWD_OPT_OVERRIDE = 'clef_override_settings_key';
     const PWD_OPT_BADGE = 'support_clef_badge';
+    const PWD_OPT_API_ID = 'clef_settings_app_id';
+    const PWD_OPT_API_SECRET = 'clef_settings_app_secret';
     private $site_url;
     private $admin_email;
     private $wpclef_opts;
@@ -108,6 +110,19 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             return WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
     }
     
+    protected function update_api_option($arg, $opt) {
+        // allowed $opt values include '' (i.e., delete) and 32 char length (i.e., api key).
+        if ((strlen($opt) != 32) && (strlen($opt) > 0) ) {
+            return WP_CLI::error('Invalid API option');
+        }
+        
+        if ($arg == 'id') {
+            return self::update_wpclef_option(self::PWD_OPT_API_ID, $opt, "New application ID: $opt");
+        } elseif (($arg == 'secret')) {
+            return self::update_wpclef_option(self::PWD_OPT_API_SECRET, $opt, "New application secret: $opt");
+        }
+    }
+    
     function get_option_info($option) {
         $msg = null;
         $current_value = $this->wpclef_opts[$option];
@@ -172,6 +187,20 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                     $msg = 'Show the Clef badge.';
                 } elseif ($current_value == 'link') {
                     $msg = 'Show the Clef link.';
+                }
+                break;
+            case self::PWD_OPT_API_ID:
+                if (empty($current_value)) {
+                    $msg = 'Application ID is not set!';
+                } else {
+                    $msg = "Application ID: $current_value";
+                }
+                break;
+            case self::PWD_OPT_API_SECRET:
+                if (empty($current_value)) {
+                    $msg = 'Application secret is not set!';
+                } else {
+                    $msg = "Application secret: $current_value";
                 }
                 break;
             default:
@@ -249,7 +278,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
     function update_wpclef_option($option, $value, $msg = null) {
-            
         // If the option is already set to the input value, return true.
         // Else, update the option to the input value, then return true.
         if ($this->wpclef_opts[$option] == $value) {
@@ -295,7 +323,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                     $key = substr ( (md5(uniqid(mt_rand(), true))), 0, 15);
                     return self::update_wpclef_option(self::PWD_OPT_OVERRIDE, $key);
                 }
-
         } else {
             
             if (isset($key)) {
@@ -306,7 +333,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 return self::update_wpclef_option(self::PWD_OPT_OVERRIDE, $key);
             }
         }
-        
         return $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
     }
     
@@ -346,7 +372,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $override_url = self::get_override_url();
         $message = "<p>Your Clef override URL for $site_name: $override_url</p><p>Bookmark this URL for safekeeping.</p><p>Thanks for using Clef!<br>the Clef Team<br>https://getclef.com</p>";
             
-            
         $headers = "From: WordPress Admin <$from_email> \r\n";
         add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
 
@@ -355,7 +380,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
         return $sent;
     }
-
+    
     /**
      * Configure password disabling for select user roles and for the WP API.
      * 
@@ -367,7 +392,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
      * <enable>
      * : Turn on passwords (i.e., remove Clef auth security).
      * 
-     * <info>
+     * <info> [<role>]
      * : Show the current password settings.
      * Use without options to view all password settings values.
      * Use with a role option to view only that role's password setting value.
@@ -727,6 +752,62 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             case 'disable':
             case 'link':
                 self::toggle_badge($cmd_name, $args[0]);
+                break;
+            default:
+                self::error_invalid_option("$cmd_name");
+                break;
+        }
+    }
+    
+    /**
+     * Manage wpclef’s local Clef API settings.
+     * 
+     * Use this command only if you manually create a new integration for your WP site via the getclef.com dashboard (https://getclef.com/user) and hence need to update your WP site’s local API settings to match the Clef server’s API settings.
+     * 
+     * ## OPTIONS
+     * 
+     * <info>
+     * : Display the current value of the 'api' option.
+     * 
+     * <id> <value>
+     * : Update the Clef application id.
+     * 
+     * <secret> <value>
+     * : Update the Clef application secret.
+     * 
+     * ## EXAMPLES
+     * 
+     *     wp clef api info
+     *     wp clef api id 00000000000000000000000000000000
+     *     wp clef api secret 111111111111111111111111111111
+     * 
+     * If you need to delete the id or secret, use '' for the value like this:
+     * 
+     *     wp clef api id ''
+     *
+     * @synopsis <option> [<value>]
+     */
+    function api($args, $assoc_args) {
+        $cmd_name = 'api';
+        
+        //If no commands or flags are entered, exit; otherwise, execute the commands and flags.
+        self::is_valid_command_input($args, $assoc_args, "$cmd_name");
+        
+        // Execute commands.
+        $args = self::get_filtered_command_input($args);
+
+        switch($args[0]) {
+            case 'info':
+                self::get_option_info(self::PWD_OPT_API_ID);
+                self::get_option_info(self::PWD_OPT_API_SECRET);
+                break;
+            case 'id':
+            case 'secret':
+                if (isset($args[1])) {
+                    self::update_api_option($args[0], $args[1]);
+                } else {
+                    self::error_invalid_option("$cmd_name");
+                }
                 break;
             default:
                 self::error_invalid_option("$cmd_name");
