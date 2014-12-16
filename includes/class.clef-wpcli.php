@@ -89,11 +89,11 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     
     protected function toggle_badge($arg) {
         if ($arg == 'disable') {
-            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'disabled', 'Do not show the Clef badge or link.');
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'disabled', 'Footer will not show Clef badge or link.');
         } elseif (($arg == 'enable')) {
-            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'badge', 'Show the Clef badge.');
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'badge', 'Footer will show Clef badge.');
         } elseif (($arg == 'link')) {
-            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'link', 'Show the Clef link.');
+            return self::update_wpclef_option(self::PWD_OPT_BADGE, 'link', 'Footer will show Clef link.');
         }
     }
     
@@ -166,25 +166,26 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
                 break;
             case self::PWD_OPT_WAVE:
                 if ($current_value == 1) {
-                    $msg = 'Wp-login.php will show the Clef Wave.';
+                    $msg = 'Wave: show Clef Wave on wp-login.php.';
                 } elseif ($current_value == 0) {
-                    $msg = 'Wp-login.php will show the standard WP login form.';
+                    $msg = 'Wave: show standard login form on wp-login.php.';
                 }
                 break;
             case self::PWD_OPT_OVERRIDE:
                 if (empty($current_value)) {
                     $msg = 'An override URL has not been set.';
                 } elseif ($current_value == 0) {
-                    $msg = self::get_override_url();
+                    $msg = 'Override url: ';
+                    $msg .= self::get_override_url();
                 }    
                 break;
             case self::PWD_OPT_BADGE:
                 if ($current_value == 'disabled') {
-                    $msg = 'Do not show the Clef badge or link.';
+                    $msg = 'Footer: do not show Clef badge or link.';
                 } elseif ($current_value == 'badge') {
-                    $msg = 'Show the Clef badge.';
+                    $msg = 'Footer: show Clef badge.';
                 } elseif ($current_value == 'link') {
-                    $msg = 'Show the Clef link.';
+                    $msg = 'Footer: show Clef link.';
                 }
                 break;
             case self::PWD_OPT_API_ID:
@@ -217,7 +218,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $current_value;
     }
     
-    protected function get_all_pass_option_info() {
+    protected function print_all_pass_option_info() {
         // build table row: clef                        
         if (self::get_pass_option_value(self::PWD_OPT_CLEF)) {
             $row_clef = array('Clef', 'Disabled'); 
@@ -270,9 +271,6 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $table->setHeaders($headers);
         $table->setRows($data);
         $table->display();
-        
-        // Show Clef Wave info
-        self::get_option_info(self::PWD_OPT_WAVE);
     }
     
     protected function update_wpclef_option($option, $value, $msg=null) {
@@ -378,6 +376,66 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $sent;
     }
     
+    protected function print_all_option_info() {
+        WP_CLI::line('');
+        WP_CLI::line('DISABLE PASSWORDS SETTINGS:');
+        self::print_all_pass_option_info();
+        WP_CLI::line('');
+        WP_CLI::line('OTHER SETTINGS:');
+        
+        // build table row: wave                        
+        if (self::get_pass_option_value(self::PWD_OPT_WAVE)) {
+            $row_wave = array('Wave', 'Show Clef wave on wp-login.php'); 
+        } else {
+            $row_wave = array('Wave', 'Show standard login form on wp-login.php');
+        }
+        
+        // build table row: override                        
+        if (self::get_pass_option_value(self::PWD_OPT_OVERRIDE)) {
+            $row_override = array('Override URL', 'Disabled'); 
+        } else {
+            $row_override = array('Override URL', 'Enabled');
+        }
+        
+        // build table row: badge
+        if (self::get_pass_option_value(self::PWD_OPT_BADGE) == 'badge') {
+            $row_badge = array('Badge:', 'Show badge'); 
+        } elseif (self::get_pass_option_value(self::PWD_OPT_BADGE) == 'link') {
+            $row_badge = array('Badge', 'Show link');
+        } elseif (self::get_pass_option_value(self::PWD_OPT_BADGE) == 'disabled') {
+            $row_badge = array('Badge', 'Disabled');
+        }
+        
+        // build table row: application settings
+        $row_application_id = array('Application ID', self::get_pass_option_value(self::PWD_OPT_API_ID));
+        $row_application_secret = array('Application secret', self::get_pass_option_value(self::PWD_OPT_API_SECRET)); 
+                
+        // build table columns
+        $headers = array('Setting', 'Value');
+        $data = array(
+            $row_wave,
+            $row_override,
+            $row_badge,
+            $row_application_id,
+            $row_application_secret
+        );
+        
+        $table = new \cli\Table();
+        $table->setHeaders($headers);
+        $table->setRows($data);
+        $table->display();
+        WP_CLI::line('');
+    }
+    
+    /**
+     * Display wpclef’s current settings.
+     * 
+     * @synopsis
+     */
+    function info($args, $assoc_args) {
+        self::print_all_option_info();
+    }
+    
     /**
      * Configure password disabling for select user roles and for the WP API.
      * 
@@ -447,7 +505,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         
         // Handle 'info' and 'reset' actions first.
         if ( ($args[0] == 'info') && (empty($args[1])) ) {
-            self::get_all_pass_option_info();
+            self::print_all_pass_option_info();
+            self::get_option_info(self::PWD_OPT_WAVE);
             return;
         } elseif ( ($args[0] == 'reset') && (empty($args[1])) ) {
             self::reset_pass_settings();
@@ -597,7 +656,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
     }
     
     /**
-     * Configure an override URL that allows password-based logins via a secret URL.
+     * Configure a secret override URL that allows password-based logins.
      * 
      * ## COMMANDS
      * 
