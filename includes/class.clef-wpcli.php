@@ -1,19 +1,23 @@
 <?php
 /**
- * Manage wpclef from the command line.
+ * Add WP-CLI integration to wpclef.
  * 
- * This class adds WP-CLI (http://wp-cli.org) functionality to the wpclef plugin (https://wordpress.org/plugins/wpclef/).
+ * This class adds WP-CLI (http://wp-cli.org) functionality to the wpclef plugin (https://wordpress.org/plugins/wpclef/) thereby enabling WP admins to configure wpclef’s settings from the command line.
  * 
  * Contributions are welcome. See https://github.com/clef/wordpress.
  * 
- * @author Laurence O’Donnell <laurence@getclef.com>
- * @version 1.0
  * @since 2.2.9
- * @uses 
+ */
+
+
+/**
+ * Manage wpclef from the command line.
  */ 
 class Clef_WPCLI_Command extends WP_CLI_Command {
 
-   // Class properties.
+    /**
+     * Properties
+     */ 
     const PWD_OPT_CLEF = 'clef_password_settings_disable_passwords';
     const PWD_OPT_WP = 'clef_password_settings_disable_certain_passwords';
     const PWD_OPT_ALL = 'clef_password_settings_force';
@@ -33,8 +37,10 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $this->admin_email = get_option('admin_email');
     }
     
-   // Class utility methods. 
-    protected function is_valid_command_input($args, $assoc_args, $command) {
+    /**
+     * Methods
+     */ 
+    private function is_valid_command_input($args, $assoc_args, $command) {
         
         if (empty($args) && empty($assoc_args)) {
             self::error_invalid_option($command);
@@ -44,16 +50,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function get_filtered_command_input($input) {
+    private function get_filtered_command_input($input) {
         $input = array_map('strtolower', $input);
         return $input;
     }
     
-    protected function error_invalid_option($command) {
+    private function error_invalid_option($command) {
          WP_CLI::error("Please enter a valid option for '$command'. For help, use 'wp help clef $command'.");
     }
     
-    protected function toggle_passwords($arg, $option, $role) {
+    private function toggle_passwords($arg, $option, $role) {
         if ($arg == 'disable') {
             return self::update_wpclef_option($option, 1, "Passwords are now disabled for $role.");
         } elseif (($arg == 'enable')) {
@@ -61,7 +67,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_passwords_api($arg, $option, $role) {
+    private function toggle_passwords_api($arg, $option, $role) {
         if ($arg == 'disable') {
             return self::update_wpclef_option($option, 0, "Passwords are now disabled for $role.");
         } elseif (($arg == 'enable')) {
@@ -69,7 +75,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_passwords_wprole($arg, $role, $wprole) {
+    private function toggle_passwords_wprole($arg, $role, $wprole) {
         if ($arg == 'disable') {
             $value = $wprole;
             return self::update_wpclef_option($role, $value, "Passwords are disabled for WP roles >= $wprole.");
@@ -79,7 +85,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_wave($arg) {
+    private function toggle_wave($arg) {
         if ($arg == 'disable') {
             return self::update_wpclef_option(self::PWD_OPT_WAVE, 0, 'Wp-login.php will show the standard WP login form.');
         } elseif (($arg == 'enable')) {
@@ -87,7 +93,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function toggle_badge($arg) {
+    private function toggle_badge($arg) {
         if ($arg == 'disable') {
             return self::update_wpclef_option(self::PWD_OPT_BADGE, 'disabled', 'Footer will not show Clef badge or link.');
         } elseif (($arg == 'enable')) {
@@ -97,7 +103,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function reset_pass_settings() {
+    private function reset_pass_settings() {
         WP_CLI::confirm('Are you sure you want to reset your password settings to their fresh-install default values?');
             self::update_wpclef_option(self::PWD_OPT_ALL, 0);
             self::update_wpclef_option(self::PWD_OPT_CLEF, 1);
@@ -108,7 +114,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             return WP_CLI::success('Clef’s password settings have been reset to their fresh-install default values.');
     }
     
-    protected function update_api_option($arg, $opt) {
+    private function update_api_option($arg, $opt) {
         // allowed $opt values include '' (i.e., delete) and 32 char length (i.e., api key).
         if ((strlen($opt) != 32) && (strlen($opt) > 0) ) {
             return WP_CLI::error('Invalid API option');
@@ -121,7 +127,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function get_option_info($option) {
+    private function print_option_info($option) {
         $msg = null;
         $current_value = $this->wpclef_opts[$option];
         
@@ -209,16 +215,16 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         if (!empty($msg)) {
             return WP_CLI::line($msg);
         } else {
-            return WP_CLI::error("Unable to complete get_option_info() for $option");
+            return WP_CLI::error("Unable to complete print_option_info() for $option");
         }
     }
     
-    protected function get_pass_option_value($option) {
+    private function get_pass_option_value($option) {
         $current_value = $this->wpclef_opts[$option];
         return $current_value;
     }
     
-    protected function print_all_pass_option_info() {
+    private function print_all_pass_option_info() {
         // build table row: clef                        
         if (self::get_pass_option_value(self::PWD_OPT_CLEF)) {
             $row_clef = array('Clef', 'Disabled'); 
@@ -258,7 +264,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
             }
         }
         
-        // construct table
+        // build table columns
         $headers = array('Role', 'Passwords');
         $data = array(
             $row_clef,
@@ -273,7 +279,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         $table->display();
     }
     
-    protected function update_wpclef_option($option, $value, $msg=null) {
+    private function update_wpclef_option($option, $value, $msg=null) {
         // If the option is already set to the input value, return true.
         // Else, update the option to the input value, then return true.
         if ($this->wpclef_opts[$option] == $value) {
@@ -301,12 +307,12 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         }
     }
     
-    protected function is_confirm_enable_passwords() {
+    private function is_confirm_enable_passwords() {
         WP_CLI::confirm('Enabling passwords makes your site less secure. Are you sure you want to do this?');
         return 1;
     }
     
-    protected function create_override($key = null) {
+    private function create_override($key = null) {
         if (!empty($this->wpclef_opts[self::PWD_OPT_OVERRIDE])) {
             
             $current_url = self::get_override_url();
@@ -332,7 +338,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
     }
     
-    protected function get_override_url() {
+    private function get_override_url() {
         $url = wp_login_url();
         $url .= '?override=';
         $url .= $this->wpclef_opts[self::PWD_OPT_OVERRIDE];
@@ -340,14 +346,14 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $url;
     }
     
-    protected function show_override_confirmation() {
+    private function show_override_confirmation() {
         $msg = 'Your new override URL is: ';
         $msg .= self::get_override_url();
 
         WP_CLI::success($msg);
     }
 
-    protected function send_override_email($to=null) {
+    private function send_override_email($to=null) {
         $site_name = get_bloginfo('name');
         $subject = "$site_name Clef override URL";
         $from_email = $this->admin_email;
@@ -376,7 +382,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         return $sent;
     }
     
-    protected function print_all_option_info() {
+    private function print_all_option_info() {
         WP_CLI::line('');
         WP_CLI::line('DISABLE PASSWORDS SETTINGS:');
         self::print_all_pass_option_info();
@@ -506,7 +512,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         // Handle 'info' and 'reset' actions first.
         if ( ($args[0] == 'info') && (empty($args[1])) ) {
             self::print_all_pass_option_info();
-            self::get_option_info(self::PWD_OPT_WAVE);
+            self::print_option_info(self::PWD_OPT_WAVE);
             return;
         } elseif ( ($args[0] == 'reset') && (empty($args[1])) ) {
             self::reset_pass_settings();
@@ -585,7 +591,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
 
         switch($args[0]) {
             case 'info':
-                return self::get_option_info(self::PWD_OPT_WAVE);
+                return self::print_option_info(self::PWD_OPT_WAVE);
                 break;
             case 'enable':
             case 'disable':
@@ -701,7 +707,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
         
         // 'wp clef override info'
         if ( ($args[0] == 'info') && (empty($args[1])) && (empty($assoc_args)) ) {
-            return self::get_option_info(self::PWD_OPT_OVERRIDE);
+            return self::print_option_info(self::PWD_OPT_OVERRIDE);
         } 
         // 'wp clef override enable'
         elseif ( ($args[0] == 'enable') && (empty($args[1])) && (empty($assoc_args['key'])) ) {
@@ -802,7 +808,7 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
 
         switch($args[0]) {
             case 'info':
-                return self::get_option_info(self::PWD_OPT_BADGE);
+                return self::print_option_info(self::PWD_OPT_BADGE);
                 break;
             case 'enable':
             case 'disable':
@@ -854,8 +860,8 @@ class Clef_WPCLI_Command extends WP_CLI_Command {
 
         switch($args[0]) {
             case 'info':
-                self::get_option_info(self::PWD_OPT_API_ID);
-                self::get_option_info(self::PWD_OPT_API_SECRET);
+                self::print_option_info(self::PWD_OPT_API_ID);
+                self::print_option_info(self::PWD_OPT_API_SECRET);
                 break;
             case 'id':
             case 'secret':
