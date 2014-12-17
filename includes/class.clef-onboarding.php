@@ -79,6 +79,15 @@ class ClefOnboarding {
         }
     }
 
+    /**
+    * Set FIRST_LOGIN true for users who are upgrading — we don't want
+    * to disable passwords for all of our previous users before the 2.2.9.1
+    * update.
+    */
+    public function set_first_login_true() {
+        $this->set_key(self::FIRST_LOGIN_KEY, true);
+    }
+
     public static function start($settings) {
         if (!isset(self::$instance) || self::$instance === null) {
             self::$instance = new self($settings);

@@ -92,6 +92,10 @@ class ClefCore {
 
         if ($previous_version) {
 
+            if (version_compare($previous_version, '2.2.9.1', '<')) {
+                $this->onboarding->set_first_login_true();
+            }
+
             if (version_compare($previous_version, '2.1', '<')) {
                 if (!session_id()) @session_start();
                 if (isset($_SESSION['logged_in_at'])) {

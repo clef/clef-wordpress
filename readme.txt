@@ -136,7 +136,7 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 
 == Changelog ==
 
-= 2.2.9 =
+= 2.2.9.1 =
 Released 17 December 2014
 
 * Enhancement: disable passwords by default for Clef users
