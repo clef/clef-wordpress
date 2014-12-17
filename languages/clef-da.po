@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2014-11-20 16:00-0800\n"
-"PO-Revision-Date: 2014-11-20 23:59+0000\n"
+"POT-Creation-Date: 2014-12-17 11:48-0800\n"
+"PO-Revision-Date: 2014-12-17 19:48+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/wpclef/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: includes/class.clef-admin.php:534
+#: includes/class.clef-admin.php:535
 msgid ""
 ". Copy and paste the preview email to your users and they'll be walked "
 "through a tutorial to connect with Clef"
@@ -77,7 +77,7 @@ msgstr "Yderligere sikkerhed"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: includes/class.clef-admin.php:404
+#: includes/class.clef-admin.php:405
 msgid "Allow XML"
 msgstr "Tillad XML"
 
@@ -89,6 +89,10 @@ msgstr "Tillad individuelle websider at styre indstillinger"
 msgid ""
 "Allow passwords for API (necessary for things like the WordPress mobile app)"
 msgstr "Tillad adgangskoder for API (nødvendig for ting som WordPress-mobil-app'en)"
+
+#: templates/admin/form.tpl.php:124
+msgid "Allow visitors to your site to register with Clef"
+msgstr ""
 
 #: includes/class.clef-login.php:314
 msgid "An error occurred when creating your new account: "
@@ -106,7 +110,7 @@ msgstr "Applikation-hemmelighed"
 msgid "Author"
 msgstr "Forfatter"
 
-#: includes/class.clef-admin.php:420
+#: includes/class.clef-admin.php:421
 msgid "Badge"
 msgstr "Badge"
 
@@ -205,11 +209,11 @@ msgstr "Brugertilpasning"
 msgid "Customize the Clef login screen"
 msgstr "Tilpas Clef-login-skærmen"
 
-#: includes/class.clef-admin.php:401
+#: includes/class.clef-admin.php:402
 msgid "Disable all passwords"
 msgstr "Deaktivér alle adgangskoder"
 
-#: includes/class.clef-admin.php:383
+#: includes/class.clef-admin.php:384
 msgid "Disable certain passwords"
 msgstr "Deaktivér visse adgangskoder"
 
@@ -222,7 +226,7 @@ msgstr "Deaktiver brug af samme indstillinger i hele netværket"
 msgid "Disable passwords"
 msgstr "Deaktivér adgangskoder"
 
-#: includes/class.clef-admin.php:380 templates/admin/form.tpl.php:22
+#: includes/class.clef-admin.php:381 templates/admin/form.tpl.php:22
 msgid "Disable passwords for Clef users"
 msgstr "Deaktivér adgangskoder for Clef-brugere"
 
@@ -239,7 +243,7 @@ msgstr "Deaktivér adgangskoder for alle brugere med roller højere eller lig me
 msgid "Disable passwords for custom roles"
 msgstr ""
 
-#: includes/class.clef-admin.php:420
+#: includes/class.clef-admin.php:421
 msgid "Disabled"
 msgstr "Deaktiveret"
 
@@ -271,7 +275,7 @@ msgstr "Email-invitationerer blevet sendt til dine brugere."
 msgid "Email preview"
 msgstr ""
 
-#: includes/class.clef-admin.php:409
+#: includes/class.clef-admin.php:410
 msgid "Embed Clef wave in the login form"
 msgstr "Indlejr Clef-bølgen i login-formen"
 
@@ -300,7 +304,7 @@ msgstr "Alle"
 msgid "Follow %s"
 msgstr "Følg %s"
 
-#: includes/class.clef-admin.php:408
+#: includes/class.clef-admin.php:409
 msgid "Form settings"
 msgstr "Form-indstillinger"
 
@@ -357,7 +361,7 @@ msgstr "Netværksindstillinger for individuelle websider"
 msgid "Install and Activate BruteProtect"
 msgstr "Installér og aktivér BruteProtect"
 
-#: includes/class.clef-admin.php:423 templates/js-templates/invite.tpl.php:21
+#: includes/class.clef-admin.php:424 templates/js-templates/invite.tpl.php:21
 msgid "Invite Users"
 msgstr "Invitér brugere"
 
@@ -376,11 +380,11 @@ msgid ""
 " they are browsing a secure site and helps us spread the word about Clef."
 msgstr "Lad dine besøgende vide, at du er beskyttet med Clef-login ved at tilføje et Clef-badge til sidefoden. </br> Dette lader dine besøgende vide, at de benytter en sikker webside, og det hjælper os med at sprede viden om Clef."
 
-#: includes/class.clef-admin.php:420
+#: includes/class.clef-admin.php:421
 msgid "Link"
 msgstr "Link"
 
-#: templates/admin/form.tpl.php:156
+#: templates/admin/form.tpl.php:160
 msgid "Log In"
 msgstr "Log ind"
 
@@ -414,7 +418,7 @@ msgstr "Bemærk: Hvis adgangskoder er deaktiveret for alle brugere og du afbryde
 msgid "Other plugins that Clef recommends for the security of your site."
 msgstr "Andre plugins Clef anbefaler for at holde sin side sikker."
 
-#: includes/class.clef-admin.php:411
+#: includes/class.clef-admin.php:412
 msgid "Override Settings"
 msgstr "Tilsidesættelsesindstillinger"
 
@@ -422,7 +426,7 @@ msgstr "Tilsidesættelsesindstillinger"
 msgid "Override URL"
 msgstr "Tilsidesættelses-URL"
 
-#: includes/class.clef-admin.php:412
+#: includes/class.clef-admin.php:413
 msgid "Override key"
 msgstr "Tilsidesættelseskode"
 
@@ -430,15 +434,15 @@ msgstr "Tilsidesættelseskode"
 msgid "Override network settings"
 msgstr "Tilsidesæt netværksindstillinger"
 
-#: templates/admin/form.tpl.php:138
+#: templates/admin/form.tpl.php:142
 msgid "Password"
 msgstr "Adgangskode"
 
-#: includes/class.clef-admin.php:379
+#: includes/class.clef-admin.php:380
 msgid "Password Settings"
 msgstr "Adgangskode-indstillinger"
 
-#: includes/class.clef-login.php:278 includes/class.clef-login.php:382
+#: includes/class.clef-login.php:278 includes/class.clef-login.php:380
 msgid "Passwords have been disabled for this user."
 msgstr "Adgangskoder er blevet deaktiveret for denne bruger."
 
@@ -453,7 +457,7 @@ msgstr "Forbind venligst med din Clef-konto før du deaktiverer adgangskoder. Du
 msgid "Preview of your customizations"
 msgstr "Forhåndsvisning af dine tilpasninger"
 
-#: templates/admin/form.tpl.php:131
+#: templates/admin/form.tpl.php:135
 msgid "Preview of your login form"
 msgstr "Forhåndsvisning af din login-boks"
 
@@ -461,11 +465,15 @@ msgstr "Forhåndsvisning af din login-boks"
 msgid "Preview of your support"
 msgstr "Forhåndsvisning af din støtte"
 
-#: templates/admin/form.tpl.php:154
+#: includes/class.clef-admin.php:378
+msgid "Register with Clef"
+msgstr ""
+
+#: templates/admin/form.tpl.php:158
 msgid "Remember Me"
 msgstr "Husk mig"
 
-#: includes/class.clef-admin.php:438 includes/class.clef-network-admin.php:91
+#: includes/class.clef-admin.php:439 includes/class.clef-network-admin.php:91
 msgid "Security check; nonce failed."
 msgstr "Sikkerhedscheck; nonce mislykkedes."
 
@@ -512,7 +520,7 @@ msgid ""
 " new one."
 msgstr "Beklager, dette invitationslink er udløbet. Kontakt din administrator for et nyt."
 
-#: includes/class.clef-login.php:375
+#: includes/class.clef-login.php:373
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr "YES! <b>Din Clef-konto er blevet forbundet!</b>"
 
@@ -524,11 +532,11 @@ msgstr "Forbindelsen til Clef-kontoen blev afbrudt."
 msgid "Super Administrator"
 msgstr "Super-administrator"
 
-#: includes/class.clef-admin.php:414 templates/admin/form.tpl.php:83
+#: includes/class.clef-admin.php:415 templates/admin/form.tpl.php:83
 msgid "Support Clef"
 msgstr "Støt Clef"
 
-#: includes/class.clef-admin.php:417
+#: includes/class.clef-admin.php:418
 msgid "Support Clef by automatically adding a link!"
 msgstr "Støt Clef ved automatisk at tilføje et link!"
 
@@ -579,7 +587,7 @@ msgstr "Der var et problem med at afbryde forbindelsen til din Clef-konto: <%= e
 msgid "There was a problem sending invites: <%= error %>."
 msgstr "Der var et problem med udsendelsen af invitationer: <%= error %>."
 
-#: includes/class.clef-login.php:324
+#: includes/class.clef-login.php:322
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
@@ -618,7 +626,7 @@ msgstr "Brug netværksindstillinger"
 msgid "Use network settings everywhere"
 msgstr "Brug netværksindstillingerne overalt"
 
-#: templates/admin/form.tpl.php:134
+#: templates/admin/form.tpl.php:138
 msgid "Username"
 msgstr "Brugernavn"
 
@@ -723,7 +731,7 @@ msgstr "tilføj sikkerhed"
 msgid "generate a secure override url for me"
 msgstr "generér en sikker tilsidesættelses-url til mig"
 
-#: includes/class.clef-admin.php:544
+#: includes/class.clef-admin.php:545
 msgid "invalid Clef ID"
 msgstr "ugyldigt Clef-ID"
 
@@ -735,11 +743,11 @@ msgstr "ugyldig OAuth-kode"
 msgid "invalid nonce"
 msgstr "ugyldig nonce"
 
-#: includes/class.clef-admin.php:489
+#: includes/class.clef-admin.php:490
 msgid "invalid role"
 msgstr "ugyldig rolle"
 
-#: templates/admin/form.tpl.php:152 templates/login.tpl.php:39
+#: templates/admin/form.tpl.php:156 templates/login.tpl.php:39
 msgid "log in with a password"
 msgstr "log ind med en adgangskode"
 
@@ -747,7 +755,7 @@ msgstr "log ind med en adgangskode"
 msgid "needs setup"
 msgstr "kræver opsætning"
 
-#: templates/admin/form.tpl.php:103 templates/admin/form.tpl.php:144
+#: templates/admin/form.tpl.php:103 templates/admin/form.tpl.php:148
 msgid "or"
 msgstr "eller"
 
@@ -755,18 +763,18 @@ msgstr "eller"
 msgid "show clef login"
 msgstr "vis Clef-login"
 
-#: includes/class.clef-admin.php:508
+#: includes/class.clef-admin.php:509
 msgid "there are no other users without Clef with this role or greater"
 msgstr "der er ingen brugere uden Clef med denne rolle eller højere"
 
-#: includes/class.clef-admin.php:530
+#: includes/class.clef-admin.php:531
 msgid ""
 "there was an error sending the invite email to all users. Copy and paste the"
 " preview email to your users and they'll be walked through a tutorial to "
 "connect with Clef"
 msgstr "der var en fejl under afsendelsen af invitations-email. Kopier, indsæt og send forhåndsvisningens-email'en til dine brugere, så de kan komme i gang med at bruge Clef"
 
-#: includes/class.clef-admin.php:532
+#: includes/class.clef-admin.php:533
 msgid "unable to send emails to the following users: "
 msgstr "kunne ikke sende emails til de følgende brugere:"
 
