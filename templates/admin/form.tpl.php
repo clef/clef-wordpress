@@ -120,6 +120,10 @@
                     <label for=""><?php _e("Application Secret", "clef"); ?></label>
                     <?php $form->getSection('clef_settings')->getField('app_secret')->render(); ?>
                 </div>
+                <div class="input-container">
+                    <label for=""><?php _e("Allow visitors to your site to register with Clef", "clef"); ?></label>
+                    <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
+                </div>
             </div>
         </div>
         <?php submit_button(); ?>

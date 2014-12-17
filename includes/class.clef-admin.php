@@ -56,6 +56,8 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
+        add_action('clef_onboarding_first_login', array($this, 'disable_passwords_for_clef_users'));
+
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
@@ -375,6 +377,7 @@ class ClefAdmin {
         $settings = $form->addSection('clef_settings', __('API Settings', 'clef'));
         $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
         $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $settings->addField('register', __('Register with Clef', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
         $pw_settings = $form->addSection('clef_password_settings', __('Password Settings', 'clef'), '');
         $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
@@ -472,6 +475,10 @@ class ClefAdmin {
             if (in_array($affiliate, $saved_affiliates)) return true;
         }
         return false;
+    }
+
+    public function disable_passwords_for_clef_users() {
+        $this->settings->disable_passwords_for_clef_users();
     }
 
     /**** BEGIN AJAX HANDLERS ******/
