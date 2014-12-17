@@ -136,7 +136,7 @@ class ClefLogin {
     }
 
     public function register_form() {
-        if ($this->settings->is_configured()) {
+        if ($this->settings->is_configured() && $this->settings->registration_with_clef_is_allowed()) {
             echo ClefUtils::render_template('register.tpl', array(
                 "redirect_url" => $this->get_callback_url(),
                 "app_id" => $this->settings->get( 'clef_settings_app_id' )
@@ -305,25 +305,23 @@ class ClefLogin {
                 $user = get_user_by('email', $email);
 
                 if (!$user) {
-                    if (get_option('users_can_register')) {
-                        // Users can register, so create a new user
-                        $id = wp_create_user($email, wp_generate_password(16, FALSE), $email);
-                        if(is_wp_error($id)) {
-                            return new WP_Error(
-                                'clef',
-                                __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
-                            );
-                        }
-                        $user = get_user_by('id', $id );
-                    } else {
-                        // Users cannot register so set things up to automatically
-                        // connect the user account if they log in with username & password
+                    if(!$this->settings->registration_with_clef_is_allowed()) {
                         $this->clef_id_to_connect = $clef_id;
                         return new WP_Error(
                             'clef',
                             __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'clef')
                         );
                     }
+
+                    // Users can register, so create a new user
+                    $id = wp_create_user($email, wp_generate_password(16, FALSE), $email);
+                    if(is_wp_error($id)) {
+                        return new WP_Error(
+                            'clef',
+                            __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
+                        );
+                    }
+                    $user = get_user_by('id', $id );
                 }
 
                 ClefUtils::associate_clef_id($clef_id, $user->ID);
