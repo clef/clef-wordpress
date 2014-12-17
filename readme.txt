@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, oauth, password, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.2.9
+Stable tag: 2.2.8
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
