@@ -305,23 +305,23 @@ class ClefLogin {
                 $user = get_user_by('email', $email);
 
                 if (!$user) {
-                    if(!$this->settings->registration_with_clef_is_allowed()) {
+                    if (get_option('users_can_register') && $this->settings->registration_with_clef_is_allowed()) {
+                        // Users can register, so create a new user
+                        $id = wp_create_user($email, wp_generate_password(16, FALSE), $email);
+                        if(is_wp_error($id)) {
+                            return new WP_Error(
+                                'clef',
+                                __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
+                            );
+                        }
+                        $user = get_user_by('id', $id );
+                    } else {
                         $this->clef_id_to_connect = $clef_id;
                         return new WP_Error(
                             'clef',
                             __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'clef')
                         );
                     }
-
-                    // Users can register, so create a new user
-                    $id = wp_create_user($email, wp_generate_password(16, FALSE), $email);
-                    if(is_wp_error($id)) {
-                        return new WP_Error(
-                            'clef',
-                            __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
-                        );
-                    }
-                    $user = get_user_by('id', $id );
                 }
 
                 ClefUtils::associate_clef_id($clef_id, $user->ID);
