@@ -2,6 +2,7 @@
 
 class ClefOnboarding {
     const ONBOARDING_KEY = "onboarding_data";
+    const FIRST_LOGIN_KEY = "has_logged_in";
     const LOGINS = 'clef_logins';
 
     private static $instance = null;
@@ -11,6 +12,7 @@ class ClefOnboarding {
     private function __construct($settings) {
         $this->settings = $settings;
         add_action('clef_login', array($this, 'mark_login_for_user_id'));
+        add_action('clef_login', array($this, 'do_first_login_action'));
     }
 
     public function get_data() {
@@ -54,6 +56,13 @@ class ClefOnboarding {
     public function get_login_count_for_current_user() {
         $user_id = get_current_user_id();
         return get_user_meta($user_id, self::LOGINS, true);
+    }
+
+    public function do_first_login_action() {
+        if (!$this->get_key(self::FIRST_LOGIN_KEY)) {
+            $this->set_key(self::FIRST_LOGIN_KEY, true);
+            do_action('clef_onboarding_first_login');
+        }
     }
 
     public function had_clef_before_onboarding() {

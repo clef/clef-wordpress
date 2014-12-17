@@ -202,6 +202,10 @@ class ClefInternalSettings {
         }
     }
 
+    public function disable_passwords_for_clef_users() {
+        return $this->set('clef_password_settings_disable_passwords', 1);
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;
