@@ -47,6 +47,7 @@ class ClefUserSettings {
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
                     "redirectURL" => $redirect_url,
                     "clefJSURL" => CLEF_JS_URL,
+                    "state" => ClefUtils::get_state(),
                     "nonces" => array(
                         "connectClef" => $connect_nonce,
                         "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
@@ -83,6 +84,8 @@ class ClefUserSettings {
             $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_POST('identifier'), $this->settings);
         } catch (LoginException $e) {
             return new WP_Error("bad_oauth_exchange", $e->getMessage());
+        } catch (ClefStateException $e)  {
+            return new WP_Error("bad_state_parameter", $e->getMessage());
         }
 
         $result = ClefUtils::associate_clef_id($info->id);
