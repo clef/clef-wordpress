@@ -159,6 +159,8 @@ class ClefUtils {
     }
 
     public static function exchange_oauth_code_for_info($code, $settings=null, $app_id=false, $app_secret=false) {
+        ClefUtils::verify_state();
+
         if ($settings) {
             if (!$app_id) $app_id = $settings->get( 'clef_settings_app_id' );
             if (!$app_secret) $app_secret = $settings->get( 'clef_settings_app_secret' );
@@ -238,5 +240,22 @@ class ClefUtils {
         return $custom_roles;
     }
 
+    public static function get_state() {
+        $session = ClefSession::start();
+        if ($session->get('state')) return $session->get('state');
+        $state = wp_generate_password(24, false);
+        $session->set('state', $state);
+        return $state;
+    }
+
+    public static function verify_state() {
+        $state = ClefUtils::isset_GET('state') ?ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
+        $session = ClefSession::start();
+        if ($session->get('state') && $state && $session->get('state') == $state) {
+            return true;
+        } else {
+            throw new ClefStateException('The state parameter is not verified. Please refresh your page and try again, you may be experiencing a CSRF attempt');
+        }
+    }
 }
 ?>

@@ -77,6 +77,7 @@
             connectData =
                 _wpnonce: @opts.nonces.connectClef
                 identifier: data.identifier
+                state: data.state
 
             failure = (msg) =>
                 @showMessage
@@ -207,7 +208,10 @@
             if params.code
                 opts.nonces.connectClef = params._wpnonce
                 @$el.find('.sub:not(.using-clef)').remove()
-                @connectClefAccount { identifier: params.code },
+                @connectClefAccount {
+                    identifier: params.code,
+                    state: params.state
+                },
                     () =>
                         window.location = @opts.redirectURL
 
@@ -220,12 +224,15 @@
             target = $('#clef-button-target')
                 .attr('data-app-id', @opts.appID)
                 .attr('data-redirect-url', @opts.redirectURL)
+                .attr('data-state', @opts.state)
             @button = new ClefButton el: $('#clef-button-target')[0]
             @button.render()
 
             @button.login = (data) =>
                 @button.overlayClose()
-                @connectClefAccount identifier: data.code,
+                stateMatch = data.redirectURL.match(/state=(.*?)(&|$)/)
+                state = stateMatch[1]
+                @connectClefAccount identifier: data.code, state: state,
                     (result) =>
                         @next()
                         @showMessage

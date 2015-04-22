@@ -1,6 +1,7 @@
 <?php
 
 class LoginException extends Exception {}
+class ClefStateException extends Exception {}
 
 class ClefCore {
     private static $instance = null;
