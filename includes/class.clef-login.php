@@ -290,6 +290,8 @@ class ClefLogin {
                 $info = ClefUtils::exchange_oauth_code_for_info($_REQUEST['code'], $this->settings);
             } catch (LoginException $e) {
                 return new WP_Error('clef', $e->getMessage());
+            } catch (ClefStateException $e) {
+                return new WP_Error('clef', $e->getMessage());
             }
 
             $clef_id = $info->id;

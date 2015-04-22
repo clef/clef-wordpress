@@ -205,7 +205,8 @@
       var connectData, failure;
       connectData = {
         _wpnonce: this.opts.nonces.connectClef,
-        identifier: data.identifier
+        identifier: data.identifier,
+        state: data.state
       };
       failure = (function(_this) {
         return function(msg) {
@@ -358,7 +359,8 @@
         opts.nonces.connectClef = params._wpnonce;
         this.$el.find('.sub:not(.using-clef)').remove();
         return this.connectClefAccount({
-          identifier: params.code
+          identifier: params.code,
+          state: params.state
         }, (function(_this) {
           return function() {
             return window.location = _this.opts.redirectURL;
@@ -375,16 +377,20 @@
       if (this.button) {
         return;
       }
-      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', this.opts.redirectURL);
+      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', this.opts.redirectURL).attr('data-state', this.opts.state);
       this.button = new ClefButton({
         el: $('#clef-button-target')[0]
       });
       this.button.render();
       return this.button.login = (function(_this) {
         return function(data) {
+          var state, stateMatch;
           _this.button.overlayClose();
+          stateMatch = data.redirectURL.match(/state=(.*?)(&|$)/);
+          state = stateMatch[1];
           _this.connectClefAccount({
-            identifier: data.code
+            identifier: data.code,
+            state: state
           }, function(result) {
             _this.next();
             return _this.showMessage({

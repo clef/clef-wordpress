@@ -39,7 +39,6 @@ class ClefAdmin {
     }
 
     public function initialize_hooks() {
-        add_action('admin_init', array($this, "other_install"));
         add_action('admin_init', array($this, "setup_plugin"));
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
@@ -192,28 +191,16 @@ class ClefAdmin {
             return;
         }
 
-        if ($this->bruteprotect_active() && get_site_option("bruteprotect_installed_clef")) {
-            $menu_name = 'bruteprotect-config';
-            add_submenu_page(
-                $menu_name,
-                __("Clef", "clef"),
-                __("Clef", "clef"),
-                "manage_options",
-                $this->settings->settings_path,
-                array($this, 'general_settings')
-            );
-        } else {
-            $clef_menu_title = $this->get_clef_menu_title();
-            $menu_name = $this->settings->settings_path;
-            add_menu_page(
-                __("Clef", 'clef'),
-                $clef_menu_title,
-                "manage_options",
-                $menu_name,
-                array($this, 'general_settings'),
-                CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
-            );
-        }
+        $clef_menu_title = $this->get_clef_menu_title();
+        $menu_name = $this->settings->settings_path;
+        add_menu_page(
+            __("Clef", 'clef'),
+            $clef_menu_title,
+            "manage_options",
+            $menu_name,
+            array($this, 'general_settings'),
+            CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
+        );
 
         if ($this->settings->is_configured()) {
             if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'clef');
@@ -225,18 +212,6 @@ class ClefAdmin {
                 'read',
                 self::CONNECT_CLEF_PAGE,
                 array($this, 'render_clef_user_settings')
-            );
-        }
-
-
-        if (!$this->bruteprotect_active() && !is_multisite() && !$this->affiliate_check())  {
-            add_submenu_page(
-                $menu_name,
-                __('Add Additional Security', 'clef'),
-                __('Additional Security', 'clef'),
-                'manage_options',
-                'clef_other_install',
-                array($this, 'other_install_settings')
             );
         }
     }
@@ -344,32 +319,6 @@ class ClefAdmin {
         echo ClefUtils::render_template('admin/multisite-disabled.tpl');
     }
 
-    public function other_install_settings() {
-        require_once 'lib/plugin-installer/installer.php';
-
-        $installer = new PluginInstaller( array( "name" => "BruteProtect", "slug" => "bruteprotect" ) );
-        // pass in current URL as base URL
-        $url = $installer->url();
-
-        echo ClefUtils::render_template('admin/other-install.tpl', array(
-            "url" => $url
-        ));
-    }
-
-    public function other_install() {
-        require_once 'lib/plugin-installer/installer.php';
-
-        $installer = new PluginInstaller( array(
-            "name" => "BruteProtect",
-            "slug" => "bruteprotect",
-            "redirect" => admin_url( "admin.php?page=bruteprotect-config" )
-        ) );
-
-        if ($installer->called()) {
-            $installer->install_and_activate();
-        }
-    }
-
     public function settings_form() {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
@@ -456,17 +405,9 @@ class ClefAdmin {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
 
-            if ($this->bruteprotect_active()) {
-                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('admin.php')));
-            } else {
-                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
-            }
+            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
             exit();
         }
-    }
-
-    public function bruteprotect_active() {
-        return in_array( 'bruteprotect/bruteprotect.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
     }
 
     public function affiliate_check() {
