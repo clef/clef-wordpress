@@ -240,11 +240,15 @@ class ClefUtils {
         return $custom_roles;
     }
 
+    public static function initialize_state() {
+        $session = ClefSession::start();
+        if ($session->get('state')) return;
+        $session->set('state', wp_generate_password(24, false));
+    }
+
     public static function get_state() {
         $session = ClefSession::start();
-        if ($session->get('state')) return $session->get('state');
-        $state = wp_generate_password(24, false);
-        $session->set('state', $state);
+        $state = $session->get('state');
         return $state;
     }
 
