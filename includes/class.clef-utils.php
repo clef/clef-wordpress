@@ -240,11 +240,15 @@ class ClefUtils {
         return $custom_roles;
     }
 
+    public static function initialize_state() {
+        $session = ClefSession::start();
+        if ($session->get('state')) return;
+        $session->set('state', wp_generate_password(24, false));
+    }
+
     public static function get_state() {
         $session = ClefSession::start();
-        if ($session->get('state')) return $session->get('state');
-        $state = wp_generate_password(24, false);
-        $session->set('state', $state);
+        $state = $session->get('state');
         return $state;
     }
 
@@ -252,6 +256,7 @@ class ClefUtils {
         $state = ClefUtils::isset_GET('state') ?ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
         $session = ClefSession::start();
         if ($session->get('state') && $state && $session->get('state') == $state) {
+            $session->set('state', null);
             return true;
         } else {
             throw new ClefStateException('The state parameter is not verified. Please refresh your page and try again, you may be experiencing a CSRF attempt');
