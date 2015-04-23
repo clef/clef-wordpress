@@ -88,12 +88,14 @@ class ClefLogin {
         return $redirect_to;
     }
 
-    public function validate_invite() {
+    public function validate_invite($message) {
         $invite_code = ClefUtils::isset_GET('clef_invite_code');
         $invite_email = base64_decode(ClefUtils::isset_GET('clef_invite_id'));
         $error = $this->validate_invite_code($invite_code, $invite_email);
         if ($invite_code && $error) {
             return '<div id="login_error">' . $error . '</div>';
+        } else {
+            return $message;
         }
     }
 
