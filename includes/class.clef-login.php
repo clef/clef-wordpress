@@ -12,7 +12,7 @@ class ClefLogin {
     }
 
     public function initialize_hooks() {
-        add_action('init', array($this, 'initialize_state_on_login_page'));
+        add_action('init', array($this, 'initialize_state'));
 
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
@@ -428,10 +428,9 @@ class ClefLogin {
         return $url;
     }
 
-    public function initialize_state_on_login_page() {
-        if (in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'))) {
-            ClefUtils::initialize_state();
-        }
+
+    public function initialize_state() {
+        ClefUtils::initialize_state();
     }
 
     public static function start($settings) {
