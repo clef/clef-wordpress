@@ -3,8 +3,8 @@ Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, iphone, log in, login, mfa, mobile, multi factor, oauth, password, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login
 Requires at least: 3.5
-Tested up to: 4.1.2
-Stable tag: 2.2.9.3
+Tested up to: 4.2.1
+Stable tag: 2.2.9.4
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -135,6 +135,10 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 3. The settings page for Clef.
 
 == Changelog ==
+
+= 2.2.9.4 =
+
+* Fix: login issue with websites that had custom login pages
 
 = 2.2.9.3 =
 

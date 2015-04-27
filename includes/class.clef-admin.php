@@ -39,7 +39,6 @@ class ClefAdmin {
     }
 
     public function initialize_hooks() {
-        add_action('admin_init', array($this, 'initialize_state'));
         add_action('admin_init', array($this, "setup_plugin"));
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
@@ -421,10 +420,6 @@ class ClefAdmin {
 
     public function disable_passwords_for_clef_users() {
         $this->settings->disable_passwords_for_clef_users();
-    }
-
-    public function initialize_state() {
-        ClefUtils::initialize_state();
     }
 
     /**** BEGIN AJAX HANDLERS ******/
