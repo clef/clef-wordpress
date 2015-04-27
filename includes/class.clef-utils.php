@@ -241,25 +241,34 @@ class ClefUtils {
     }
 
     public static function initialize_state() {
-        $session = ClefSession::start();
-        if ($session->get('state')) return;
-        $session->set('state', wp_generate_password(24, false));
+        if (!session_id()) @session_start();
+
+        if (isset($_SESSION['_clef_state']) && $_SESSION['_clef_state']) return;
+
+        return $_SESSION['_clef_state'] = wp_generate_password(24, false);
     }
 
     public static function get_state() {
-        $session = ClefSession::start();
-        $state = $session->get('state');
-        return $state;
+        if (!session_id()) @session_start();
+
+        if (!isset($_SESSION['_clef_state']) || !$_SESSION['_clef_state']) ClefUtils::initialize_state();
+
+        return $_SESSION['_clef_state'];
     }
 
     public static function verify_state() {
-        $state = ClefUtils::isset_GET('state') ?ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
-        $session = ClefSession::start();
-        if ($session->get('state') && $state && $session->get('state') == $state) {
-            $session->set('state', null);
+        if (!session_id()) @session_start();
+
+        $state = ClefUtils::isset_GET('state') ? ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
+
+        if ($state && isset($_SESSION['_clef_state']) && $_SESSION['_clef_state'] == $state) {
+
+            $_SESSION['state'] = null;
+            ClefUtils::initialize_state();
+
             return true;
         } else {
-            throw new ClefStateException('The state parameter is not verified. Please refresh your page and try again, you may be experiencing a CSRF attempt');
+            throw new ClefStateException('The state parameter is not verified. This may be due to this page being cached by another WordPress plugin. Please refresh your page and try again');
         }
     }
 }
