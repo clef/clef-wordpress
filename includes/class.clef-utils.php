@@ -240,32 +240,28 @@ class ClefUtils {
         return $custom_roles;
     }
 
-    public static function initialize_state() {
-        if (!session_id()) @session_start();
+    public static function initialize_state($override = false) {
+        if (!$override && isset($_COOKIE['_clef_state']) && $_COOKIE['_clef_state']) return;
 
-        if (isset($_SESSION['_clef_state']) && $_SESSION['_clef_state']) return;
+        $state = wp_generate_password(24, false);
+        setcookie('_clef_state', $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
 
-        return $_SESSION['_clef_state'] = wp_generate_password(24, false);
+        return $state;
     }
 
     public static function get_state() {
-        if (!session_id()) @session_start();
-
-        if (!isset($_SESSION['_clef_state']) || !$_SESSION['_clef_state']) ClefUtils::initialize_state();
-
-        return $_SESSION['_clef_state'];
+        if (!isset($$_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
+        return $_COOKIE['_clef_state'];
     }
 
     public static function verify_state() {
         if (!session_id()) @session_start();
 
-        $state = ClefUtils::isset_GET('state') ? ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
+        $request_state = ClefUtils::isset_GET('state') ? ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
+        $correct_state = ClefUtils::get_state();
 
-        if ($state && isset($_SESSION['_clef_state']) && $_SESSION['_clef_state'] == $state) {
-
-            $_SESSION['state'] = null;
-            ClefUtils::initialize_state();
-
+        if ($request_state && $correct_state && $correct_state == $request_state) {
+            ClefUtils::initialize_state(true);
             return true;
         } else {
             throw new ClefStateException('The state parameter is not verified. This may be due to this page being cached by another WordPress plugin. Please refresh your page and try again');
