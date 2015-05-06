@@ -244,7 +244,8 @@ class ClefUtils {
         if (!$override && isset($_COOKIE['_clef_state']) && $_COOKIE['_clef_state']) return;
 
         $state = wp_generate_password(24, false);
-        setcookie('_clef_state', $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
+        @setcookie('_clef_state', $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
+        $_COOKIE['_clef_state'] = $state;
 
         return $state;
     }
@@ -255,8 +256,6 @@ class ClefUtils {
     }
 
     public static function verify_state() {
-        if (!session_id()) @session_start();
-
         $request_state = ClefUtils::isset_GET('state') ? ClefUtils::isset_GET('state') : ClefUtils::isset_POST('state');
         $correct_state = ClefUtils::get_state();
 
