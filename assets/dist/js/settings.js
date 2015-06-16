@@ -411,7 +411,6 @@
 
 (function($) {
   var AppView, FormVisualization, SettingsModel, SettingsView;
-  Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     el: $('#clef-settings-container'),
     initialize: function(opts) {
