@@ -1,6 +1,12 @@
 <div id="connect-clef-account" class="wp-core-ui">
     <?php include CLEF_TEMPLATE_PATH . 'admin/tutorial.tpl.php'; ?>
 
+    <?php if ($connect_error) { ?>
+        <div class="error">
+            <p><?php echo $connect_error->get_error_message() ?></p>
+        </div>
+    <?php }?>
+
     <div class="settings-section disconnect-clef">
         <h3><?php _e("Disconnect your Clef account", "clef"); ?></h3>
         <p><?php _e("You currently have a Clef account connected to this WordPress user. To disconnect this Clef account, click the button below.", "clef"); ?></p>
