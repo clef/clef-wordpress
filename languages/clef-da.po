@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-06-15 10:14-0700\n"
-"PO-Revision-Date: 2015-06-15 17:14+0000\n"
+"POT-Creation-Date: 2015-06-17 17:20-0700\n"
+"PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/wpclef/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -232,7 +232,7 @@ msgstr "Deaktiveret"
 msgid "Disconnect Clef account"
 msgstr "Afbryd forbindelse til Clef-konto"
 
-#: templates/user_settings.tpl.php:5 templates/user_settings.tpl.php:8
+#: templates/user_settings.tpl.php:11 templates/user_settings.tpl.php:14
 msgid "Disconnect your Clef account"
 msgstr "Afbryd forbindelsen til din Clef-konto"
 
@@ -385,7 +385,7 @@ msgstr "Besked til login-side"
 msgid "No thanks!"
 msgstr "Nej tak!"
 
-#: templates/user_settings.tpl.php:7
+#: templates/user_settings.tpl.php:13
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
@@ -645,7 +645,7 @@ msgid ""
 "would like to customize how Clef works on each site."
 msgstr "Du kan lade individuelle websider styre deres egen Clef-konfiguration, hvis du ønsker at tilpasse, hvordan Clef virker på hver webside."
 
-#: templates/user_settings.tpl.php:6
+#: templates/user_settings.tpl.php:12
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
@@ -708,10 +708,6 @@ msgstr "generér en sikker tilsidesættelses-url til mig"
 msgid "invalid Clef ID"
 msgstr "ugyldigt Clef-ID"
 
-#: includes/class.clef-user-settings.php:80
-msgid "invalid OAuth Code"
-msgstr "ugyldig OAuth-kode"
-
 #: includes/class.clef-ajax.php:55
 msgid "invalid nonce"
 msgstr "ugyldig nonce"
@@ -755,7 +751,7 @@ msgstr "kunne ikke sende emails til de følgende brugere:"
 msgid "user does not have correct capabilities"
 msgstr "brugeren har ikke korrekte kapaciteter"
 
-#: includes/class.clef-user-settings.php:107
+#: includes/class.clef-user-settings.php:100
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "

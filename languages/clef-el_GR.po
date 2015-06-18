@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-06-15 10:14-0700\n"
-"PO-Revision-Date: 2015-06-15 17:15+0000\n"
+"POT-Creation-Date: 2015-06-17 17:20-0700\n"
+"PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/projects/p/wpclef/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgstr ""
 msgid "Disconnect Clef account"
 msgstr ""
 
-#: templates/user_settings.tpl.php:5 templates/user_settings.tpl.php:8
+#: templates/user_settings.tpl.php:11 templates/user_settings.tpl.php:14
 msgid "Disconnect your Clef account"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 msgid "No thanks!"
 msgstr ""
 
-#: templates/user_settings.tpl.php:7
+#: templates/user_settings.tpl.php:13
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
@@ -643,7 +643,7 @@ msgid ""
 "would like to customize how Clef works on each site."
 msgstr ""
 
-#: templates/user_settings.tpl.php:6
+#: templates/user_settings.tpl.php:12
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
@@ -706,10 +706,6 @@ msgstr ""
 msgid "invalid Clef ID"
 msgstr ""
 
-#: includes/class.clef-user-settings.php:80
-msgid "invalid OAuth Code"
-msgstr ""
-
 #: includes/class.clef-ajax.php:55
 msgid "invalid nonce"
 msgstr ""
@@ -753,7 +749,7 @@ msgstr ""
 msgid "user does not have correct capabilities"
 msgstr ""
 
-#: includes/class.clef-user-settings.php:107
+#: includes/class.clef-user-settings.php:100
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "

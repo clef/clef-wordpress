@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-06-15 10:14-0700\n"
-"PO-Revision-Date: 2015-06-15 17:14+0000\n"
+"POT-Creation-Date: 2015-06-17 17:20-0700\n"
+"PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/wpclef/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -235,7 +235,7 @@ msgstr "Désactivé"
 msgid "Disconnect Clef account"
 msgstr "Se déconnecter de son compte Clef"
 
-#: templates/user_settings.tpl.php:5 templates/user_settings.tpl.php:8
+#: templates/user_settings.tpl.php:11 templates/user_settings.tpl.php:14
 msgid "Disconnect your Clef account"
 msgstr "Vous déconnecter de votre compte Clef"
 
@@ -388,7 +388,7 @@ msgstr "Message pour la page de connexion"
 msgid "No thanks!"
 msgstr "Non merci !"
 
-#: templates/user_settings.tpl.php:7
+#: templates/user_settings.tpl.php:13
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
@@ -648,7 +648,7 @@ msgid ""
 "would like to customize how Clef works on each site."
 msgstr "Vous pouvez laisser les sites gérer leur propre configuration de Clef si vous préférez personnaliser le fonctionnement de Clef sur chaque site."
 
-#: templates/user_settings.tpl.php:6
+#: templates/user_settings.tpl.php:12
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
@@ -711,10 +711,6 @@ msgstr "Générer une URL de façon à permettre l'utilisation de mots de passe.
 msgid "invalid Clef ID"
 msgstr "ID de Clef invalide"
 
-#: includes/class.clef-user-settings.php:80
-msgid "invalid OAuth Code"
-msgstr "Code OAuth invalide"
-
 #: includes/class.clef-ajax.php:55
 msgid "invalid nonce"
 msgstr "invalide pour l'instant"
@@ -758,7 +754,7 @@ msgstr ""
 msgid "user does not have correct capabilities"
 msgstr "L'utilisateur n'a pas les droits nécessaires"
 
-#: includes/class.clef-user-settings.php:107
+#: includes/class.clef-user-settings.php:100
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
