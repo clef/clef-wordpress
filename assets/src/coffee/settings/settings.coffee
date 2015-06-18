@@ -1,6 +1,4 @@
 (($) ->
-    Backbone.emulateHTTP = true
-
     AppView = Backbone.View.extend
         el: $('#clef-settings-container')
         initialize: (@opts) ->

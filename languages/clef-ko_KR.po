@@ -10,12 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2015-06-17 17:20-0700\n"
 "PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
-"Language-Team: Latvian (http://www.transifex.com/projects/p/wpclef/language/lv/)\n"
+"Language-Team: Korean (Korea) (http://www.transifex.com/projects/p/wpclef/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: lv\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: includes/class.clef-admin.php:482
 msgid ""
@@ -86,11 +86,11 @@ msgstr ""
 
 #: includes/class.clef-admin.php:327 templates/admin/form.tpl.php:116
 msgid "Application ID"
-msgstr "Aplikācijas ID"
+msgstr ""
 
 #: includes/class.clef-admin.php:328 templates/admin/form.tpl.php:120
 msgid "Application Secret"
-msgstr "Aplikācijas noslēpums"
+msgstr ""
 
 #: templates/js-templates/invite.tpl.php:15
 msgid "Author"
@@ -143,7 +143,7 @@ msgstr ""
 
 #: includes/class.clef-admin.php:207
 msgid "Connect Clef account"
-msgstr ""
+msgstr "Clef 계정 접속"
 
 #: templates/admin/tutorial.tpl.php:38
 msgid "Connect your Clef account"

@@ -351,57 +351,26 @@
   });
   ConnectTutorialView = TutorialView.extend({
     connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code",
-    initialize: function(opts) {
-      var params;
-      this.constructor.__super__.initialize.call(this, opts);
-      params = ClefUtils.getURLParams();
-      if (params.code) {
-        opts.nonces.connectClef = params._wpnonce;
-        this.$el.find('.sub:not(.using-clef)').remove();
-        return this.connectClefAccount({
-          identifier: params.code,
-          state: params.state
-        }, (function(_this) {
-          return function() {
-            return window.location = _this.opts.redirectURL;
-          };
-        })(this));
-      }
-    },
     render: function() {
       this.addButton();
       return this.constructor.__super__.render.call(this);
     },
     addButton: function() {
-      var target;
+      var redirectURL, target;
       if (this.button) {
         return;
       }
-      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', this.opts.redirectURL).attr('data-state', this.opts.state);
+      redirectURL = window.location.href;
+      if (/\?/.test(redirectURL)) {
+        redirectURL += "&connect_clef_account=1";
+      } else {
+        redirectURL += "?connect_clef_account=1";
+      }
+      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', redirectURL).attr('data-state', this.opts.state);
       this.button = new ClefButton({
         el: $('#clef-button-target')[0]
       });
-      this.button.render();
-      return this.button.login = (function(_this) {
-        return function(data) {
-          var state, stateMatch;
-          _this.button.overlayClose();
-          stateMatch = data.redirectURL.match(/state=(.*?)(&|$)/);
-          state = stateMatch[1];
-          _this.connectClefAccount({
-            identifier: data.code,
-            state: state
-          }, function(result) {
-            _this.next();
-            return _this.showMessage({
-              message: clefTranslations.messages.success.connect,
-              type: "updated",
-              removeNext: true
-            });
-          });
-          return void 0;
-        };
-      })(this);
+      return this.button.render();
     }
   });
   this.TutorialView = TutorialView;
@@ -411,7 +380,6 @@
 
 (function($) {
   var AppView, FormVisualization, SettingsModel, SettingsView;
-  Backbone.emulateHTTP = true;
   AppView = Backbone.View.extend({
     el: $('#clef-settings-container'),
     initialize: function(opts) {

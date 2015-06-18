@@ -201,46 +201,24 @@
 
     ConnectTutorialView = TutorialView.extend
         connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code"
-        initialize: (opts) ->
-            @constructor.__super__.initialize.call this, opts
-
-            params = ClefUtils.getURLParams()
-            if params.code
-                opts.nonces.connectClef = params._wpnonce
-                @$el.find('.sub:not(.using-clef)').remove()
-                @connectClefAccount {
-                    identifier: params.code,
-                    state: params.state
-                },
-                    () =>
-                        window.location = @opts.redirectURL
-
         render: ->
             @addButton()
             @constructor.__super__.render.call this
-
         addButton: ->
             return if @button
+
+            redirectURL = window.location.href
+            if /\?/.test redirectURL
+                redirectURL += "&connect_clef_account=1"
+            else
+                redirectURL += "?connect_clef_account=1"
+
             target = $('#clef-button-target')
                 .attr('data-app-id', @opts.appID)
-                .attr('data-redirect-url', @opts.redirectURL)
+                .attr('data-redirect-url', redirectURL)
                 .attr('data-state', @opts.state)
             @button = new ClefButton el: $('#clef-button-target')[0]
             @button.render()
-
-            @button.login = (data) =>
-                @button.overlayClose()
-                stateMatch = data.redirectURL.match(/state=(.*?)(&|$)/)
-                state = stateMatch[1]
-                @connectClefAccount identifier: data.code, state: state,
-                    (result) =>
-                        @next()
-                        @showMessage
-                            message: clefTranslations.messages.success.connect,
-                            type: "updated"
-                            removeNext: true
-
-                return undefined
 
     this.TutorialView = TutorialView
     this.SetupTutorialView = SetupTutorialView

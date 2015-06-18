@@ -10,9 +10,12 @@ class ClefUserSettings {
     protected function __construct($settings) {
         $this->settings = $settings;
         $this->initialize_hooks();
+        $this->connect_error = null;
     }
 
     public function initialize_hooks() {
+        add_action('init', array($this,'connect_clef_account'));
+
         add_action('clef_render_user_settings', array($this, 'render'));
         add_action('wp_footer', array($this, 'print_assets'));
 
@@ -33,23 +36,16 @@ class ClefUserSettings {
     }
 
     public function render() {
-        $connect_nonce = wp_create_nonce(self::CONNECT_CLEF_OAUTH_ACTION);
-        $redirect_url = add_query_arg(
-            array('_wpnonce' => $connect_nonce, 'connect' => true),
-            admin_url("/admin.php?page=" . $this->settings->settings_path)
-        );
-
         echo ClefUtils::render_template(
             'user_settings.tpl',
             array(
+                "connect_error" => $this->connect_error,
                 "options" => array(
                     "connected" => ClefUtils::user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
-                    "redirectURL" => $redirect_url,
                     "clefJSURL" => CLEF_JS_URL,
                     "state" => ClefUtils::get_state(),
                     "nonces" => array(
-                        "connectClef" => $connect_nonce,
                         "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
                     )
                 )
@@ -75,28 +71,25 @@ class ClefUserSettings {
         }
     }
 
-    public function ajax_connect_clef_account_with_oauth_code() {
-        if (!ClefUtils::isset_POST('identifier')) {
-            return new WP_Error("invalid_oauth_code", __("invalid OAuth Code", "clef"));
-        }
+    public function connect_clef_account() {
+        if (ClefUtils::isset_GET('connect_clef_account') && ClefUtils::isset_get('code')) {
+            try {
+                $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_GET('code'), $this->settings);
 
-        try {
-            $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_POST('identifier'), $this->settings);
-        } catch (LoginException $e) {
-            return new WP_Error("bad_oauth_exchange", $e->getMessage());
-        } catch (ClefStateException $e)  {
-            return new WP_Error("bad_state_parameter", $e->getMessage());
-        }
+                $result = ClefUtils::associate_clef_id($info->id);
 
-        $result = ClefUtils::associate_clef_id($info->id);
-
-        if (is_wp_error($result)) {
-            return $result;
-        } else {
-            $session = ClefSession::start();
-            $session->set('logged_in_at', time());
-
-            return array("success" => true);
+                if (is_wp_error($result)) {
+                    $this->connect_error = $result;
+                } else {
+                    $session = ClefSession::start();
+                    $session->set('logged_in_at', time());
+                    return;
+                }
+            } catch (LoginException $e) {
+                $this->connect_error =  new WP_Error("bad_oauth_exchange", $e->getMessage());
+            } catch (ClefStateException $e)  {
+                $this->connect_error =  new WP_Error("bad_state_parameter", $e->getMessage());
+            }
         }
     }
 
