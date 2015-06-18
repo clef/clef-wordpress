@@ -71,7 +71,7 @@ class ClefUserSettings {
     }
 
     public function connect_clef_account() {
-        if (ClefUtils::isset_GET('page') == 'connect_clef_account' && ClefUtils::isset_get('code')) {
+        if (ClefUtils::isset_GET('connect_clef_account') && ClefUtils::isset_get('code')) {
 
             try {
                 $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_GET('code'), $this->settings);
