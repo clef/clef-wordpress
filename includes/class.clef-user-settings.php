@@ -44,7 +44,8 @@ class ClefUserSettings {
                     "connected" => ClefUtils::user_has_clef(),
                     "appID" => $this->settings->get( 'clef_settings_app_id' ),
                     "clefJSURL" => CLEF_JS_URL,
-                    "state" => ClefUtils::get_state(),                    "nonces" => array(
+                    "state" => ClefUtils::get_state(),
+                    "nonces" => array(
                         "disconnectClef" => wp_create_nonce(self::DISCONNECT_CLEF_ACTION)
                     )
                 )
@@ -72,7 +73,6 @@ class ClefUserSettings {
 
     public function connect_clef_account() {
         if (ClefUtils::isset_GET('connect_clef_account') && ClefUtils::isset_get('code')) {
-
             try {
                 $info = ClefUtils::exchange_oauth_code_for_info(ClefUtils::isset_GET('code'), $this->settings);
 
