@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-06-15 10:14-0700\n"
-"PO-Revision-Date: 2015-06-15 17:14+0000\n"
+"POT-Creation-Date: 2015-06-17 17:20-0700\n"
+"PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/wpclef/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "Uitgeschakeld"
 msgid "Disconnect Clef account"
 msgstr "Verbreek verbinding Clef account"
 
-#: templates/user_settings.tpl.php:5 templates/user_settings.tpl.php:8
+#: templates/user_settings.tpl.php:11 templates/user_settings.tpl.php:14
 msgid "Disconnect your Clef account"
 msgstr "Verbreek de verbinding met je Clef account"
 
@@ -384,7 +384,7 @@ msgstr "Bericht voor de login pagina"
 msgid "No thanks!"
 msgstr "Nee bedankt!"
 
-#: templates/user_settings.tpl.php:7
+#: templates/user_settings.tpl.php:13
 msgid ""
 "Note: if passwords are disabled for all users and you disconnect your Clef "
 "account, you won't be able to log in."
@@ -644,7 +644,7 @@ msgid ""
 "would like to customize how Clef works on each site."
 msgstr "Je kunt individuele sites hun eigen Clef instellingen laten beheren als je op iedere site wilt aanpassen hoe Clef daar werkt."
 
-#: templates/user_settings.tpl.php:6
+#: templates/user_settings.tpl.php:12
 msgid ""
 "You currently have a Clef account connected to this WordPress user. To "
 "disconnect this Clef account, click the button below."
@@ -707,10 +707,6 @@ msgstr "genereer een veilige overrule url voor me"
 msgid "invalid Clef ID"
 msgstr "ongeldig Clef ID"
 
-#: includes/class.clef-user-settings.php:80
-msgid "invalid OAuth Code"
-msgstr "ongeldige OAuth Code"
-
 #: includes/class.clef-ajax.php:55
 msgid "invalid nonce"
 msgstr "ongeldige nonce"
@@ -754,7 +750,7 @@ msgstr "niet in staat email te versturen naar de volgende gebruikers:"
 msgid "user does not have correct capabilities"
 msgstr "gebruiker heeft  niet de juiste verantwoordelijkheden"
 
-#: includes/class.clef-user-settings.php:107
+#: includes/class.clef-user-settings.php:100
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
