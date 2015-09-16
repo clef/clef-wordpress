@@ -13,7 +13,7 @@
     }
 }
 
-.clef-login-form:not(.login-action-register):not(.login-action-lostpassword) {
+.clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp) {
     .clef-login-container {
         .clef-button-container {
             margin-bottom: 30px;
