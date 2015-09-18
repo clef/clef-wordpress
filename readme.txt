@@ -126,11 +126,10 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 
 == Screenshots ==
 
-1. WordPress login form with passwords disabled.
-
-2. Clef setup wizard.
-
-3. The settings page for Clef.
+1. Logging into WordPress with Clef
+2. Passwords disabled on wp-login.php
+3. Clef setup wizard
+4. Clef settings page
 
 == Changelog ==
 
