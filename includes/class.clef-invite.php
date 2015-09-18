@@ -28,23 +28,23 @@ class ClefInvite {
     }
 
     function get_link() {
-        return ($this->login_url . 
-            '?clef_invite_code=' . $this->code . 
-            '&clef_invite_id=' . urlencode(base64_encode($this->user_email))); 
+        return ($this->login_url .
+            '?clef_invite_code=' . $this->code .
+            '&clef_invite_id=' . urlencode(base64_encode($this->user_email)));
     }
 
     function send_email($from_email) {
         if (empty($this->user_email)) return true;
-        
+
         $invite_link = $this->get_link();
 
-        $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "clef");
+        $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "wpclef");
         $message = ClefUtils::render_template(
-            'invite_email.tpl', 
+            'invite_email.tpl',
             array(
                 "invite_link" =>  $this->get_link(),
                 "site_name" => $this->site_name
-            ), 
+            ),
             false
         );
         $headers = "From: WordPress <".$from_email."> \r\n";

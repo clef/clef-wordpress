@@ -12,7 +12,7 @@ class Clef {
         }
 
         // Load translations
-        load_plugin_textdomain( 'clef', false, dirname(plugin_basename(__FILE__)) .'/languages' );
+        load_plugin_textdomain( 'wpclef', false, dirname(plugin_basename(__FILE__)) .'/languages' );
 
         require_once(CLEF_PATH . 'includes/class.clef-core.php');
         add_action('plugins_loaded', array('ClefCore', 'manage_wp_fix'), 0);
