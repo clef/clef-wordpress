@@ -404,9 +404,11 @@ class ClefAdmin {
     public function setup_plugin() {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
-
-            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
-            exit();
+            
+            if (!$this->settings->is_configured()) {
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
+                exit();
+            }
         }
     }
 
