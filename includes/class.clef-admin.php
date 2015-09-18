@@ -55,8 +55,6 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
-        add_action('clef_onboarding_first_login', array($this, 'disable_passwords_for_clef_users'));
-
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
@@ -270,7 +268,7 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
-                'logoutHook' => home_url('/'),
+                'logoutHook' => wp_login_url(),
                 'source' => 'wordpress',
                 'affiliates' => apply_filters('clef_add_affiliate', array())
             ),
@@ -404,9 +402,11 @@ class ClefAdmin {
     public function setup_plugin() {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
-
-            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
-            exit();
+            
+            if (!$this->settings->is_configured()) {
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
+                exit();
+            }
         }
     }
 
@@ -418,9 +418,6 @@ class ClefAdmin {
         return false;
     }
 
-    public function disable_passwords_for_clef_users() {
-        $this->settings->disable_passwords_for_clef_users();
-    }
 
     /**** BEGIN AJAX HANDLERS ******/
 
