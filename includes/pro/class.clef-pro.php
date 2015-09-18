@@ -18,15 +18,15 @@ class ClefPro  {
     }
 
     public function add_settings($form) {
-        $customization = $form->addSection('customization', __('Customization', 'clef'));
+        $customization = $form->addSection('customization', __('Customization', 'wpclef'));
         $customization->addField(
             'message',
-            __('Message for login page', 'clef'),
+            __('Message for login page', 'wpclef'),
             Settings_API_Util_Field::TYPE_TEXTAREA
         );
         $customization->addField(
             'logo',
-            __('Logo for login page', 'clef'),
+            __('Logo for login page', 'wpclef'),
             Settings_API_Util_Field::TYPE_HIDDEN
         );
     }

@@ -97,7 +97,7 @@ class ClefUserSettings {
         $user = wp_get_current_user();
         $passwords_disabled = $this->settings->passwords_are_disabled_for_user($user);
         if (current_user_can('manage_options') && $passwords_disabled) {
-            return new WP_Error('passwords_disabled', __("your passwords are currently disabled. <br/> If you disconnect your Clef account, you won't be able to log in. Please enable passwords for yourself before disconnecting your Clef account", 'clef'));
+            return new WP_Error('passwords_disabled', __("your passwords are currently disabled. <br/> If you disconnect your Clef account, you won't be able to log in. Please enable passwords for yourself before disconnecting your Clef account", 'wpclef'));
         }
         ClefUtils::dissociate_clef_id();
         return array("success" => true);

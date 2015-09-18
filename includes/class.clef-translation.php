@@ -10,20 +10,20 @@ class ClefTranslation {
     public static function javascript() {
         return array(
             "messages" => array(
-                "error" => array( 
-                    "connect" => __("There was a problem automatically connecting your Clef account: <%= error %>. Please refresh and try again.", "clef"),
-                    "create" => __("There was a problem creating a new Clef application for your WordPress site: <%= error %>. Please refresh and try again. If the issue, persists, email <a href='mailto:support@getclef.com'>support@getclef.com</a>.", "clef"),
-                    "invite" => __("There was a problem sending invites: <%= error %>.", "clef"),
-                    "generic" => __("Something wrong, please refresh and try again.", "clef"),
-                    "disconnect" => __("There was a problem disconnecting your Clef account: <%= error %>.", "clef")
+                "error" => array(
+                    "connect" => __("There was a problem automatically connecting your Clef account: <%= error %>. Please refresh and try again.", "wpclef"),
+                    "create" => __("There was a problem creating a new Clef application for your WordPress site: <%= error %>. Please refresh and try again. If the issue, persists, email <a href='mailto:support@getclef.com'>support@getclef.com</a>.", "wpclef"),
+                    "invite" => __("There was a problem sending invites: <%= error %>.", "wpclef"),
+                    "generic" => __("Something wrong, please refresh and try again.", "wpclef"),
+                    "disconnect" => __("There was a problem disconnecting your Clef account: <%= error %>.", "wpclef")
                 ),
                 "success" => array(
-                    "connect" => __("You've successfully connected your account with Clef", "clef"),
-                    "configured" => __("You're all set up!", "clef"),
-                    "invite" => __("Email invitations have been sent to your users.", "clef"),
-                    "disconnect" => __("Successfully disconnected Clef account.", "clef")
+                    "connect" => __("You've successfully connected your account with Clef", "wpclef"),
+                    "configured" => __("You're all set up!", "wpclef"),
+                    "invite" => __("Email invitations have been sent to your users.", "wpclef"),
+                    "disconnect" => __("Successfully disconnected Clef account.", "wpclef")
                 ),
-                "saving" =>  __("Settings are being saved. Are you sure you want to navigate away?", "clef")
+                "saving" =>  __("Settings are being saved. Are you sure you want to navigate away?", "wpclef")
             )
         );
 

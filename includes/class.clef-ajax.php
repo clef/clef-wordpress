@@ -19,15 +19,15 @@ class ClefAjax {
     public function add_action($action, $function_to_add, $opts = array()) {
         $opts = array_merge($this->defaults, $opts);
 
-        $this->hook_map[$action] = array( 
+        $this->hook_map[$action] = array(
             "function" => $function_to_add,
             "options" => $opts
         );
 
         add_action(
-            'wp_ajax_' . $action, 
+            'wp_ajax_' . $action,
             array($this, "handle_ajax_request"),
-            $opts['priority'], 
+            $opts['priority'],
             $opts['accepted_args']
         );
     }
@@ -52,14 +52,14 @@ class ClefAjax {
 
         if ($options['nonce'] && (!isset($data['_wpnonce']) || !wp_verify_nonce($data['_wpnonce'], $action))) {
             $this->send_json_error(
-                array("error" => __("invalid nonce", "clef")),
+                array("error" => __("invalid nonce", "wpclef")),
                 $send_non_200_error
             );
         }
 
         if (!current_user_can($options['capability'])) {
             $this->send_json_error(
-                array("error" => __("user does not have correct capabilities", "clef")),
+                array("error" => __("user does not have correct capabilities", "wpclef")),
                 $send_non_200_error
             );
         }

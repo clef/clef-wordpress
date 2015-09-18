@@ -36,15 +36,15 @@
     </noscript>
 
     <?php if (!$passwords_disabled) { ?>
-    <a class="close-overlay overlay-text" href="?clefup=true"><?php _e('log in with a password', 'clef'); ?></a>
-    <a class="open-overlay overlay-text" href="?clefup=false"><?php _e('show clef login', 'clef'); ?></a>
+    <a class="close-overlay overlay-text" href="?clefup=true"><?php _e('log in with a password', 'wpclef'); ?></a>
+    <a class="open-overlay overlay-text" href="?clefup=false"><?php _e('show clef login', 'wpclef'); ?></a>
     <?php } ?>
 
     <div class="overlay-info closed">
         <div class="open">?</div>
         <div class="info">
-            <p><?php _e('<a href="http://getclef.com">Clef</a> lets you securely log in with your phone.', 'clef'); ?></p>
-            <p><?php _e('To change the way the login form displays with Clef, log in and go to the Clef settings page.', 'clef'); ?></p>
+            <p><?php _e('<a href="http://getclef.com">Clef</a> lets you securely log in with your phone.', 'wpclef'); ?></p>
+            <p><?php _e('To change the way the login form displays with Clef, log in and go to the Clef settings page.', 'wpclef'); ?></p>
         </div>
     </div>
 

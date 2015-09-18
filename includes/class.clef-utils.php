@@ -143,7 +143,7 @@ class ClefUtils {
         if (!empty($user))  {
             return new WP_Error(
                 'clef_id_already_associated',
-                __("The Clef account you're trying to connect is already associated to a different WordPress account", "clef")
+                __("The Clef account you're trying to connect is already associated to a different WordPress account", "wpclef")
             );
         }
 
@@ -175,13 +175,13 @@ class ClefUtils {
         $response = wp_remote_post( CLEF_API_BASE . 'authorize', array( 'method'=> 'POST', 'body' => $args, 'timeout' => 20 ) );
 
         if ( is_wp_error($response)  ) {
-            throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
+            throw new LoginException(__("Something went wrong: ", 'wpclef' ) . $response->get_error_message());
         }
 
         $body = json_decode( $response['body'] );
 
         if ( !isset($body->success) || $body->success != 1 ) {
-            throw new LoginException(__( 'Error retrieving Clef access token: ', 'clef') . $body->error);
+            throw new LoginException(__('Error retrieving Clef access token: ', 'wpclef') . $body->error);
         }
 
         $access_token = $body->access_token;
@@ -189,13 +189,13 @@ class ClefUtils {
         // Get info
         $response = wp_remote_get( CLEF_API_BASE . "info?access_token={$access_token}" );
         if ( is_wp_error($response)  ) {
-            throw new LoginException(__( "Something went wrong: ", 'clef' ) . $response->get_error_message());
+            throw new LoginException(__("Something went wrong: ", 'wpclef' ) . $response->get_error_message());
         }
 
         $body = json_decode( $response['body'] );
 
         if ( !isset($body->success) || $body->success != 1 ) {
-            throw new LoginException(__('Error retrieving Clef user data: ', 'clef')  . $body->error);
+            throw new LoginException(__('Error retrieving Clef user data: ', 'wpclef')  . $body->error);
         }
 
         return $body->info;
