@@ -66,7 +66,7 @@
                <?php
                	$opts = get_option( 'wpclef' );
                	$css_hide = !empty( $opts['clef_override_settings_key'] ) ? '' : ' hidden';
-               	$url = !empty( $opts['clef_override_settings_key'] ) ? esc_url( wp_login_url() . '?override=' . $opts['clef_override_settings_key'] ) : '#error';
+               	$url = ClefInternalSettings::get_instance()->get_override_link();
                ?>
                <div class="override-buttons<?php echo $css_hide; ?>">
                    <a name="override link" class="button button-primary button-hero" href="<?php echo $url; ?>"><?php bloginfo('name', 'display'); ?> <?php _e("Override URL", "wpclef"); ?></a>

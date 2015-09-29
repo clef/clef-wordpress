@@ -404,7 +404,7 @@ class ClefAdmin {
     public function setup_plugin() {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
-            
+
             if (!$this->settings->is_configured()) {
                 wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
                 exit();
@@ -420,8 +420,9 @@ class ClefAdmin {
         return false;
     }
 
-    public function disable_passwords_for_clef_users() {
+    public function disable_passwords_for_clef_users($user_id) {
         $this->settings->disable_passwords_for_clef_users();
+        $this->settings->generate_and_send_override_link($user_id);
     }
 
     /**** BEGIN AJAX HANDLERS ******/
@@ -457,13 +458,6 @@ class ClefAdmin {
         if (empty($filtered_users)) {
             return new WP_Error('no_users', __("there are no other users without Clef with this role or greater", "wpclef"));
         }
-
-        // Get the site domain and get rid of www.
-        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
-        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-                $sitename = substr( $sitename, 4 );
-        }
-        $from_email = 'wordpress@' . $sitename;
 
         $errors = array();
         foreach ($filtered_users as &$user) {

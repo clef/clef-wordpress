@@ -58,10 +58,10 @@ class ClefOnboarding {
         return get_user_meta($user_id, self::LOGINS, true);
     }
 
-    public function do_first_login_action() {
+    public function do_first_login_action($user_id) {
         if (!$this->get_key(self::FIRST_LOGIN_KEY)) {
             $this->set_key(self::FIRST_LOGIN_KEY, true);
-            do_action('clef_onboarding_first_login');
+            do_action('clef_onboarding_first_login', $user_id);
         }
     }
 

@@ -266,5 +266,28 @@ class ClefUtils {
             throw new ClefStateException('The state parameter is not verified. This may be due to this page being cached by another WordPress plugin. Please refresh your page and try again');
         }
     }
+
+    public static function send_email($email, $subject, $template, $vars) {
+        // Get the site domain and get rid of www.
+        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+                $sitename = substr( $sitename, 4 );
+        }
+        $from_email = 'wordpress@' . $sitename;
+
+        $message = ClefUtils::render_template(
+            $template,
+            $vars,
+            false
+        );
+
+        $headers = "From: WordPress <".$from_email."> \r\n";
+
+        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+        $sent = wp_mail($email, $subject, $message, $headers);
+        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
+
+        return $sent;
+    }
 }
 ?>
