@@ -44,8 +44,8 @@ class ClefOnboarding {
         return $this->set_data($data);
     }
 
-    public function mark_login_for_user_id($user_id) {
-        $this->increment_logins_for_user_id($user_id, 1);
+    public function mark_login_for_user_id($user) {
+        $this->increment_logins_for_user_id($user->ID, 1);
     }
 
     public function increment_logins_for_user_id($user_id, $by=1) {
@@ -58,10 +58,10 @@ class ClefOnboarding {
         return get_user_meta($user_id, self::LOGINS, true);
     }
 
-    public function do_first_login_action($user_id) {
+    public function do_first_login_action($user) {
         if (!$this->get_key(self::FIRST_LOGIN_KEY)) {
             $this->set_key(self::FIRST_LOGIN_KEY, true);
-            do_action('clef_onboarding_first_login', $user_id);
+            do_action('clef_onboarding_first_login', $user);
         }
     }
 

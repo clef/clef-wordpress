@@ -420,9 +420,11 @@ class ClefAdmin {
         return false;
     }
 
-    public function disable_passwords_for_clef_users($user_id) {
+    public function disable_passwords_for_clef_users($user) {
+        error_log('doing this thang');
+        error_log(print_r($user, true));
         $this->settings->disable_passwords_for_clef_users();
-        $this->settings->generate_and_send_override_link($user_id);
+        $this->settings->generate_and_send_override_link($user);
     }
 
     /**** BEGIN AJAX HANDLERS ******/

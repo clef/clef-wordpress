@@ -333,16 +333,19 @@ class ClefLogin {
                 ClefUtils::associate_clef_id($clef_id, $user->ID);
             }
 
-            do_action('clef_login', $user->ID);
+            add_action('wp_login', array($this, 'do_clef_login_action'), 10, 2);
 
             // Log in the user
-
             $session = ClefSession::start();
             $session->set('logged_in_at', time());
             return $user;
         } else {
             return $user;
         }
+    }
+
+    public function do_clef_login_action($user_login, $user) {
+        do_action('clef_login', $user);
     }
 
     public function disable_password_reset($allow, $user_id) {

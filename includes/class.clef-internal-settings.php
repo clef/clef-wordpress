@@ -231,12 +231,12 @@ class ClefInternalSettings {
         $this->send_override_link($user_id);
     }
 
-    public function send_override_link($user_id) {
+    public function send_override_link($user) {
         $site_name = get_bloginfo('name');
         $subject = '[' . $site_name . '] ' . __('Clef override URL - keep safe', 'wpclef');
 
-        $sent = ClefUtils::send_email(
-            get_user_by('id', $user_id)->user_email,
+        return ClefUtils::send_email(
+            $user->user_email,
             $subject,
             'override_link_email.tpl',
             array(
