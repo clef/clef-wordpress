@@ -137,7 +137,7 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 Released 23 September 2015
 
 * Fix: accommodate new password reset action introduced in WP 4.3
-* Feature: remove automatic password disabling on completion of the setup wizard
+* Feature: automatically send override link to site administrator
 * Enhancement: update Clef logo and README
 * Enhancement: upon activation redirect to default plugins page if Clef is already configured
 
