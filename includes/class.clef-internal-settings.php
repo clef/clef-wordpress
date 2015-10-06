@@ -206,6 +206,46 @@ class ClefInternalSettings {
         return $this->set('clef_password_settings_disable_passwords', 1);
     }
 
+    public function get_override_key() {
+        return $this->get( 'clef_override_settings_key' );
+    }
+
+    public function set_override_key($override) {
+        return $this->set( 'clef_override_settings_key', $override );
+    }
+
+    public function get_override_link() {
+        $override_key = $this->get_override_key();
+        if (empty($override_key)) {
+            return false;
+        }
+
+        return esc_url(wp_login_url() . '?override=' . $override_key);
+    }
+
+    public function generate_and_send_override_link($user_id) {
+        $override = $this->get_override_key();
+        if (empty($override)) {
+            $this->set_override_key(wp_generate_password(24, false));
+        }
+        $this->send_override_link($user_id);
+    }
+
+    public function send_override_link($user) {
+        $site_name = get_bloginfo('name');
+        $subject = '[' . $site_name . '] ' . __('Clef override URL - keep safe', 'wpclef');
+
+        return ClefUtils::send_email(
+            $user->user_email,
+            $subject,
+            'override_link_email.tpl',
+            array(
+                "site_url" => get_site_url(),
+                "override_link" => $this->get_override_link()
+            )
+        );
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;

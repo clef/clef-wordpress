@@ -36,24 +36,19 @@ class ClefInvite {
     function send_email($from_email) {
         if (empty($this->user_email)) return true;
 
-        $invite_link = $this->get_link();
-
         $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "wpclef");
-        $message = ClefUtils::render_template(
-            'invite_email.tpl',
-            array(
-                "invite_link" =>  $this->get_link(),
-                "site_name" => $this->site_name
-            ),
-            false
+        $template = 'invite_email.tpl';
+        $vars = array(
+            "invite_link" =>  $this->get_link(),
+            "site_name" => $this->site_name
         );
-        $headers = "From: WordPress <".$from_email."> \r\n";
-        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
 
-        $sent = wp_mail($this->user_email, $subject, $message, $headers);
-
-        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-        return $sent;
+        return ClefUtils::send_email(
+            $this->user_email,
+            $subject,
+            $template,
+            $vars
+        );
     }
 }
 
