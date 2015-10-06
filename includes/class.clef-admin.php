@@ -55,7 +55,7 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
-        add_action('clef_onboarding_first_login', array($this, 'disable_passwords_for_clef_users'));
+        add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
 
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
@@ -76,7 +76,7 @@ class ClefAdmin {
     private function render_waltz_prompt($class="") {
         echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
             'next_href' => '#',
-            'next_text' => __('Hide this message', 'clef'),
+            'next_text' => __('Hide this message', 'wpclef'),
             'class' => $class
         ));
     }
@@ -180,8 +180,8 @@ class ClefAdmin {
                 // let's add a menu page that only lets a user connect
                 // their clef account
                 add_menu_page(
-                    __("Clef", 'clef'),
-                    __("Clef", 'clef'),
+                    __("Clef", 'wpclef'),
+                    __("Clef", 'wpclef'),
                     "read",
                     $this->settings->settings_path,
                     array($this, 'render_clef_user_settings'),
@@ -194,7 +194,7 @@ class ClefAdmin {
         $clef_menu_title = $this->get_clef_menu_title();
         $menu_name = $this->settings->settings_path;
         add_menu_page(
-            __("Clef", 'clef'),
+            __("Clef", 'wpclef'),
             $clef_menu_title,
             "manage_options",
             $menu_name,
@@ -203,8 +203,8 @@ class ClefAdmin {
         );
 
         if ($this->settings->is_configured()) {
-            if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'clef');
-            else $name = __('Connect Clef account', 'clef');
+            if (ClefUtils::user_has_clef()) $name = __('Disconnect Clef account', 'wpclef');
+            else $name = __('Connect Clef account', 'wpclef');
             add_submenu_page(
                 $menu_name,
                 $name,
@@ -230,7 +230,7 @@ class ClefAdmin {
      * @return string The title of the menu with or without a badge
      */
     public function get_clef_menu_title() {
-        $clef_menu_title = __('Clef', 'clef');
+        $clef_menu_title = __('Clef', 'wpclef');
 
         if ($badge = $this->get_menu_badge()) {
             $clef_menu_title .= $this->render_badge($badge);
@@ -270,7 +270,7 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
-                'logoutHook' => home_url('/'),
+                'logoutHook' => wp_login_url(),
                 'source' => 'wordpress',
                 'affiliates' => apply_filters('clef_add_affiliate', array())
             ),
@@ -323,16 +323,16 @@ class ClefAdmin {
         $form = ClefSettings::forID(self::FORM_ID, CLEF_OPTIONS_NAME, $this->settings);
 
 
-        $settings = $form->addSection('clef_settings', __('API Settings', 'clef'));
-        $settings->addField('app_id', __('Application ID', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        $settings->addField('app_secret', __('Application Secret', "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
-        $settings->addField('register', __('Register with Clef', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $settings = $form->addSection('clef_settings', __('API Settings', 'wpclef'));
+        $settings->addField('app_id', __('Application ID', "wpclef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $settings->addField('app_secret', __('Application Secret', "wpclef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $settings->addField('register', __('Register with Clef', 'wpclef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        $pw_settings = $form->addSection('clef_password_settings', __('Password Settings', 'clef'), '');
-        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings = $form->addSection('clef_password_settings', __('Password Settings', 'wpclef'), '');
+        $pw_settings->addField('disable_passwords', __('Disable passwords for Clef users', "wpclef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'disable_certain_passwords',
-            __('Disable certain passwords', "clef"),
+            __('Disable certain passwords', "wpclef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "Disabled",
             array( "options" => array_merge(array(""), ClefUtils::$default_roles))
@@ -350,29 +350,29 @@ class ClefAdmin {
             }
         }
 
-        $pw_settings->addField('force', __('Disable all passwords', "clef"), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $pw_settings->addField('force', __('Disable all passwords', "wpclef"), Settings_API_Util_Field::TYPE_CHECKBOX);
         $pw_settings->addField(
             'xml_allowed',
-            __('Allow XML', 'clef'),
+            __('Allow XML', 'wpclef'),
             Settings_API_Util_Field::TYPE_CHECKBOX
         );
 
-        $form_settings = $form->addSection('clef_form_settings', __('Form settings', 'clef'), '');
-        $form_settings->addField('embed_clef', __('Embed Clef wave in the login form', 'clef'), Settings_API_Util_Field::TYPE_CHECKBOX);
+        $form_settings = $form->addSection('clef_form_settings', __('Form settings', 'wpclef'), '');
+        $form_settings->addField('embed_clef', __('Embed Clef wave in the login form', 'wpclef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
-        $override_settings = $form->addSection('clef_override_settings', __('Override Settings', 'clef'));
-        $override_settings->addField('key', __("Override key", "clef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
+        $override_settings = $form->addSection('clef_override_settings', __('Override Settings', 'wpclef'));
+        $override_settings->addField('key', __("Override key", "wpclef"), Settings_API_Util_Field::TYPE_TEXTFIELD);
 
-        $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "clef"));
+        $support_clef_settings = $form->addSection('support_clef', __('Support Clef', "wpclef"));
         $support_clef_settings->addField(
             'badge',
-            __("Support Clef by automatically adding a link!", "clef"),
+            __("Support Clef by automatically adding a link!", "wpclef"),
             Settings_API_Util_Field::TYPE_SELECT,
             "disabled",
-            array("options" => array(array(__("Badge", "clef"), "badge") , array(__("Link", "clef"), "link"), array(__("Disabled", "clef"), "disabled")))
+            array("options" => array(array(__("Badge", "wpclef"), "badge") , array(__("Link", "wpclef"), "link"), array(__("Disabled", "wpclef"), "disabled")))
         );
 
-        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "clef"));
+        $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "wpclef"));
 
         $pro = ClefPro::start();
         $pro->add_settings($form);
@@ -387,7 +387,7 @@ class ClefAdmin {
             !is_network_admin()
         ) {
             if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
-                die(__("Security check; nonce failed.", "clef"));
+                die(__("Security check; nonce failed.", "wpclef"));
             }
 
             $override = get_option(ClefInternalSettings::MS_OVERRIDE_OPTION);
@@ -405,8 +405,10 @@ class ClefAdmin {
         if (is_admin() && get_option("Clef_Activated")) {
             delete_option("Clef_Activated");
 
-            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
-            exit();
+            if (!$this->settings->is_configured()) {
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), admin_url('options.php')));
+                exit();
+            }
         }
     }
 
@@ -420,6 +422,7 @@ class ClefAdmin {
 
     public function disable_passwords_for_clef_users() {
         $this->settings->disable_passwords_for_clef_users();
+        $this->settings->generate_and_send_override_link(wp_get_current_user());
     }
 
     /**** BEGIN AJAX HANDLERS ******/
@@ -434,7 +437,7 @@ class ClefAdmin {
         $is_network_admin = filter_var(ClefUtils::isset_POST('networkAdmin'), FILTER_VALIDATE_BOOLEAN);
 
         if (!$role) {
-            return new WP_Error('invalid_role', __('invalid role', 'clef'));
+            return new WP_Error('invalid_role', __('invalid role', 'wpclef'));
         }
 
         $opts = array(
@@ -453,15 +456,8 @@ class ClefAdmin {
         $filtered_users = $this->filter_users_by_role($other_users, $role);
 
         if (empty($filtered_users)) {
-            return new WP_Error('no_users', __("there are no other users without Clef with this role or greater", "clef"));
+            return new WP_Error('no_users', __("there are no other users without Clef with this role or greater", "wpclef"));
         }
-
-        // Get the site domain and get rid of www.
-        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
-        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-                $sitename = substr( $sitename, 4 );
-        }
-        $from_email = 'wordpress@' . $sitename;
 
         $errors = array();
         foreach ($filtered_users as &$user) {
@@ -475,11 +471,11 @@ class ClefAdmin {
 
         if (count($errors) > 0) {
             if (count($errors) == count($filtered_users)) {
-                $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
+                $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
             } else {
-                $message = __("unable to send emails to the following users: ", 'clef');
+                $message = __("unable to send emails to the following users: ", 'wpclef');
                 $message .= join(", ", $errors);
-                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'clef');
+                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
             }
             return new WP_Error('clef_mail_error', $message);
         } else {
@@ -489,7 +485,7 @@ class ClefAdmin {
 
     public function ajax_connect_clef_account_with_clef_id() {
         if (!ClefUtils::isset_POST('identifier')) {
-            return new WP_Error("invalid_clef_id", __("invalid Clef ID", "clef"));
+            return new WP_Error("invalid_clef_id", __("invalid Clef ID", "wpclef"));
         }
 
         $result = ClefUtils::associate_clef_id($_POST["identifier"]);

@@ -17,7 +17,7 @@ class ClefNetworkAdmin extends ClefAdmin {
 
         global $clef_ajax;
         $clef_ajax->add_action(
-            self::MULTISITE_SETTINGS_ACTION, 
+            self::MULTISITE_SETTINGS_ACTION,
             array($this, 'ajax_multisite_options'),
             array( 'capability' => 'manage_network_options')
         );
@@ -54,10 +54,10 @@ class ClefNetworkAdmin extends ClefAdmin {
 
     public function admin_menu() {
         add_menu_page(
-            "Clef", 
-            "Clef", 
-            "manage_options", 
-            'clef', 
+            "Clef",
+            "Clef",
+            "manage_options",
+            'clef',
             array($this, 'general_settings'),
             CLEF_URL . 'assets/dist/img/gradient_icon_16.png'
         );
@@ -88,7 +88,7 @@ class ClefNetworkAdmin extends ClefAdmin {
         if (!is_super_admin()) die(__('Cheatin&#8217; uh?'));
 
         if (!wp_verify_nonce($_POST['_wpnonce'], 'clef_multisite')) {
-            die(__("Security check; nonce failed.", "clef"));
+            die(__("Security check; nonce failed.", "wpclef"));
         }
 
         if (isset($_POST['allow_override_form'])) {
@@ -96,7 +96,7 @@ class ClefNetworkAdmin extends ClefAdmin {
         }
 
         $enabled = get_site_option(ClefInternalSettings::MS_ENABLED_OPTION);
-        
+
         if (isset($_POST['disable']) || isset($_POST['enable'])) {
             update_site_option(ClefInternalSettings::MS_ENABLED_OPTION, !$enabled);
         }
@@ -119,9 +119,10 @@ class ClefNetworkAdmin extends ClefAdmin {
                 update_site_option(ClefInternalSettings::MS_ENABLED_OPTION, true);
             }
 
-            wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), network_admin_url('admin.php')));
-
-            exit();
+            if (!$this->settings->is_configured()) {
+                wp_redirect(add_query_arg(array('page' => $this->settings->settings_path), network_admin_url('admin.php')));
+                exit();
+            }
         }
     }
 

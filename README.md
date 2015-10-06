@@ -1,4 +1,4 @@
-# [Clef for WordPress](http://wordpress.org/plugins/wpclef/) [![Build Status](https://travis-ci.org/clef/wordpress.svg?branch=master)](https://travis-ci.org/clef/wordpress)
+# [Clef for WordPress](http://wordpress.org/plugins/wpclef/) [![Build Status](https://travis-ci.org/clef/clef-wordpress.svg?branch=master)](https://travis-ci.org/clef/clef-wordpress)
 
 Welcome to the Clef for WordPress development repository!
 
@@ -12,7 +12,7 @@ To install, contribute to, and test the developer build, you should clone this r
 
 ## Support
 
-For support, we recommend emailing us directly at [support@getclef.com](mailto:support@getclef.com) or joining our [support chat room](http://www.hipchat.com/go5kUkq90). 
+For support, we recommend emailing us directly at [support@getclef.com](mailto:support@getclef.com) or joining our [community chat](https://community.getclef.com), where most of our engineers hang out. 
 
 ## Bugs
 

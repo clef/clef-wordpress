@@ -28,32 +28,27 @@ class ClefInvite {
     }
 
     function get_link() {
-        return ($this->login_url . 
-            '?clef_invite_code=' . $this->code . 
-            '&clef_invite_id=' . urlencode(base64_encode($this->user_email))); 
+        return ($this->login_url .
+            '?clef_invite_code=' . $this->code .
+            '&clef_invite_id=' . urlencode(base64_encode($this->user_email)));
     }
 
     function send_email($from_email) {
         if (empty($this->user_email)) return true;
-        
-        $invite_link = $this->get_link();
 
-        $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "clef");
-        $message = ClefUtils::render_template(
-            'invite_email.tpl', 
-            array(
-                "invite_link" =>  $this->get_link(),
-                "site_name" => $this->site_name
-            ), 
-            false
+        $subject = '['. $this->site_name . '] ' . __('Set up Clef for your account', "wpclef");
+        $template = 'invite_email.tpl';
+        $vars = array(
+            "invite_link" =>  $this->get_link(),
+            "site_name" => $this->site_name
         );
-        $headers = "From: WordPress <".$from_email."> \r\n";
-        add_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
 
-        $sent = wp_mail($this->user_email, $subject, $message, $headers);
-
-        remove_filter('wp_mail_content_type', array('ClefUtils', 'set_html_content_type'));
-        return $sent;
+        return ClefUtils::send_email(
+            $this->user_email,
+            $subject,
+            $template,
+            $vars
+        );
     }
 }
 

@@ -28,9 +28,9 @@ class ClefSettings extends Settings_API_Util {
         }
 
         $attrs_to_escape = array(
-            'clef_settings_app_id', 
-            'clef_settings_app_secret', 
-            'customization_message', 
+            'clef_settings_app_id',
+            'clef_settings_app_secret',
+            'customization_message',
             'customization_logo'
         );
 
@@ -47,7 +47,7 @@ class ClefSettings extends Settings_API_Util {
                 add_settings_error(
                     CLEF_OPTIONS_NAME,
                     'clef_password_settings_force',
-                    sprintf(__( "Please link your Clef account before you fully disable passwords. You can do this <a href='%s'>here</a>", "clef"), $url),
+                    sprintf(__( "Please link your Clef account before you fully disable passwords. You can do this <a href='%s'>here</a>", "wpclef"), $url),
                     "error"
                 );
             }

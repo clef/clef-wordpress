@@ -198,7 +198,7 @@ class ClefLogin {
     }
 
     private function validate_invite_code($incoming_invite_code, $email) {
-        $generic_error_message = __("Sorry, that isn't a valid invite code.", "clef");
+        $generic_error_message = __("Sorry, that isn't a valid invite code.", "wpclef");
         if (!$incoming_invite_code || !$email) {
             return $generic_error_message;
         }
@@ -215,7 +215,7 @@ class ClefLogin {
         if (empty($invite_code) ||
             ($invite_code->created_at < $three_days_ago) ||
             ($invite_code->code !== $incoming_invite_code)) {
-                return __("Sorry, this invite link has expired. Please contact your administrator for a new one.", "clef");
+                return __("Sorry, this invite link has expired. Please contact your administrator for a new one.", "wpclef");
         }
     }
 
@@ -279,7 +279,7 @@ class ClefLogin {
 
         if ($disabled_for_user && $disabled_for_xml_rpc) {
             add_filter('xmlrpc_login_error', array($this, "return_xml_error_message"));
-            return new WP_Error('passwords_disabled', __("Passwords have been disabled for this user.", "clef"));
+            return new WP_Error('passwords_disabled', __("Passwords have been disabled for this user.", "wpclef"));
         } else {
             return $user;
         }
@@ -317,7 +317,7 @@ class ClefLogin {
                         if(is_wp_error($id)) {
                             return new WP_Error(
                                 'clef',
-                                __("An error occurred when creating your new account: ", 'clef') . $id->get_error_message()
+                                __("An error occurred when creating your new account: ", 'wpclef') . $id->get_error_message()
                             );
                         }
                         $user = get_user_by('id', $id );
@@ -325,7 +325,7 @@ class ClefLogin {
                         $this->clef_id_to_connect = $clef_id;
                         return new WP_Error(
                             'clef',
-                            __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'clef')
+                            __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'wpclef')
                         );
                     }
                 }
@@ -333,16 +333,19 @@ class ClefLogin {
                 ClefUtils::associate_clef_id($clef_id, $user->ID);
             }
 
-            do_action('clef_login', $user->ID);
+            add_action('wp_login', array($this, 'do_clef_login_action'), 10, 2);
 
             // Log in the user
-
             $session = ClefSession::start();
             $session->set('logged_in_at', time());
             return $user;
         } else {
             return $user;
         }
+    }
+
+    public function do_clef_login_action($user_login, $user) {
+        do_action('clef_login', $user);
     }
 
     public function disable_password_reset($allow, $user_id) {
@@ -376,14 +379,14 @@ class ClefLogin {
             ?>
             <div class="updated clef-flash connect-clef-account-on-login-message">
                 <img src="<?php echo CLEF_URL . 'assets/dist/img/gradient_icon_32.png'?>" alt="Clef">
-                <p><?php _e('Success. <b>Your Clef account has been connected!</b>', 'clef'); ?></p>
+                <p><?php _e('Success. <b>Your Clef account has been connected!</b>', 'wpclef'); ?></p>
             </div>
             <?php
         }
    }
 
     public function return_xml_error_message() {
-        return new IXR_Error( 403, __("Passwords have been disabled for this user.", "clef") );
+        return new IXR_Error( 403, __("Passwords have been disabled for this user.", "wpclef") );
     }
 
     public function apply_filter_and_action_fixes($hook) {

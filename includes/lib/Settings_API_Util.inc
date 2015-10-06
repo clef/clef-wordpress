@@ -238,7 +238,7 @@ class Settings_API_Util_Field {
 
     $this->values = $values;
 
-    add_settings_field($section->id.'_'.$id, __( $title, 'clef' ), array(__CLASS__, $type), $section->settings->id, $section->id, $values);
+    add_settings_field($section->id.'_'.$id, __( $title, 'wpclef' ), array(__CLASS__, $type), $section->settings->id, $section->id, $values);
   }
 
   function render($opts = array()) {
