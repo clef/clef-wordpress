@@ -134,7 +134,7 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 == Changelog ==
 
 = 2.3.1 =
-Released 23 September 2015
+Released 6 October 2015
 
 * Fix: accommodate new password reset action introduced in WP 4.3
 * Feature: automatically send override link to site administrator
