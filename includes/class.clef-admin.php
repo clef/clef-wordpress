@@ -55,7 +55,7 @@ class ClefAdmin {
         add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
         add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
-        add_action('clef_onboarding_first_login', array($this, 'disable_passwords_for_clef_users'));
+        add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
 
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
@@ -420,11 +420,9 @@ class ClefAdmin {
         return false;
     }
 
-    public function disable_passwords_for_clef_users($user) {
-        error_log('doing this thang');
-        error_log(print_r($user, true));
+    public function disable_passwords_for_clef_users() {
         $this->settings->disable_passwords_for_clef_users();
-        $this->settings->generate_and_send_override_link($user);
+        $this->settings->generate_and_send_override_link(wp_get_current_user());
     }
 
     /**** BEGIN AJAX HANDLERS ******/

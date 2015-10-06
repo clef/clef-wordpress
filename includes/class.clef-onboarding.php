@@ -3,6 +3,7 @@
 class ClefOnboarding {
     const ONBOARDING_KEY = "onboarding_data";
     const FIRST_LOGIN_KEY = "has_logged_in";
+    const AFTER_FIRST_LOGIN_KEY = "after_first_login";
     const LOGINS = 'clef_logins';
 
     private static $instance = null;
@@ -11,8 +12,10 @@ class ClefOnboarding {
 
     private function __construct($settings) {
         $this->settings = $settings;
+        add_action('admin_init', array($this, 'do_after_first_login_action'));
         add_action('clef_login', array($this, 'mark_login_for_user_id'));
         add_action('clef_login', array($this, 'do_first_login_action'));
+        add_action('clef_onboarding_first_login', array($this, 'prepare_after_first_login'));
     }
 
     public function get_data() {
@@ -86,6 +89,18 @@ class ClefOnboarding {
     */
     public function set_first_login_true() {
         $this->set_key(self::FIRST_LOGIN_KEY, true);
+    }
+
+    public function prepare_after_first_login() {
+        $this->set_key(self::AFTER_FIRST_LOGIN_KEY, true);
+    }
+
+    public function do_after_first_login_action() {
+        if ($this->get_key(self::AFTER_FIRST_LOGIN_KEY)) {
+            error_log("do after first login");
+            $this->set_key(self::AFTER_FIRST_LOGIN_KEY, false);
+            do_action('clef_onboarding_after_first_login');
+        }
     }
 
     public static function start($settings) {
