@@ -12,9 +12,7 @@ class ClefSetup {
         'clef_id', 
         'clef_invite_code',
         'logged_out_at',
-        'clef_logins',
-        'clef_hide_waltz_badge',
-        'clef_hide_waltz_prompt'
+        'clef_logins'
     );
 
     public static function activate_plugin($network) {

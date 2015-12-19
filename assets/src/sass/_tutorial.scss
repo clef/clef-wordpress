@@ -167,40 +167,6 @@
         }
     }
 
-    .waltz {
-        display: none;
-        margin-top: 80px;
-        padding: 10px;
-        img {
-            @include span-columns(2);
-            margin-top: 20px;
-        }
-        .text {
-            @include span-columns(8);
-            margin-right: 0;
-
-            h1, p {
-                margin: 5px;
-                border: 0;
-            }
-        }
-        .buttons {
-            clear: both;
-            margin-bottom: 40px;
-            position: relative;
-            top: 30px;
-            .button {
-                width: 44%;
-                text-align: center;
-                margin: 0;
-                &:first-child {
-                    margin-right: 3%;
-                    margin-left: 4%;
-                }
-            }
-        }
-    }
-
     .user, .no-sync {
         h1 {
             text-align: left;

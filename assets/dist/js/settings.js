@@ -134,10 +134,6 @@
     initialize: function(opts) {
       var potentialSubs, sub, _i, _len;
       this.opts = opts;
-      if (window.chrome && !window.waltzIsInstalled) {
-        this.$el.find('.waltz').addClass(this.slideClass);
-        this.$el.addClass('.no-waltz');
-      }
       this.subs = [];
       potentialSubs = this.$el.find("." + this.slideClass).filter(this.opts.slideFilterSelector);
       for (_i = 0, _len = potentialSubs.length; _i < _len; _i++) {

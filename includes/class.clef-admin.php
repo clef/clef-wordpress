@@ -6,15 +6,9 @@ class ClefAdmin {
     const FORM_ID = "clef";
     const CONNECT_CLEF_ID_ACTION = "connect_clef_account_clef_id";
     const INVITE_USERS_ACTION = "clef_invite_users";
-    const DISMISS_WALTZ_ACTION = "clef_dismiss_waltz";
 
     const CONNECT_CLEF_PAGE = "connect_clef_account";
 
-    const CLEF_WALTZ_LOGIN_COUNT = 3;
-    const DASHBOARD_WALTZ_LOGIN_COUNT = 15;
-
-    const HIDE_WALTZ_BADGE = 'clef_hide_waltz_badge';
-    const HIDE_WALTZ_PROMPT = 'clef_hide_waltz_prompt';
     const HIDE_USER_SETUP_BADGE = 'clef_hide_user_setup_badge';
 
     private static $instance = null;
@@ -52,8 +46,6 @@ class ClefAdmin {
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
 
         add_action('admin_notices', array($this, 'display_messages') );
-        add_action('admin_notices', array($this, 'display_clef_waltz_prompt'));
-        add_action('admin_notices', array($this, 'display_dashboard_waltz_prompt'));
 
         add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
 
@@ -61,57 +53,10 @@ class ClefAdmin {
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
         $clef_ajax->add_action(self::INVITE_USERS_ACTION, array($this, 'ajax_invite_users'));
-        $clef_ajax->add_action(
-            self::DISMISS_WALTZ_ACTION,
-            array($this, 'ajax_dismiss_waltz_notification'),
-            array('capability' => 'read')
-        );
-
     }
 
     public function clef_hook_onboarding() {
         do_action('clef_hook_onboarding');
-    }
-
-    private function render_waltz_prompt($class="") {
-        echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
-            'next_href' => '#',
-            'next_text' => __('Hide this message', 'wpclef'),
-            'class' => $class
-        ));
-    }
-
-    public function display_dashboard_waltz_prompt() {
-        $onboarding = ClefOnboarding::start($this->settings);
-
-        $login_count = $onboarding->get_login_count_for_current_user();
-        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-
-        $hide_waltz_prompt = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
-
-        // If the user has access to the dashboard and they haven't already
-        // dismissed the prompt, then display it.
-        $should_display_for_user = !$hide_waltz_prompt && current_user_can('read');
-
-        if ($login_count < self::DASHBOARD_WALTZ_LOGIN_COUNT || !$should_display_for_user || $is_settings_page) return;
-
-        $this->render_waltz_prompt("settings waltz-notification");
-
-        // Make sure the notification doesn't ever show again for this user
-        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
-    }
-
-    public function display_clef_waltz_prompt() {
-        $is_google_chrome = strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false;
-        $is_settings_page = ClefUtils::isset_GET('page') == $this->settings->settings_path;
-        $should_hide = get_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
-
-        $onboarding = ClefOnboarding::start($this->settings);
-        $login_count = $onboarding->get_login_count_for_current_user();
-
-        if (!$is_google_chrome || !$is_settings_page || $should_hide || $login_count < self::CLEF_WALTZ_LOGIN_COUNT) return;
-
-        $this->render_waltz_prompt("settings waltz-notification");
     }
 
     public function hook_admin_menu() {
@@ -131,9 +76,6 @@ class ClefAdmin {
             $ident = ClefUtils::register_script('clef_heartbeat');
             wp_enqueue_script($ident);
         }
-
-        $ident = ClefUtils::register_script('waltz_notification', array('jquery'));
-        wp_enqueue_script($ident);
 
         $ident = ClefUtils::register_style('admin');
         wp_enqueue_style($ident);
@@ -167,8 +109,6 @@ class ClefAdmin {
     }
 
     public function admin_menu() {
-        // Ensure that if the Waltz notification bubble was showing, that it is
-        // never shown again.
         if (ClefUtils::isset_REQUEST('page') === $this->settings->connect_path &&
           $this->get_menu_badge() === _('add security')) {
             update_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
@@ -426,11 +366,6 @@ class ClefAdmin {
     }
 
     /**** BEGIN AJAX HANDLERS ******/
-
-    public function ajax_dismiss_waltz_notification() {
-        update_user_meta(get_current_user_id(), self::HIDE_WALTZ_PROMPT, true);
-        return array('success' => true);
-    }
 
     public function ajax_invite_users() {
         $role = strtolower(ClefUtils::isset_POST('roles'));

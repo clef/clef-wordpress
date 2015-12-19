@@ -517,41 +517,6 @@ Styles
       color: #333; }
     #clef-tutorial .using-clef .next {
       margin: 20px 0; }
-  #clef-tutorial .waltz {
-    display: none;
-    margin-top: 80px;
-    padding: 10px; }
-    #clef-tutorial .waltz img {
-      display: block;
-      float: left;
-      margin-right: 1.85185%;
-      width: 18.51852%;
-      margin-top: 20px; }
-      #clef-tutorial .waltz img:last-child {
-        margin-right: 0; }
-    #clef-tutorial .waltz .text {
-      display: block;
-      float: left;
-      margin-right: 1.85185%;
-      width: 79.62963%;
-      margin-right: 0; }
-      #clef-tutorial .waltz .text:last-child {
-        margin-right: 0; }
-      #clef-tutorial .waltz .text h1, #clef-tutorial .waltz .text p {
-        margin: 5px;
-        border: 0; }
-    #clef-tutorial .waltz .buttons {
-      clear: both;
-      margin-bottom: 40px;
-      position: relative;
-      top: 30px; }
-      #clef-tutorial .waltz .buttons .button {
-        width: 44%;
-        text-align: center;
-        margin: 0; }
-        #clef-tutorial .waltz .buttons .button:first-child {
-          margin-right: 3%;
-          margin-left: 4%; }
   #clef-tutorial .user, #clef-tutorial .no-sync {
     text-align: left; }
     #clef-tutorial .user h1, #clef-tutorial .no-sync h1 {
@@ -842,92 +807,6 @@ Styles
   margin-left: 5px; }
   #clef-settings-form .setting-info:hover {
     color: #888; }
-
-.waltz {
-  *zoom: 1;
-  max-width: 75em;
-  margin-left: auto;
-  margin-right: auto;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e5e5e5;
-  background: white;
-  padding: 20px 25px;
-  margin: 10px 20px 10px 0; }
-  .waltz:before,
-  .waltz:after {
-    content: " ";
-    display: table; }
-  .waltz:after {
-    clear: both; }
-  .waltz * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .waltz.settings {
-    padding: 10px;
-    margin-top: 40px; }
-    .waltz.settings img {
-      display: block;
-      float: left;
-      margin-right: 1.85185%;
-      width: 8.33333%;
-      margin-top: 7px; }
-      .waltz.settings img:last-child {
-        margin-right: 0; }
-      @media screen and (max-width: 768px) {
-        .waltz.settings img {
-          display: block;
-          float: left;
-          margin-right: 1.85185%;
-          width: 8.33333%; }
-          .waltz.settings img:last-child {
-            margin-right: 0; } }
-    .waltz.settings .text {
-      display: block;
-      float: left;
-      margin-right: 1.85185%;
-      width: 49.07407%; }
-      .waltz.settings .text:last-child {
-        margin-right: 0; }
-      @media screen and (max-width: 768px) {
-        .waltz.settings .text {
-          display: block;
-          float: left;
-          margin-right: 1.85185%;
-          width: 79.62963%; }
-          .waltz.settings .text:last-child {
-            margin-right: 0; } }
-      .waltz.settings .text h1 {
-        font-size: 12px;
-        margin: 0; }
-      .waltz.settings .text p {
-        margin: 0;
-        font-size: 12px; }
-    .waltz.settings .buttons {
-      display: block;
-      float: left;
-      margin-right: 1.85185%;
-      width: 38.88889%;
-      margin-right: 0;
-      margin-top: 15px; }
-      .waltz.settings .buttons:last-child {
-        margin-right: 0; }
-      @media screen and (max-width: 768px) {
-        .waltz.settings .buttons {
-          display: block;
-          float: left;
-          margin-right: 1.85185%;
-          width: 100%; }
-          .waltz.settings .buttons:last-child {
-            margin-right: 0; } }
-      .waltz.settings .buttons .button {
-        float: none;
-        margin: 0;
-        text-align: center;
-        font-size: 12px;
-        width: 45%;
-        padding: 0; }
 
 .bruteprotect-install {
   background: #515953;
