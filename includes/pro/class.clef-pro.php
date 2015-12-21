@@ -33,7 +33,7 @@ class ClefPro  {
 
     public function ajax_get_pro_services() {
         if (!$this->settings->is_configured()) {
-            return [];
+            return array();
         }
 
         $args = array(
