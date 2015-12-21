@@ -54,26 +54,6 @@
             <p><?php _e("If you lose your device, don't fret! Just visit <a href='https://getclef.com/lost'>getclef.com/lost</a>, deactivate with your PIN, and reactivate on a new device.", "wpclef"); ?></p>
             <div class="button button-primary button-hero next"><?php _e("Got it!", "wpclef"); ?></div>
         </div>
-
-        <?php if (is_admin()) { ?>
-        <?php
-            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
-                "next_href" => '#',
-                "next_text" => __("Go to Clef settings", "wpclef"),
-                "class" => "setup"
-            ));
-        ?>
-
-        <?php
-            echo ClefUtils::render_template('admin/waltz-prompt.tpl', array(
-                "next_href" => admin_url(),
-                "next_text" => __("Go to dashboard", "wpclef"),
-                "class" => "connect"
-            ));
-        ?>
-
-        <?php } ?>
-
     </div>
 </div>
 

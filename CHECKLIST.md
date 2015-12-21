@@ -56,9 +56,7 @@ This file presents a master list of WP Clef’s features to facilitate systemati
  - [ ] E-mail preview text matches actual e-mail. 
 
 - [ ] Arrive at "3 tips" screen after send invite or skip invite.
-- [ ] Arrive at "Get Waltz" screen.
 
- - [ ] "Try Waltz" loads http://getwaltz.com in new tab.
  - [ ] "Go to Clef Settings" loads settings page with graceful slide up.
  
 ### Setup Wizard Multi-Site Iterations
@@ -457,15 +455,6 @@ Start the following tests from fresh install state (i.e., all settings except AP
 
 1. State 1b: after first login via CB.
  - [ ] Selecting “Link” prints functioning `a` in site footer and saves the setting (verify on setting page).
-
-1. State 2: Waltz not installed.
- - [ ] After 3 successful logins, show numbered badge in Clef settings menu title.
- - [ ] After 3 successful logins, show dismissible Waltz notification on Clef settings page.
- - [ ] After 15 successful logins, if Clef settings Waltz notification hasn't been dismissed, show a one-time notification on the Dashboard.
-
-1. State 3: Waltz installed.
- - [ ] No Waltz notifications after 3 successful logins.
- - [ ] No Waltz notification on Dashboard after 15 successful logins.
 
 ## Browser Iterations
 ### Setup Wizard
