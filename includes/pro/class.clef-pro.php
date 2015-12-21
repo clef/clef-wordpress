@@ -32,6 +32,10 @@ class ClefPro  {
     }
 
     public function ajax_get_pro_services() {
+        if (!$this->settings->is_configured()) {
+            return array();
+        }
+
         $args = array(
             'app_id' => $this->settings->get('clef_settings_app_id'),
             'app_secret' => $this->settings->get('clef_settings_app_secret')
