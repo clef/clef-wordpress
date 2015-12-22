@@ -138,7 +138,7 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 * Fix: update issue
 
 = 2.3.2 =
->>>>>>> tmp
+
 Release 21 December 2015
 
 * Fix: stop making unnecessary request to Clef API when site is not configured
