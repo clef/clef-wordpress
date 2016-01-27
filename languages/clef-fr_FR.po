@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the WPClef package.
 # 
 # Translators:
+# Beauvisage Baptiste <beau.baptiste@gmail.com>, 2016
 # Dimitri, 2015
 # leblogdelise <webmaster@liseweb.fr>, 2014
 # leolelego <leolelego@gmail.com>, 2014
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-12-18 17:44-0800\n"
-"PO-Revision-Date: 2015-12-19 01:45+0000\n"
+"POT-Creation-Date: 2016-01-27 14:10-0800\n"
+"PO-Revision-Date: 2016-01-27 22:10+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/clef/wpclef/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +51,7 @@ msgstr "Ajouter votre logo et message dans la fenêtre Clef afin de personnalise
 
 #: templates/admin/badge-prompt.tpl.php:10
 msgid "Add protected by Clef badge"
-msgstr "Ajoutez l'icône de Clef"
+msgstr "Ajouter le badge Protégé par Clef"
 
 #: templates/js-templates/invite.tpl.php:17
 msgid "Administrator"
@@ -540,9 +541,10 @@ msgstr "Un problème est survenu lors de votre connexion à votre compte Clef : 
 #: includes/class.clef-translation.php:15
 msgid ""
 "There was a problem creating a new Clef application for your WordPress site:"
-" <%= error %>. Please refresh and try again. If the issue, persists, email "
-"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
-msgstr "Un problème est survenu lors de la création d'une nouvelle application Clef pour votre site WordPress :  <%= error %>. Merci de rafraîchir votre page et de réessayer. Si l'erreur persiste, envoyez un message à <a href='mailto:support@getclef.com'>support@getclef.com</a>."
+" <%= error %>. Please refresh and try again. If the issue, persists, visit "
+"<a href='http://support.getclef.com' target='_blank'>support.getclef.com</a>"
+" to get help."
+msgstr ""
 
 #: includes/class.clef-translation.php:18
 msgid "There was a problem disconnecting your Clef account: <%= error %>."
@@ -695,7 +697,7 @@ msgstr "L'accès à votre site est aussi peu sécurisé qu'avec un mot de passe 
 
 #: includes/class.clef-admin.php:113 includes/class.clef-admin.php:189
 msgid "add security"
-msgstr ""
+msgstr "Ajouter de la sécurité"
 
 #: templates/admin/form.tpl.php:64
 msgid "generate a secure override url for me"
@@ -715,7 +717,7 @@ msgstr "rôle invalide"
 
 #: templates/admin/form.tpl.php:156 templates/login.tpl.php:39
 msgid "log in with a password"
-msgstr ""
+msgstr "Se connecter grâce à un mots de passe"
 
 #: includes/class.clef-admin.php:185
 msgid "needs setup"
@@ -727,7 +729,7 @@ msgstr "ou"
 
 #: templates/login.tpl.php:40
 msgid "show clef login"
-msgstr ""
+msgstr "Afficher la connection grâce à Clef"
 
 #: includes/class.clef-admin.php:394
 msgid "there are no other users without Clef with this role or greater"

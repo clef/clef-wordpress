@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the WPClef package.
 # 
 # Translators:
+# Arnaud De Moyer <arnauddemoyer@gmail.com>, 2016
 # Jan De Baat <de_baat@de-baat.nl>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2015-12-18 17:44-0800\n"
-"PO-Revision-Date: 2015-12-19 01:45+0000\n"
+"POT-Creation-Date: 2016-01-27 14:10-0800\n"
+"PO-Revision-Date: 2016-01-27 22:10+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/clef/wpclef/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +126,7 @@ msgstr "Clef maakt inloggen op je site veiliger en eenvoudiger. <br> Het is <b>g
 
 #: includes/class.clef-internal-settings.php:236
 msgid "Clef override URL - keep safe"
-msgstr ""
+msgstr "Clef veiligheids URL - bewaar goed"
 
 #: templates/invite_email.tpl.php:13
 #, php-format
@@ -405,7 +406,7 @@ msgid ""
 "href='https://getclef.com'>Clef</a>. If you ever have an issue that causes "
 "you to be locked out of your site, we've created an override URL which will "
 "allow you to log in to your site without Clef. The link is: "
-msgstr ""
+msgstr "Wachtwoorden zijn nu uitgeschakeld op %s voor alle gebruikers die <a href='https://getclef.com'>Clef</a> ingeschakeld hebben. Voor als je ooit een probleem zou hebben waardoor je niet meer kan inloggen op je site, hebben we een veiligheids url gemaakt zodat je toch kan inloggen zonder Clef. De link is:"
 
 #: includes/class.clef-settings.php:50
 #, php-format
@@ -536,9 +537,10 @@ msgstr "Er was een probleem met het automatisch verbinden met je Clef account: <
 #: includes/class.clef-translation.php:15
 msgid ""
 "There was a problem creating a new Clef application for your WordPress site:"
-" <%= error %>. Please refresh and try again. If the issue, persists, email "
-"<a href='mailto:support@getclef.com'>support@getclef.com</a>."
-msgstr "Er was een probleem met het creëren van een nieuwe Clef applicatie voor je WordPress site: <%= error %>. Ververs aub en probeer opnieuw. Als het probleem blijft bestaan, stuur een email naar <a href='mailto:support@getclef.com'>support@getclef.com</a>."
+" <%= error %>. Please refresh and try again. If the issue, persists, visit "
+"<a href='http://support.getclef.com' target='_blank'>support.getclef.com</a>"
+" to get help."
+msgstr ""
 
 #: includes/class.clef-translation.php:18
 msgid "There was a problem disconnecting your Clef account: <%= error %>."
@@ -630,7 +632,7 @@ msgid ""
 "can-log-into-your-wordpress-site-with-a-password'>here</a>. If you have any "
 "issues, please visit <a "
 "href='http://support.getclef.com'>support.getclef.com</a>."
-msgstr ""
+msgstr "<a href='http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password'>Hier</a> vindt u meer informatie over deze functionaliteit. Als u problemen ondervindt, ga naar <a href='http://support.getclef.com'>support.getclef.com</a>."
 
 #: templates/admin/multisite/network-enabled.tpl.php:20
 msgid ""
