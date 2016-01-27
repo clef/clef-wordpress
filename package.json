@@ -2,7 +2,7 @@
   "name": "wpclef",
   "title": "Clef for WordPress",
   "description": "Clef replaces insecure username/password authentication with strongly encrypted, multi-factor authentication using your smartphone. Simply click the \"Log in with your phone\" button, scan the Clef Wave with your [Clef app](https://getclef.com/apps), and you are instantly and securely logged in to all of your Clef-enabled websites. Clef provides the best single sign-on solution for WordPress. Once you sign in to one WordPress site using Clef, you can sign into all of your Clef-enabled sites with a single click. And once you sign out of the app on your phone, you are automatically signed out of all your WordPress sites. Say goodbye to passwords and hello to admistrative bliss--try Clef today!",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "homepage": "http://getclef.com",
   "repository": "http://github.com/clef/wordpress",
   "author": {

@@ -3,7 +3,7 @@
 Plugin Name: Clef
 Plugin URI: http://wordpress.org/extend/plugins/wpclef
 Description: Clef lets you log in and register on your WordPress site using only your phone — forget your usernames and passwords.
-Version: 2.3.3
+Version: 2.3.4
 Author: Clef
 Author URI: https://getclef.com
 License: MIT
