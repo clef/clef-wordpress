@@ -3,3 +3,4 @@ node_modules
 release
 sftp-config.json
 build
+.agignore

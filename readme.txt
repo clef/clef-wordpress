@@ -53,7 +53,7 @@ http://vimeo.com/103148853
 
 - **Helpful [documentation](http://support.getclef.com/)**
 
-- **Free [email](mailto:support@getclef.com) support**
+- **Free [support](http://support.getclef.com/)**
 
 == Installation ==
 
@@ -69,7 +69,7 @@ For detailed setup instructions [see the installation guide](http://support.getc
 - For using Clef with staging and production URLs, see the [staging guide](http://support.getclef.com/article/75-using-staging-urls-with-clef-s-wordpress-plugin).
 - For assistance with cloning a Clef-enabled site, see the [cloning guide](http://support.getclef.com/article/89-using-the-clef-plugin-on-cloned-wordpress-sites).
 
-If you have any questions or installation issues, please feel free to email [support@getclef.com](mailto:support@getclef.com).
+If you have any questions or installation issues, visit [support.getclef.com](http://support.getclef.com) to get help.
 
 == Frequently Asked Questions ==
 
@@ -78,8 +78,7 @@ If you have any questions or installation issues, please feel free to email [sup
 Yes. Really. Boom! And your free Clef account includes
 
 - unlimited users,
-- up to 10K logins per month,
-- [email](mailto:support@getclef.com) support,
+- support,
 - and basic usage analytics.
 
 = Can existing users on my WordPress site sign in with Clef after I install the plugin? =
@@ -133,12 +132,11 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 
 == Changelog ==
 
-= 2.3.3 =
+= 2.3.3 -
 
 * Fix: update issue
 
 = 2.3.2 =
-
 Release 21 December 2015
 
 * Fix: stop making unnecessary request to Clef API when site is not configured

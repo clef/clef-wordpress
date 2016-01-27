@@ -12,7 +12,7 @@ To install, contribute to, and test the developer build, you should clone this r
 
 ## Support
 
-For support, we recommend emailing us directly at [support@getclef.com](mailto:support@getclef.com) or joining our [community chat](https://community.getclef.com), where most of our engineers hang out. 
+Visit [support.getclef.com](http://support.getclef.com) to get support with the Clef plugin or experience.
 
 ## Bugs
 
