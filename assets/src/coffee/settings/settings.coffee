@@ -60,7 +60,8 @@
         genericErrorMessage: clefTranslations.messages.error.generic
         addEvents:
             "click .generate-override": "generateOverride"
-            "click input[type='submit']:not(.ajax-ignore)": "saveForm"
+            "click .clef-settings__saveButton": "saveForm"
+            "click .clef-settings__resetButton": "resetForm"
             "click a.show-support-html": "showSupportHTML"
 
         constructor: (opts) ->
@@ -162,6 +163,11 @@
 
                 error: @model.saveError.bind(@model)
 
+        resetForm: (e) ->
+            e.preventDefault()
+            if confirm("Are you sure you want to clear your settings?")
+                @model.reset success: -> window.location = window.location
+
         showSupportHTML: (e) ->
             e.preventDefault()
             $('.support-html-container').slideDown()
@@ -197,7 +203,10 @@
             !!(@cget('clef_settings_app_id') &&
                 @cget('clef_settings_app_secret'))
 
-        configure: (data) ->
+        reset: (options={}) ->
+            @configure { appID: "", appSecret: "" }, options
+
+        configure: (data, options={}) ->
             toSave = {
                 'wpclef[clef_settings_app_id]': data.appID
                 'wpclef[clef_settings_app_secret]': data.appSecret
@@ -207,7 +216,7 @@
                 for k, v of data.configuration
                     toSave["wpclef[#{k}]"] = v
 
-            @save toSave
+            @save toSave, options
 
 
 

@@ -126,7 +126,10 @@
                 </div>
             </div>
         </div>
-        <?php submit_button(); ?>
+        <div class="clef-settings clef-settings__buttons">
+            <?php submit_button("Save settings", "primary clef-settings__saveButton"); ?>
+            <?php submit_button("Reset settings", "delete clef-settings__resetButton"); ?>
+        </div>
     </form>
 
 </div>
