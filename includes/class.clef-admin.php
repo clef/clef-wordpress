@@ -45,6 +45,9 @@ class ClefAdmin {
 
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
 
+        add_action('admin_footer-users.php', array($this, "add_invite_bulk_action_to_dropdown"));
+        add_action('admin_action_invite_to_clef', array($this, "handle_invite_bulk_action"));
+
         add_action('admin_notices', array($this, 'display_messages') );
 
         add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
@@ -365,6 +368,44 @@ class ClefAdmin {
         $this->settings->generate_and_send_override_link(wp_get_current_user());
     }
 
+    public function add_invite_bulk_action_to_dropdown() {
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('<option>').val('invite_to_clef').text('Invite to use Clef')
+                    .appendTo("select[name='action'], select[name='action2']");
+            });
+        </script>
+        <?php
+    }
+
+    public function handle_invite_bulk_action () {
+        if (isset($_REQUEST['users'])) {
+            $users = get_users(array("include" => $_REQUEST['users']));
+            if (empty($users)) {
+                return new WP_Error('no_users', __("No users were invited to use Clef."));
+            }
+
+            try {
+                ClefInvite::invite_users($users, false);
+
+                add_settings_error(
+                    CLEF_OPTIONS_NAME, 
+                    "clef_invite_success",
+                    sprintf(__("%s users successfully invited to Clef."), count($users)),
+                    "success"
+                );
+            } catch (Exception $e) {
+                add_settings_error(
+                    CLEF_OPTIONS_NAME, 
+                    "clef_invite_error",
+                    sprintf(__("There was an error inviting users to Clef: %s"), $e->getMessage()),
+                    "error"
+                );
+            }
+        }
+    }
+
     /**** BEGIN AJAX HANDLERS ******/
 
     public function ajax_invite_users() {
@@ -394,27 +435,11 @@ class ClefAdmin {
             return new WP_Error('no_users', __("there are no other users without Clef with this role or greater", "wpclef"));
         }
 
-        $errors = array();
-        foreach ($filtered_users as &$user) {
-            $invite = new ClefInvite($user, $is_network_admin);
-            $invite->persist();
-            $success = $invite->send_email($from_email);
-            if (!$success) {
-                $errors[] = $user->user_email;
-            }
-        }
-
-        if (count($errors) > 0) {
-            if (count($errors) == count($filtered_users)) {
-                $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
-            } else {
-                $message = __("unable to send emails to the following users: ", 'wpclef');
-                $message .= join(", ", $errors);
-                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
-            }
-            return new WP_Error('clef_mail_error', $message);
-        } else {
+        try {
+            ClefInvite::invite_users($users, $is_network_admin);
             return array("success" => true);
+        } catch (Exception $e) {
+            return $e;
         }
     }
 
