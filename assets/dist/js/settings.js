@@ -45,7 +45,7 @@
       if ($messageEl.length) {
         $messageEl.remove();
       }
-      return this.$el.find('.button').first().before(this.messageTemplate(data));
+      return this.$el.find('.invite-role-button').first().before(this.messageTemplate(data));
     },
     template: function() {
       return _.template($('#invite-users-template').html());
@@ -60,6 +60,7 @@
     inviteUsers: function(e) {
       var data, failure;
       e.preventDefault();
+      $(e.target).attr('disabled', 'disabled');
       data = {
         _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val(),
@@ -67,6 +68,7 @@
       };
       failure = (function(_this) {
         return function(msg) {
+          $(e.target).removeAttr('disabled');
           return _this.showMessage({
             message: _.template(clefTranslations.messages.error.invite)({
               error: msg
@@ -77,10 +79,11 @@
       })(this);
       return $.post(this.inviteUsersAction, data).success((function(_this) {
         return function(data) {
+          $(e.target).removeAttr('disabled');
           if (data.success) {
             _this.trigger("invited");
             return _this.showMessage({
-              message: clefTranslations.messages.success.invite,
+              message: data.message,
               type: "updated"
             });
           } else {

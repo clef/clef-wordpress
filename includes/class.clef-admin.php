@@ -387,7 +387,7 @@ class ClefAdmin {
 
             $users = get_users(array("include" => $_REQUEST['users']));
             if (empty($users)) {
-                return new WP_Error('no_users', __("No users were invited to use Clef."));
+                return new WP_Error('no_users', __("No users were invited to use Clef.", "wpclef"));
             }
 
             try {
@@ -401,7 +401,7 @@ class ClefAdmin {
                 add_settings_error(
                     CLEF_OPTIONS_NAME, 
                     "clef_invite_error",
-                    sprintf(__("There was an error inviting users to Clef: %s"), $e->getMessage()),
+                    sprintf(__("There was an error inviting users to Clef: %s", "wpclef"), $e->getMessage()),
                     "error"
                 );
                 unset($_GET['_wp_http_referer']);
@@ -412,10 +412,11 @@ class ClefAdmin {
 
     public function handle_invite_bulk_action_admin_notices() {
         if (isset($_GET['clef_invite_success'])) {
+            $num_invited = (int) $_GET['clef_invite_success'];
             add_settings_error(
                 CLEF_OPTIONS_NAME,
                 "clef_invite_success",
-                sprintf(__("%d users successfully invited to Clef."), (int) $_GET['clef_invite_success']),
+                sprintf(__("%d %s successfully invited to Clef.", "wpclef"), $num_invited, _n("user", "users", $num_invited)),
                 "updated"
             );
         }
@@ -451,8 +452,9 @@ class ClefAdmin {
         }
 
         try {
-            ClefInvite::invite_users($users, $is_network_admin);
-            return array("success" => true);
+            ClefInvite::invite_users($filtered_users, $is_network_admin);
+            $num_invited = count($filtered_users);
+            return array("success" => true, "message" => sprintf(__("%d %s successfully invited to Clef.", "wpclef"), $num_invited, _n("user", "users", $num_invited)));
         } catch (Exception $e) {
             return new WP_Error('clef_email_error', $e->getMessage());
         }
