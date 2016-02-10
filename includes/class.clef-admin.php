@@ -48,6 +48,7 @@ class ClefAdmin {
         add_action('admin_footer-users.php', array($this, "add_invite_bulk_action_to_dropdown"));
         add_action('admin_action_invite_to_clef', array($this, "handle_invite_bulk_action"));
 
+        add_action('admin_notices', array($this, 'handle_invite_bulk_action_admin_notices') );
         add_action('admin_notices', array($this, 'display_messages') );
 
         add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
@@ -380,7 +381,10 @@ class ClefAdmin {
     }
 
     public function handle_invite_bulk_action () {
-        if (isset($_REQUEST['users'])) {
+        $user_is_admin = current_user_can('manage_options');
+        if (isset($_REQUEST['users']) && isset($_REQUEST['_wpnonce']) && $user_is_admin) {
+            check_admin_referer('bulk-users');
+
             $users = get_users(array("include" => $_REQUEST['users']));
             if (empty($users)) {
                 return new WP_Error('no_users', __("No users were invited to use Clef."));
@@ -389,12 +393,10 @@ class ClefAdmin {
             try {
                 ClefInvite::invite_users($users, false);
 
-                add_settings_error(
-                    CLEF_OPTIONS_NAME, 
-                    "clef_invite_success",
-                    sprintf(__("%s users successfully invited to Clef."), count($users)),
-                    "success"
-                );
+                $redirect_to = remove_query_arg('action', wp_get_referer());
+                wp_redirect(add_query_arg('clef_invite_success', count($users), $redirect_to));
+                exit();
+
             } catch (Exception $e) {
                 add_settings_error(
                     CLEF_OPTIONS_NAME, 
@@ -402,7 +404,20 @@ class ClefAdmin {
                     sprintf(__("There was an error inviting users to Clef: %s"), $e->getMessage()),
                     "error"
                 );
+                unset($_GET['_wp_http_referer']);
             }
+
+        }
+    }
+
+    public function handle_invite_bulk_action_admin_notices() {
+        if (isset($_GET['clef_invite_success'])) {
+            add_settings_error(
+                CLEF_OPTIONS_NAME,
+                "clef_invite_success",
+                sprintf(__("%d users successfully invited to Clef."), (int) $_GET['clef_invite_success']),
+                "updated"
+            );
         }
     }
 
@@ -439,7 +454,7 @@ class ClefAdmin {
             ClefInvite::invite_users($users, $is_network_admin);
             return array("success" => true);
         } catch (Exception $e) {
-            return $e;
+            return new WP_Error('clef_email_error', $e->getMessage());
         }
     }
 
