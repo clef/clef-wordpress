@@ -70,7 +70,7 @@ class ClefLogin {
     }
 
     public function load_base_styles() {
-        $ident = ClefUtils::register_style('main');
+        $ident = ClefUtils::register_style('login');
         wp_enqueue_style($ident);
         $ident = ClefUtils::register_script('login');
         wp_enqueue_script($ident);
