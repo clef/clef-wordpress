@@ -8,6 +8,7 @@ Author: Clef
 Author URI: https://getclef.com
 License: MIT
 License URI: http://opensource.org/licenses/MIT
+Text Domain: wpclef
  */
 
 /**
