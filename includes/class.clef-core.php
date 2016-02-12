@@ -69,7 +69,6 @@ class ClefCore {
         }
         add_action('clef_plugin_uninstall', array('ClefSetup', 'uninstall_plugin'));
         add_action('clef_plugin_updated', array($this, 'plugin_updated'), 10, 2);
-        add_action('wp_enqueue_scripts', array($this, 'load_base_styles'));
 
         // Run migrations and other hooks upon plugin update
         $old_version = $settings->get('version');
@@ -81,11 +80,6 @@ class ClefCore {
         if (CLEF_IS_BASE_PLUGIN) {
             do_action('clef_hook_admin_menu');
         }
-    }
-
-    public function load_base_styles() {
-        $ident = ClefUtils::register_style('main');
-        wp_enqueue_style($ident);
     }
 
     public function plugin_updated($version, $previous_version) {

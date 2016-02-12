@@ -20,7 +20,6 @@ class ClefTranslation {
                 "success" => array(
                     "connect" => __("You've successfully connected your account with Clef", "wpclef"),
                     "configured" => __("You're all set up!", "wpclef"),
-                    "invite" => __("Email invitations have been sent to your users.", "wpclef"),
                     "disconnect" => __("Successfully disconnected Clef account.", "wpclef")
                 ),
                 "saving" =>  __("Settings are being saved. Are you sure you want to navigate away?", "wpclef")
