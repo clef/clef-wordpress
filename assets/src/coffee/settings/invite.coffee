@@ -10,14 +10,14 @@
         showMessage: (data) ->
             $messageEl = @$el.find('.invite-users-message')
             $messageEl.remove() if $messageEl.length
-            @$el.find('.invite-role-button') .first()
-              .before(@messageTemplate(data))
+            @$el.find('.invite-role-button').first()
+                .before(@messageTemplate(data))
 
         template: -> _.template($('#invite-users-template').html())
         initialize: (@opts) ->
             if @opts.el
                 @setElement(@opts.el)
-            
+
         inviteUsersAction: ajaxurl + "?action=clef_invite_users"
         inviteUsers: (e) ->
             e.preventDefault()

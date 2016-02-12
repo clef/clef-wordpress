@@ -354,6 +354,11 @@ Styles
     float: right;
     cursor: pointer; }
 
+.clef-settings__buttons p.submit {
+  margin-top: 0;
+  margin-right: 10px;
+  float: left; }
+
 #clef-tutorial {
   width: 100%;
   height: 100%;

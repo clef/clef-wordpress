@@ -444,7 +444,8 @@
     genericErrorMessage: clefTranslations.messages.error.generic,
     addEvents: {
       "click .generate-override": "generateOverride",
-      "click input[type='submit']:not(.ajax-ignore)": "saveForm",
+      "click .clef-settings__saveButton": "saveForm",
+      "click .clef-settings__resetButton": "resetForm",
       "click a.show-support-html": "showSupportHTML"
     },
     constructor: function(opts) {
@@ -547,6 +548,16 @@
         error: this.model.saveError.bind(this.model)
       });
     },
+    resetForm: function(e) {
+      e.preventDefault();
+      if (confirm("Are you sure you want to clear your settings?")) {
+        return this.model.reset({
+          success: function() {
+            return window.location = window.location;
+          }
+        });
+      }
+    },
     showSupportHTML: function(e) {
       e.preventDefault();
       return $('.support-html-container').slideDown();
@@ -580,8 +591,20 @@
     isConfigured: function() {
       return !!(this.cget('clef_settings_app_id') && this.cget('clef_settings_app_secret'));
     },
-    configure: function(data) {
+    reset: function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return this.configure({
+        appID: "",
+        appSecret: ""
+      }, options);
+    },
+    configure: function(data, options) {
       var k, toSave, v, _ref;
+      if (options == null) {
+        options = {};
+      }
       toSave = {
         'wpclef[clef_settings_app_id]': data.appID,
         'wpclef[clef_settings_app_secret]': data.appSecret
@@ -593,7 +616,7 @@
           toSave["wpclef[" + k + "]"] = v;
         }
       }
-      return this.save(toSave);
+      return this.save(toSave, options);
     }
   });
   FormVisualization = Backbone.View.extend({
