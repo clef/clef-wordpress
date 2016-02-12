@@ -140,10 +140,16 @@
     }
 
     .login {
+        width: 460px;
         @include widget();
-        .button-wrapper {
-            margin: 60px auto;
-            width: 190px;
+        h1 {
+          border-bottom: none;
+          margin-bottom: 0;
+        }
+        p {
+          margin-bottom: 20px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #eee;
         }
         iframe {
             margin-top: 10px;

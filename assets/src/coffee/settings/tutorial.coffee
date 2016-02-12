@@ -213,6 +213,7 @@
                 .attr('data-app-id', @opts.appID)
                 .attr('data-redirect-url', redirectURL)
                 .attr('data-state', @opts.state)
+                .attr('data-embed', true)
             @button = new ClefButton el: $('#clef-button-target')[0]
             @button.render()
 
