@@ -197,10 +197,6 @@ Styles
     margin-top: 20px;
     margin-left: 0;
     display: none; }
-  #clef-settings-container #clef-settings, #connect-clef-account #clef-settings {
-    position: aboslute;
-    top: 0;
-    left: 0; }
   #clef-settings-container .settings-section, #connect-clef-account .settings-section {
     background: white;
     padding: 20px;
@@ -339,14 +335,11 @@ Styles
   float: left; }
 
 #clef-tutorial {
-  width: 100%;
-  height: 100%;
-  display: none;
-  margin-top: 40px;
   *zoom: 1;
   max-width: 75em;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  margin-left: 0; }
   #clef-tutorial:before,
   #clef-tutorial:after {
     content: " ";
@@ -362,8 +355,9 @@ Styles
     float: left;
     margin-right: 1.85185%;
     width: 59.25926%;
-    margin-left: 20.37037%;
-    min-width: 460px; }
+    min-width: 580px;
+    position: relative;
+    margin: 20px; }
     #clef-tutorial .clef-tutorial-container:last-child {
       margin-right: 0; }
   #clef-tutorial .tutorial-message {
@@ -392,29 +386,21 @@ Styles
       font-size: 22px;
       margin-bottom: 0;
       font-weight: 500; }
-    #clef-tutorial .intro .button {
-      text-align: center;
-      display: inline-block;
-      margin: 40px auto;
-      background: #0D9DDB;
-      border: none;
-      -webkit-box-shadow: 3px 3px #07587b;
-      box-shadow: 3px 3px #07587b;
-      border-radius: 0;
-      font-weight: bold;
-      font-size: 18px; }
-      #clef-tutorial .intro .button:hover {
-        background: #0c8cc3; }
+    #clef-tutorial .intro .next-container {
+      margin: 30px auto; }
     #clef-tutorial .intro .quotes {
-      background: #DDD;
-      padding: 5px; }
+      background: #dedede;
+      padding: 20px;
+      padding-bottom: 1px; }
       #clef-tutorial .intro .quotes blockquote {
         color: #333;
         text-align: left;
         font-weight: 700;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.2em;
-        margin-bottom: 70px; }
+        margin: 0;
+        margin-bottom: 60px;
+        min-height: 46px; }
         #clef-tutorial .intro .quotes blockquote .highlight {
           background: none;
           border: none;
@@ -450,6 +436,17 @@ Styles
             background: rgba(0, 186, 110, 0.6); }
             #clef-tutorial .intro .quotes blockquote .highlight.green:hover {
               background: #00BA6E; }
+          #clef-tutorial .intro .quotes blockquote .highlight.blue {
+            color: white;
+            font-weight: bold;
+            background: rgba(13, 157, 219, 0.6); }
+            #clef-tutorial .intro .quotes blockquote .highlight.blue:hover {
+              background: #0D9DDB; }
+      #clef-tutorial .intro .quotes .recommended {
+        text-align: left; }
+        #clef-tutorial .intro .quotes .recommended p {
+          font-size: 16px;
+          font-style: italic; }
     #clef-tutorial .intro .skip {
       float: right;
       color: #AAA;

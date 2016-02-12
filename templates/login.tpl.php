@@ -23,7 +23,7 @@
     <div class="clef-button-container">
         <div class="spinner-container">
             <h2>loading clef login</h2>
-            <span class="spinner"></span>
+            <span class="spinner is-active"></span>
         </div>
         <?php do_action('clef_render_login_button', $redirect_url, $app_id, $clef_embedded); ?>
     </div>
