@@ -1,12 +1,13 @@
 @import "settings";
-@import "main";
+@import "login";
 @import "mixins";
 @import "bourbon/_bourbon";
 @import "grid-settings";
 @import "neat/_neat";
-@import "_settings-page";
-@import "_tutorial";
-@import "_form";
+@import "badge";
+@import "settings-page";
+@import "tutorial";
+@import "form";
 
 .bruteprotect-install {
     background: #515953;
