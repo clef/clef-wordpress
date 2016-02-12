@@ -143,6 +143,10 @@ class ClefCore {
         $this->settings->set("version", $version);
     }
 
+    public static function load_translations() {
+        load_plugin_textdomain( 'wpclef' );
+    }
+
     public static function manage_wp_fix() {
         if (isset($_REQUEST['action']) && preg_match('/ajax_settings/', $_REQUEST['action']) && function_exists('mmb_authenticate')) {
             remove_action('plugins_loaded', 'mmb_authenticate', 1);
