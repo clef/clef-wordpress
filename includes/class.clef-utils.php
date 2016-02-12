@@ -251,7 +251,7 @@ class ClefUtils {
     }
 
     public static function get_state() {
-        if (!isset($$_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
+        if (!isset($_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
         return $_COOKIE['_clef_state'];
     }
 
