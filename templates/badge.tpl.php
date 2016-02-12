@@ -11,14 +11,13 @@ if ($pretty) {
 <a href="https://getclef.com?utm_source=badge" class="clef-badge <?php if ($pretty) {?>pretty<?php } ?>" target="_blank"><?php echo $text ?></a>
 <style>
 .clef-badge {
-    * {
-        box-sizing: border-box;
-    }
-
     width: 100%;
     text-align: center;
     display: inline-block;
     margin: 10px auto;
+}
+.clef-badge * {
+    box-sizing: border-box;
 }
 .clef-badge.pretty {
     display: block;
