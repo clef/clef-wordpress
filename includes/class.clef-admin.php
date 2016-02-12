@@ -36,18 +36,13 @@ class ClefAdmin {
         add_action('admin_init', array($this, "setup_plugin"));
         add_action('admin_init', array($this, "settings_form"));
         add_action('admin_init', array($this, "multisite_settings_edit"));
-
-        // Display the badge message, if appropriate
-        add_action('admin_init', array($this, 'clef_hook_onboarding'));
-
+        add_action('admin_init', array($this, 'clef_hook_onboarding')); // Display the badge message, if appropriate
         add_action('clef_hook_admin_menu', array($this, "hook_admin_menu"));
         add_filter('clef_add_affiliate', array($this, "add_affiliates"));
-
         add_action('admin_enqueue_scripts', array($this, "admin_enqueue_scripts"));
-
         add_action('admin_notices', array($this, 'display_messages') );
-
         add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
+        add_action('wp_dashboard_setup', array($this, 'add_dashboard_widget'));
 
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
         global $clef_ajax;
@@ -363,6 +358,48 @@ class ClefAdmin {
     public function disable_passwords_for_clef_users() {
         $this->settings->disable_passwords_for_clef_users();
         $this->settings->generate_and_send_override_link(wp_get_current_user());
+    }
+
+    public function add_dashboard_widget() {
+        if ($this->settings->is_configured()) return;
+
+        $name = 'clef_setup_widget';
+
+        wp_add_dashboard_widget(
+            $name,
+            'Your site is Clef enabled!',
+            array($this, 'render_dashboard_widget')
+        );
+
+        // Globalize the metaboxes array, this holds all the widgets for wp-admin
+
+        global $wp_meta_boxes;
+
+        // Get the regular dashboard widgets array
+        // (which has our new widget already but at the end)
+
+        $normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+        // Backup and delete our new dashboard widget from the end of the array
+
+        $widget_backup = array( $name => $normal_dashboard[$name] );
+        unset( $normal_dashboard[$name] );
+
+        // Merge the two arrays together so our widget is at the beginning
+
+        $sorted_dashboard = array_merge( $widget_backup, $normal_dashboard );
+
+        // Save the sorted array back into the original metaboxes
+
+        $wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+    }
+
+    public function render_dashboard_widget() {
+    ?>
+        <p><?php _e("Clef is the best way to log in to WordPress <b>without usernames or passwords</b>. You're a few clicks away from joining more than 600,000 other WordPress sites that use Clef to make logging in safer and easier."); ?></p>
+        <p><?php _e("Click below to finish setting up Clef or learn more <a href='https://getclef.com/wordpress' target='_blank'>here</a>.") ?></p>
+        <a href="<?php echo admin_url('admin.php?page=clef') ?>" class="button button-primary"><?php _e("Finish setup"); ?></a>
+    <?php
     }
 
     /**** BEGIN AJAX HANDLERS ******/
