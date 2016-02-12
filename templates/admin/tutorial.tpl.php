@@ -34,12 +34,8 @@
 
         <div class="sub connect login">
             <h1><?php _e("Connect your Clef account", "wpclef"); ?></h1>
-            <p><?php _e("To connect, click the button below and sync the Wave. Once you're connected, you'll be able to log in and out of your WordPress site with just your phone.", "wpclef"); ?></p>
-            <div class="button-wrapper">
-                <div id="clef-button-target"></div>
-            </div>
-            <h3><?php _e("Don't have the app? Let us text you the download link.", "wpclef"); ?></h3>
-            <iframe src="<?php echo CLEF_BASE ?>/iframes/text" frameborder="0"></iframe>
+            <p><?php _e("To connect a Clef account, use the Clef app to sync with the wave below. Once you're connected, you'll be able to log in and out of your WordPress site with just your phone.", "wpclef"); ?></p>
+            <div id="clef-button-target"></div>
         </div>
 
         <div class="sub using-clef setup connect">

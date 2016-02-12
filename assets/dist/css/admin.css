@@ -489,14 +489,19 @@ Styles
   #clef-tutorial .invite .next {
     display: inline-block !important; }
   #clef-tutorial .login {
+    width: 460px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e5e5;
     background: white;
     padding: 20px 25px; }
-    #clef-tutorial .login .button-wrapper {
-      margin: 60px auto;
-      width: 190px; }
+    #clef-tutorial .login h1 {
+      border-bottom: none;
+      margin-bottom: 0; }
+    #clef-tutorial .login p {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee; }
     #clef-tutorial .login iframe {
       margin-top: 10px;
       width: 100%;
