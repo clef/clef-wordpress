@@ -2,10 +2,6 @@
 /******************************
 Styles
 *********************************/
-
-$width: 140px;
-$height: 50px;
-
 .clef-badge-prompt {
     * {
         box-sizing: border-box;
@@ -30,26 +26,3 @@ $height: 50px;
    }
 }
 
-.clef-badge {
-    * {
-        box-sizing: border-box;
-    }
-
-    width: 100%;
-    text-align: center;
-    display: inline-block;
-    margin: 10px auto;
-    &.pretty {
-        display: block;
-        overflow: hidden;
-        text-indent: -579px;
-        height: $height;
-        width: $width;
-        background: url("https://bit.ly/clef-wordpress-badge");
-        background-size: 100% 100%;
-        opacity: .8;
-        &:hover {
-            opacity: 1;
-        }
-    }
-}
