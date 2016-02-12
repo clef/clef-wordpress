@@ -307,14 +307,31 @@ Styles
       float: none; }
   #clef-settings-container .sync iframe, #connect-clef-account .sync iframe {
     display: none; }
+  #clef-settings-container .invite-users h3, #connect-clef-account .invite-users h3 {
+    margin-bottom: 20px; }
   #clef-settings-container .invite-users .invite-users-message, #connect-clef-account .invite-users .invite-users-message {
     margin: 10px 0 0 0;
     clear: both; }
-  #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4, #connect-clef-account .invite-users .header h3, #connect-clef-account .invite-users .header h4 {
-    margin-top: 0;
-    margin-bottom: 5px; }
-  #clef-settings-container .invite-users .button, #connect-clef-account .invite-users .button {
-    margin-top: 20px; }
+  #clef-settings-container .invite-users .invite-users__img, #connect-clef-account .invite-users .invite-users__img {
+    width: 50%;
+    float: left; }
+  #clef-settings-container .invite-users .invite-users__individually-container, #connect-clef-account .invite-users .invite-users__individually-container {
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee; }
+  #clef-settings-container .invite-users .invite-users__individually, #connect-clef-account .invite-users .invite-users__individually {
+    float: left;
+    width: 50%;
+    padding-left: 20px; }
+    #clef-settings-container .invite-users .invite-users__individually .button, #connect-clef-account .invite-users .invite-users__individually .button {
+      margin-top: 0; }
+    #clef-settings-container .invite-users .invite-users__individually p, #connect-clef-account .invite-users .invite-users__individually p {
+      margin-top: 5px; }
+  #clef-settings-container .invite-users .invite-role-button, #connect-clef-account .invite-users .invite-role-button {
+    margin-top: 15px; }
+  #clef-settings-container .invite-users .next, #connect-clef-account .invite-users .next {
+    float: right;
+    cursor: pointer; }
 
 .clef-settings__buttons p.submit {
   margin-top: 0;
