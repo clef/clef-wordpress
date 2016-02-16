@@ -12,9 +12,9 @@ Modern two-factor that people love to use: strong authentication without passwor
 
 == Description ==
 
-[The Clef mobile app](https://getclef.com) provides password-free, two-factor authentication that is highly secure and enjoyable to use. Just sync your phone with the Clef Wave to log in. [Watch the 30-sec. demo](https://getclef.wistia.com/medias/pl9bg9dggs).
+[The Clef mobile app](https://getclef.com) provides password-free, two-factor authentication that is highly secure and enjoyable to use. Just sync your phone with the Clef Wave to log in. [Watch the 30-sec. demo](http://vimeo.com/103148853).
 
-http://getclef.wistia.com/medias/pl9bg9dggs?embedType=async&videoWidth=640
+http://vimeo.com/103148853
 
 = Our Users’ Favorite Features =
 - **No passwords**: login securely with the [Clef wave](https://getclef.com/tutorial/), and enjoy two-factor protection without one-time codes.
