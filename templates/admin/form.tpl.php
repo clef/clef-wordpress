@@ -90,9 +90,9 @@
                 <span class="hide-if-js"><b><?php _e( 'I want to add the badge or link elsewhere', 'wpclef' ); ?>:</b></span>
                 <div class="support-html-container hide-if-js">
                     <h4><?php _e( 'Copy this HTML where you want to add the badge', 'wpclef' ); ?></h4>
-                    <textarea class="ajax-ignore"><?php echo esc_textarea( '<a href="https://bit.ly/wordpress-login-clef" class="clef-badge pretty">'.__( 'WordPress Login Protected by Clef', 'wpclef' ).'</a>'); ?></textarea>
+                    <textarea class="ajax-ignore"><?php echo esc_textarea(ClefUtils::render_template('badge.tpl', array("pretty" => true)))?></textarea>
                     <h4><?php _e( 'Copy this HTML where you want to add the link', 'wpclef' ); ?></h4>
-                    <textarea class="ajax-ignore"><?php echo esc_textarea('<a href="https://bit.ly/wordpress-login-clef" class="clef-badge">'.__( 'WordPress Login Protected by Clef', 'wpclef' ).'</a>'); ?></textarea>
+                    <textarea class="ajax-ignore"><?php echo esc_textarea(ClefUtils::render_template('badge.tpl', array("pretty" => false))); ?></textarea>
                 </div>
             </div>
             <div class="preview-container hide-if-no-js">
@@ -126,7 +126,10 @@
                 </div>
             </div>
         </div>
-        <?php submit_button(); ?>
+        <div class="clef-settings clef-settings__buttons">
+            <?php submit_button("Save settings", "primary clef-settings__saveButton"); ?>
+            <?php submit_button("Reset Application ID and Secret", "delete clef-settings__resetButton"); ?>
+        </div>
     </form>
 
 </div>

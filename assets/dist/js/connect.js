@@ -273,7 +273,7 @@
       } else {
         redirectURL += "?connect_clef_account=1";
       }
-      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', redirectURL).attr('data-state', this.opts.state);
+      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', redirectURL).attr('data-state', this.opts.state).attr('data-embed', true);
       this.button = new ClefButton({
         el: $('#clef-button-target')[0]
       });

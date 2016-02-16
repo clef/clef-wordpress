@@ -251,7 +251,7 @@ class ClefUtils {
     }
 
     public static function get_state() {
-        if (!isset($$_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
+        if (!isset($_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
         return $_COOKIE['_clef_state'];
     }
 
@@ -263,7 +263,7 @@ class ClefUtils {
             ClefUtils::initialize_state(true);
             return true;
         } else {
-            throw new ClefStateException('The state parameter is not verified. This may be due to this page being cached by another WordPress plugin. Please refresh your page and try again');
+            throw new ClefStateException('The state parameter is not verified. This may be due to this page being cached by another WordPress plugin. Please refresh your page and try again. If the issue persists, please follow <a href="http://support.getclef.com/article/95-the-state-parameter-is-not-verified-error#caching" target="_blank">this guide</a> to debug the issue.');
         }
     }
 

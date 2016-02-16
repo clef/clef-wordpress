@@ -12,7 +12,7 @@ class ClefLogin {
     }
 
     public function initialize_hooks() {
-        add_action('init', array($this, 'initialize_state'));
+        add_action('init', array($this, 'initialize_state'), -1);
 
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
@@ -70,7 +70,7 @@ class ClefLogin {
     }
 
     public function load_base_styles() {
-        $ident = ClefUtils::register_style('main');
+        $ident = ClefUtils::register_style('login');
         wp_enqueue_style($ident);
         $ident = ClefUtils::register_script('login');
         wp_enqueue_script($ident);

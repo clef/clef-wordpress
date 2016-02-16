@@ -45,7 +45,7 @@
       if ($messageEl.length) {
         $messageEl.remove();
       }
-      return this.$el.find('.button').first().before(this.messageTemplate(data));
+      return this.$el.find('.invite-role-button').first().before(this.messageTemplate(data));
     },
     template: function() {
       return _.template($('#invite-users-template').html());
@@ -60,6 +60,7 @@
     inviteUsers: function(e) {
       var data, failure;
       e.preventDefault();
+      $(e.target).attr('disabled', 'disabled');
       data = {
         _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val(),
@@ -67,6 +68,7 @@
       };
       failure = (function(_this) {
         return function(msg) {
+          $(e.target).removeAttr('disabled');
           return _this.showMessage({
             message: _.template(clefTranslations.messages.error.invite)({
               error: msg
@@ -77,10 +79,11 @@
       })(this);
       return $.post(this.inviteUsersAction, data).success((function(_this) {
         return function(data) {
+          $(e.target).removeAttr('disabled');
           if (data.success) {
             _this.trigger("invited");
             return _this.showMessage({
-              message: clefTranslations.messages.success.invite,
+              message: data.message,
               type: "updated"
             });
           } else {
@@ -362,7 +365,7 @@
       } else {
         redirectURL += "?connect_clef_account=1";
       }
-      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', redirectURL).attr('data-state', this.opts.state);
+      target = $('#clef-button-target').attr('data-app-id', this.opts.appID).attr('data-redirect-url', redirectURL).attr('data-state', this.opts.state).attr('data-embed', true);
       this.button = new ClefButton({
         el: $('#clef-button-target')[0]
       });
@@ -441,7 +444,8 @@
     genericErrorMessage: clefTranslations.messages.error.generic,
     addEvents: {
       "click .generate-override": "generateOverride",
-      "click input[type='submit']:not(.ajax-ignore)": "saveForm",
+      "click .clef-settings__saveButton": "saveForm",
+      "click .clef-settings__resetButton": "resetForm",
       "click a.show-support-html": "showSupportHTML"
     },
     constructor: function(opts) {
@@ -544,6 +548,16 @@
         error: this.model.saveError.bind(this.model)
       });
     },
+    resetForm: function(e) {
+      e.preventDefault();
+      if (confirm("Are you sure you want to clear your settings?")) {
+        return this.model.reset({
+          success: function() {
+            return window.location = window.location;
+          }
+        });
+      }
+    },
     showSupportHTML: function(e) {
       e.preventDefault();
       return $('.support-html-container').slideDown();
@@ -577,8 +591,20 @@
     isConfigured: function() {
       return !!(this.cget('clef_settings_app_id') && this.cget('clef_settings_app_secret'));
     },
-    configure: function(data) {
+    reset: function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return this.configure({
+        appID: "",
+        appSecret: ""
+      }, options);
+    },
+    configure: function(data, options) {
       var k, toSave, v, _ref;
+      if (options == null) {
+        options = {};
+      }
       toSave = {
         'wpclef[clef_settings_app_id]': data.appID,
         'wpclef[clef_settings_app_secret]': data.appSecret
@@ -590,7 +616,7 @@
           toSave["wpclef[" + k + "]"] = v;
         }
       }
-      return this.save(toSave);
+      return this.save(toSave, options);
     }
   });
   FormVisualization = Backbone.View.extend({

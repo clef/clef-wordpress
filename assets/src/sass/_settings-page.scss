@@ -12,11 +12,6 @@
         margin-left: 0;
         display: none;
     }
-    #clef-settings {
-        position: aboslute;
-        top: 0;
-        left: 0;
-    }
 
     .settings-section {
         background: white;
@@ -104,18 +99,52 @@
     }
 
     .invite-users {
-        .invite-users-message {
-            margin: 10px 0 0 0;
-            clear: both;
-        }
-        .header {
-            h3, h4 {
-                margin-top: 0;
-                margin-bottom: 5px;
-            }
-        }
+      h3 {
+        margin-bottom: 20px;
+      }
+
+      .invite-users-message {
+          margin: 10px 0 0 0;
+          clear: both;
+      }
+
+      .invite-users__img {
+        width: 50%;
+        float: left; 
+      }
+
+      .invite-users__individually-container {
+        padding-bottom: 25px;
+        margin-top: 10px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .invite-users__individually {
+        float: left;
+        width: 50%;
+        padding-left: 20px;
         .button {
-            margin-top: 20px;
+          margin-top: 0;
         }
+        p {
+          margin-top: 5px;
+        }
+      }
+
+      .invite-role-button {
+        margin-top: 15px;
+      }
+
+      .next {
+        float: right;
+        cursor: pointer;
+      }
     }
+}
+
+.clef-settings__buttons p.submit {
+  margin-top: 0;
+  margin-right: 10px;
+  float: left;
 }

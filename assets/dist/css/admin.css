@@ -1,46 +1,3 @@
-/******************************
-Styles
-*********************************/
-.clef-badge-prompt {
-  position: relative;
-  min-height: 170px; }
-  .clef-badge-prompt * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .clef-badge-prompt .link-fade {
-    display: none; }
-  .clef-badge-prompt .dismiss {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-weight: bold;
-    color: #AAA;
-    font-size: 20px; }
-    .clef-badge-prompt .dismiss:hover {
-      color: #888; }
-
-.clef-badge {
-  width: 100%;
-  text-align: center;
-  display: inline-block;
-  margin: 10px auto; }
-  .clef-badge * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .clef-badge.pretty {
-    display: block;
-    overflow: hidden;
-    text-indent: -579px;
-    height: 50px;
-    width: 140px;
-    background: url("https://bit.ly/clef-wordpress-badge");
-    background-size: 100% 100%;
-    opacity: .8; }
-    .clef-badge.pretty:hover {
-      opacity: 1; }
-
 .clef-login-form .clef-button-container {
   width: 188px;
   height: 35px;
@@ -206,6 +163,28 @@ Styles
 .login-action-register.clef-login-form .clef-register-container {
   padding-top: 20px; }
 
+/******************************
+Styles
+*********************************/
+.clef-badge-prompt {
+  position: relative;
+  min-height: 170px; }
+  .clef-badge-prompt * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  .clef-badge-prompt .link-fade {
+    display: none; }
+  .clef-badge-prompt .dismiss {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-weight: bold;
+    color: #AAA;
+    font-size: 20px; }
+    .clef-badge-prompt .dismiss:hover {
+      color: #888; }
+
 #clef-settings-container, #connect-clef-account {
   width: 100%;
   height: 100%;
@@ -218,10 +197,6 @@ Styles
     margin-top: 20px;
     margin-left: 0;
     display: none; }
-  #clef-settings-container #clef-settings, #connect-clef-account #clef-settings {
-    position: aboslute;
-    top: 0;
-    left: 0; }
   #clef-settings-container .settings-section, #connect-clef-account .settings-section {
     background: white;
     padding: 20px;
@@ -328,24 +303,44 @@ Styles
       float: none; }
   #clef-settings-container .sync iframe, #connect-clef-account .sync iframe {
     display: none; }
+  #clef-settings-container .invite-users h3, #connect-clef-account .invite-users h3 {
+    margin-bottom: 20px; }
   #clef-settings-container .invite-users .invite-users-message, #connect-clef-account .invite-users .invite-users-message {
     margin: 10px 0 0 0;
     clear: both; }
-  #clef-settings-container .invite-users .header h3, #clef-settings-container .invite-users .header h4, #connect-clef-account .invite-users .header h3, #connect-clef-account .invite-users .header h4 {
-    margin-top: 0;
-    margin-bottom: 5px; }
-  #clef-settings-container .invite-users .button, #connect-clef-account .invite-users .button {
-    margin-top: 20px; }
+  #clef-settings-container .invite-users .invite-users__img, #connect-clef-account .invite-users .invite-users__img {
+    width: 50%;
+    float: left; }
+  #clef-settings-container .invite-users .invite-users__individually-container, #connect-clef-account .invite-users .invite-users__individually-container {
+    padding-bottom: 25px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee; }
+  #clef-settings-container .invite-users .invite-users__individually, #connect-clef-account .invite-users .invite-users__individually {
+    float: left;
+    width: 50%;
+    padding-left: 20px; }
+    #clef-settings-container .invite-users .invite-users__individually .button, #connect-clef-account .invite-users .invite-users__individually .button {
+      margin-top: 0; }
+    #clef-settings-container .invite-users .invite-users__individually p, #connect-clef-account .invite-users .invite-users__individually p {
+      margin-top: 5px; }
+  #clef-settings-container .invite-users .invite-role-button, #connect-clef-account .invite-users .invite-role-button {
+    margin-top: 15px; }
+  #clef-settings-container .invite-users .next, #connect-clef-account .invite-users .next {
+    float: right;
+    cursor: pointer; }
+
+.clef-settings__buttons p.submit {
+  margin-top: 0;
+  margin-right: 10px;
+  float: left; }
 
 #clef-tutorial {
-  width: 100%;
-  height: 100%;
-  display: none;
-  margin-top: 40px;
   *zoom: 1;
   max-width: 75em;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  margin-left: 0; }
   #clef-tutorial:before,
   #clef-tutorial:after {
     content: " ";
@@ -361,8 +356,9 @@ Styles
     float: left;
     margin-right: 1.85185%;
     width: 59.25926%;
-    margin-left: 20.37037%;
-    min-width: 460px; }
+    min-width: 580px;
+    position: relative;
+    margin: 20px; }
     #clef-tutorial .clef-tutorial-container:last-child {
       margin-right: 0; }
   #clef-tutorial .tutorial-message {
@@ -370,7 +366,6 @@ Styles
     float: left;
     margin-right: 1.85185%;
     width: 59.25926%;
-    margin-left: 20.37037%;
     padding: 10px;
     margin-top: 20px;
     margin-bottom: 20px; }
@@ -391,29 +386,21 @@ Styles
       font-size: 22px;
       margin-bottom: 0;
       font-weight: 500; }
-    #clef-tutorial .intro .button {
-      text-align: center;
-      display: inline-block;
-      margin: 40px auto;
-      background: #0D9DDB;
-      border: none;
-      -webkit-box-shadow: 3px 3px #07587b;
-      box-shadow: 3px 3px #07587b;
-      border-radius: 0;
-      font-weight: bold;
-      font-size: 18px; }
-      #clef-tutorial .intro .button:hover {
-        background: #0c8cc3; }
+    #clef-tutorial .intro .next-container {
+      margin: 30px auto; }
     #clef-tutorial .intro .quotes {
-      background: #DDD;
-      padding: 5px; }
+      background: #dedede;
+      padding: 20px;
+      padding-bottom: 1px; }
       #clef-tutorial .intro .quotes blockquote {
         color: #333;
         text-align: left;
         font-weight: 700;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.2em;
-        margin-bottom: 70px; }
+        margin: 0;
+        margin-bottom: 60px;
+        min-height: 46px; }
         #clef-tutorial .intro .quotes blockquote .highlight {
           background: none;
           border: none;
@@ -449,6 +436,17 @@ Styles
             background: rgba(0, 186, 110, 0.6); }
             #clef-tutorial .intro .quotes blockquote .highlight.green:hover {
               background: #00BA6E; }
+          #clef-tutorial .intro .quotes blockquote .highlight.blue {
+            color: white;
+            font-weight: bold;
+            background: rgba(13, 157, 219, 0.6); }
+            #clef-tutorial .intro .quotes blockquote .highlight.blue:hover {
+              background: #0D9DDB; }
+      #clef-tutorial .intro .quotes .recommended {
+        text-align: left; }
+        #clef-tutorial .intro .quotes .recommended p {
+          font-size: 16px;
+          font-style: italic; }
     #clef-tutorial .intro .skip {
       float: right;
       color: #AAA;
@@ -491,14 +489,19 @@ Styles
   #clef-tutorial .invite .next {
     display: inline-block !important; }
   #clef-tutorial .login {
+    width: 460px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e5e5;
     background: white;
     padding: 20px 25px; }
-    #clef-tutorial .login .button-wrapper {
-      margin: 60px auto;
-      width: 190px; }
+    #clef-tutorial .login h1 {
+      border-bottom: none;
+      margin-bottom: 0; }
+    #clef-tutorial .login p {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee; }
     #clef-tutorial .login iframe {
       margin-top: 10px;
       width: 100%;

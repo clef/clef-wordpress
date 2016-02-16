@@ -2,9 +2,9 @@
 Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login
-Requires at least: 3.5
+Requires at least: 3.6
 Tested up to: 4.4
-Stable tag: 2.3.4
+Stable tag: 2.4.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -12,9 +12,9 @@ Modern two-factor that people love to use: strong authentication without passwor
 
 == Description ==
 
-[The Clef mobile app](https://getclef.com) provides password-free, two-factor authentication that is highly secure and enjoyable to use. Just sync your phone with the Clef Wave to log in. [Watch the 30-sec. demo](http://vimeo.com/103148853).
+[The Clef mobile app](https://getclef.com) provides password-free, two-factor authentication that is highly secure and enjoyable to use. Just sync your phone with the Clef Wave to log in. [Watch the 30-sec. demo](https://getclef.wistia.com/medias/pl9bg9dggs).
 
-http://vimeo.com/103148853
+http://getclef.wistia.com/medias/pl9bg9dggs?embedType=async&videoWidth=640
 
 = Our Users’ Favorite Features =
 - **No passwords**: login securely with the [Clef wave](https://getclef.com/tutorial/), and enjoy two-factor protection without one-time codes.
@@ -131,6 +131,15 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 4. Clef settings page
 
 == Changelog ==
+
+= 2.4.0 =
+
+* Enhancement: better onboarding experience
+* Enhancement: per-user and bulk user invites to use Clef
+* Enhancement: less CSS loaded by default, including 0 on all non-admin pages
+* Enhancement: dashboard widget to help new users get setup
+* Enhancement: easily reset your Clef settings
+* Fix: reduced frequency of "invalid state" errors
 
 = 2.3.4 =
 
