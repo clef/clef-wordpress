@@ -128,7 +128,7 @@
         </div>
         <div class="clef-settings clef-settings__buttons">
             <?php submit_button("Save settings", "primary clef-settings__saveButton"); ?>
-            <?php submit_button("Reset settings", "delete clef-settings__resetButton"); ?>
+            <?php submit_button("Reset Application ID and Secret", "delete clef-settings__resetButton"); ?>
         </div>
     </form>
 

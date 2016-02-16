@@ -418,6 +418,8 @@ class ClefAdmin {
 
     public function add_dashboard_widget() {
         if ($this->settings->is_configured()) return;
+        if (!current_user_can('manage_options')) return;
+
 
         $name = 'clef_setup_widget';
 

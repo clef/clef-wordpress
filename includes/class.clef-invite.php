@@ -55,11 +55,13 @@ class ClefInvite {
     public static function invite_users($users, $is_network_admin) {
         $errors = array();
         foreach ($users as &$user) {
-            $invite = new ClefInvite($user, $is_network_admin);
-            $invite->persist();
-            $success = $invite->send_email();
-            if (!$success) {
-                $errors[] = $user->user_email;
+            if (!ClefUtils::user_has_clef($user)) {
+                $invite = new ClefInvite($user, $is_network_admin);
+                $invite->persist();
+                $success = $invite->send_email();
+                if (!$success) {
+                    $errors[] = $user->user_email;
+                }
             }
         }
 
@@ -72,7 +74,7 @@ class ClefInvite {
                 $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
             }
             throw new Exception($message);
-        } else { 
+        } else {
             return true;
         }
     }

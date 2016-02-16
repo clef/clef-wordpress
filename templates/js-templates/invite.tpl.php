@@ -1,6 +1,7 @@
 <script id="invite-users-template" type="text/template">
     <div class="invite-users">
-        <a class="next" style="display:none;"><?php _e("Skip and finish setup", "wpclef"); ?></a>
+        <a class="next button button-primary" style="display:none;"><?php _e("Skip and finish setup", "wpclef"); ?></a>
+        <div class="clear"></div>
         <div class="inputs-container">
             <div class="invite-users__individually-container">
                 <h3>Invite users individually or in bulk</h3>

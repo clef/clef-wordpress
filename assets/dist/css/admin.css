@@ -313,6 +313,7 @@ Styles
     float: left; }
   #clef-settings-container .invite-users .invite-users__individually-container, #connect-clef-account .invite-users .invite-users__individually-container {
     padding-bottom: 25px;
+    margin-top: 10px;
     margin-bottom: 25px;
     border-bottom: 1px solid #eee; }
   #clef-settings-container .invite-users .invite-users__individually, #connect-clef-account .invite-users .invite-users__individually {
