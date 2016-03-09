@@ -29,7 +29,8 @@
         disconnectClefAccount: (e) ->
             e.preventDefault()
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data) 
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.disconnect
@@ -50,8 +51,9 @@
                             message: msg
                             type: "updated"
                     else
-                        failure ClefUtils.getErrorMessage(data)
-                .fail (res) -> failure res.responseText
+                        failure data
+                .fail (res) ->
+                    failure res.responseText
 
         showMessage: (data) ->
             @message.remove() if @message

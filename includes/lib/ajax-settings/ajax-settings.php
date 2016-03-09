@@ -46,21 +46,13 @@ class AjaxSettings {
     }
 
     function handle_settings_save() {
-        global $HTTP_RAW_POST_DATA;
-        if (!isset($HTTP_RAW_POST_DATA)) {
-            $HTTP_RAW_POST_DATA = file_get_contents( "php://input" );
-        }
+        if (!isset($_REQUEST[$this->name()])) wp_die(__('Settings could not be parsed — this may be caused by a plugin conflict.'));
 
-        // strip off any leading characters before json starts and then parse
-        $stripped = preg_replace('/^.*?{/', '{', $HTTP_RAW_POST_DATA);
-        $settings = json_decode($stripped, true);
-
-        if (!$settings) wp_die(__('Settings could not be parsed — this may be caused by a plugin conflict.'));
-
-        $option_page = $settings['option_page'];
+        $to_be_saved = $_REQUEST[$this->name()];
+        $option_page = $_REQUEST['option_page'];
         $is_network_wide = isset($_REQUEST['network_wide']) && $_REQUEST['network_wide'];
 
-        if (!wp_verify_nonce($settings['_wpnonce'], $option_page . "-options")) {
+        if (!wp_verify_nonce($_REQUEST['_wpnonce'], $option_page . "-options")) {
             wp_die(__('Cheatin&#8217; uh?'));
         }
 
@@ -75,21 +67,9 @@ class AjaxSettings {
             wp_die(__('Cheatin&#8217; uh?'));
 
         $whitelist_options = apply_filters( 'whitelist_options', array() );
-        $options = $whitelist_options[$settings['option_page']];
+        $options = $whitelist_options[$option_page];
         if (empty($options[0]) || $options[0] != $this->name()) {
             wp_die("You can't do that!");
-        }
-
-        $to_be_saved = array();
-        foreach ($settings as $key => &$value) {
-            $match = preg_match('/(.+)\[(.+)\]$/', $key, $output);
-            if ($match) {
-                $nester_key = $output[1];
-                if ($nester_key == $this->name()) {
-                    $nested_key = $output[2];
-                    $to_be_saved[$nested_key] = $value;
-                }
-            }
         }
 
         $to_be_saved = apply_filters('ajax_settings_pre_save', $to_be_saved);

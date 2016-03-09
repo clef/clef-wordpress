@@ -30,7 +30,8 @@
                 networkAdmin: @opts.isNetworkSettings
                 action: @inviteUsersAction
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data)
                 $(e.target).removeAttr('disabled')
                 @showMessage
                     message: _.template(
@@ -47,12 +48,10 @@
                             message: data.message
                             type:"updated"
                     else
-                        failure ClefUtils.getErrorMessage data
+                        failure data
                 .fail (res) -> failure res.responseText
-
         hideButton: () ->
             @$el.find('.button').hide()
-            
         render: () ->
             @$el.html(@template)
 
