@@ -3,7 +3,7 @@
         el: "#connect-clef-account"
         events:
             "click #disconnect": "disconnectClefAccount"
-        disconnectURL: ajaxurl + "?action=disconnect_clef_account"
+        disconnectAction: "disconnect_clef_account"
         messageTemplate:
             _.template "<div class='<%=type%> connect-clef-message'>\
                           <%=message%>\
@@ -36,7 +36,11 @@
                     )(error: msg)
                     type: "error"
 
-            $.post @disconnectURL, { _wpnonce: @opts.nonces.disconnectClef }
+            data =
+              action: @disconnectClefAction
+              _wpnonce: @opts.nonces.disconnectClef
+
+            $.post "#{ajaxurl}?action=#{@disconnectAction}", data
                 .success (data) =>
                     if data.success
                         @opts.connected = false

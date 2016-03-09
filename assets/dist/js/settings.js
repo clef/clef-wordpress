@@ -56,7 +56,7 @@
         return this.setElement(this.opts.el);
       }
     },
-    inviteUsersAction: ajaxurl + "?action=clef_invite_users",
+    inviteUsersAction: "clef_invite_users",
     inviteUsers: function(e) {
       var data, failure;
       e.preventDefault();
@@ -64,7 +64,8 @@
       data = {
         _wpnonce: this.opts.nonces.inviteUsers,
         roles: $("select[name='invite-users-role']").val(),
-        networkAdmin: this.opts.isNetworkSettings
+        networkAdmin: this.opts.isNetworkSettings,
+        action: this.inviteUsersAction
       };
       failure = (function(_this) {
         return function(msg) {
@@ -77,7 +78,7 @@
           });
         };
       })(this);
-      return $.post(this.inviteUsersAction, data).success((function(_this) {
+      return $.post("" + ajaxurl + "?action=" + this.inviteUsersAction, data).success((function(_this) {
         return function(data) {
           $(e.target).removeAttr('disabled');
           if (data.success) {
@@ -117,6 +118,9 @@
     parse: function(data, options) {
       options.url = ajaxurl + '?action=clef_multisite_settings';
       return MultisiteOptionsModel.__super__.parse.call(this, data, options);
+    },
+    addActionToData: function(data) {
+      return data.action = "clef_multisite_settings";
     }
   });
   this.MultisiteOptionsModel = MultisiteOptionsModel;
@@ -205,7 +209,8 @@
       connectData = {
         _wpnonce: this.opts.nonces.connectClef,
         identifier: data.identifier,
-        state: data.state
+        state: data.state,
+        action: this.connectClefAction
       };
       failure = (function(_this) {
         return function(msg) {
@@ -217,7 +222,7 @@
           });
         };
       })(this);
-      return $.post(this.connectClefAction, connectData).success(function(data) {
+      return $.post("" + ajaxurl + "?action=" + this.connectClefAction, connectData).success(function(data) {
         if (data.success) {
           if (typeof cb === "function") {
             return cb(data);
@@ -268,7 +273,7 @@
     }
   });
   SetupTutorialView = TutorialView.extend({
-    connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id",
+    connectClefAction: "connect_clef_account_clef_id",
     iframePath: '/iframes/application/create/v2',
     initialize: function(opts) {
       opts.slideFilterSelector = '.setup';
@@ -349,7 +354,7 @@
     }
   });
   ConnectTutorialView = TutorialView.extend({
-    connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code",
+    connectClefAction: "connect_clef_account_oauth_code",
     render: function() {
       this.addButton();
       return this.constructor.__super__.render.call(this);
@@ -662,7 +667,7 @@
     events: {
       "click #disconnect": "disconnectClefAccount"
     },
-    disconnectURL: ajaxurl + "?action=disconnect_clef_account",
+    disconnectAction: "disconnect_clef_account",
     messageTemplate: _.template("<div class='<%=type%> connect-clef-message'><%=message%></div>"),
     initialize: function(opts) {
       this.opts = opts;
@@ -685,7 +690,7 @@
       }
     },
     disconnectClefAccount: function(e) {
-      var failure;
+      var data, failure;
       e.preventDefault();
       failure = (function(_this) {
         return function(msg) {
@@ -697,9 +702,11 @@
           });
         };
       })(this);
-      return $.post(this.disconnectURL, {
+      data = {
+        action: this.disconnectClefAction,
         _wpnonce: this.opts.nonces.disconnectClef
-      }).success((function(_this) {
+      };
+      return $.post("" + ajaxurl + "?action=" + this.disconnectAction, data).success((function(_this) {
         return function(data) {
           var msg;
           if (data.success) {

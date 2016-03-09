@@ -18,7 +18,7 @@
             if @opts.el
                 @setElement(@opts.el)
 
-        inviteUsersAction: ajaxurl + "?action=clef_invite_users"
+        inviteUsersAction: "clef_invite_users"
         inviteUsers: (e) ->
             e.preventDefault()
 
@@ -28,6 +28,7 @@
                 _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
                 networkAdmin: @opts.isNetworkSettings
+                action: @inviteUsersAction
 
             failure = (msg) =>
                 $(e.target).removeAttr('disabled')
@@ -37,7 +38,7 @@
                     )(error: msg)
                     type: "error"
 
-            $.post @inviteUsersAction, data
+            $.post "#{ajaxurl}?action=#{@inviteUsersAction}", data
                 .success (data) =>
                     $(e.target).removeAttr('disabled')
                     if data.success
