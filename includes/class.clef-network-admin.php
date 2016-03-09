@@ -71,14 +71,8 @@ class ClefNetworkAdmin extends ClefAdmin {
     }
 
     public function ajax_multisite_options() {
-        global $HTTP_RAW_POST_DATA;
-        if (!isset($HTTP_RAW_POST_DATA)) {
-            $HTTP_RAW_POST_DATA = file_get_contents( "php://input" );
-        }
-        $settings = json_decode($HTTP_RAW_POST_DATA, true);
-
-        if (isset($settings['allow_override'])) {
-            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, (bool) $settings['allow_override']);
+        if (isset($_REQUEST['allow_override'])) {
+            update_site_option(ClefInternalSettings::MS_ALLOW_OVERRIDE_OPTION, (bool) $_REQUEST['allow_override']);
         }
 
         return array("success" => true);

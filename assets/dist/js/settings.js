@@ -127,7 +127,8 @@
       return MultisiteOptionsModel.__super__.parse.call(this, data, options);
     },
     addActionToData: function(data) {
-      return data.action = "clef_multisite_settings";
+      data.action = "clef_multisite_settings";
+      return data;
     }
   });
   this.MultisiteOptionsModel = MultisiteOptionsModel;

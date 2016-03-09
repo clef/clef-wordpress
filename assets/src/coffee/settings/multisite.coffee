@@ -12,6 +12,7 @@
             MultisiteOptionsModel.__super__.parse.call(this, data, options)
         addActionToData: (data) ->
             data.action = "clef_multisite_settings"
+            data
 
 
     this.MultisiteOptionsModel = MultisiteOptionsModel
