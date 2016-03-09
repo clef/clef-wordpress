@@ -76,7 +76,8 @@
                 state: data.state
                 action: @connectClefAction
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data)
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.connect
@@ -88,7 +89,7 @@
                     if data.success
                         cb(data) if typeof(cb) == "function"
                     else
-                        failure ClefUtils.getErrorMessage(data)
+                        failure data
                 .fail (res) -> failure res.responseText
 
         showMessage: (opts) ->
@@ -197,7 +198,6 @@
 
 
     ConnectTutorialView = TutorialView.extend
-        connectClefAction: "connect_clef_account_oauth_code"
         render: ->
             @addButton()
             @constructor.__super__.render.call this

@@ -17,7 +17,7 @@
             data.enable = 'badge'
             $.extend data, ajaxData
             $prompt.slideUp()
-            $.post ajaxurl, data, (() ->), "json"
+            $.post ajaxurl, data, (() ->)
 
         $prompt.find(".no-badge, .dismiss").click (e) ->
             e.preventDefault()
@@ -31,7 +31,7 @@
 
             data.disable = true
             $.extend data, ajaxData
-            $.post ajaxurl, data, (() ->), "json"
+            $.post ajaxurl, data, (() ->)
             $prompt.slideUp()
 
 

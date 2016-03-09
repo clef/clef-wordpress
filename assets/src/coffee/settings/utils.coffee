@@ -3,6 +3,10 @@
     class Utils
 
         @getErrorMessage: (data) ->
+            try
+                data = JSON.parse(data)
+            catch
+
             if data.error
                 return data.error
             else if data.data && data.data.error

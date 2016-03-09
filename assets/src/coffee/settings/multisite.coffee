@@ -11,7 +11,7 @@
             options.url = ajaxurl + '?action=clef_multisite_settings'
             MultisiteOptionsModel.__super__.parse.call(this, data, options)
         addActionToData: (data) ->
-          data.action = "clef_multisite_settings"
+            data.action = "clef_multisite_settings"
 
 
     this.MultisiteOptionsModel = MultisiteOptionsModel

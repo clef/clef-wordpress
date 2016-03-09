@@ -4,6 +4,11 @@
     function Utils() {}
 
     Utils.getErrorMessage = function(data) {
+      try {
+        data = JSON.parse(data);
+      } catch (_error) {
+
+      }
       if (data.error) {
         return data.error;
       } else if (data.data && data.data.error) {
@@ -117,7 +122,9 @@
         action: this.connectClefAction
       };
       failure = (function(_this) {
-        return function(msg) {
+        return function(data) {
+          var msg;
+          msg = ClefUtils.getErrorMessage(data);
           return _this.showMessage({
             message: _.template(clefTranslations.messages.error.connect)({
               error: msg
@@ -132,7 +139,7 @@
             return cb(data);
           }
         } else {
-          return failure(ClefUtils.getErrorMessage(data));
+          return failure(data);
         }
       }).fail(function(res) {
         return failure(res.responseText);
@@ -258,7 +265,6 @@
     }
   });
   ConnectTutorialView = TutorialView.extend({
-    connectClefAction: "connect_clef_account_oauth_code",
     render: function() {
       this.addButton();
       return this.constructor.__super__.render.call(this);
@@ -319,7 +325,9 @@
       var data, failure;
       e.preventDefault();
       failure = (function(_this) {
-        return function(msg) {
+        return function(data) {
+          var msg;
+          msg = ClefUtils.getErrorMessage(data);
           return _this.showMessage({
             message: _.template(clefTranslations.messages.error.disconnect)({
               error: msg
@@ -344,7 +352,7 @@
               type: "updated"
             });
           } else {
-            return failure(ClefUtils.getErrorMessage(data));
+            return failure(data);
           }
         };
       })(this)).fail(function(res) {
