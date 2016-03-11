@@ -3,7 +3,7 @@
         el: "#connect-clef-account"
         events:
             "click #disconnect": "disconnectClefAccount"
-        disconnectURL: ajaxurl + "?action=disconnect_clef_account"
+        disconnectAction: "disconnect_clef_account"
         messageTemplate:
             _.template "<div class='<%=type%> connect-clef-message'>\
                           <%=message%>\
@@ -29,14 +29,19 @@
         disconnectClefAccount: (e) ->
             e.preventDefault()
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data)
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.disconnect
                     )(error: msg)
                     type: "error"
 
-            $.post @disconnectURL, { _wpnonce: @opts.nonces.disconnectClef }
+            data =
+              action: @disconnectClefAction
+              _wpnonce: @opts.nonces.disconnectClef
+
+            $.post "#{ajaxurl}?action=#{@disconnectAction}", data
                 .success (data) =>
                     if data.success
                         @opts.connected = false
@@ -46,8 +51,9 @@
                             message: msg
                             type: "updated"
                     else
-                        failure ClefUtils.getErrorMessage(data)
-                .fail (res) -> failure res.responseText
+                        failure data
+                .fail (res) ->
+                    failure res.responseText
 
         showMessage: (data) ->
             @message.remove() if @message

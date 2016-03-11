@@ -3,6 +3,11 @@
     class Utils
 
         @getErrorMessage: (data) ->
+            if typeof data == "string"
+                try
+                    data = $.parseJSON(data)
+                catch
+
             if data.error
                 return data.error
             else if data.data && data.data.error

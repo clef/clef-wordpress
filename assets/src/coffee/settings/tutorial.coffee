@@ -74,20 +74,22 @@
                 _wpnonce: @opts.nonces.connectClef
                 identifier: data.identifier
                 state: data.state
+                action: @connectClefAction
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data)
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.connect
                     )(error: msg),
                     type: "error"
 
-            $.post @connectClefAction, connectData
+            $.post "#{ajaxurl}?action=#{@connectClefAction}", connectData
                 .success (data) ->
                     if data.success
                         cb(data) if typeof(cb) == "function"
                     else
-                        failure ClefUtils.getErrorMessage(data)
+                        failure data
                 .fail (res) -> failure res.responseText
 
         showMessage: (opts) ->
@@ -121,7 +123,7 @@
 
 
     SetupTutorialView = TutorialView.extend
-        connectClefAction: ajaxurl + "?action=connect_clef_account_clef_id"
+        connectClefAction: "connect_clef_account_clef_id"
         iframePath: '/iframes/application/create/v2'
 
         initialize: (opts) ->
@@ -196,7 +198,6 @@
 
 
     ConnectTutorialView = TutorialView.extend
-        connectClefAction: ajaxurl + "?action=connect_clef_account_oauth_code"
         render: ->
             @addButton()
             @constructor.__super__.render.call this

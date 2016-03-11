@@ -4,7 +4,6 @@ class ClefUserSettings {
     private static $instance = null;
     private $rendered = false;
 
-    const CONNECT_CLEF_OAUTH_ACTION = "connect_clef_account_oauth_code";
     const DISCONNECT_CLEF_ACTION = "disconnect_clef_account";
 
     protected function __construct($settings) {
@@ -23,11 +22,6 @@ class ClefUserSettings {
         add_action('wp_enqueue_scripts', array($this, 'register_assets'));
 
         global $clef_ajax;
-        $clef_ajax->add_action(
-            self::CONNECT_CLEF_OAUTH_ACTION,
-            array($this, 'ajax_connect_clef_account_with_oauth_code'),
-            array('capability' => 'read')
-        );
         $clef_ajax->add_action(
             self::DISCONNECT_CLEF_ACTION,
             array($this, 'ajax_disconnect_clef_account'),

@@ -208,9 +208,7 @@ Styles
     margin-right: auto; }
     #clef-settings-container .settings-section h3, #clef-settings-container .settings-section h4, #connect-clef-account .settings-section h3, #connect-clef-account .settings-section h4 {
       margin: 0; }
-    #clef-settings-container .settings-section:before,
-    #clef-settings-container .settings-section:after, #connect-clef-account .settings-section:before,
-    #connect-clef-account .settings-section:after {
+    #clef-settings-container .settings-section:before, #clef-settings-container .settings-section:after, #connect-clef-account .settings-section:before, #connect-clef-account .settings-section:after {
       content: " ";
       display: table; }
     #clef-settings-container .settings-section:after, #connect-clef-account .settings-section:after {
@@ -341,8 +339,7 @@ Styles
   margin-left: auto;
   margin-right: auto;
   margin-left: 0; }
-  #clef-tutorial:before,
-  #clef-tutorial:after {
+  #clef-tutorial:before, #clef-tutorial:after {
     content: " ";
     display: table; }
   #clef-tutorial:after {

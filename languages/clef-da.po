@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-02-16 13:56-0800\n"
-"PO-Revision-Date: 2016-02-16 21:56+0000\n"
+"POT-Creation-Date: 2016-03-10 16:37-0800\n"
+"PO-Revision-Date: 2016-03-11 00:37+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Danish (http://www.transifex.com/clef/wpclef/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -96,10 +96,10 @@ msgstr "Forfatter"
 msgid "Badge"
 msgstr "Badge"
 
-#: includes/class.clef-network-admin.php:88
-#: includes/lib/ajax-settings/ajax-settings.php:64
-#: includes/lib/ajax-settings/ajax-settings.php:69
-#: includes/lib/ajax-settings/ajax-settings.php:75
+#: includes/class.clef-network-admin.php:82
+#: includes/lib/ajax-settings/ajax-settings.php:56
+#: includes/lib/ajax-settings/ajax-settings.php:61
+#: includes/lib/ajax-settings/ajax-settings.php:67
 msgid "Cheatin&#8217; uh?"
 msgstr "Snyder du?"
 
@@ -248,8 +248,8 @@ msgid "Disconnect your Clef account"
 msgstr "Afbryd forbindelsen til din Clef-konto"
 
 #: templates/admin/form.tpl.php:73
-msgid "Drag this your bookmarks bar"
-msgstr "Træk denne til dine bogmærker"
+msgid "Drag this to your bookmarks bar"
+msgstr ""
 
 #: templates/js-templates/invite.tpl.php:28
 msgid "Editor"
@@ -454,7 +454,7 @@ msgstr "Tilmeld dig med Clef"
 msgid "Remember Me"
 msgstr "Husk mig"
 
-#: includes/class.clef-admin.php:328 includes/class.clef-network-admin.php:91
+#: includes/class.clef-admin.php:328 includes/class.clef-network-admin.php:85
 msgid "Security check; nonce failed."
 msgstr "Sikkerhedscheck; nonce mislykkedes."
 
@@ -470,7 +470,7 @@ msgstr "Indstillinger"
 msgid "Settings are being saved. Are you sure you want to navigate away?"
 msgstr "Indstillinger er ved at blive gemt. Er du sikker på, at du vil navigere væk?"
 
-#: includes/lib/ajax-settings/ajax-settings.php:58
+#: includes/lib/ajax-settings/ajax-settings.php:49
 msgid ""
 "Settings could not be parsed — this may be caused by a plugin conflict."
 msgstr "Indstillingerne kunne ikke godkendes - dette kan skyldes en plugin-konflikt."
@@ -733,7 +733,7 @@ msgstr "generér en sikker tilsidesættelses-url til mig"
 msgid "invalid Clef ID"
 msgstr "ugyldigt Clef-ID"
 
-#: includes/class.clef-ajax.php:55
+#: includes/class.clef-ajax.php:45
 msgid "invalid nonce"
 msgstr "ugyldig nonce"
 
@@ -772,11 +772,11 @@ msgstr "der var en fejl under afsendelsen af invitations-email. Kopier, indsæt 
 msgid "unable to send emails to the following users: "
 msgstr "kunne ikke sende emails til de følgende brugere:"
 
-#: includes/class.clef-ajax.php:62
+#: includes/class.clef-ajax.php:52
 msgid "user does not have correct capabilities"
 msgstr "brugeren har ikke korrekte kapaciteter"
 
-#: includes/class.clef-user-settings.php:100
+#: includes/class.clef-user-settings.php:94
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "

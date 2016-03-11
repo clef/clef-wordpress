@@ -37,18 +37,8 @@ class ClefAjax {
         $hook_info = $this->hook_map[$action];
         $options = $hook_info['options'];
 
-        if(isset($_SERVER["CONTENT_TYPE"]) && 0 === strpos($_SERVER["CONTENT_TYPE"], 'application/json')) {
-            global $HTTP_RAW_POST_DATA;
-            if (!isset($HTTP_RAW_POST_DATA)) {
-                $HTTP_RAW_POST_DATA = file_get_contents( "php://input" );
-            }
-            $data = json_decode($HTTP_RAW_POST_DATA, true);
-            # if the request is coming from backbone, we need to non-200 error
-            $send_non_200_error = true;
-        } else {
-            $data = $_REQUEST;
-            $send_non_200_error = false;
-        }
+        $data = $_REQUEST;
+        $send_non_200_error = true;
 
         if ($options['nonce'] && (!isset($data['_wpnonce']) || !wp_verify_nonce($data['_wpnonce'], $action))) {
             $this->send_json_error(

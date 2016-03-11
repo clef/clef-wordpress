@@ -18,7 +18,7 @@
             if @opts.el
                 @setElement(@opts.el)
 
-        inviteUsersAction: ajaxurl + "?action=clef_invite_users"
+        inviteUsersAction: "clef_invite_users"
         inviteUsers: (e) ->
             e.preventDefault()
 
@@ -28,8 +28,10 @@
                 _wpnonce: @opts.nonces.inviteUsers
                 roles: $("select[name='invite-users-role']").val()
                 networkAdmin: @opts.isNetworkSettings
+                action: @inviteUsersAction
 
-            failure = (msg) =>
+            failure = (data) =>
+                msg = ClefUtils.getErrorMessage(data)
                 $(e.target).removeAttr('disabled')
                 @showMessage
                     message: _.template(
@@ -37,7 +39,7 @@
                     )(error: msg)
                     type: "error"
 
-            $.post @inviteUsersAction, data
+            $.post "#{ajaxurl}?action=#{@inviteUsersAction}", data
                 .success (data) =>
                     $(e.target).removeAttr('disabled')
                     if data.success
@@ -46,12 +48,10 @@
                             message: data.message
                             type:"updated"
                     else
-                        failure ClefUtils.getErrorMessage data
+                        failure data
                 .fail (res) -> failure res.responseText
-
         hideButton: () ->
             @$el.find('.button').hide()
-            
         render: () ->
             @$el.html(@template)
 

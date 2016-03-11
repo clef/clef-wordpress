@@ -20,7 +20,7 @@
       data.enable = 'badge';
       $.extend(data, ajaxData);
       $prompt.slideUp();
-      return $.post(ajaxurl, data, (function() {}), "json");
+      return $.post(ajaxurl, data, (function() {}));
     });
     return $prompt.find(".no-badge, .dismiss").click(function(e) {
       var data;
@@ -35,7 +35,7 @@
       });
       data.disable = true;
       $.extend(data, ajaxData);
-      $.post(ajaxurl, data, (function() {}), "json");
+      $.post(ajaxurl, data, (function() {}));
       return $prompt.slideUp();
     });
   });
