@@ -30,7 +30,7 @@
             e.preventDefault()
 
             failure = (data) =>
-                msg = ClefUtils.getErrorMessage(data) 
+                msg = ClefUtils.getErrorMessage(data)
                 @showMessage
                     message: _.template(
                         clefTranslations.messages.error.disconnect

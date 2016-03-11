@@ -4,10 +4,12 @@
     function Utils() {}
 
     Utils.getErrorMessage = function(data) {
-      try {
-        data = JSON.parse(data);
-      } catch (_error) {
+      if (typeof data === "string") {
+        try {
+          data = $.parseJSON(data);
+        } catch (_error) {
 
+        }
       }
       if (data.error) {
         return data.error;
