@@ -70,7 +70,7 @@
                ?>
                <div class="override-buttons<?php echo $css_hide; ?>">
                    <a name="override link" class="button button-primary button-hero" href="<?php echo $url; ?>"><?php bloginfo('name', 'display'); ?> <?php _e("Override URL", "wpclef"); ?></a>
-                   <p><?php _e("Drag this your bookmarks bar", "wpclef"); ?></p>
+                   <p><?php _e("Drag this to your bookmarks bar", "wpclef"); ?></p>
                </div>
                <?php unset( $opts, $url ); ?>
            </div>
