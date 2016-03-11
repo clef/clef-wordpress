@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-02-16 13:56-0800\n"
+"POT-Creation-Date: 2016-03-10 16:37-0800\n"
 "PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/projects/p/wpclef/"
@@ -94,10 +94,10 @@ msgstr ""
 msgid "Badge"
 msgstr ""
 
-#: includes/class.clef-network-admin.php:88
-#: includes/lib/ajax-settings/ajax-settings.php:64
-#: includes/lib/ajax-settings/ajax-settings.php:69
-#: includes/lib/ajax-settings/ajax-settings.php:75
+#: includes/class.clef-network-admin.php:82
+#: includes/lib/ajax-settings/ajax-settings.php:56
+#: includes/lib/ajax-settings/ajax-settings.php:61
+#: includes/lib/ajax-settings/ajax-settings.php:67
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
@@ -246,7 +246,7 @@ msgid "Disconnect your Clef account"
 msgstr ""
 
 #: templates/admin/form.tpl.php:73
-msgid "Drag this your bookmarks bar"
+msgid "Drag this to your bookmarks bar"
 msgstr ""
 
 #: templates/js-templates/invite.tpl.php:28
@@ -452,7 +452,7 @@ msgstr ""
 msgid "Remember Me"
 msgstr ""
 
-#: includes/class.clef-admin.php:328 includes/class.clef-network-admin.php:91
+#: includes/class.clef-admin.php:328 includes/class.clef-network-admin.php:85
 msgid "Security check; nonce failed."
 msgstr ""
 
@@ -468,7 +468,7 @@ msgstr ""
 msgid "Settings are being saved. Are you sure you want to navigate away?"
 msgstr ""
 
-#: includes/lib/ajax-settings/ajax-settings.php:58
+#: includes/lib/ajax-settings/ajax-settings.php:49
 msgid "Settings could not be parsed — this may be caused by a plugin conflict."
 msgstr ""
 
@@ -728,7 +728,7 @@ msgstr ""
 msgid "invalid Clef ID"
 msgstr ""
 
-#: includes/class.clef-ajax.php:55
+#: includes/class.clef-ajax.php:45
 msgid "invalid nonce"
 msgstr ""
 
@@ -767,11 +767,11 @@ msgstr ""
 msgid "unable to send emails to the following users: "
 msgstr ""
 
-#: includes/class.clef-ajax.php:62
+#: includes/class.clef-ajax.php:52
 msgid "user does not have correct capabilities"
 msgstr ""
 
-#: includes/class.clef-user-settings.php:100
+#: includes/class.clef-user-settings.php:94
 msgid ""
 "your passwords are currently disabled. <br/> If you disconnect your Clef "
 "account, you won't be able to log in. Please enable passwords for yourself "
