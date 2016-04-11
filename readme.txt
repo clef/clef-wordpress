@@ -3,7 +3,7 @@ Contributors: csixty4, jessepollak, zrathustra, inthylight
 Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login
 Requires at least: 3.6
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: 2.4.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
@@ -133,10 +133,12 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 == Changelog ==
 
 = 2.4.1 =
+Released 10 March 2016
 
 * Fix: with certain setups, settings were unable to save
 
 = 2.4.0 =
+Released 16 February 2016
 
 * Enhancement: better onboarding experience
 * Enhancement: per-user and bulk user invites to use Clef
@@ -146,15 +148,17 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 * Fix: reduced frequency of "invalid state" errors
 
 = 2.3.4 =
+Released 27 January 2016
 
 * Enhancement: updates support path
 
 = 2.3.3 =
+Released 21 December 2015
 
 * Fix: update issue
 
 = 2.3.2 =
-Release 21 December 2015
+Released 21 December 2015
 
 * Fix: stop making unnecessary request to Clef API when site is not configured
 * Enhancement: remove Waltz upsell
