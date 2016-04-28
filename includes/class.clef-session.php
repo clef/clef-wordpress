@@ -56,7 +56,7 @@ class ClefSession {
 
             // Use WP_Session (default)
             if ( ! defined( 'WP_SESSION_COOKIE' ) )
-                define( 'WP_SESSION_COOKIE', 'clef_wp_session' );
+                define( 'WP_SESSION_COOKIE', 'wordpress_clef_session' );
 
             if ( ! class_exists( 'Recursive_ArrayAccess' ) )
                 require_once CLEF_PATH . 'includes/lib/wp-session/class-recursive-arrayaccess.php';
