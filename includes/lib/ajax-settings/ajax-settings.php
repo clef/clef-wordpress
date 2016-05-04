@@ -1,7 +1,7 @@
 <?php
 
 class AjaxSettings {
-    const VERSION = '0.0.1';
+    const VERSION = '1.0.0';
     static $DEFAULTS =  array(
         "network_wide" => false
     );
@@ -25,7 +25,7 @@ class AjaxSettings {
         $ident = $this->identifier();
         wp_register_script(
             $ident,
-            $this->options['base_url']  . "js/ajax-settings.min.js",
+            $this->options['base_url']  . "js/ajax-settings.v" . self::VERSION . ".min.js",
             array('backbone'),
             self::VERSION,
             TRUE
@@ -38,7 +38,7 @@ class AjaxSettings {
         $ident = $this->identifier();
         wp_register_style(
             $ident,
-            $this->options['base_url'] . 'css/ajax-settings.min.css',
+            $this->options['base_url'] . 'css/ajax-settings.v'  . self::VERSION . 'min.css',
             false,
             self::VERSION
         );
