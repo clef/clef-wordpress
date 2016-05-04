@@ -7,6 +7,12 @@
  */
 class ClefUtils {
     public static $default_roles = array("Subscriber", "Contributor", "Author", "Editor", "Administrator", "Super Administrator" );
+
+    /*
+    * The cookie for the state parameter used in the Clef OAuth handshake. 
+    */
+    public static $cookie_name = "wordpress_clef_state";
+
     /**
      * Runs esc_html on strings. Leaves input untouched if it's not a string.
      *
@@ -241,18 +247,18 @@ class ClefUtils {
     }
 
     public static function initialize_state($override = false) {
-        if (!$override && isset($_COOKIE['_clef_state']) && $_COOKIE['_clef_state']) return;
+        if (!$override && isset($_COOKIE[self::$cookie_name]) && $_COOKIE[self::$cookie_name]) return;
 
         $state = wp_generate_password(24, false);
-        @setcookie('_clef_state', $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
-        $_COOKIE['_clef_state'] = $state;
+        @setcookie(self::$cookie_name, $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
+        $_COOKIE[self::$cookie_name] = $state;
 
         return $state;
     }
 
     public static function get_state() {
-        if (!isset($_COOKIE['_clef_state']) || !$_COOKIE['_clef_state']) ClefUtils::initialize_state();
-        return $_COOKIE['_clef_state'];
+        if (!isset($_COOKIE[self::$cookie_name]) || !$_COOKIE[self::$cookie_name]) ClefUtils::initialize_state();
+        return $_COOKIE[self::$cookie_name];
     }
 
     public static function verify_state() {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-03-10 16:37-0800\n"
+"POT-Creation-Date: 2016-05-04 13:29-0700\n"
 "PO-Revision-Date: 2016-03-11 00:37+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/clef/wpclef/language/ru_RU/)\n"
@@ -269,11 +269,11 @@ msgstr "Включить Clef для всей сети"
 msgid "Enter override key here"
 msgstr "Введите ключ здесь"
 
-#: includes/class.clef-utils.php:184
+#: includes/class.clef-utils.php:190
 msgid "Error retrieving Clef access token: "
 msgstr "Ошибка получения ключа доступа Clef: "
 
-#: includes/class.clef-utils.php:198
+#: includes/class.clef-utils.php:204
 msgid "Error retrieving Clef user data: "
 msgstr "Ошибка получения данных пользователя Clef: "
 
@@ -485,7 +485,7 @@ msgstr ""
 msgid "Skip setup, I already have Clef API keys"
 msgstr "Пропустить авторизацию, у меня уже есть API ключи на сайте Clef"
 
-#: includes/class.clef-utils.php:178 includes/class.clef-utils.php:192
+#: includes/class.clef-utils.php:184 includes/class.clef-utils.php:198
 msgid "Something went wrong: "
 msgstr "Что-то пошло не так: "
 
@@ -535,7 +535,7 @@ msgstr "Одна синхронизация и Вы авторизованы в�
 msgid "Thanks!"
 msgstr "Благодарим за использование сервиса Clef!"
 
-#: includes/class.clef-utils.php:146
+#: includes/class.clef-utils.php:152
 msgid ""
 "The Clef account you're trying to connect is already associated to a "
 "different WordPress account"
