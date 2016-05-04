@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-03-10 16:37-0800\n"
+"POT-Creation-Date: 2016-05-04 13:29-0700\n"
 "PO-Revision-Date: 2016-03-11 00:37+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/clef/wpclef/language/fr_FR/)\n"
@@ -274,11 +274,11 @@ msgstr "Autoriser Clef sur tout le réseau"
 msgid "Enter override key here"
 msgstr "Saisir la clé d'écrasement ici"
 
-#: includes/class.clef-utils.php:184
+#: includes/class.clef-utils.php:190
 msgid "Error retrieving Clef access token: "
 msgstr "Erreur avec le jeton de Clef : "
 
-#: includes/class.clef-utils.php:198
+#: includes/class.clef-utils.php:204
 msgid "Error retrieving Clef user data: "
 msgstr "Erreur avec les données utilisateur :"
 
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Skip setup, I already have Clef API keys"
 msgstr "Passer la configuration, j'ai déjà les clés API pour Clef."
 
-#: includes/class.clef-utils.php:178 includes/class.clef-utils.php:192
+#: includes/class.clef-utils.php:184 includes/class.clef-utils.php:198
 msgid "Something went wrong: "
 msgstr "Quelque chose s'est mal passé :"
 
@@ -540,7 +540,7 @@ msgstr "Synchronisez une fois, connectez-vous partout !"
 msgid "Thanks!"
 msgstr "Merci !"
 
-#: includes/class.clef-utils.php:146
+#: includes/class.clef-utils.php:152
 msgid ""
 "The Clef account you're trying to connect is already associated to a "
 "different WordPress account"
