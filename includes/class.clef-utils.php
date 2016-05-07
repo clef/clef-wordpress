@@ -10,8 +10,9 @@ class ClefUtils {
 
     /*
     * The cookie for the state parameter used in the Clef OAuth handshake. 
+    * To prevent deletion by some caches (like Pantheon), it is prefixed with SESS.
     */
-    public static $cookie_name = "wordpress_clef_state";
+    public static $cookie_name = "SESSclefstate";
 
     /**
      * Runs esc_html on strings. Leaves input untouched if it's not a string.

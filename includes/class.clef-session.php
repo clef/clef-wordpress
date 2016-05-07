@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class ClefSession {
 
     private static $instance = null;
-    private static $cookie_name = 'wordpress_clef_session';
 
     /**
      * Holds our session data
@@ -44,7 +43,7 @@ class ClefSession {
      *
      * @since 1.5
      */
-    public function __construct($cookie_name = false) {
+    public function __construct() {
 
         $this->use_php_sessions = defined( 'CLEF_USE_PHP_SESSIONS' ) && CLEF_USE_PHP_SESSIONS;
 
@@ -57,7 +56,7 @@ class ClefSession {
 
             // Use WP_Session (default)
             if ( ! defined( 'WP_SESSION_COOKIE' ) )
-                define( 'WP_SESSION_COOKIE', self::$cookie_name );
+                define( 'WP_SESSION_COOKIE', 'clef_wp_session' );
 
             if ( ! class_exists( 'Recursive_ArrayAccess' ) )
                 require_once CLEF_PATH . 'includes/lib/wp-session/class-recursive-arrayaccess.php';
@@ -70,7 +69,7 @@ class ClefSession {
             add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
         }
 
-        $this->init($cookie_name);
+        $this->init();
     }
 
 
@@ -81,11 +80,11 @@ class ClefSession {
      * @since 1.5
      * @return void
      */
-    public function init($cookie_name) {
+    public function init() {
         if( $this->use_php_sessions )
             $this->session = isset( $_SESSION['clef'] ) && is_array( $_SESSION['clef'] ) ? $_SESSION['clef'] : array();
         else
-            $this->session = WP_Session::get_instance($cookie_name);
+            $this->session = WP_Session::get_instance();
 
         return $this->session;
     }
@@ -149,23 +148,6 @@ class ClefSession {
      */
     public function set_expiration_time( $exp ) {
         return current_time( 'timestamp' ) + ( 60 * 60 * 24 * 365 );
-    }
-
-    public static function migrate($old_cookie_name) {
-        if ( ! class_exists( 'Recursive_ArrayAccess' ) )
-            require_once CLEF_PATH . 'includes/lib/wp-session/class-recursive-arrayaccess.php';
-
-        if ( ! class_exists( 'WP_Session' ) ) {
-            require_once CLEF_PATH . 'includes/lib/wp-session/class-wp-session.php';
-            require_once CLEF_PATH . 'includes/lib/wp-session/wp-session.php';
-        }
-
-        $old_session = new WP_Session($old_cookie_name);
-        $new_session = ClefSession::start();
-
-        foreach ($old_session as $key => $value) {
-            $new_session->set($key, $value);
-        }
     }
 
     public static function start() {
