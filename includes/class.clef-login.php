@@ -323,10 +323,12 @@ class ClefLogin {
                         $user = get_user_by('id', $id );
                     } else {
                         $this->clef_id_to_connect = $clef_id;
-                        return new WP_Error(
-                            'clef',
-                            __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'wpclef')
-                        );
+                        if ($this->settings->passwords_are_disabled_for_user($user)) {
+                            $message = __("There's <b>no WordPress user</b> connected to your Clef account.", 'wpclef');
+                        } else {
+                            $message = __("There's <b>no WordPress user</b> connected to your Clef account. <br></br> Log in with your standard username and password to <b>automatically connect your Clef account</b> now.", 'wpclef');
+                        }
+                        return new WP_Error('clef', $message);
                     }
                 }
 
