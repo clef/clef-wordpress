@@ -56,18 +56,18 @@ class ClefSession {
         } else {
 
             // Use WP_Session (default)
-            if ( ! defined( 'WP_SESSION_COOKIE' ) )
-                define( 'WP_SESSION_COOKIE', self::$cookie_name );
+            if ( ! defined( 'CLEF_WP_SESSION_COOKIE' ) )
+                define( 'CLEF_WP_SESSION_COOKIE', self::$cookie_name );
 
             if ( ! class_exists( 'Recursive_ArrayAccess' ) )
                 require_once CLEF_PATH . 'includes/lib/wp-session/class-recursive-arrayaccess.php';
 
-            if ( ! class_exists( 'WP_Session' ) ) {
+            if ( ! class_exists( '\Clef\WP_Session' ) ) {
                 require_once CLEF_PATH . 'includes/lib/wp-session/class-wp-session.php';
                 require_once CLEF_PATH . 'includes/lib/wp-session/wp-session.php';
             }
 
-            add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
+            add_filter( 'clef_wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
         }
 
         $this->init($cookie_name);
@@ -85,7 +85,7 @@ class ClefSession {
         if( $this->use_php_sessions )
             $this->session = isset( $_SESSION['clef'] ) && is_array( $_SESSION['clef'] ) ? $_SESSION['clef'] : array();
         else
-            $this->session = WP_Session::get_instance($cookie_name);
+            $this->session = \Clef\WP_Session::get_instance($cookie_name);
 
         return $this->session;
     }
@@ -155,12 +155,12 @@ class ClefSession {
         if ( ! class_exists( 'Recursive_ArrayAccess' ) )
             require_once CLEF_PATH . 'includes/lib/wp-session/class-recursive-arrayaccess.php';
 
-        if ( ! class_exists( 'WP_Session' ) ) {
+        if ( ! class_exists( '\Clef\WP_Session' ) ) {
             require_once CLEF_PATH . 'includes/lib/wp-session/class-wp-session.php';
             require_once CLEF_PATH . 'includes/lib/wp-session/wp-session.php';
         }
 
-        $old_session = new WP_Session($old_cookie_name);
+        $old_session = new \Clef\WP_Session($old_cookie_name);
         $new_session = ClefSession::start();
 
         foreach ($old_session as $key => $value) {
