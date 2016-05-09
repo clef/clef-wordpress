@@ -9,9 +9,9 @@
 .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp) .clef-login-container .close-overlay, .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp) .clef-login-container .overlay-info, .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp) .clef-login-container .open-overlay {
   display: none; }
 
-.clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform {
+.clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite):not(.clef-auto-connect-account) #login form#loginform {
   padding: 40px 20px; }
-  .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform input, .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) #login form#loginform label {
+  .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite):not(.clef-auto-connect-account) #login form#loginform input, .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite):not(.clef-auto-connect-account) #login form#loginform label {
     display: none; }
 
 .clef-login-form:not(.login-action-register):not(.login-action-lostpassword):not(.login-action-rp).clef-login-form-embed:not(.clef-override-or-invite):not(.clef-auto-connect-account):not(.clef-show-username-password):not(.interim-login) #login {
