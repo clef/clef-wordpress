@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Ivan Dyakov <imdyakov@mac.com>, 2014
+# Ramil Yafizov <ramil.yafizov@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-04 13:29-0700\n"
-"PO-Revision-Date: 2016-03-11 00:37+0000\n"
+"POT-Creation-Date: 2016-05-16 11:22-0700\n"
+"PO-Revision-Date: 2016-05-16 18:22+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/clef/wpclef/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +22,7 @@ msgstr ""
 #: includes/class.clef-admin.php:413 includes/class.clef-admin.php:495
 #, php-format
 msgid "%d %s successfully invited to Clef."
-msgstr ""
+msgstr "%d %s успешно приглашён в Clef"
 
 #: includes/class.clef-invite.php:74
 msgid ""
@@ -120,13 +121,13 @@ msgid ""
 "Clef is the best way to log in to WordPress <b>without usernames or "
 "passwords</b>. You're a few clicks away from joining more than 600,000 other"
 " WordPress sites that use Clef to make logging in safer and easier."
-msgstr ""
+msgstr "Clef является наилучшим способом авторизации для WordPress <b>без пользовательских имён или паролей</b>. Вы всего в нескольких шагах от присоединения к более чем 600000 других сайтов на WordPress, что используют Clef для более лёгкой и безопасной авторизации."
 
 #: templates/admin/tutorial.tpl.php:5
 msgid ""
 "Clef is the best way to log in, without passwords. <br> It's <b>free</b>, "
 "and getting set up takes <b>30 seconds</b>."
-msgstr ""
+msgstr "Clef является наилучшим способом авторизации без паролей. <br> Он <b>бесплатный</b> и его установка занимает <b>30 секунд</b>."
 
 #: templates/admin/form.tpl.php:84
 msgid ""
@@ -137,11 +138,11 @@ msgstr "Clef всегда останется бесплатным для Вас 
 
 #: includes/class.clef-internal-settings.php:236
 msgid "Clef override URL - keep safe"
-msgstr ""
+msgstr "URL адрес для входа, минуя Clef - храните в секрете"
 
 #: templates/badge.tpl.php:4
 msgid "Clef two-factor authentication"
-msgstr ""
+msgstr "Двух-факторная аутентификация Clef"
 
 #: templates/invite_email.tpl.php:13
 #, php-format
@@ -154,7 +155,7 @@ msgstr "Нажмите <a href=\"%s\">сюда</a> и войдите на сай
 msgid ""
 "Click below to finish setting up Clef or learn more <a "
 "href='https://getclef.com/wordpress' target='_blank'>here</a>."
-msgstr ""
+msgstr "Кликните ниже для окончания установки Clef или получите больше информации <a href='https://getclef.com/wordpress' target='_blank'>здесь</a>."
 
 #: includes/class.clef-admin.php:145
 msgid "Connect Clef account"
@@ -231,7 +232,7 @@ msgstr "Отключить пароли для всех пользователе
 
 #: templates/admin/form.tpl.php:31
 msgid "Disable passwords for custom roles"
-msgstr ""
+msgstr "Отключить пароли для настраиваемых ролей"
 
 #: includes/class.clef-admin.php:310
 msgid "Disabled"
@@ -247,7 +248,7 @@ msgstr "Отключить Clef"
 
 #: templates/admin/form.tpl.php:73
 msgid "Drag this to your bookmarks bar"
-msgstr ""
+msgstr "Перенесите это в вашу панель закладок"
 
 #: templates/js-templates/invite.tpl.php:28
 msgid "Editor"
@@ -283,7 +284,7 @@ msgstr "Все"
 
 #: includes/class.clef-admin.php:459 templates/admin/tutorial.tpl.php:7
 msgid "Finish setup"
-msgstr ""
+msgstr "Окончание установки"
 
 #: templates/admin/form.tpl.php:7
 #, php-format
@@ -300,7 +301,7 @@ msgstr "Оформление формы"
 
 #: templates/js-templates/invite.tpl.php:12
 msgid "Go to users page"
-msgstr ""
+msgstr "Перейдите на страницу пользователя"
 
 #: templates/admin/tutorial.tpl.php:49
 msgid "Got it!"
@@ -341,7 +342,7 @@ msgstr "Пригласить всех пользователей с ролью <
 
 #: templates/js-templates/invite.tpl.php:33
 msgid "Invite users by role"
-msgstr ""
+msgstr "Пригласите пользователей согласно ролям"
 
 #: templates/admin/badge-prompt.tpl.php:8
 msgid ""
@@ -380,7 +381,7 @@ msgstr "Нет спасибо!"
 
 #: includes/class.clef-admin.php:384
 msgid "No users were invited to use Clef."
-msgstr ""
+msgstr "Ни одного пользователя не было приглашено для использования Clef"
 
 #: templates/user_settings.tpl.php:13
 msgid ""
@@ -412,7 +413,7 @@ msgstr "Пароль"
 msgid "Password Settings"
 msgstr "Настройки паролей"
 
-#: includes/class.clef-login.php:282 includes/class.clef-login.php:389
+#: includes/class.clef-login.php:282 includes/class.clef-login.php:391
 msgid "Passwords have been disabled for this user."
 msgstr "Пароль для данного пользователя отключён."
 
@@ -423,7 +424,7 @@ msgid ""
 "href='https://getclef.com'>Clef</a>. If you ever have an issue that causes "
 "you to be locked out of your site, we've created an override URL which will "
 "allow you to log in to your site without Clef. The link is: "
-msgstr ""
+msgstr "Теперь пароли выключены на %s для всех пользователей, кто включил <a href='https://getclef.com'>Clef</a>. Если у Вас когда нибудь возникнет ситуация, при которой Вы не сможете войти в Ваш сайт, мы создали специальный адрес, который позволит Вам авторизоваться на Вашем сайте без использования Clef. Ссылка:"
 
 #: includes/class.clef-settings.php:50
 #, php-format
@@ -479,7 +480,7 @@ msgstr "Показывать волну Clef как основное окно д
 
 #: templates/js-templates/invite.tpl.php:3
 msgid "Skip and finish setup"
-msgstr ""
+msgstr "Пропустите и закончите установку"
 
 #: templates/admin/tutorial.tpl.php:19
 msgid "Skip setup, I already have Clef API keys"
@@ -503,7 +504,7 @@ msgid ""
 " new one."
 msgstr "Извините, но срок действия приглашения уже истёк. Свяжитесь с администратором, чтобы получить новую ссылку."
 
-#: includes/class.clef-login.php:382
+#: includes/class.clef-login.php:384
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr "Готово. <b>Ваша учётная запись Clef успешно подключена!</b>"
 
@@ -561,7 +562,7 @@ msgid ""
 " <%= error %>. Please refresh and try again. If the issue, persists, visit "
 "<a href='http://support.getclef.com' target='_blank'>support.getclef.com</a>"
 " to get help."
-msgstr ""
+msgstr "Возникла ошибка при создании нового приложения Clef для вашего сайта WordPress: <%= error %>. Пожалуйста обновите страницу и попробуйте ещё раз. Если ошибка не исчезнет, посетите <a href='http://support.getclef.com' target='_blank'>support.getclef.com</a> для получения помощи."
 
 #: includes/class.clef-translation.php:18
 msgid "There was a problem disconnecting your Clef account: <%= error %>."
@@ -574,9 +575,13 @@ msgstr "Возникла ошибка при отправке приглашен
 #: includes/class.clef-admin.php:398
 #, php-format
 msgid "There was an error inviting users to Clef: %s"
+msgstr "Произошла ошибка приглашения пользователей к Clef: %s"
+
+#: includes/class.clef-login.php:327
+msgid "There's <b>no WordPress user</b> connected to your Clef account."
 msgstr ""
 
-#: includes/class.clef-login.php:328
+#: includes/class.clef-login.php:329
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
@@ -601,13 +606,13 @@ msgid ""
 "To connect a Clef account, use the Clef app to sync with the wave below. "
 "Once you're connected, you'll be able to log in and out of your WordPress "
 "site with just your phone."
-msgstr ""
+msgstr "Для присоединения учётной записи Clef, используйте приложение Clef для синхронизации волн ниже. После того, как Вы присоединитесь, Вы сможете авторизовываться и де-авторизовываться на Вашем сайте на WordPress просто используя Ваш телефон."
 
 #: templates/js-templates/invite.tpl.php:11
 msgid ""
 "To invite users individually or in bulk, go to the users page and use the "
 "dropdown."
-msgstr ""
+msgstr "Чтобы пригласить пользователей индивидуально или скопом, перейдите на страницу пользователей и используйте ниспадающее меню."
 
 #: templates/admin/multisite/single-disabled.tpl.php:7
 msgid "Use network settings"
@@ -664,7 +669,7 @@ msgid ""
 "can-log-into-your-wordpress-site-with-a-password'>here</a>. If you have any "
 "issues, please visit <a "
 "href='http://support.getclef.com'>support.getclef.com</a>."
-msgstr ""
+msgstr "Вы можете получить больше информации об этой функциональности <a href='http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password'>здесь</a>. Если у вас возникнут затруднения, пожалуйста посетите <a href='http://support.getclef.com'>support.getclef.com</a>."
 
 #: templates/admin/multisite/network-enabled.tpl.php:20
 msgid ""

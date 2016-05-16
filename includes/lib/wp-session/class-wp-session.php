@@ -10,13 +10,15 @@
  * @since   3.7.0
  */
 
+namespace Clef;
+
 /**
  * WordPress Session class for managing user session data.
  *
  * @package WordPress
  * @since   3.7.0
  */
-final class WP_Session extends Recursive_ArrayAccess implements Iterator, Countable {
+final class WP_Session extends \Recursive_ArrayAccess implements \Iterator, \Countable {
     /**
      * ID of the current session.
      *
@@ -72,7 +74,7 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
         if ($cookie_name) {
             $this->cookie_name = $cookie_name;
         } else {
-            $this->cookie_name = WP_SESSION_COOKIE;
+            $this->cookie_name = CLEF_WP_SESSION_COOKIE;
         }
 
         if ( isset( $_COOKIE[$this->cookie_name] ) ) {
@@ -119,8 +121,8 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
      * @uses apply_filters Calls `wp_session_expiration` to get the standard expiration time for sessions.
      */
     protected function set_expiration() {
-        $this->exp_variant = time() + (int) apply_filters( 'wp_session_expiration_variant', 24 * 60 );
-        $this->expires = time() + (int) apply_filters( 'wp_session_expiration', 30 * 60 );
+        $this->exp_variant = time() + (int) apply_filters( 'clef_wp_session_expiration_variant', 24 * 60 );
+        $this->expires = time() + (int) apply_filters( 'clef_wp_session_expiration', 30 * 60 );
     }
 
     /**
@@ -137,7 +139,7 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
      */
     protected function generate_id() {
         require_once( ABSPATH . 'wp-includes/class-phpass.php');
-        $hasher = new PasswordHash( 8, false );
+        $hasher = new \PasswordHash( 8, false );
 
         return md5( $hasher->get_random_bytes( 32 ) );
     }

@@ -24,7 +24,7 @@
     }
 
     // Styles for when login is clef only and it's the button
-    &.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite) {
+    &.clef-hidden:not(.clef-login-form-embed):not(.clef-override-or-invite):not(.clef-auto-connect-account) {
         #login form#loginform {
             padding: 40px 20px;
             input, label {

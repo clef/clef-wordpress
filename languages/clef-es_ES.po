@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-04 13:29-0700\n"
-"PO-Revision-Date: 2016-05-04 11:41+0000\n"
-"Last-Translator: Iñaki Simón <ignaciojesus.simon@oracle.com>\n"
+"POT-Creation-Date: 2016-05-16 11:22-0700\n"
+"PO-Revision-Date: 2016-05-16 18:22+0000\n"
+"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/clef/wpclef/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -413,7 +413,7 @@ msgstr "Contraseña"
 msgid "Password Settings"
 msgstr "Ajustes de Contraseña"
 
-#: includes/class.clef-login.php:282 includes/class.clef-login.php:389
+#: includes/class.clef-login.php:282 includes/class.clef-login.php:391
 msgid "Passwords have been disabled for this user."
 msgstr "Las contraseñas han sido deshabilitadas para este usuario."
 
@@ -504,7 +504,7 @@ msgid ""
 " new one."
 msgstr "Disculpe, este enlace de invitación ha expirado. Por favor contacte su administrador para uno nuevo."
 
-#: includes/class.clef-login.php:382
+#: includes/class.clef-login.php:384
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr "Éxito. <b>¡Su cuenta Clef ha sido conectada!</b>"
 
@@ -577,7 +577,11 @@ msgstr "Hubo un problema enviando las invitaciones: <%= error %>."
 msgid "There was an error inviting users to Clef: %s"
 msgstr "Ocurrió un error al invitar a los usuarios a usar Clef: %s"
 
-#: includes/class.clef-login.php:328
+#: includes/class.clef-login.php:327
+msgid "There's <b>no WordPress user</b> connected to your Clef account."
+msgstr ""
+
+#: includes/class.clef-login.php:329
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
