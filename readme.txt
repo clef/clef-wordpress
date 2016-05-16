@@ -132,6 +132,16 @@ Clef’s security architecture is fully distributed, which means Clef stores no 
 
 == Changelog ==
 
+= 2.5.1 =
+Release 16 May 2016
+
+* Fix: crashing issue on activation for certain users
+
+From 2.5.0:
+
+* Fix: "Settings could not be parsed" error on configuration page
+* Fix: reduced frequency of "invalid state" errors for hosts with Varnish caching
+
 = 2.5.0 =
 Released 5 May 2016
 
