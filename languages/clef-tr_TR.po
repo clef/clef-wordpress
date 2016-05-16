@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-04 13:29-0700\n"
+"POT-Creation-Date: 2016-05-16 11:22-0700\n"
 "PO-Revision-Date: 2015-06-18 00:20+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/wpclef/"
@@ -412,7 +412,7 @@ msgstr ""
 msgid "Password Settings"
 msgstr ""
 
-#: includes/class.clef-login.php:282 includes/class.clef-login.php:389
+#: includes/class.clef-login.php:282 includes/class.clef-login.php:391
 msgid "Passwords have been disabled for this user."
 msgstr ""
 
@@ -502,7 +502,7 @@ msgid ""
 "new one."
 msgstr ""
 
-#: includes/class.clef-login.php:382
+#: includes/class.clef-login.php:384
 msgid "Success. <b>Your Clef account has been connected!</b>"
 msgstr ""
 
@@ -574,7 +574,11 @@ msgstr ""
 msgid "There was an error inviting users to Clef: %s"
 msgstr ""
 
-#: includes/class.clef-login.php:328
+#: includes/class.clef-login.php:327
+msgid "There's <b>no WordPress user</b> connected to your Clef account."
+msgstr ""
+
+#: includes/class.clef-login.php:329
 msgid ""
 "There's <b>no WordPress user</b> connected to your Clef account. <br></br> "
 "Log in with your standard username and password to <b>automatically connect "
