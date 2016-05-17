@@ -10,15 +10,13 @@
  * @since   3.7.0
  */
 
-namespace Clef;
-
 /**
  * WordPress Session class for managing user session data.
  *
  * @package WordPress
  * @since   3.7.0
  */
-final class WP_Session extends \Recursive_ArrayAccess implements \Iterator, \Countable {
+final class ClefWP_Session extends Recursive_ArrayAccess implements Iterator, Countable {
     /**
      * ID of the current session.
      *
@@ -139,7 +137,7 @@ final class WP_Session extends \Recursive_ArrayAccess implements \Iterator, \Cou
      */
     protected function generate_id() {
         require_once( ABSPATH . 'wp-includes/class-phpass.php');
-        $hasher = new \PasswordHash( 8, false );
+        $hasher = new PasswordHash( 8, false );
 
         return md5( $hasher->get_random_bytes( 32 ) );
     }
