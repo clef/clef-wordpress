@@ -127,7 +127,7 @@ final class ClefWP_Session extends Recursive_ArrayAccess implements Iterator, Co
      * Set the session cookie
      */
     protected function set_cookie() {
-        setcookie( $this->cookie_name, $this->session_id . '||' . $this->expires . '||' . $this->exp_variant , $this->expires, COOKIEPATH, COOKIE_DOMAIN );
+        setcookie( $this->cookie_name, $this->session_id . '||' . $this->expires . '||' . $this->exp_variant , (int) $this->expires, COOKIEPATH, COOKIE_DOMAIN );
     }
 
     /**
