@@ -119,7 +119,7 @@ class ClefLogout {
      * Remove WP Engine's reduced scope for the Heartbeat API (i.e., editing-only pages) so that the WP logout modal will appear
      * when the Clef logout hook is received.
      */
-    private function increase_heartbeat_scope_for_wpe( $heartbeat_allowed_pages ) {
+    public function increase_heartbeat_scope_for_wpe( $heartbeat_allowed_pages ) {
         $heartbeat_allowed_pages[] = 'admin.php';
         $heartbeat_allowed_pages[] = 'customize.php';
         $heartbeat_allowed_pages[] = 'edit-comments.php';
