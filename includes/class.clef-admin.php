@@ -208,7 +208,7 @@ class ClefAdmin {
             'setup' => array(
                 'siteName' => get_option('blogname'),
                 'siteDomain' => get_option('siteurl'),
-                'logoutHook' => wp_login_url(),
+                'logoutHook' => ClefUtils::get_logout_hook_url(),
                 'source' => 'wordpress',
                 'affiliates' => apply_filters('clef_add_affiliate', array())
             ),
