@@ -17,7 +17,10 @@ class ClefLogout {
             add_filter('init', array($this, "logged_out_check_with_redirect"));
         }
         
-        // Add this filter to expand the scope of the Heartbeat API only if we're running on a WP Engine server
+        /**
+        * Accommodate WP Engine's restriction on the scope of the Heartbeat API (i.e., restricted to post/page editing pages only)
+        * by expanding the scope to all pages in WP Dashboard; this scope is required for Clef to display the WP logout modal upon Clef-enabled logouts.
+        */
         if ( class_exists('WPE_Heartbeat_Throttle') ) {
             add_filter( 'wpe_heartbeat_allowed_pages', array( $this, 'increase_heartbeat_scope_for_wpe') );
         }
@@ -134,6 +137,8 @@ class ClefLogout {
         $heartbeat_allowed_pages[] = 'options-permalink.php';
         $heartbeat_allowed_pages[] = 'options-reading.php';
         $heartbeat_allowed_pages[] = 'options-writing.php';
+        $heartbeat_allowed_pages[] = 'plugin-editor.php';
+        $heartbeat_allowed_pages[] = 'plugin-install.php';
         $heartbeat_allowed_pages[] = 'plugins.php';
         $heartbeat_allowed_pages[] = 'profile.php';
         $heartbeat_allowed_pages[] = 'themes.php';
