@@ -36,8 +36,8 @@ class Clef {
         
         // Accommodate WP Engine's throttle on the Heartbeat API
         if ( class_exists('WPE_Heartbeat_Throttle') ) {
-		    if (!defined('WPE_HEARTBEAT_INTERVAL')) define('WPE_HEARTBEAT_INTERVAL', 5);
-	    }
+            if (!defined('WPE_HEARTBEAT_INTERVAL')) define('WPE_HEARTBEAT_INTERVAL', 5);
+        }
     }
 
     public static function start() {
