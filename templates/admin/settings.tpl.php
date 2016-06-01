@@ -1,6 +1,4 @@
 <div id="clef-settings-container">
-    <div class="message"><p></p></div>
-
     <?php if ($options['isMultisite']) { ?>
     <div id='clef-multisite-options'>
         <?php include CLEF_TEMPLATE_PATH . 'admin/multisite.tpl.php'; ?>
