@@ -10,14 +10,11 @@ php:
     - "5.4"
     - "5.3"
     - "7.0"
-    - hhvm
-    - nightly
 
 # WordPress version used in first build configuration.
 env:
     - WP_VERSION=master
     - WP_VERSION=4.4
-    - WP_VERSION=3.9.1
 
 # Clones WordPress and configures our testing environment.
 before_script:
