@@ -295,5 +295,16 @@ class ClefUtils {
 
         return $sent;
     }
+    
+    public static function get_logout_hook_url() {
+        $logout_hook_url = wp_login_url();
+        
+        // Accommodate WP Engine's firewall rules, which require a wpe-login param on POST requests to the login script URL
+        if ( function_exists( 'wpe_site' ) ) {
+            $logout_hook_url = add_query_arg('wpe-login', 'clef', $logout_hook_url);
+        }
+
+        return $logout_hook_url;
+    }
 }
 ?>

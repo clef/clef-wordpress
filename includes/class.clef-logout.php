@@ -16,6 +16,14 @@ class ClefLogout {
         if (!defined('DOING_AJAX') || !DOING_AJAX) {
             add_filter('init', array($this, "logged_out_check_with_redirect"));
         }
+        
+        /**
+        * Accommodate WP Engine's restriction on the scope of the Heartbeat API (i.e., restricted to post/page editing pages only)
+        * by expanding the scope to all pages in WP Dashboard; this scope is required for Clef to display the WP logout modal upon Clef-enabled logouts.
+        */
+        if ( class_exists('WPE_Heartbeat_Throttle') ) {
+            add_filter( 'wpe_heartbeat_allowed_pages', array( $this, 'increase_heartbeat_scope_for_wpe') );
+        }
     }
 
     /**
@@ -107,6 +115,41 @@ class ClefLogout {
             self::$instance = new self($settings);
         }
         return self::$instance;
+    }
+    
+    /***
+     * Ported from Jeremy Pry (http://jeremypry.com/); Original: https://gist.github.com/JPry/b1f6c55a5d5337557f97
+     * Remove WP Engine's reduced scope for the Heartbeat API (i.e., editing-only pages) so that the WP logout modal will appear
+     * when the Clef logout hook is received.
+     */
+    public function increase_heartbeat_scope_for_wpe( $heartbeat_allowed_pages ) {
+        $heartbeat_allowed_pages[] = 'admin.php';
+        $heartbeat_allowed_pages[] = 'customize.php';
+        $heartbeat_allowed_pages[] = 'edit-comments.php';
+        $heartbeat_allowed_pages[] = 'export.php';
+        $heartbeat_allowed_pages[] = 'import.php';
+        $heartbeat_allowed_pages[] = 'index.php.php';
+        $heartbeat_allowed_pages[] = 'media-new.php';
+        $heartbeat_allowed_pages[] = 'nav-menus.php';
+        $heartbeat_allowed_pages[] = 'options-discussion.php';
+        $heartbeat_allowed_pages[] = 'options-general.php';
+        $heartbeat_allowed_pages[] = 'options-media.php';
+        $heartbeat_allowed_pages[] = 'options-permalink.php';
+        $heartbeat_allowed_pages[] = 'options-reading.php';
+        $heartbeat_allowed_pages[] = 'options-writing.php';
+        $heartbeat_allowed_pages[] = 'plugin-editor.php';
+        $heartbeat_allowed_pages[] = 'plugin-install.php';
+        $heartbeat_allowed_pages[] = 'plugins.php';
+        $heartbeat_allowed_pages[] = 'profile.php';
+        $heartbeat_allowed_pages[] = 'themes.php';
+        $heartbeat_allowed_pages[] = 'tools.php';
+        $heartbeat_allowed_pages[] = 'update-core.php';
+        $heartbeat_allowed_pages[] = 'upload.php';
+        $heartbeat_allowed_pages[] = 'users.php';
+        $heartbeat_allowed_pages[] = 'user-new.php';
+        $heartbeat_allowed_pages[] = 'widgets.php';
+        
+        return $heartbeat_allowed_pages;
     }
 }
 ?>
