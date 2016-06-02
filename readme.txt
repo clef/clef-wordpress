@@ -88,14 +88,12 @@ Yes. Clef 2FA is compatible with all of the top-tier security plugins.
 
 = Can I use Clef with Web Application Firewalls such as ModSecurity? =
 
-Yes. Depending on your firewall configuration, you may need to white list the following:
+Yes. Depending on your firewall configuration, you may need to whitelist the following:
 
 - outgoing: `clef.io` (i.e., the Clef API domain)
 - incoming: `User-Agent: Clef/1.0 (https://getclef.com)` (i.e., the Clef API user agent for logout hook HTTP requests)
 
-You can verify that the logout request is passing through the firewall by sending a test request from the command line (expected result: `success`):
-
-`curl --data 'logout_token=1234567890' -H 'User-Agent: Clef/1.0 (https://getclef.com)' [wp-login.php URL]`
+You can verify that the logout request is passing through the firewall by sending [a test request from the command line](http://support.getclef.com/article/127-how-to-test-clef-logout-hooks-from-the-command-line).
 
 = My Clef log out hook is not working. How do I fix it? =
 
