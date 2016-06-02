@@ -99,6 +99,8 @@ You can verify that the logout request is passing through the firewall by sendin
 
 = My Clef log out hook is not working. How do I fix it? =
 
+See "[How do I fix Logout Hook errors?](http://support.getclef.com/article/41-how-to-fix-clef-logout-hook-errors)"
+
 = Can my existing WordPress users log in with Clef right away after I install the plugin? =
 
 Yes. If your users register on their Clef mobile apps using the same email address as their WordPress accounts, they can start using Clef instantly. Otherwise, they can [link their WP users with their Clef accounts](http://support.getclef.com/article/69-linking-the-clef-mobile-app-to-wordpress-users) after logging in to the WordPress dashboard.
@@ -486,10 +488,4 @@ adds significant security and functionality improvements designed to foil botnet
 
 == Credits ==
 
-[Dave Ross](http://davidmichaelross.com) created the original Clef plugin for WordPress. The Clef team continues to develop the plugin further. All trademarks, including the Clef logo, are the property of Clef.
-
-== Roadmap ==
-
-* More localization. To help translate, see [the localization guide](http://support.getclef.com/article/62-how-to-help-translate-clef-wordpress-plugin).
-* Improved invite system for adding new Clef users
-* Support for Clef team member login and account creation
+[Dave Ross](http://davidmichaelross.com) created the original Clef plugin for WordPress. The Clef team continues to develop the plugin further. Open source contributions are welcome via the [Clef 2FA GitHub repository](https://github.com/clef/clef-wordpress/). All trademarks, including the Clef logo, are the property of Clef.
