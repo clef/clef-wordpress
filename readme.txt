@@ -155,7 +155,6 @@ Released 6 June 2016
 
 * Feature: automatic setup for WP Engine servers; manual workarounds no longer required, should be removed ([248](https://github.com/clef/clef-wordpress/pull/248))
 * Fix: minor PHP 7 syntax issue ([246](https://github.com/clef/clef-wordpress/pull/246))
-* Fix: minor display issue on settings page ([247](https://github.com/clef/clef-wordpress/pull/247))
 
 = 2.5.2 =
 Released 17 May 2016
