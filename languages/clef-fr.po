@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the WPClef package.
 # 
 # Translators:
+# Valentin R. <rubeluta@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-16 11:22-0700\n"
-"PO-Revision-Date: 2016-05-16 18:22+0000\n"
-"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
+"POT-Creation-Date: 2016-06-06 15:33-0700\n"
+"PO-Revision-Date: 2016-05-31 13:45+0000\n"
+"Last-Translator: Valentin R. <rubeluta@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/clef/wpclef/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 #: includes/class.clef-admin.php:413 includes/class.clef-admin.php:495
 #, php-format
 msgid "%d %s successfully invited to Clef."
-msgstr ""
+msgstr "%d %s a bien été invité sur Clef."
 
 #: includes/class.clef-invite.php:74
 msgid ""
@@ -30,7 +31,7 @@ msgstr ""
 
 #: templates/admin/tutorial.tpl.php:42
 msgid "3 tips for using Clef"
-msgstr ""
+msgstr "3 suggestions d'utilisation"
 
 #: templates/login.tpl.php:46
 msgid ""

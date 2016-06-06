@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-16 11:22-0700\n"
-"PO-Revision-Date: 2016-05-16 18:22+0000\n"
-"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
+"POT-Creation-Date: 2016-06-06 15:33-0700\n"
+"PO-Revision-Date: 2016-05-19 07:23+0000\n"
+"Last-Translator: Ramil Yafizov <ramil.yafizov@gmail.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/clef/wpclef/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -579,7 +579,7 @@ msgstr "Произошла ошибка приглашения пользова�
 
 #: includes/class.clef-login.php:327
 msgid "There's <b>no WordPress user</b> connected to your Clef account."
-msgstr ""
+msgstr "<b>Нет пользователя WodPress</b>, привязанного к Вашей учётной записи Clef."
 
 #: includes/class.clef-login.php:329
 msgid ""

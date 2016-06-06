@@ -20,7 +20,7 @@ class Clef {
     }
 
     private function define_constants() {
-        define('CLEF_VERSION', '2.5.2');
+        define('CLEF_VERSION', '2.5.3');
 
         if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', false);
 
@@ -33,6 +33,11 @@ class Clef {
         if (!defined('CLEF_BASE')) define( 'CLEF_BASE', 'https://clef.io');
         if (!defined('CLEF_JS_URL')) define( 'CLEF_JS_URL', CLEF_BASE . '/v3/clef.js');
         if (!defined('CLEF_API_BASE')) define( 'CLEF_API_BASE', CLEF_BASE . '/api/v1/');
+
+        // Accommodate WP Engine's throttle on the Heartbeat API
+        if ( class_exists('WPE_Heartbeat_Throttle') ) {
+            if (!defined('WPE_HEARTBEAT_INTERVAL')) define('WPE_HEARTBEAT_INTERVAL', 5);
+        }
     }
 
     public static function start() {
