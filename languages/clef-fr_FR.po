@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the WPClef package.
 # 
 # Translators:
-# Beauvisage Baptiste <beau.baptiste@gmail.com>, 2016
+# Baptiste Beauvisage <beau.baptiste@gmail.com>, 2016
 # Dimitri, 2015
 # leblogdelise <webmaster@liseweb.fr>, 2014
 # leolelego <leolelego@gmail.com>, 2014
@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-16 11:22-0700\n"
+"POT-Creation-Date: 2016-06-06 15:33-0700\n"
 "PO-Revision-Date: 2016-05-16 18:22+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/clef/wpclef/language/fr_FR/)\n"

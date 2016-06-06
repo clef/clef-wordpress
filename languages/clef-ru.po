@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Abalim <zlotm@mail.ru>, 2014
+# Ramil Yafizov <ramil.yafizov@gmail.com>, 2016
 # Abalim <zlotm@mail.ru>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-05-16 11:22-0700\n"
-"PO-Revision-Date: 2016-05-16 18:22+0000\n"
-"Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
+"POT-Creation-Date: 2016-06-06 15:33-0700\n"
+"PO-Revision-Date: 2016-05-19 07:44+0000\n"
+"Last-Translator: Ramil Yafizov <ramil.yafizov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/clef/wpclef/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 #: includes/class.clef-admin.php:413 includes/class.clef-admin.php:495
 #, php-format
 msgid "%d %s successfully invited to Clef."
-msgstr ""
+msgstr "%d %s успешно приглашены в Clef"
 
 #: includes/class.clef-invite.php:74
 msgid ""
@@ -64,12 +65,12 @@ msgstr "Разрешить XML"
 
 #: templates/admin/multisite/network-enabled.tpl.php:24
 msgid "Allow individual sites to manage settings"
-msgstr ""
+msgstr "Позволить индивидуальным сайтам управлять настройками"
 
 #: templates/admin/form.tpl.php:45
 msgid ""
 "Allow passwords for API (necessary for things like the WordPress mobile app)"
-msgstr ""
+msgstr "Разрешить паролям присутствовать в API (необходимо для программ, таких, как мобильное приложение WordPress)"
 
 #: templates/admin/form.tpl.php:124
 msgid "Allow visitors to your site to register with Clef"
@@ -100,7 +101,7 @@ msgstr "Значок"
 #: includes/lib/ajax-settings/ajax-settings.php:61
 #: includes/lib/ajax-settings/ajax-settings.php:67
 msgid "Cheatin&#8217; uh?"
-msgstr ""
+msgstr "Что, жульничаем?"
 
 #: includes/class.clef-admin.php:121 includes/class.clef-admin.php:122
 #: includes/class.clef-admin.php:135 includes/class.clef-admin.php:171
@@ -114,7 +115,7 @@ msgstr "Настройки Clef API "
 
 #: templates/admin/multisite/single-enabled.tpl.php:4
 msgid "Clef is being managed by multi-site."
-msgstr ""
+msgstr "Clef управляется мульти-сайтом"
 
 #: includes/class.clef-admin.php:457
 msgid ""
@@ -138,11 +139,11 @@ msgstr "Clef  бесплатен, и всегда будет бесплатны�
 
 #: includes/class.clef-internal-settings.php:236
 msgid "Clef override URL - keep safe"
-msgstr ""
+msgstr "URL для замещения Clef - хранить в безопасности"
 
 #: templates/badge.tpl.php:4
 msgid "Clef two-factor authentication"
-msgstr ""
+msgstr "Двух-факторная аутентификация Clef"
 
 #: templates/invite_email.tpl.php:13
 #, php-format
