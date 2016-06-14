@@ -128,7 +128,7 @@ class ClefLogout {
         $heartbeat_allowed_pages[] = 'edit-comments.php';
         $heartbeat_allowed_pages[] = 'export.php';
         $heartbeat_allowed_pages[] = 'import.php';
-        $heartbeat_allowed_pages[] = 'index.php.php';
+        $heartbeat_allowed_pages[] = 'index.php';
         $heartbeat_allowed_pages[] = 'media-new.php';
         $heartbeat_allowed_pages[] = 'nav-menus.php';
         $heartbeat_allowed_pages[] = 'options-discussion.php';
