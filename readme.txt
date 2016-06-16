@@ -155,7 +155,6 @@ Released 16 June 2016
 
 * Fix: minor update to Heartbeat API files whitelist on WP Engine servers ([252](https://github.com/clef/clef-wordpress/pull/252))
 
-
 = 2.5.3 =
 Released 6 June 2016
 
