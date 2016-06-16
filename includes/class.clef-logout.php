@@ -125,10 +125,12 @@ class ClefLogout {
     public function increase_heartbeat_scope_for_wpe( $heartbeat_allowed_pages ) {
         $heartbeat_allowed_pages[] = 'admin.php';
         $heartbeat_allowed_pages[] = 'customize.php';
+        $heartbeat_allowed_pages[] = 'edit.php';
         $heartbeat_allowed_pages[] = 'edit-comments.php';
+        $heartbeat_allowed_pages[] = 'edit-tags.php';
         $heartbeat_allowed_pages[] = 'export.php';
         $heartbeat_allowed_pages[] = 'import.php';
-        $heartbeat_allowed_pages[] = 'index.php.php';
+        $heartbeat_allowed_pages[] = 'index.php';
         $heartbeat_allowed_pages[] = 'media-new.php';
         $heartbeat_allowed_pages[] = 'nav-menus.php';
         $heartbeat_allowed_pages[] = 'options-discussion.php';
@@ -140,7 +142,9 @@ class ClefLogout {
         $heartbeat_allowed_pages[] = 'plugin-editor.php';
         $heartbeat_allowed_pages[] = 'plugin-install.php';
         $heartbeat_allowed_pages[] = 'plugins.php';
+        $heartbeat_allowed_pages[] = 'post-new.php';
         $heartbeat_allowed_pages[] = 'profile.php';
+        $heartbeat_allowed_pages[] = 'theme-editor.php';
         $heartbeat_allowed_pages[] = 'themes.php';
         $heartbeat_allowed_pages[] = 'tools.php';
         $heartbeat_allowed_pages[] = 'update-core.php';
