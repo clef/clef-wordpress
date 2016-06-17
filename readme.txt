@@ -150,6 +150,11 @@ Clef employs a distributed security architecture, which means Clef stores no use
 
 == Changelog ==
 
+= 2.5.5 =
+Released 20 June 2016
+
+* Fix: WP cron scheduler adding excess session garbage collection events ([253](https://github.com/clef/clef-wordpress/pull/253))
+
 = 2.5.4 =
 Released 16 June 2016
 
