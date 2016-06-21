@@ -159,10 +159,10 @@ function clef_wp_session_cleanup() {
 add_action( 'wp_session_garbage_collection', 'clef_wp_session_cleanup' );
 
 /**
- * Register the garbage collector as a twice daily event.
+ * Register the garbage collector.
  */
 function clef_wp_session_register_garbage_collection() {
-    if ( ! wp_next_scheduled( 'wp_session_garbage_collection' ) ) {
+    if ( ! wp_next_scheduled( 'clef_wp_session_garbage_collection' ) ) {
         wp_schedule_event( time(), 'hourly', 'clef_wp_session_garbage_collection' );
     }
 }

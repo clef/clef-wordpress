@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, xmlrpc, xml-rpc
 Requires at least: 3.6
 Tested up to: 4.5
-Stable tag: 2.5.4
+Stable tag: 2.5.5
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -149,6 +149,11 @@ Clef employs a distributed security architecture, which means Clef stores no use
 4. Clef settings page
 
 == Changelog ==
+
+= 2.5.5 =
+Released 20 June 2016
+
+* Fix: WP cron scheduler adding excess session garbage collection events ([253](https://github.com/clef/clef-wordpress/pull/253))
 
 = 2.5.4 =
 Released 16 June 2016
