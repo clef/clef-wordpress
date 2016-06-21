@@ -11,7 +11,7 @@ echo "Creating POT"
 rm -f $POT
 xgettext --copyright-holder="Clef, Inc." \
     --package-name="WPClef" \
-    --package-version="2.5.4" \
+    --package-version="2.5.5" \
     --msgid-bugs-address="support@getclef.com" \
     --language=PHP \
     --sort-output \
