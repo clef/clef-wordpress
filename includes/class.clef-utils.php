@@ -250,7 +250,7 @@ class ClefUtils {
         if (!$override && isset($_COOKIE[self::$cookie_name]) && $_COOKIE[self::$cookie_name]) return;
 
         $state = wp_generate_password(24, false);
-        @setcookie(self::$cookie_name, $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
+        @setcookie(self::$cookie_name, $state, (time() + 60 * 60 * 24), '/', '', ClefUtils::is_tls(), true);
         $_COOKIE[self::$cookie_name] = $state;
 
         return $state;
@@ -305,6 +305,10 @@ class ClefUtils {
         }
 
         return $logout_hook_url;
+    }
+    
+    public static function is_tls() {
+        return is_ssl() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
     }
 }
 ?>
