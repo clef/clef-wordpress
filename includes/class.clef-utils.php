@@ -308,13 +308,7 @@ class ClefUtils {
     }
     
     public static function is_tls() {
-        if ( is_ssl() ) {
-            return true;
-        } elseif ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )  {
-            return true;
-        } else {
-            return false;
-        }
+        return is_ssl() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
     }
 }
 ?>
