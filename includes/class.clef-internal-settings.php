@@ -257,7 +257,7 @@ class ClefInternalSettings {
         if ($this->get('shortcode_settings_shortcode')) return true;
 
         // first check if the `pagenow` variable is the login or register page
-        $pages = ['wp-login.php', 'wp-register.php'];
+        $pages = array('wp-login.php', 'wp-register.php');
         if (in_array( $GLOBALS['pagenow'], $pages )) return true;
 
         // if it's not, compare the login and register paths to the
