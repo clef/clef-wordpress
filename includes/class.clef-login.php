@@ -12,16 +12,10 @@ class ClefLogin {
     }
 
     public function initialize_hooks() {
-        /***
-         * Set the OAuth state parameter cookie via initialize_state() if
-         * (a) site admin has NOT opted to turn on Clef 2FA's shortcode feature, which requires sending the state parameter to all clients including anonymous front-end users;
-         * and (b) client is browsing the login or registration URL.
-         */
-        $clef_settings = ClefInternalSettings::start();
-        if ( ( $clef_settings->get('shortcode_settings_shortcode') == true ) || ( in_array( $GLOBALS['pagenow'], array( wp_login_url(), wp_registration_url() ) ) ) ) {
+        if ($this->settings->should_initialize_state_on_request()) {
             add_action('init', array($this, 'initialize_state'), -1);
         }
-        
+
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
 
