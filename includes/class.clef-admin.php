@@ -311,7 +311,7 @@ class ClefAdmin {
         );
 
         $invite_users_settings = $form->addSection('invite_users', __('Invite Users', "wpclef"));
-        
+
         $shortcode_settings = $form->addSection('shortcode_settings', __('Shortcode settings', 'wpclef'), '');
         $shortcode_settings->addField('shortcode', __('Enable shortcode support', 'wpclef'), Settings_API_Util_Field::TYPE_CHECKBOX);
 
