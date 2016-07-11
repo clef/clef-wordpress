@@ -108,6 +108,27 @@
         </div>
         <div id="invite-users-settings" class="settings-section"></div>
         <?php include CLEF_TEMPLATE_PATH . 'pro/form.tpl.php'; ?>
+        <div id="registration-settings" class="settings-section">
+           <div class="inputs-container">
+                <h3><?php _e("Register with your phone", "wpclef"); ?></h3>
+                <p><?php _e("Register new users with the Clef mobile app. The <strong>Membership: anyone can register</strong> setting also must be enabled in WordPress's <a href='".admin_url('options-general.php')."'><strong>General Settings</strong></a>.", "wpclef"); ?></p>
+                <div class="input-container">
+                    <label for=""><?php _e("Allow visitors to your site to register with Clef", "wpclef"); ?></label>
+                    <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
+                </div>
+            </div>
+        </div>
+        <div id="shortcode-settings" class="settings-section">
+           <div class="inputs-container">
+                <h3><?php _e("Shortcode support", "wpclef"); ?> <a class="setting-info" href="http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode" target="clef">Learn more about this setting</a></h3>
+                <p><?php _e("Use the <code>[clef_render_login_button]</code> or <br /><code>[clef_render_login_button embed=true]</code> shortcodes on a custom login page.", "wpclef"); ?></p>
+                <p><?php _e("Enabling shortcode support means that the OAuth2 state parameter cookie (i.e., <code>wordpress_clef_state</code>) is set on every request for all users including anonymous users browsing the front end. Thus server-side caches such as Varnish may lose the ability to provide full-page caching to anonymous users.", "wpclef"); ?></p>
+                <div class="input-container">
+                    <label for=""><?php _e("Enable the Clef login shortcode", "wpclef"); ?></label>
+                    <?php $form->getSection('shortcode_settings')->getField('shortcode')->render(); ?>
+                </div>
+            </div>
+        </div>
         <div class="clef-settings settings-section">
             <div class="inputs-container">
                 <h3><?php _e("Clef API Settings", "wpclef"); ?></h3>
@@ -119,10 +140,6 @@
                 <div class="input-container">
                     <label for=""><?php _e("Application Secret", "wpclef"); ?></label>
                     <?php $form->getSection('clef_settings')->getField('app_secret')->render(); ?>
-                </div>
-                <div class="input-container">
-                    <label for=""><?php _e("Allow visitors to your site to register with Clef", "wpclef"); ?></label>
-                    <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
                 </div>
             </div>
         </div>
