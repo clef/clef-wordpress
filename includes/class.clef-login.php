@@ -435,7 +435,9 @@ class ClefLogin {
 
 
     public function initialize_state() {
-        ClefUtils::initialize_state();
+        if ($this->settings->should_initialize_state_on_request()) {
+            ClefUtils::initialize_state();
+        }
     }
 
     public static function start($settings) {

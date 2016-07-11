@@ -246,6 +246,31 @@ class ClefInternalSettings {
         );
     }
 
+    /***
+     * Check whether we should set the OAuth state parameter cookie via initialize_state() if
+     * (a) site admin has NOT opted to turn on Clef 2FA's shortcode feature, which requires sending the state parameter to all clients including anonymous front-end users;
+     * and (b) client is browsing the login or registration URL.
+     */
+    public function should_initialize_state_on_request() {
+
+        // if the shortcode is set, we should always initialize state
+        if ($this->get('shortcode_settings_shortcode')) return true;
+
+        // first check if the `pagenow` variable is the login or register page
+        $pages = array('wp-login.php', 'wp-register.php');
+        if (in_array( $GLOBALS['pagenow'], $pages )) return true;
+
+        // if it's not, compare the login and register paths to the
+        // current path
+        $parsed_login_url = parse_url(wp_login_url());
+        if (isset($parsed_login_url['path'])) $pages[] = $parsed_login_url['path'];
+        $parsed_registration_url = parse_url(wp_registration_url());
+        if (isset($parsed_registration_url['path'])) $pages[] = $parsed_login_url['path'];
+
+        $parsed_current_url = parse_url($_SERVER['REQUEST_URI']);
+        return isset($parsed_current_url['path']) && in_array( $parsed_current_url['path'], $pages );
+    }
+
     public static function start() {
         if (!isset(self::$instance) || self::$instance === null || defined('CLEF_TESTING')) {
             self::$instance = new self;

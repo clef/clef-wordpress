@@ -250,7 +250,7 @@ class ClefUtils {
         if (!$override && isset($_COOKIE[self::$cookie_name]) && $_COOKIE[self::$cookie_name]) return;
 
         $state = wp_generate_password(24, false);
-        @setcookie(self::$cookie_name, $state, (time() + 60 * 60 * 24), '/', '', is_ssl(), true);
+        @setcookie(self::$cookie_name, $state, (time() + 60 * 60 * 24), '/', '', ClefUtils::is_tls(), true);
         $_COOKIE[self::$cookie_name] = $state;
 
         return $state;
@@ -295,16 +295,20 @@ class ClefUtils {
 
         return $sent;
     }
-    
+
     public static function get_logout_hook_url() {
         $logout_hook_url = wp_login_url();
-        
+
         // Accommodate WP Engine's firewall rules, which require a wpe-login param on POST requests to the login script URL
         if ( function_exists( 'wpe_site' ) ) {
             $logout_hook_url = add_query_arg('wpe-login', 'clef', $logout_hook_url);
         }
 
         return $logout_hook_url;
+    }
+
+    public static function is_tls() {
+        return is_ssl() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
     }
 }
 ?>

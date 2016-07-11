@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPClef\n"
 "Report-Msgid-Bugs-To: support@getclef.com\n"
-"POT-Creation-Date: 2016-06-16 14:13-0700\n"
-"PO-Revision-Date: 2016-05-16 18:22+0000\n"
+"POT-Creation-Date: 2016-07-11 10:14-0700\n"
+"PO-Revision-Date: 2016-07-11 17:14+0000\n"
 "Last-Translator: Jesse Pollak <jesse@getclef.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/clef/wpclef/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: includes/class.clef-admin.php:413 includes/class.clef-admin.php:495
+#: includes/class.clef-admin.php:416 includes/class.clef-admin.php:498
 #, php-format
 msgid "%d %s successfully invited to Clef."
 msgstr ""
@@ -75,7 +75,7 @@ msgid ""
 "Allow passwords for API (necessary for things like the WordPress mobile app)"
 msgstr "Autoriser les mots de passe pour l'API (nécessaire par exemple pour les applications WordPress mobiles). "
 
-#: templates/admin/form.tpl.php:124
+#: templates/admin/form.tpl.php:116
 msgid "Allow visitors to your site to register with Clef"
 msgstr "Autoriser les visiteurs de votre site à s'enregistrer avec Clef"
 
@@ -83,11 +83,11 @@ msgstr "Autoriser les visiteurs de votre site à s'enregistrer avec Clef"
 msgid "An error occurred when creating your new account: "
 msgstr "Une erreur est survenue en créant votre nouveau compte :"
 
-#: includes/class.clef-admin.php:265 templates/admin/form.tpl.php:116
+#: includes/class.clef-admin.php:265 templates/admin/form.tpl.php:137
 msgid "Application ID"
 msgstr "ID de l'application"
 
-#: includes/class.clef-admin.php:266 templates/admin/form.tpl.php:120
+#: includes/class.clef-admin.php:266 templates/admin/form.tpl.php:141
 msgid "Application Secret"
 msgstr "Clé privée"
 
@@ -112,7 +112,7 @@ msgstr ""
 msgid "Clef"
 msgstr "Clef"
 
-#: templates/admin/form.tpl.php:113
+#: templates/admin/form.tpl.php:134
 msgid "Clef API Settings"
 msgstr "Paramètres API de Clef"
 
@@ -120,7 +120,7 @@ msgstr "Paramètres API de Clef"
 msgid "Clef is being managed by multi-site."
 msgstr "Clef est configuré pour le multisite."
 
-#: includes/class.clef-admin.php:457
+#: includes/class.clef-admin.php:460
 msgid ""
 "Clef is the best way to log in to WordPress <b>without usernames or "
 "passwords</b>. You're a few clicks away from joining more than 600,000 other"
@@ -155,7 +155,7 @@ msgid ""
 "(for the last time) to get started."
 msgstr "Cliquez <a href=\"%s\">ici</a> et connectez-vous avec votre nom d'utilisateur et votre mot passe (pour la dernière fois) pour commencer."
 
-#: includes/class.clef-admin.php:458
+#: includes/class.clef-admin.php:461
 msgid ""
 "Click below to finish setting up Clef or learn more <a "
 "href='https://getclef.com/wordpress' target='_blank'>here</a>."
@@ -270,6 +270,23 @@ msgstr ""
 msgid "Enable Clef across the whole network"
 msgstr "Autoriser Clef sur tout le réseau"
 
+#: includes/class.clef-admin.php:316
+msgid "Enable shortcode support"
+msgstr ""
+
+#: templates/admin/form.tpl.php:127
+msgid "Enable the Clef login shortcode"
+msgstr ""
+
+#: templates/admin/form.tpl.php:125
+msgid ""
+"Enabling shortcode support means that the OAuth2 state parameter cookie "
+"(i.e., <code>wordpress_clef_state</code>) is set on every request for all "
+"users including anonymous users browsing the front end. Thus server-side "
+"caches such as Varnish may lose the ability to provide full-page caching to "
+"anonymous users."
+msgstr ""
+
 #: templates/admin/form.tpl.php:63
 msgid "Enter override key here"
 msgstr "Saisir la clé d'écrasement ici"
@@ -286,7 +303,7 @@ msgstr "Erreur avec les données utilisateur :"
 msgid "Everyone"
 msgstr "Tout le monde"
 
-#: includes/class.clef-admin.php:459 templates/admin/tutorial.tpl.php:7
+#: includes/class.clef-admin.php:462 templates/admin/tutorial.tpl.php:7
 msgid "Finish setup"
 msgstr ""
 
@@ -359,7 +376,7 @@ msgstr "Faites savoir à vos visiteurs que votre site est protégé par une conn
 msgid "Link"
 msgstr "Lien"
 
-#: templates/admin/form.tpl.php:163
+#: templates/admin/form.tpl.php:180
 msgid "Log In"
 msgstr "Connectez-vous"
 
@@ -383,7 +400,7 @@ msgstr "Message pour la page de connexion"
 msgid "No thanks!"
 msgstr "Non merci !"
 
-#: includes/class.clef-admin.php:384
+#: includes/class.clef-admin.php:387
 msgid "No users were invited to use Clef."
 msgstr ""
 
@@ -409,7 +426,7 @@ msgstr "Ecraser la clé"
 msgid "Override network settings"
 msgstr "Ecraser les paramètres réseau"
 
-#: templates/admin/form.tpl.php:145
+#: templates/admin/form.tpl.php:162
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -441,7 +458,7 @@ msgstr "Merci de vous connecter à votre compte Clef avant de désactiver les mo
 msgid "Preview of your customizations"
 msgstr "Aperçu des personnalisations"
 
-#: templates/admin/form.tpl.php:138
+#: templates/admin/form.tpl.php:155
 msgid "Preview of your login form"
 msgstr "Aperçu de votre page de connexion"
 
@@ -449,15 +466,25 @@ msgstr "Aperçu de votre page de connexion"
 msgid "Preview of your support"
 msgstr "Aperçu "
 
+#: templates/admin/form.tpl.php:114
+msgid ""
+"Register new users with the Clef mobile app. The <strong>Membership: anyone "
+"can register</strong> setting also must be enabled in WordPress's <a href='"
+msgstr ""
+
 #: includes/class.clef-admin.php:267
 msgid "Register with Clef"
 msgstr "S'enregistrer avec Clef"
 
-#: templates/admin/form.tpl.php:161
+#: templates/admin/form.tpl.php:113
+msgid "Register with your phone"
+msgstr ""
+
+#: templates/admin/form.tpl.php:178
 msgid "Remember Me"
 msgstr "Se souvenir de moi"
 
-#: includes/class.clef-admin.php:328 includes/class.clef-network-admin.php:85
+#: includes/class.clef-admin.php:331 includes/class.clef-network-admin.php:85
 msgid "Security check; nonce failed."
 msgstr "Echec de la vérification de sécurité."
 
@@ -477,6 +504,14 @@ msgstr "Les paramètres ont été enregistrés. Etes-vous sûr(e) néanmoins de 
 msgid ""
 "Settings could not be parsed — this may be caused by a plugin conflict."
 msgstr "Les paramètres n'ont pu être appliqués. Ceci peut être dû à un conflit de plugin."
+
+#: includes/class.clef-admin.php:315
+msgid "Shortcode settings"
+msgstr ""
+
+#: templates/admin/form.tpl.php:123
+msgid "Shortcode support"
+msgstr ""
 
 #: templates/admin/form.tpl.php:50
 msgid "Show Clef wave as primary login option"
@@ -576,7 +611,7 @@ msgstr "Un problème est survenu lors de la déconnexion de votre compte Clef : 
 msgid "There was a problem sending invites: <%= error %>."
 msgstr "Un problème est survenu lors de l'envoi de l'invitation : <%= error %>."
 
-#: includes/class.clef-admin.php:398
+#: includes/class.clef-admin.php:401
 #, php-format
 msgid "There was an error inviting users to Clef: %s"
 msgstr ""
@@ -592,7 +627,7 @@ msgid ""
 "your Clef account</b> now."
 msgstr "Il n'existe <b>pas d'utilisateur WordPress</b> lié à votre compte Clef. <br></br> Identifiez-vous avec vos habituels nom d'utilisateur et mot de passe pour <b>connecter automatiquement votre compte Clef</b> maintenant."
 
-#: templates/admin/form.tpl.php:114
+#: templates/admin/form.tpl.php:135
 msgid ""
 "These keys connect your WordPress site to the Clef application you log in "
 "to. For more advanced settings, visit the <a "
@@ -626,7 +661,14 @@ msgstr "Utiliser les paramètres du réseau"
 msgid "Use network settings everywhere"
 msgstr "Utiliser la configuration réseau sur tous les sites"
 
-#: templates/admin/form.tpl.php:141
+#: templates/admin/form.tpl.php:124
+msgid ""
+"Use the <code>[clef_render_login_button]</code> or <br "
+"/><code>[clef_render_login_button embed=true]</code> shortcodes on a custom "
+"login page."
+msgstr ""
+
+#: templates/admin/form.tpl.php:158
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -736,7 +778,7 @@ msgstr "Ajouter de la sécurité"
 msgid "generate a secure override url for me"
 msgstr "Générer une URL de façon à permettre l'utilisation de mots de passe."
 
-#: includes/class.clef-admin.php:503
+#: includes/class.clef-admin.php:506
 msgid "invalid Clef ID"
 msgstr "ID de Clef invalide"
 
@@ -744,11 +786,11 @@ msgstr "ID de Clef invalide"
 msgid "invalid nonce"
 msgstr "invalide pour l'instant"
 
-#: includes/class.clef-admin.php:470
+#: includes/class.clef-admin.php:473
 msgid "invalid role"
 msgstr "rôle invalide"
 
-#: templates/admin/form.tpl.php:159 templates/login.tpl.php:39
+#: templates/admin/form.tpl.php:176 templates/login.tpl.php:39
 msgid "log in with a password"
 msgstr "Se connecter grâce à un mots de passe"
 
@@ -756,7 +798,7 @@ msgstr "Se connecter grâce à un mots de passe"
 msgid "needs setup"
 msgstr ""
 
-#: templates/admin/form.tpl.php:103 templates/admin/form.tpl.php:151
+#: templates/admin/form.tpl.php:103 templates/admin/form.tpl.php:168
 msgid "or"
 msgstr "ou"
 
@@ -764,7 +806,7 @@ msgstr "ou"
 msgid "show clef login"
 msgstr "Afficher la connection grâce à Clef"
 
-#: includes/class.clef-admin.php:489
+#: includes/class.clef-admin.php:492
 msgid "there are no other users without Clef with this role or greater"
 msgstr "Il n'y a pas d'utilisateur de Clef avec ce rôle ou un rôle supérieur"
 
