@@ -151,9 +151,10 @@ Clef employs a distributed security architecture, which means Clef stores no use
 == Changelog ==
 
 = 2.6.0 =
-Released 6 July 2016
+Released 11 July 2016
 
-* Fix: change default settings so cache is not invalidated on frontend pages
+* Feature: add support for Varnish full-page caching on front end via new shortcode setting ([255](https://github.com/clef/clef-wordpress/pull/255))
+* Enhancement: add httponly and secure flags to session and state cookies ([254](https://github.com/clef/clef-wordpress/pull/254))
 
 = 2.5.5 =
 Released 20 June 2016
