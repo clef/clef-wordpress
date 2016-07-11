@@ -12,9 +12,7 @@ class ClefLogin {
     }
 
     public function initialize_hooks() {
-        if ($this->settings->should_initialize_state_on_request()) {
-            add_action('init', array($this, 'initialize_state'), -1);
-        }
+        add_action('init', array($this, 'initialize_state'), -1);
 
         // Authenticate with Clef is there is a valid OAuth code present
         add_action('authenticate', array($this, 'authenticate_clef'), 10, 3);
@@ -437,7 +435,9 @@ class ClefLogin {
 
 
     public function initialize_state() {
-        ClefUtils::initialize_state();
+        if ($this->settings->should_initialize_state_on_request()) {
+            ClefUtils::initialize_state();
+        }
     }
 
     public static function start($settings) {
