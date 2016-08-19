@@ -69,7 +69,9 @@ class ClefAdmin {
     }
 
     public function add_clef_column_to_users_table( $column ) {
-        $column['clef'] = 'Clef';
+        if ($this->settings->is_configured()) {
+            $column['clef'] = 'Clef';
+        }
         return $column;
     }
 
