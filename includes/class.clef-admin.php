@@ -47,7 +47,10 @@ class ClefAdmin {
         add_action('clef_onboarding_after_first_login', array($this, 'disable_passwords_for_clef_users'));
         add_action('wp_dashboard_setup', array($this, 'add_dashboard_widget'));
 
+        add_filter( 'manage_users_columns', array($this, 'add_clef_column_to_users_table') );
+        add_filter( 'manage_users_custom_column', array($this, 'manage_clef_column_in_users_table'), 10, 3 );
         add_filter( 'plugin_action_links_'.plugin_basename( CLEF_PATH.'wpclef.php' ), array($this, 'clef_settings_action_links' ) );
+
         global $clef_ajax;
         $clef_ajax->add_action(self::CONNECT_CLEF_ID_ACTION, array($this, 'ajax_connect_clef_account_with_clef_id'));
         $clef_ajax->add_action(self::INVITE_USERS_ACTION, array($this, 'ajax_invite_users'));
@@ -63,6 +66,27 @@ class ClefAdmin {
 
     public function display_messages() {
         settings_errors( CLEF_OPTIONS_NAME );
+    }
+
+    public function add_clef_column_to_users_table( $column ) {
+        if ($this->settings->is_configured()) {
+            $column['clef'] = 'Clef';
+        }
+        return $column;
+    }
+
+    public function manage_clef_column_in_users_table( $val, $column_name, $user_id ) {
+        switch ($column_name) {
+            case 'clef' :
+                if (ClefUtils::user_has_clef($user_id)) {
+                    return 'Enabled';
+                } else {
+                    return 'Disabled';
+                }
+                break;
+            default:
+        }
+        return $val;
     }
 
     public function admin_enqueue_scripts($hook) {
