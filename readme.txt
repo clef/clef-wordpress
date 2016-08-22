@@ -151,7 +151,7 @@ Clef employs a distributed security architecture, which means Clef stores no use
 == Changelog ==
 
 = 2.6.1 =
-Released 22 August 2016
+Released 23 August 2016
 
 * Feature: add Clef column to Users: All Users view to demarcate which WP users have enabled Clef ([257](https://github.com/clef/clef-wordpress/pull/257))
 
