@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, xmlrpc, xml-rpc
 Requires at least: 3.6
 Tested up to: 4.6
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -12,7 +12,7 @@ Modern two-factor that people love to use: strong authentication without passwor
 
 == Description ==
 
-[The Clef mobile app](https://getclef.com) provides password-free, two-factor authentication that is highly secure and enjoyable to use. Sync your phone with the Clef Wave to log in. [Watch the 30-sec. demo](http://vimeo.com/103148853).
+[The Clef mobile app](https://getclef.com) provides passwordless two-factor authentication that is highly secure and enjoyable to use. Scan the Clef Wave to log in. [Watch the 30-sec. demo](http://vimeo.com/103148853).
 
 http://vimeo.com/103148853
 
@@ -21,7 +21,7 @@ http://vimeo.com/103148853
 
 - **No extra devices**: use your smartphone instead of a “third device” such as a USB drive or security key.
 
-- **[Single sign on/off](http://support.getclef.com/article/52-how-does-clef-s-single-sign-on-work)**: Sync with the Clef Wave once, then enjoy one-click sign ins for all subsequent sites. Also, sign out from all your sites with one-click any time, or [set the timer](http://support.getclef.com/article/72-how-to-adjust-the-duration-of-the-logout-timer) to log you out automatically when you’re done working.
+- **[Single sign on/off](http://support.getclef.com/article/52-how-does-clef-s-single-sign-on-work)**: Scan the Clef Wave once, then enjoy one-click sign ins for all subsequent sites. Also, sign out from all your sites with one-click any time, or [set the timer](http://support.getclef.com/article/72-how-to-adjust-the-duration-of-the-logout-timer) to log you out automatically when you’re done working.
 
 = Clef Security Features =
 
@@ -90,8 +90,8 @@ Yes. Clef 2FA is compatible with all of the top-tier security plugins.
 
 Yes. Depending on your firewall configuration, you may need to whitelist the following:
 
-- outgoing: `clef.io` (i.e., the Clef API domain)
-- incoming: `User-Agent: Clef/1.0 (https://getclef.com)` (i.e., the Clef API user agent for logout hook HTTP requests)
+- outgoing (i.e., the Clef API domain): `https://clef.io`
+- incoming (i.e., the Clef API user agent): `User-Agent: Clef/1.0 (https://getclef.com)`
 
 You can verify that the logout request is passing through the firewall by sending [a test request from the command line](http://support.getclef.com/article/127-how-to-test-clef-logout-hooks-from-the-command-line).
 
@@ -149,6 +149,11 @@ Clef employs a distributed security architecture, which means Clef stores no use
 4. Clef settings page
 
 == Changelog ==
+
+= 2.6.1 =
+Released 23 August 2016
+
+* Feature: add Clef column to Users: All Users view to demarcate which WP users have enabled Clef ([257](https://github.com/clef/clef-wordpress/pull/257))
 
 = 2.6.0 =
 Released 11 July 2016

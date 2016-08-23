@@ -132,7 +132,12 @@ class ClefUtils {
     public static function user_has_clef($user=false) {
         # if no user is provided, defaults to current user
         if (!$user) $user = wp_get_current_user();
-        return !!get_user_meta($user->ID, "clef_id", true);
+        if (is_int($user)) {
+            $user_id = $user;
+        } else {
+            $user_id = $user->ID;
+        }
+        return !!get_user_meta($user_id, "clef_id", true);
     }
 
     public static function associate_clef_id($clef_id, $user_id=false) {
