@@ -150,6 +150,12 @@ Clef employs a distributed security architecture, which means Clef stores no use
 
 == Changelog ==
 
+= 2.6.2 =
+Released 4 October 2016
+
+* Feature: add register with your phone shortcode parameter ([258](https://github.com/clef/clef-wordpress/pull/258))
+
+
 = 2.6.1 =
 Released 23 August 2016
 
