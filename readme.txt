@@ -116,8 +116,8 @@ See [the guide for accommodating users without smartphones](http://support.getcl
 1. [Deactivate](http://support.getclef.com/article/32-what-should-i-do-if-my-phone-is-lost-or-stolen) your old phone.
 1. [Reactivate](http://support.getclef.com/article/59-how-do-i-move-my-clef-account-to-a-new-phone) on your new phone.
 
-= How do I create a custom login page or widget with the Clef login shortcode? =
-You can add the Clef Wave or the Clef “login with your phone” button by inserting the **clef_render_login_button** shortcode into any post, page, or text widget. See the [shortcode guide](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) for details.
+= Is there a shortcode for the Clef login and register buttons? =
+Yes. The [`clef_render_login_button` shortcode](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) can be used in posts, pages, or text widgets.
 
 = How do I configure Clef for multisite networks? =
 
