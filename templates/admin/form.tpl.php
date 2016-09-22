@@ -121,7 +121,7 @@
         <div id="shortcode-settings" class="settings-section">
            <div class="inputs-container">
                 <h3><?php _e("Shortcode support", "wpclef"); ?> <a class="setting-info" href="http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode" target="clef">Learn more about this setting</a></h3>
-                <p><?php _e("Use the <code>[clef_render_login_button]</code> or <br /><code>[clef_render_login_button embed=true]</code> shortcodes on a custom login page.", "wpclef"); ?></p>
+                <p><?php _e("Use the <code>[clef_render_login_button]</code> shortcode to display the <strong>Login with your phone</strong> button. Add the <code>embed=true</code> parameter to display the Clef Wave instead of the login button. Or add the <code>type=register</code> parameter to display the <strong>Register with your phone</strong> button. E.g., <code>[clef_render_login_button type=register]</code>.", "wpclef"); ?></p>
                 <p><?php _e("Enabling shortcode support means that the OAuth2 state parameter cookie (i.e., <code>wordpress_clef_state</code>) is set on every request for all users including anonymous users browsing the front end. Thus server-side caches such as Varnish may lose the ability to provide full-page caching to anonymous users.", "wpclef"); ?></p>
                 <div class="input-container">
                     <label for=""><?php _e("Enable the Clef login shortcode", "wpclef"); ?></label>
