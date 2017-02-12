@@ -111,7 +111,12 @@
         <div id="registration-settings" class="settings-section">
            <div class="inputs-container">
                 <h3><?php _e("Register with your phone", "wpclef"); ?></h3>
-                <p><?php _e("Register new users with the Clef mobile app. The <strong>Membership: anyone can register</strong> setting also must be enabled in WordPress's <a href='".admin_url('options-general.php')."'><strong>General Settings</strong></a>.", "wpclef"); ?></p>
+                <p><?php
+                    printf( /* translators: %s: link to General Setting */
+                        __("Register new users with the Clef mobile app. The <strong>Membership: anyone can register</strong> setting also must be enabled in WordPress's %s.", 'wpclef'),
+                        '<a href="'.admin_url('options-general.php').'"><strong>'.__('General Settings').'</strong></a>'
+                    );
+                ?></p>
                 <div class="input-container">
                     <label for=""><?php _e("Allow visitors to your site to register with Clef", "wpclef"); ?></label>
                     <?php $form->getSection('clef_settings')->getField('register')->render(); ?>
