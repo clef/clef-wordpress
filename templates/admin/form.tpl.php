@@ -17,7 +17,7 @@
         <div class="settings-section">
             <div class="password-settings">
                 <div class="inputs-container">
-                    <h3><?php _e("Disable passwords", "wpclef"); ?> <a class="setting-info" href="http://support.getclef.com/article/60-recommended-password-settings-for-clef-wordpress-plugin" target="clef">Learn more about these settings</a></h3>
+                    <h3><?php _e("Disable passwords", 'wpclef'); ?> <a class="setting-info" href="http://support.getclef.com/article/60-recommended-password-settings-for-clef-wordpress-plugin" target="clef"><?php _e("Learn more about these settings", 'wpclef'); ?></a></h3>
                     <div class="input-container">
                         <label for="disable_passwords"><?php _e("Disable passwords for Clef users", "wpclef"); ?></label>
                         <?php $form->getSection('clef_password_settings')->getField('disable_passwords')->render(); ?>
@@ -56,8 +56,8 @@
         </div>
         <div class="override-settings settings-section">
            <div class="inputs-container">
-                <h3><?php _e("Override URL", "wpclef"); ?> <a class="setting-info" href="http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password" target="clef">Learn more about this setting</a></h3>
                 <p><?php _e("You have disabled passwords for some (or all) users. In case of emergency, you can create a special link where passwords can still be used. This is a good safety precaution.", "wpclef"); ?></p>
+                <h3><?php _e("Override URL", 'wpclef'); ?> <a class="setting-info" href="http://support.getclef.com/article/11-creating-a-secret-url-where-you-can-log-into-your-wordpress-site-with-a-password" target="clef"><?php esc_html_e('Learn more about this setting', 'wpclef') ?></a></h3>
                 <div class="input-container">
                     <label for=""><?php echo wp_login_url() ?>?override=</label>
                     <?php $form->getSection('clef_override_settings')->getField('key')->render(array("placeholder" => __( "Enter override key here", 'wpclef' ))); ?>
@@ -144,8 +144,8 @@
             </div>
         </div>
         <div class="clef-settings clef-settings__buttons">
-            <?php submit_button("Save settings", "primary clef-settings__saveButton"); ?>
-            <?php submit_button("Reset Application ID and Secret", "delete clef-settings__resetButton"); ?>
+            <?php submit_button(__("Save settings", 'wpclef'), "primary clef-settings__saveButton"); ?>
+            <?php submit_button(__("Reset Application ID and Secret", 'wpclef'), "delete clef-settings__resetButton"); ?>
         </div>
     </form>
 

@@ -394,7 +394,7 @@ class ClefAdmin {
         ?>
         <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $('<option>').val('invite_to_clef').text('Invite to use Clef')
+                $('<option>').val('invite_to_clef').text('<?php _e('Invite to use Clef', 'wpclef'); ?>')
                     .appendTo("select[name='action'], select[name='action2']");
             });
         </script>
@@ -452,7 +452,7 @@ class ClefAdmin {
 
         wp_add_dashboard_widget(
             $name,
-            'Your site is Clef enabled!',
+            __('Your site is Clef enabled!', 'wpclef'),
             array($this, 'render_dashboard_widget')
         );
 
