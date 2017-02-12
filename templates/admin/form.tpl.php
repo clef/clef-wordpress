@@ -28,7 +28,7 @@
                     </div>
                     <?php if (property_exists($form->getSection('clef_password_settings'), 'custom_roles')) { ?>
                     <div class="input-container custom-roles">
-                        <label class="title"><?php _e("Disable passwords for custom roles"); ?></label>
+                        <label class="title"><?php _e("Disable passwords for custom roles", 'wpclef'); ?></label>
                         <?php foreach($form->getSection('clef_password_settings')->custom_roles as $role => $role_obj) { ?>
                             <div class="custom-role">
                                 <label for=""><?php echo $role_obj['name'] ?></label>

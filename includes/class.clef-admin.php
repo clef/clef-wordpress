@@ -489,7 +489,7 @@ class ClefAdmin {
 
     public function render_dashboard_widget() {
     ?>
-        <p><?php _e("Clef is the best way to log in to WordPress <b>without usernames or passwords</b>. You're a few clicks away from joining more than 600,000 other WordPress sites that use Clef to make logging in safer and easier."); ?></p>
+        <p><?php _e("Clef is the best way to log in to WordPress <b>without usernames or passwords</b>. You're a few clicks away from joining more than 600,000 other WordPress sites that use Clef to make logging in safer and easier.", 'wpclef'); ?></p>
         <p><?php printf( /* translators: %s: here */
             __("Click below to finish setting up Clef or learn more %s.", 'wpclef'),
             '<a href="https://getclef.com/wordpress" target="_blank">'.__('here', 'wpclef').'</a>'
