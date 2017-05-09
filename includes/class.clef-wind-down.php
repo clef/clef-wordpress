@@ -38,12 +38,20 @@ class ClefWindDown {
     ?>
     <php? */ move this css to whereever we need */ ?>
         <style>
+
           #message.clef-sunset-msg {
-            background-color: #1DB2DF;
-            color: #fff;
-        }
+              background-color: #1DB2DF;
+              color: #fff;
+          }
+
+          #message .clef-sunset-msg-img {
+            width: 100px;
+            margin: 14px 14px 10px 6px;
+          }
+
         </style>
     <div id="message" class="clef-sunset-msg updated error notice-error">
+      <img src="<?php echo esc_url( plugins_url( 'assets/src/img/clef-logo@2x.png', dirname( __FILE__ ) ) ); ?>" alt="Clef logo" class="clef-sunset-msg-img"/>
       <p><?php printf( __( "Unfortunately, we're discontinuing support for Clef. <a href='%s' target='_blank'>Read more here</a>.", 'wpclef' ), 'https://blog.getclef.com/discontinuing-support-for-clef-6c89febef5f3#.ejv4vcu89' ); ?></p>
       <?php echo self::get_jetpack_prompt(); ?>
     </div><?php
