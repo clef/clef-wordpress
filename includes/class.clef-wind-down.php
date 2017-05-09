@@ -40,17 +40,51 @@ class ClefWindDown {
         <style>
 
           #message.clef-sunset-msg {
-              background-color: #1DB2DF;
-              color: #fff;
+            position: relative;
+            background-color: #1DB2DF;
+            border-color: #1DB2DF;
+            color: #fff;
+            padding: 16px;
           }
 
           #message .clef-sunset-msg-img {
             width: 100px;
-            margin: 14px 14px 10px 6px;
+            margin: 0 14px 10px 6px;
+          }
+
+          #message.clef-sunset-msg a {
+            color: #fff;
+          }
+
+          #message.clef-sunset-msg .button {
+            color: #555;
+          }
+
+          .clef-sunset-msg-dismiss {
+            display: block;
+            text-decoration: none !important;
+            line-height: .5;
+            float: right;
+          }
+
+          .clef-sunset-msg-dismiss:before {
+            color: #fff;
+            font: 400 16px/1 dashicons;
+            content: '\f158';
+          }
+
+          @media (max-width: 480px) {
+            .clef-sunset-msg-dismiss {
+              float: none;
+              position: absolute;
+              top: 14px;
+              right: 14px;
+            }
           }
 
         </style>
     <div id="message" class="clef-sunset-msg updated error notice-error">
+      <a href="#" class="clef-sunset-msg-dismiss"></a>
       <img src="<?php echo esc_url( plugins_url( 'assets/src/img/clef-logo@2x.png', dirname( __FILE__ ) ) ); ?>" alt="Clef logo" class="clef-sunset-msg-img"/>
       <p><?php printf( __( "Unfortunately, we're discontinuing support for Clef. <a href='%s' target='_blank'>Read more here</a>.", 'wpclef' ), 'https://blog.getclef.com/discontinuing-support-for-clef-6c89febef5f3#.ejv4vcu89' ); ?></p>
       <?php echo self::get_jetpack_prompt(); ?>
@@ -78,7 +112,7 @@ class ClefWindDown {
       $url = admin_url( 'admin.php?page=clef&jetpack=activate' );
       ?>
       <p><?php _e( 'It looks like you have the Jetpack plugin installed, but not activated. Activate it now so that you can use their "Sign on with WordPress.com" feature to require Two-Step Authentication.', 'wpclef' ); ?></p>
-      <p><a href="<?php echo esc_url( $url ); ?>" class="button-primary"><?php _e( 'Activate Jetpack', 'wpclef' ); ?></a></p>
+      <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Activate Jetpack', 'wpclef' ); ?></a></p>
       <?php
       return;
     }
