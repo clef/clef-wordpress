@@ -35,7 +35,15 @@ class ClefWindDown {
       return;
     }
 
-    ?><div id="message" class="updated error notice-error">
+    ?>
+    <php? */ move this css to whereever we need */ ?>
+        <style>
+          #message.clef-sunset-msg {
+            background-color: #1DB2DF;
+            color: #fff;
+        }
+        </style>
+    <div id="message" class="clef-sunset-msg updated error notice-error">
       <p><?php printf( __( "Unfortunately, we're discontinuing support for Clef. <a href='%s' target='_blank'>Read more here</a>.", 'wpclef' ), 'https://blog.getclef.com/discontinuing-support-for-clef-6c89febef5f3#.ejv4vcu89' ); ?></p>
       <?php echo self::get_jetpack_prompt(); ?>
     </div><?php
