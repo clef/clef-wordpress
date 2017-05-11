@@ -146,7 +146,7 @@ class ClefWindDown {
       ?>
       <p><?php _e( 'To continue securing your site, we recommend Jetpack\'s, "Sign on with WordPress.com" feature, with Two-Step Authentication.', 'wpclef' ); ?></p>
       <p>
-        <a href="plugin-install.php?tab=plugin-information&plugin=jetpack&from=plugins&TB_iframe=true&width=640&height=666" class="button-primary thickbox"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
+        <a href="<?php echo admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ?>" class="button-primary thickbox"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
       </p>
       <?php
       return;
