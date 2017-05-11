@@ -143,10 +143,12 @@ class ClefWindDown {
 		if ( $current_step === 0 ) {
       add_thickbox();
       wp_enqueue_script( 'plugin-install' );
+      wp_enqueue_script('wp-util');
+      wp_enqueue_script('updates');
       ?>
       <p><?php _e( 'To continue securing your site, we recommend Jetpack\'s, "Sign on with WordPress.com" feature, with Two-Step Authentication.', 'wpclef' ); ?></p>
       <p>
-        <a href="<?php echo admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ?>" class="button-primary thickbox"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
+        <a href="<?php echo admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ?>" class="install-now button"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
       </p>
       <?php
       return;
