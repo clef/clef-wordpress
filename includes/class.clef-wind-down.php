@@ -45,7 +45,7 @@ class ClefWindDown {
 	  $current_step = self::get_current_step();
 	  $dismissed    = get_option( 'clef_jetpack_dismissal', - 1 );
 
-	  if ( $current_step === $dismissed ) {
+	  if ( $current_step == $dismissed ) {
 		  return;
 	  }
 
