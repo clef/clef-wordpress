@@ -44,13 +44,14 @@ class ClefWindDown {
 
 	  $current_step = self::get_current_step();
 	  $dismissed    = get_option( 'clef_jetpack_dismissal', - 1 );
+	  //$dismissed = - 1;
 
 	  if ( $current_step == $dismissed ) {
 		  return;
 	  }
 
     ?>
-    <php? */ move this css to whereever we need */ ?>
+	  <?php /* move this css to whereever we need */ ?>
         <style>
 
           #message.clef-sunset-msg {
@@ -111,7 +112,7 @@ class ClefWindDown {
     </div><?php
   }
 
-	private static function get_current_step() {
+	public static function get_current_step() {
 		switch ( true ) {
 			case ! class_exists( 'Jetpack' ) && ! file_exists( WP_PLUGIN_DIR . '/jetpack/jetpack.php' ):
 				$current_step = 0;
@@ -130,6 +131,7 @@ class ClefWindDown {
 				break;
 			default:
 				$current_step = 5;
+							update_option( 'clef_jetpack_integrated', true );
 				break;
 		}
 
@@ -195,10 +197,6 @@ class ClefWindDown {
       return;
     }
 
-    // Everything is set up and good to go
-    add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
-    add_filter( 'jetpack_remove_login_form', '__return_true' );
-
     ?><p><?php _e( "You're all set up to use Jetpack's Two-Step Authentication via WordPress.com accounts though, so carry on.", 'wpclef' ); ?></p><?php
   }
 
@@ -240,3 +238,11 @@ class ClefWindDown {
     }
   }
 }
+
+// block access to regular login, once they've completed all the steps...
+if ( get_option( 'clef_jetpack_integrated' ) ) {
+	// Everything is set up and good to go
+	add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
+	add_filter( 'jetpack_remove_login_form', '__return_true' );
+}
+
