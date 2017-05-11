@@ -7,6 +7,11 @@ class ClefWindDown {
       return;
     }
 
+	  if ( class_exists( 'Jetpack' ) && Jetpack::is_active() && ! get_option( 'clef_jetpack_connected', false ) ) {
+		  JetpackTracking::record_user_event( 'test_clef_connection', array( 'used_cta' => get_option( 'clef_jetpack_cta_used' ) ) );
+		  update_option( 'clef_jetpack_connected', true );
+	  }
+
     // Hook into global admin notices
     add_action( 'admin_notices', array( 'ClefWindDown', 'show_notice' ) );
 
@@ -23,6 +28,8 @@ class ClefWindDown {
         array(
           'index.php',
           'options-general.php',
+	        'options.php', // show immediately after clef is activated
+          'plugins.php', // a likely place to be
           'admin.php' // pretty broad visibility
         )
       )
@@ -34,6 +41,13 @@ class ClefWindDown {
     if ( stristr( $_SERVER['REQUEST_URI'], 'admin.php?page=jetpack' ) ) {
       return;
     }
+
+	  $current_step = self::get_current_step();
+	  $dismissed    = get_option( 'clef_jetpack_dismissal', - 1 );
+
+	  if ( $current_step === $dismissed ) {
+		  return;
+	  }
 
     ?>
     <php? */ move this css to whereever we need */ ?>
@@ -84,18 +98,49 @@ class ClefWindDown {
 
         </style>
     <div id="message" class="clef-sunset-msg updated error notice-error">
-      <a href="#" class="clef-sunset-msg-dismiss"></a>
+	  <?php
+	  if ( $current_step > 2 ):
+		  ?>
+	    <a href="<?php echo admin_url( 'admin.php?page=clef&jetpack=dismiss' ); ?>" class="clef-sunset-msg-dismiss"></a>
+		  <?php
+	  endif;
+	  ?>
       <img src="<?php echo esc_url( plugins_url( 'assets/src/img/clef-logo@2x.png', dirname( __FILE__ ) ) ); ?>" alt="Clef logo" class="clef-sunset-msg-img"/>
       <p><?php printf( __( "Unfortunately, we're discontinuing support for Clef. <a href='%s' target='_blank'>Read more here</a>.", 'wpclef' ), 'https://blog.getclef.com/discontinuing-support-for-clef-6c89febef5f3#.ejv4vcu89' ); ?></p>
-      <?php echo self::get_jetpack_prompt(); ?>
+	  <?php self::get_jetpack_prompt( $current_step ); ?>
     </div><?php
   }
 
-  private static function get_jetpack_prompt() {
+	private static function get_current_step() {
+		switch ( true ) {
+			case ! class_exists( 'Jetpack' ) && ! file_exists( WP_PLUGIN_DIR . '/jetpack/jetpack.php' ):
+				$current_step = 0;
+				break;
+			case ! defined( 'JETPACK__VERSION' ) || ! class_exists( 'Jetpack' ):
+				$current_step = 1;
+				break;
+			case ! Jetpack::is_active():
+				$current_step = 2;
+				break;
+			case ! Jetpack::is_module_active( 'sso' ):
+				$current_step = 3;
+				break;
+			case '1' != get_option( 'jetpack_sso_require_two_step' ):
+				$current_step = 4;
+				break;
+			default:
+				$current_step = 5;
+				break;
+		}
+
+		return $current_step;
+	}
+
+	private static function get_jetpack_prompt( $current_step ) {
     // If Jetpack is not installed at all; prompt to install it.
     // This is a pretty rough way of doing things, but it works.
     // Including the class_exists check as a safeguard against weird file paths.
-    if ( ! class_exists( 'Jetpack' ) && ! file_exists( WP_CONTENT_DIR . '/plugins/jetpack/jetpack.php' ) ) {
+		if ( $current_step === 0 ) {
       add_thickbox();
       wp_enqueue_script( 'plugin-install' );
       ?>
@@ -108,7 +153,7 @@ class ClefWindDown {
     }
 
     // If Jetpack is installed but not active, give them a button to activate it right here
-    if ( ! defined( 'JETPACK__VERSION' ) || ! class_exists( 'Jetpack' ) ) {
+		if ( $current_step === 1 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=activate' );
       ?>
       <p><?php _e( 'It looks like you have the Jetpack plugin installed, but not activated. Activate it now so that you can use their "Sign on with WordPress.com" feature to require Two-Step Authentication.', 'wpclef' ); ?></p>
@@ -118,7 +163,7 @@ class ClefWindDown {
     }
 
     // If Jetpack isn't connected yet, prompt them to connect.
-    if ( ! Jetpack::is_active() ) {
+		if ( $current_step === 2 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=connect' );
       ?>
       <p><?php _e( 'It looks like you have Jetpack installed, but have not connected to WordPress.com yet. Once you are connected, you can enable "Sign on with WordPress.com" for your site, and require Two-Step Authentication.', 'wpclef' ); ?></p>
@@ -128,7 +173,7 @@ class ClefWindDown {
     }
 
     // Jetpack is installed, active, and connected. If SSO isn't active, prompt them.
-    if ( ! Jetpack::is_module_active( 'sso' ) ) {
+		if ( $current_step === 3 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=enable-sso' );
       ?>
       <p><?php _e( 'You have Jetpack installed already, so you can enable "Sign on with WordPress.com" for your site, and require Two-Step Authentication via Jetpack.', 'wpclef' ); ?></p>
@@ -138,7 +183,7 @@ class ClefWindDown {
     }
 
     // If the 2FA requirement isn't active, prompt them.
-    if ( '1' != get_option( 'jetpack_sso_require_two_step' ) ) {
+		if ( $current_step === 4 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=require-2fa' );
       ?>
       <p><?php _e( 'Since you already have Jetpack\'s "Sign on with WordPress.com" feature enabled, you just need to make sure you have Two-Step Authentication activated on your WordPress.com account, and then you can require it for all log ins on this site.', 'wpclef' ); ?></p>
@@ -165,6 +210,10 @@ class ClefWindDown {
     // @todo
 
     switch ( $_REQUEST['jetpack'] ) {
+	    case 'dismiss':
+		    update_option( 'clef_jetpack_dismissal', self::get_current_step() );
+		    break;
+
     case 'activate':
       activate_plugin(
         'jetpack/jetpack.php',
@@ -173,7 +222,8 @@ class ClefWindDown {
       break;
 
     case 'connect':
-      $url = Jetpack::build_connect_url( true, true, 'wpclef' );
+	    update_option( 'clef_jetpack_cta_used', true );
+	    $url = Jetpack::init()->build_connect_url( true, true, 'wpclef' );
       wp_redirect( $url );
       exit;
       break;
