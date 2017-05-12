@@ -101,7 +101,7 @@ class ClefWindDown {
 	  <?php
 	  if ( $current_step > 2 ):
 		  ?>
-	    <a href="<?php echo admin_url( 'admin.php?page=clef&jetpack=dismiss' ); ?>" class="clef-sunset-msg-dismiss"></a>
+	    <a href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=dismiss' ) ); ?>" class="clef-sunset-msg-dismiss"></a>
 		  <?php
 	  endif;
 	  ?>
@@ -149,7 +149,7 @@ class ClefWindDown {
       ?>
       <p><?php printf( __( "To continue securing your site, install Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p>
-        <a href="<?php echo admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ?>" class="install-now button"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
+        <a href="<?php echo wp_nonce_url( admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ) ?>" class="install-now button"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
       </p>
       <?php
       return;
@@ -157,7 +157,7 @@ class ClefWindDown {
 
     // If Jetpack is installed but not active, give them a button to activate it right here
 		if ( $current_step === 1 ) {
-      $url = admin_url( 'admin.php?page=clef&jetpack=activate' );
+      $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=activate' ) );
       ?>
       <p><?php printf( __( "To continue securing your site, activate Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Activate Jetpack', 'wpclef' ); ?></a></p>
@@ -167,7 +167,7 @@ class ClefWindDown {
 
     // If Jetpack isn't connected yet, prompt them to connect.
 		if ( $current_step === 2 ) {
-      $url = admin_url( 'admin.php?page=clef&jetpack=connect' );
+      $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=connect' ) );
       ?>
       <p><?php printf( __( "To continue securing your site, connect Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with Two-Step Authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Connect Jetpack', 'wpclef' ); ?></a></p>
@@ -177,7 +177,7 @@ class ClefWindDown {
 
     // Jetpack is installed, active, and connected. If SSO isn't active, prompt them.
 		if ( $current_step === 3 ) {
-      $url = admin_url( 'admin.php?page=clef&jetpack=enable-sso' );
+      $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=enable-sso' ) );
       ?>
       <p><?php printf( __( "The next step is to enable Jetpack's secure sign-on with two-step authentication.", 'wpclef' ) ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button">Enable Secure Sign-On</a></p>
@@ -187,7 +187,7 @@ class ClefWindDown {
 
     // If the 2FA requirement isn't active, prompt them.
 		if ( $current_step === 4 ) {
-      $url = admin_url( 'admin.php?page=clef&jetpack=require-2fa' );
+      $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=require-2fa' ) );
       ?>
       <p><?php _e( 'Jetpack\'s secure sign-on service is already enabled. Now you need to make two-step authentication required.', 'wpclef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Require Two-Step Authentication', 'wpclef' ); ?></a></p>
@@ -207,8 +207,9 @@ class ClefWindDown {
       return;
     }
 
-    // Verify nonce against requested action
-    // @todo
+    if ( wp_verify_nonce($_REQUEST['_wpnonce']) === false ) {
+    	return;
+    }
 
     switch ( $_REQUEST['jetpack'] ) {
 	    case 'dismiss':
