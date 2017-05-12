@@ -37,18 +37,17 @@ class ClefWindDown {
       return;
     }
 
-    // Don't show on the Jetpack page itself, that gets confusing
-    if ( stristr( $_SERVER['REQUEST_URI'], 'admin.php?page=jetpack' ) ) {
-      return;
-    }
-
 	  $current_step = self::get_current_step();
 	  $dismissed    = get_option( 'clef_jetpack_dismissal', - 1 );
-	  //$dismissed = - 1;
-
 	  if ( $current_step == $dismissed ) {
 		  return;
 	  }
+
+    // Don't show on the Jetpack page itself, that gets confusing
+    if ( stristr( $_SERVER['REQUEST_URI'], 'admin.php?page=jetpack' ) && $current_step < 3 ) {
+      return;
+    }
+	  //$dismissed = - 1;
 
     ?>
 	  <?php /* move this css to whereever we need */ ?>
@@ -191,13 +190,15 @@ class ClefWindDown {
       $url = admin_url( 'admin.php?page=clef&jetpack=require-2fa' );
       ?>
       <p><?php _e( 'Since you already have Jetpack\'s "Sign on with WordPress.com" feature enabled, you just need to make sure you have Two-Step Authentication activated on your WordPress.com account, and then you can require it for all log ins on this site.', 'wpclef' ); ?></p>
-      <p><a href="https://wordpress.com/me/security/two-step" target="_blank"><?php _e( 'Configure Two-Step Authentication on your WordPress.com account', 'wpclef' ); ?></a></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Require Two-Step Authentication-protected WordPress.com accounts', 'wpclef' ); ?></a></p>
       <?php
       return;
     }
-
-    ?><p><?php _e( "You're all set up to use Jetpack's Two-Step Authentication via WordPress.com accounts though, so carry on.", 'wpclef' ); ?></p><?php
+			?>
+	  <p><?php _e('Something good needs to be said here about NOT deactivating this plugin'); ?></p>
+		<p><a href="https://wordpress.com/me/security/two-step" target="_blank"
+	          class="button"><?php _e( 'Configure Two-Step Authentication on your WordPress.com account', 'wpclef' ); ?></a>
+		</p><?php
   }
 
   public static function handle_requests() {
