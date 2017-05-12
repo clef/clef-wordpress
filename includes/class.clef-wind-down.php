@@ -179,7 +179,7 @@ class ClefWindDown {
 		if ( $current_step === 3 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=enable-sso' );
       ?>
-      <p><?php printf( __( "The next step is to enable Jetpack\'s secure sign-on with two-step authentication.", 'wpclef' ) ); ?></p>
+      <p><?php printf( __( "The next step is to enable Jetpack's secure sign-on with two-step authentication.", 'wpclef' ) ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button">Enable Secure Sign-On</a></p>
       <?php
       return;
