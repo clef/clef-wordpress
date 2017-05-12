@@ -170,7 +170,7 @@ class ClefWindDown {
       $url = admin_url( 'admin.php?page=clef&jetpack=connect' );
       ?>
       <p><?php _e( 'It looks like you have Jetpack installed, but have not connected to WordPress.com yet. Once you are connected, you can enable "Sign on with WordPress.com" for your site, and require Two-Step Authentication.', 'wpclef' ); ?></p>
-      <p><a href="<?php echo esc_url( $url ); ?>" class="button">Connect Jetpack</a></p>
+      <p><a href="<?php echo esc_url( $url ); ?>" class="button">Connect Jetpack to WordPress.com</a></p>
       <?php
       return;
     }
@@ -195,7 +195,7 @@ class ClefWindDown {
       return;
     }
 			?>
-	  <p><?php _e('Something good needs to be said here about NOT deactivating this plugin'); ?></p>
+	  <p><?php _e("Now that 2-step is required, you'll need to configure 2-step on your account. As long as the Clef plugin is active on your site, 2-step will be required to login."); ?></p>
 		<p><a href="https://wordpress.com/me/security/two-step" target="_blank"
 	          class="button"><?php _e( 'Configure Two-Step Authentication on your WordPress.com account', 'wpclef' ); ?></a>
 		</p><?php
