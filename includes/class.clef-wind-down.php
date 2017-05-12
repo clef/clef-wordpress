@@ -106,7 +106,7 @@ class ClefWindDown {
 	  endif;
 	  ?>
       <img src="<?php echo esc_url( plugins_url( 'assets/src/img/clef-logo@2x.png', dirname( __FILE__ ) ) ); ?>" alt="Clef logo" class="clef-sunset-msg-img"/>
-      <p><?php printf( __( "Unfortunately, we're discontinuing support for Clef. <a href='%s' target='_blank'>Read more here</a>.", 'wpclef' ), 'https://blog.getclef.com/discontinuing-support-for-clef-6c89febef5f3#.ejv4vcu89' ); ?></p>
+      <p><?php printf( __( "Thanks to Jetpack, we're <a href='%s' target='_blank'>extending our support</a> date for Clef by one month.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
 	  <?php self::get_jetpack_prompt( $current_step ); ?>
     </div><?php
   }
@@ -147,7 +147,7 @@ class ClefWindDown {
       wp_enqueue_script('wp-util');
       wp_enqueue_script('updates');
       ?>
-      <p><?php _e( 'To continue securing your site, we recommend Jetpack\'s, "Sign on with WordPress.com" feature, with Two-Step Authentication.', 'wpclef' ); ?></p>
+      <p><?php printf( __( "To continue securing your site, install Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p>
         <a href="<?php echo admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ?>" class="install-now button"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
       </p>
@@ -159,7 +159,7 @@ class ClefWindDown {
 		if ( $current_step === 1 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=activate' );
       ?>
-      <p><?php _e( 'It looks like you have the Jetpack plugin installed, but not activated. Activate it now so that you can use their "Sign on with WordPress.com" feature to require Two-Step Authentication.', 'wpclef' ); ?></p>
+      <p><?php printf( __( "To continue securing your site, activate Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Activate Jetpack', 'wpclef' ); ?></a></p>
       <?php
       return;
@@ -169,8 +169,8 @@ class ClefWindDown {
 		if ( $current_step === 2 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=connect' );
       ?>
-      <p><?php _e( 'It looks like you have Jetpack installed, but have not connected to WordPress.com yet. Once you are connected, you can enable "Sign on with WordPress.com" for your site, and require Two-Step Authentication.', 'wpclef' ); ?></p>
-      <p><a href="<?php echo esc_url( $url ); ?>" class="button">Connect Jetpack to WordPress.com</a></p>
+      <p><?php printf( __( "To continue securing your site, connect Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with Two-Step Authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
+      <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Connect Jetpack', 'wpclef' ); ?></a></p>
       <?php
       return;
     }
@@ -179,8 +179,8 @@ class ClefWindDown {
 		if ( $current_step === 3 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=enable-sso' );
       ?>
-      <p><?php _e( 'You have Jetpack installed already, so you can enable "Sign on with WordPress.com" for your site, and require Two-Step Authentication via Jetpack.', 'wpclef' ); ?></p>
-      <p><a href="<?php echo esc_url( $url ); ?>" class="button">Enable Sign on with WordPress.com</a></p>
+      <p><?php printf( __( "The next step is to enable Jetpack\'s secure sign-on with two-step authentication.", 'wpclef' ) ); ?></p>
+      <p><a href="<?php echo esc_url( $url ); ?>" class="button">Enable Secure Sign-On</a></p>
       <?php
       return;
     }
@@ -189,15 +189,15 @@ class ClefWindDown {
 		if ( $current_step === 4 ) {
       $url = admin_url( 'admin.php?page=clef&jetpack=require-2fa' );
       ?>
-      <p><?php _e( 'Since you already have Jetpack\'s "Sign on with WordPress.com" feature enabled, you just need to make sure you have Two-Step Authentication activated on your WordPress.com account, and then you can require it for all log ins on this site.', 'wpclef' ); ?></p>
-      <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Require Two-Step Authentication-protected WordPress.com accounts', 'wpclef' ); ?></a></p>
+      <p><?php _e( 'Jetpack\'s secure sign-on service is already enabled. Now you need to make two-step authentication required.', 'wpclef' ); ?></p>
+      <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Require Two-Step Authentication', 'wpclef' ); ?></a></p>
       <?php
       return;
     }
 			?>
-	  <p><?php _e("Now that 2-step is required, you'll need to configure 2-step on your account. As long as the Clef plugin is active on your site, 2-step will be required to login."); ?></p>
+	  <p><?php _e("Two-step is now a requirement. The final step is configuring two-step settings on your account."); ?></p>
 		<p><a href="https://wordpress.com/me/security/two-step" target="_blank"
-	          class="button"><?php _e( 'Configure Two-Step Authentication on your WordPress.com account', 'wpclef' ); ?></a>
+	          class="button"><?php _e( 'Configure Two-Step Authentication', 'wpclef' ); ?></a>
 		</p><?php
   }
 
