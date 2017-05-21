@@ -17,6 +17,9 @@ class Clef {
         require_once(CLEF_PATH . 'includes/class.clef-core.php');
         add_action('plugins_loaded', array('ClefCore', 'manage_wp_fix'), 0);
         add_action('plugins_loaded', array('ClefCore', 'start'));
+
+        require_once(CLEF_PATH . 'includes/class.clef-wind-down.php');
+        add_action( 'init', array( 'ClefWindDown', 'init' ), 1 );
     }
 
     private function define_constants() {
