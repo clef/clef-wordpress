@@ -202,10 +202,6 @@ class ClefAdmin {
     }
 
     public function get_menu_badge() {
-        $user_is_admin = current_user_can('manage_options');
-        $needs_setup_badge = ($user_is_admin && !$this->settings->is_configured());
-        if ($needs_setup_badge) return _('needs setup');
-
         $has_seen_user_setup_badge = get_user_meta(get_current_user_id(), self::HIDE_USER_SETUP_BADGE, true);
         $needs_connect_badge = !$user_is_admin && $this->settings->is_configured() && !ClefUtils::user_has_clef() && !$has_seen_user_setup_badge;
         if ($needs_connect_badge) return _('add security');

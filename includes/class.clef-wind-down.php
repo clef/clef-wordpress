@@ -147,7 +147,7 @@ class ClefWindDown {
       wp_enqueue_script('wp-util');
       wp_enqueue_script('updates');
       ?>
-      <p><?php printf( __( "To continue securing your site, install Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
+      <p><?php printf( __( "To continue securing your site, install Jetpack to use the (free) <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p>
         <a href="<?php echo wp_nonce_url( admin_url("/plugin-install.php?tab=plugin-information&plugin=jetpack&TB_iframe=true&width=600&height=550") ) ?>" class="install-now button"><?php _e( 'Install Jetpack', 'wpclef' ); ?></a>
       </p>
@@ -159,7 +159,7 @@ class ClefWindDown {
 		if ( $current_step === 1 ) {
       $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=activate' ) );
       ?>
-      <p><?php printf( __( "To continue securing your site, activate Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
+      <p><?php printf( __( "To continue securing your site, activate Jetpack to use the (free) <a href='%s' target='_blank'>secure sign-on service</a> with two-step authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Activate Jetpack', 'wpclef' ); ?></a></p>
       <?php
       return;
@@ -169,7 +169,7 @@ class ClefWindDown {
 		if ( $current_step === 2 ) {
       $url = wp_nonce_url( admin_url( 'admin.php?page=clef&jetpack=connect' ) );
       ?>
-      <p><?php printf( __( "To continue securing your site, connect Jetpack to use the (free), <a href='%s' target='_blank'>secure sign-on service</a> with Two-Step Authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
+      <p><?php printf( __( "To continue securing your site, connect Jetpack to use the (free) <a href='%s' target='_blank'>secure sign-on service</a> with Two-Step Authentication.", 'wpclef' ), 'https://jetpack.com/for/clef' ); ?></p>
       <p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php _e( 'Connect Jetpack', 'wpclef' ); ?></a></p>
       <?php
       return;
