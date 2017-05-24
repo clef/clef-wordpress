@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, xmlrpc, xml-rpc
 Requires at least: 3.6
 Tested up to: 4.6
-Stable tag: 2.6.3
+Stable tag: 2.6.4
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -150,7 +150,7 @@ Clef employs a distributed security architecture, which means Clef stores no use
 
 == Changelog ==
 
-= 2.6.3 =
+= 2.6.4 =
 Released 22 May 2017
 
 * FINAL UPDATE: please migrate to Jetpack or deactivate the plugin

@@ -23,7 +23,7 @@ class Clef {
     }
 
     private function define_constants() {
-        define('CLEF_VERSION', '2.6.3');
+        define('CLEF_VERSION', '2.6.4');
 
         if (!defined('CLEF_IS_BASE_PLUGIN')) define('CLEF_IS_BASE_PLUGIN', false);
 
