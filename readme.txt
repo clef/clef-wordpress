@@ -4,7 +4,7 @@ Donate link: http://www.giffordcatshelter.org
 Tags: two-factor, two factor, 2 step authentication, 2 factor, 2FA, admin, android, authentication, encryption, harden, iphone, log in, login, mfa, mobile, multifactor, multi factor, oauth, password, passwords, phone, secure, security, smartphone, single sign on, ssl, sso, strong authentication, tfa, two factor authentication, two step, wp-admin, wp-login, xmlrpc, xml-rpc
 Requires at least: 3.6
 Tested up to: 4.6
-Stable tag: 2.6.1
+Stable tag: 2.6.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -116,8 +116,8 @@ See [the guide for accommodating users without smartphones](http://support.getcl
 1. [Deactivate](http://support.getclef.com/article/32-what-should-i-do-if-my-phone-is-lost-or-stolen) your old phone.
 1. [Reactivate](http://support.getclef.com/article/59-how-do-i-move-my-clef-account-to-a-new-phone) on your new phone.
 
-= How do I create a custom login page or widget with the Clef login shortcode? =
-You can add the Clef Wave or the Clef “login with your phone” button by inserting the **clef_render_login_button** shortcode into any post, page, or text widget. See the [shortcode guide](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) for details.
+= Is there a shortcode for the Clef login and register buttons? =
+Yes. The [`clef_render_login_button` shortcode](http://support.getclef.com/article/56-how-do-i-use-the-clef-login-shortcode) can be used in posts, pages, or text widgets.
 
 = How do I configure Clef for multisite networks? =
 
@@ -149,6 +149,17 @@ Clef employs a distributed security architecture, which means Clef stores no use
 4. Clef settings page
 
 == Changelog ==
+
+= 2.6.3 =
+Released 22 May 2017
+
+* FINAL UPDATE: please migrate to Jetpack or deactivate the plugin
+* Adds migrate to Jetpack flow
+
+= 2.6.2 =
+Released 4 October 2016
+
+* Feature: add register with your phone shortcode parameter ([258](https://github.com/clef/clef-wordpress/pull/258))
 
 = 2.6.1 =
 Released 23 August 2016

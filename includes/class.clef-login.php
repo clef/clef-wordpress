@@ -155,7 +155,7 @@ class ClefLogin {
         $type = isset($atts['type']) ? $atts['type'] : "login";
 
         ob_start();
-        $this->render_login_button($redirect_url, $app_id, $embed);
+        $this->render_login_button($redirect_url, $app_id, $embed, $type);
         $output = ob_get_contents();
         ob_end_clean();
 
