@@ -4,7 +4,7 @@
         <div class="clear"></div>
         <div class="inputs-container">
             <div class="invite-users__individually-container">
-                <h3>Invite users individually or in bulk</h3>
+                <h3><?php _e("Invite users individually or in bulk", 'wpclef') ?></h3>
                 <div>
                     <img src="<?php echo CLEF_URL ?>assets/dist/img/invite.png" alt="invite individual users" class="invite-users__img">
                     <div class="invite-users__individually">
@@ -16,7 +16,7 @@
             </div>
 
 
-            <h3>Invite users by role</h3>
+            <h3><?php _e("Invite users by role", 'wpclef'); ?></h3>
             <p><?php _e("We've made it really easy to get all of your site's users up and running with Clef. Click the button below and we'll send an email inviting your users to set up their Clef account on your site. The invite email has <b>step-by-step instructions</b> and a video walkthrough.", "wpclef"); ?></p>
 
             <div class="input-container">

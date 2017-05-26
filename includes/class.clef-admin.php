@@ -386,7 +386,7 @@ class ClefAdmin {
         ?>
         <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $('<option>').val('invite_to_clef').text('Invite to use Clef')
+                $('<option>').val('invite_to_clef').text('<?php _e('Invite to use Clef', 'wpclef'); ?>')
                     .appendTo("select[name='action'], select[name='action2']");
             });
         </script>
@@ -429,7 +429,15 @@ class ClefAdmin {
             add_settings_error(
                 CLEF_OPTIONS_NAME,
                 "clef_invite_success",
-                sprintf(__("%d %s successfully invited to Clef.", "wpclef"), $num_invited, _n("user", "users", $num_invited)),
+                sprintf(
+                    /* translators: %s: user with number. */
+                    __("%s successfully invited to Clef.", 'wpclef'),
+                    /* translators: %d: number of user. */
+                    sprintf(
+                        esc_html( _n( '%d user', '%d users', $num_invited, 'wpclef' ) ),
+                        $num_invited
+                    )
+                ),
                 "updated"
             );
         }
@@ -444,7 +452,7 @@ class ClefAdmin {
 
         wp_add_dashboard_widget(
             $name,
-            'Your site is Clef enabled!',
+            __('Your site is Clef enabled!', 'wpclef'),
             array($this, 'render_dashboard_widget')
         );
 
@@ -473,9 +481,12 @@ class ClefAdmin {
 
     public function render_dashboard_widget() {
     ?>
-        <p><?php _e("Clef is the best way to log in to WordPress <b>without usernames or passwords</b>. You're a few clicks away from joining more than 600,000 other WordPress sites that use Clef to make logging in safer and easier."); ?></p>
-        <p><?php _e("Click below to finish setting up Clef or learn more <a href='https://getclef.com/wordpress' target='_blank'>here</a>.") ?></p>
-        <a href="<?php echo admin_url('admin.php?page=clef') ?>" class="button button-primary"><?php _e("Finish setup"); ?></a>
+        <p><?php _e("Clef is the best way to log in to WordPress <b>without usernames or passwords</b>. You're a few clicks away from joining more than 600,000 other WordPress sites that use Clef to make logging in safer and easier.", 'wpclef'); ?></p>
+        <p><?php printf( /* translators: %s: here */
+            __("Click below to finish setting up Clef or learn more %s.", 'wpclef'),
+            '<a href="https://getclef.com/wordpress" target="_blank">'.__('here', 'wpclef').'</a>'
+        ); ?></p>
+        <a href="<?php echo admin_url('admin.php?page=clef') ?>" class="button button-primary"><?php _e("Finish setup", 'wpclef'); ?></a>
     <?php
     }
 
@@ -511,7 +522,18 @@ class ClefAdmin {
         try {
             ClefInvite::invite_users($filtered_users, $is_network_admin);
             $num_invited = count($filtered_users);
-            return array("success" => true, "message" => sprintf(__("%d %s successfully invited to Clef.", "wpclef"), $num_invited, _n("user", "users", $num_invited)));
+            return array(
+                "success" => true,
+                "message" => sprintf(
+                    /* translators: %s: user with number. */
+                    __("%s successfully invited to Clef.", 'wpclef'),
+                    /* translators: %d: number of user. */
+                        sprintf(
+                        esc_html( _n( '%d user', '%d users', $num_invited, 'wpclef' ) ),
+                    $num_invited
+                    )
+                )
+            );
         } catch (Exception $e) {
             return new WP_Error('clef_email_error', $e->getMessage());
         }

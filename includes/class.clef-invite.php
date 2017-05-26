@@ -69,9 +69,8 @@ class ClefInvite {
             if (count($errors) == count($filtered_users)) {
                 $message = __("there was an error sending the invite email to all users. Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
             } else {
-                $message = __("unable to send emails to the following users: ", 'wpclef');
-                $message .= join(", ", $errors);
-                $message .= __(". Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
+                $message = sprintf( __("unable to send emails to the following users: %s.", 'wpclef'), join(", ", $errors) );
+                $message .= __("Copy and paste the preview email to your users and they'll be walked through a tutorial to connect with Clef", 'wpclef');
             }
             throw new Exception($message);
         } else {
